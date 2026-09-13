@@ -1,0 +1,162 @@
+/* Custom Context Menu — ZiaRocks Brand */
+.custom-context-menu {
+  position: fixed;
+  z-index: 100000;
+  width: 224px;
+  background: linear-gradient(135deg, rgba(17, 13, 27, 0.96) 0%, rgba(26, 18, 43, 0.94) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.38);
+  border-radius: 12px;
+  box-shadow: 
+    0 12px 36px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(245, 158, 11, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 6px;
+  user-select: none;
+  animation: contextMenuPop 0.14s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: auto;
+}
+
+@keyframes contextMenuPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.93) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.custom-context-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px 6px 10px;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.15);
+  margin-bottom: 4px;
+}
+
+.custom-context-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.custom-context-brand .brand-icon {
+  color: #fbbf24;
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.6));
+  animation: brandPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes brandPulse {
+  0% { transform: rotate(0deg) scale(0.95); opacity: 0.85; }
+  100% { transform: rotate(15deg) scale(1.1); opacity: 1; }
+}
+
+.custom-context-brand .brand-name {
+  font-family: var(--font-cinzel, 'Cinzel', serif, Georgia);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #fde68a 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.custom-context-close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.custom-context-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.custom-context-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.custom-context-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #f1f5f9;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.custom-context-btn:hover {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transform: translateX(2px);
+}
+
+.custom-context-btn:active {
+  transform: scale(0.98);
+}
+
+.custom-context-btn .btn-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.custom-context-btn.primary-link .item-icon {
+  color: #38bdf8;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
+}
+
+.custom-context-btn .btn-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.custom-context-btn .btn-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.custom-context-btn .btn-url {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+.custom-context-btn:hover .btn-url {
+  color: #fde68a;
+}
+
+.custom-context-btn .item-arrow {
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.custom-context-btn:hover .item-arrow {
+  color: #fbbf24;
+  transform: translate(2px, -2px);
+}

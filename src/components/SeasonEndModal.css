@@ -1,0 +1,308 @@
+/* Season End Ceremony & Chest Reward Modal Styling */
+
+.season-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 14, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 16px;
+  animation: fadeInSeason 0.25s ease-out;
+}
+
+@keyframes fadeInSeason {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.season-end-card {
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: radial-gradient(circle at 50% 10%, #1e1b4b 0%, #0f172a 60%, #020617 100%);
+  border: 2px solid rgba(234, 179, 8, 0.5);
+  border-radius: 20px;
+  box-shadow: 
+    0 0 35px rgba(234, 179, 8, 0.25),
+    0 20px 40px rgba(0, 0, 0, 0.8);
+  padding: 24px;
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  animation: zoomInSeason 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes zoomInSeason {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.season-end-crest-wrap {
+  position: relative;
+  margin-top: -6px;
+  margin-bottom: 12px;
+}
+
+.season-end-crest {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(250, 204, 21, 0.6));
+  animation: bounceCrest 2s ease-in-out infinite;
+}
+
+@keyframes bounceCrest {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.season-end-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.season-end-subtitle-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fde047;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+.season-end-desc {
+  font-size: 0.86rem;
+  color: #94a3b8;
+  margin: 0 0 18px 0;
+  line-height: 1.45;
+  max-width: 440px;
+}
+
+/* League & Chest Presentation */
+.season-chest-showcase {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.season-league-badge-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 12px;
+}
+
+.league-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.82rem;
+}
+
+.chest-visual-box {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.chest-glow-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.35) 0%, rgba(234, 179, 8, 0) 70%);
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.9; }
+}
+
+.chest-icon-img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+}
+
+.chest-name-heading {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #fef08a;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Rewards Grid */
+.season-rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.season-reward-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.season-reward-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.season-reward-val {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.season-reward-lbl {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Trophy Soft Reset Box */
+.season-reset-box {
+  width: 100%;
+  background: rgba(30, 27, 75, 0.5);
+  border: 1px dashed rgba(168, 85, 247, 0.4);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.season-reset-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #c084fc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.season-reset-values {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.trophies-old {
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.reset-arrow {
+  color: #facc15;
+}
+
+.trophies-new {
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.season-reset-hint {
+  font-size: 0.75rem;
+  color: #a5b4fc;
+  margin: 0;
+}
+
+/* Claim Button */
+.btn-claim-season {
+  width: 100%;
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 50%, #a16207 100%);
+  color: #1e1b4b;
+  border: 1px solid #fef08a;
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 20px rgba(234, 179, 8, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-claim-season:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 24px rgba(234, 179, 8, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.btn-claim-season:active {
+  transform: translateY(1px);
+}

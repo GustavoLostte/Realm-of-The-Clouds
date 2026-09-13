@@ -1,0 +1,870 @@
+/* ===================================================
+   GUIDED TUTORIAL (EL GRAN SENESCAL) STYLES
+   =================================================== */
+
+.guided-tutorial-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: auto;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* Dim backdrop with dynamic spotlight cutout */
+.guided-spotlight-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9991;
+  pointer-events: none;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.guided-spotlight-backdrop.full-dim {
+  background: rgba(3, 7, 18, 0.78);
+  backdrop-filter: blur(2px);
+}
+
+/* Active tutorial target element elevation & uncollapsing (Interaction blocked during tutorial) */
+.guided-target-highlighted {
+  z-index: 9995 !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+.guided-target-highlighted,
+.guided-target-highlighted * {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+#hud-quest-herald.guided-target-highlighted {
+  z-index: 9995 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) !important;
+  background: linear-gradient(135deg, rgba(14, 20, 32, 0.96) 0%, rgba(20, 28, 44, 0.94) 100%) !important;
+  border-color: var(--border-gold) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 24px rgba(245, 158, 11, 0.3) !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+@media (max-height: 580px), (orientation: landscape) and (max-height: 640px), (max-width: 960px) and (orientation: landscape) {
+  #hud-quest-herald.guided-target-highlighted {
+    transform: none !important;
+    top: max(52px, calc(env(safe-area-inset-top, 0px) + 50px)) !important;
+    left: max(14px, env(safe-area-inset-left, 14px)) !important;
+  }
+}
+
+#hud-quest-herald.guided-target-highlighted .herald-card-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  display: flex !important;
+}
+
+#hud-quest-herald.guided-target-highlighted * {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+
+.guided-spotlight-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Glowing spotlight frame around active element (no 9999px box-shadow) */
+.guided-spotlight-frame {
+  position: absolute;
+  border-radius: 14px;
+  border: 2px solid rgba(234, 179, 8, 0.95);
+  box-shadow: 0 0 22px rgba(234, 179, 8, 0.7),
+              inset 0 0 14px rgba(234, 179, 8, 0.45);
+  transition: top 0.25s ease, left 0.25s ease, width 0.25s ease, height 0.25s ease;
+  pointer-events: none;
+  animation: beaconPulse 2.2s infinite ease-in-out;
+}
+
+@keyframes beaconPulse {
+  0%, 100% {
+    box-shadow: 0 0 18px rgba(234, 179, 8, 0.55),
+                inset 0 0 10px rgba(234, 179, 8, 0.35);
+    border-color: rgba(234, 179, 8, 0.9);
+  }
+  50% {
+    box-shadow: 0 0 32px rgba(250, 204, 21, 0.85),
+                inset 0 0 18px rgba(250, 204, 21, 0.6);
+    border-color: rgba(250, 204, 21, 1);
+  }
+}
+
+/* Beacon Pointer Indicator */
+.guided-spotlight-beacon {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #f59e0b, #eab308);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 16px #f59e0b;
+  animation: pingBeacon 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pingBeacon {
+  75%, 100% {
+    transform: scale(1.4);
+    opacity: 0.2;
+  }
+}
+
+/* Advisor Dialogue Card */
+.guided-advisor-card {
+  background: linear-gradient(165deg, rgba(17, 24, 39, 0.96) 0%, rgba(10, 15, 29, 0.98) 100%);
+  border: 2px solid rgba(217, 119, 6, 0.55);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8),
+              0 0 25px rgba(245, 158, 11, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  color: #f8fafc;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  animation: cardFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Card Header */
+.guided-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.guided-advisor-avatar-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 2px solid #d97706;
+  box-shadow: 0 0 12px rgba(217, 119, 6, 0.4);
+  overflow: visible;
+}
+
+.guided-advisor-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.guided-advisor-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #111827;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.guided-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.guided-character-title {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fbbf24;
+  margin-bottom: 2px;
+}
+
+.guided-step-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.guided-step-subtitle {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+.guided-skip-x-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.guided-skip-x-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+}
+
+/* Card Body */
+.guided-card-body {
+  margin-bottom: 14px;
+}
+
+.guided-step-desc {
+  margin: 0 0 10px 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+}
+
+.guided-tip-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(234, 179, 8, 0.08);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.guided-tip-icon {
+  color: #facc15;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.guided-tip-text {
+  font-size: 0.76rem;
+  color: #fef08a;
+  line-height: 1.35;
+}
+
+/* Card Footer */
+.guided-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.guided-progress-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.guided-step-counter {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.guided-dots-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.guided-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transition: all 0.2s ease;
+}
+
+.guided-dot.active {
+  width: 18px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+
+.guided-dot.completed {
+  background: #10b981;
+}
+
+.guided-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.guided-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+}
+
+.guided-nav-btn.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+}
+
+.guided-nav-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.guided-nav-btn.primary {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #1e1b4b;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+}
+
+.guided-nav-btn.primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ===================================================
+   GRADUATION CELEBRATION MODAL
+   =================================================== */
+
+.guided-graduation-card {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(92vw, 440px) !important;
+  max-width: 440px !important;
+  max-height: calc(100vh - 20px) !important;
+  max-height: calc(100dvh - 20px) !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 16px 20px !important;
+  text-align: center;
+  border-color: rgba(234, 179, 8, 0.8) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9),
+              0 0 40px rgba(234, 179, 8, 0.4) !important;
+}
+
+.graduation-close-x-btn {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 20 !important;
+  width: 28px !important;
+  height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+}
+
+.graduation-close-x-btn:hover {
+  background: rgba(239, 68, 68, 0.25) !important;
+  color: #ef4444 !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.graduation-glow-banner {
+  padding: 8px 0 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 14px;
+}
+
+.graduation-crown-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.25) 0%, transparent 70%);
+  margin-bottom: 8px;
+}
+
+.graduation-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fef08a;
+  text-shadow: 0 2px 10px rgba(234, 179, 8, 0.5);
+}
+
+.graduation-subtitle {
+  margin: 4px 0 0 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.graduation-body {
+  margin-bottom: 16px;
+}
+
+.graduation-prose {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+  margin: 0 0 14px 0;
+}
+
+.graduation-rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.reward-pill {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.reward-pill.gold {
+  border-color: rgba(234, 179, 8, 0.35);
+  background: rgba(234, 179, 8, 0.08);
+}
+
+.reward-pill.wood {
+  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.reward-pill.gem {
+  border-color: rgba(6, 182, 212, 0.35);
+  background: rgba(6, 182, 212, 0.08);
+}
+
+.reward-val {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.reward-lbl {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.graduation-footer {
+  margin-top: 6px;
+}
+
+.graduation-claim-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+  color: #1e1b4b;
+  border: 1.5px solid #fef08a;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(202, 138, 4, 0.45);
+  transition: all 0.2s ease;
+}
+
+.graduation-claim-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 24px rgba(202, 138, 4, 0.6);
+}
+
+/* ===================================================
+   MOBILE COMPATIBILITY
+   =================================================== */
+
+.graduation-crown-svg {
+  width: 44px;
+  height: 44px;
+}
+
+.reward-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.claim-icon {
+  flex-shrink: 0;
+}
+
+.claim-text {
+  flex: 1;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@media (max-width: 640px) {
+  .guided-advisor-card {
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .guided-card-header {
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  .guided-advisor-avatar-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .guided-step-title {
+    font-size: 0.92rem;
+  }
+
+  .guided-step-desc {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .guided-tip-box {
+    padding: 6px 8px;
+  }
+
+  .guided-tip-text {
+    font-size: 0.72rem;
+  }
+
+  .guided-nav-btn {
+    padding: 7px 11px;
+    font-size: 0.76rem;
+  }
+
+  .guided-graduation-card {
+    max-height: calc(100vh - 24px) !important;
+    overflow-y: auto !important;
+    padding: 12px 14px !important;
+  }
+
+  .graduation-crown-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+  }
+
+  .graduation-crown-svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .graduation-title {
+    font-size: 1.1rem;
+  }
+
+  .graduation-claim-btn {
+    padding: 10px 14px;
+    font-size: 0.84rem;
+    min-height: 42px;
+  }
+}
+
+/* Mobile landscape and compact screens - sleek zero-overlap card styling */
+@media (max-height: 600px), (orientation: landscape) and (max-height: 660px), (max-width: 960px) and (orientation: landscape) {
+  .guided-advisor-card {
+    padding: 7px 11px !important;
+    border-radius: 12px !important;
+    border-width: 1.5px !important;
+    max-height: calc(100vh - 16px) !important;
+    overflow-y: auto !important;
+    box-shadow: 0 8px 22px -4px rgba(0, 0, 0, 0.88),
+                0 0 16px rgba(245, 158, 11, 0.25) !important;
+  }
+
+  .guided-card-header {
+    gap: 7px !important;
+    margin-bottom: 5px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .guided-advisor-avatar-wrap {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 7px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .guided-character-title {
+    font-size: 0.52rem !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .guided-step-title {
+    font-size: 0.78rem !important;
+    line-height: 1.15 !important;
+    margin: 1px 0 !important;
+  }
+
+  .guided-step-subtitle {
+    font-size: 0.60rem !important;
+  }
+
+  .guided-skip-x-btn {
+    width: 20px !important;
+    height: 20px !important;
+    padding: 1px !important;
+  }
+
+  .guided-card-body {
+    margin-bottom: 4px !important;
+  }
+
+  .guided-step-desc {
+    font-size: 0.68rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 3px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .guided-tip-box {
+    padding: 3px 6px !important;
+    gap: 4px !important;
+    margin-top: 2px !important;
+  }
+
+  .guided-tip-icon {
+    width: 10px !important;
+    height: 10px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .guided-tip-text {
+    font-size: 0.62rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .guided-card-footer {
+    margin-top: 3px !important;
+    padding-top: 3px !important;
+  }
+
+  .guided-step-counter {
+    font-size: 0.58rem !important;
+  }
+
+  .guided-dot {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  .guided-dot.active {
+    width: 12px !important;
+  }
+
+  .guided-nav-btn {
+    padding: 4px 8px !important;
+    font-size: 0.66rem !important;
+    gap: 3px !important;
+    border-radius: 6px !important;
+  }
+
+  /* Compact Graduation Celebration in Landscape (Samsung A17 / mobile 320-450px height) */
+  .guided-graduation-card {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(92vw, 460px) !important;
+    max-width: 460px !important;
+    max-height: calc(100vh - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
+    padding: 8px 14px !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    border-radius: 14px !important;
+    border-width: 1.5px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 28px rgba(234, 179, 8, 0.35) !important;
+  }
+
+  /* Inline crown + title saves ~35px of vertical space */
+  .graduation-glow-banner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 2px 0 5px 0 !important;
+    margin-bottom: 5px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .graduation-crown-wrap {
+    width: 28px !important;
+    height: 28px !important;
+    margin-bottom: 0 !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .graduation-crown-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .graduation-title {
+    font-size: 1rem !important;
+    line-height: 1.15 !important;
+    margin: 0 !important;
+  }
+
+  .graduation-subtitle {
+    display: none !important;
+  }
+
+  .graduation-body {
+    margin-bottom: 5px !important;
+  }
+
+  .graduation-prose {
+    font-size: 0.70rem !important;
+    line-height: 1.25 !important;
+    margin: 0 0 5px 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .graduation-rewards-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  .reward-pill {
+    flex: 1 1 0 !important;
+    padding: 4px 6px !important;
+    border-radius: 8px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+  }
+
+  .reward-icon {
+    width: 15px !important;
+    height: 15px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .reward-val {
+    font-size: 0.80rem !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+  }
+
+  .reward-lbl {
+    font-size: 0.58rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  .graduation-footer {
+    margin-top: 6px !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+
+  .graduation-claim-btn {
+    width: 100% !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 16px !important;
+    font-size: 0.84rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+    border-radius: 10px !important;
+    gap: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 16px rgba(245, 158, 11, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .claim-icon {
+    width: 15px !important;
+    height: 15px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .claim-text {
+    font-size: 0.82rem !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+  }
+}

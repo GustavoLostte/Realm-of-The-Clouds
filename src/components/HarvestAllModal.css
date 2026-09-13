@@ -1,0 +1,539 @@
+/* ============================================================
+   HARVEST ALL MODAL (RECAUDACIÓN IMPERIAL) - CANDY STYLING
+   ============================================================ */
+
+.harvest-modal-window {
+  position: relative;
+  width: 92vw;
+  max-width: 520px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #1e130c 0%, #120904 100%);
+  border: 2px solid #eab308;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 30px rgba(234, 179, 8, 0.25);
+  color: #fff;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  overflow: hidden;
+  animation: modalScaleIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Header */
+.harvest-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: linear-gradient(90deg, rgba(234, 179, 8, 0.15) 0%, rgba(30, 19, 12, 0.8) 100%);
+  border-bottom: 1.5px solid rgba(234, 179, 8, 0.3);
+}
+
+.harvest-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.harvest-crest-box {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.35) 0%, rgba(20, 10, 5, 0.9) 100%);
+  border: 1.5px solid #facc15;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+}
+
+.harvest-header-crest-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+.harvest-tag {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #facc15;
+  text-transform: uppercase;
+}
+
+.harvest-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 850;
+  color: #fef08a;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Modal Body */
+.harvest-modal-body {
+  padding: 16px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Hero Card */
+.harvest-hero-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(20, 12, 6, 0.6) 100%);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  border-radius: 14px;
+}
+
+.harvest-hero-art {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.25) 0%, transparent 70%);
+}
+
+.harvest-hero-img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7));
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+.harvest-hero-text {
+  flex: 1;
+}
+
+.harvest-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(234, 179, 8, 0.2);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  color: #fef08a;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-bottom: 5px;
+}
+
+.harvest-hero-desc {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: #d1d5db;
+}
+
+/* Status Bar */
+.harvest-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.harvest-status-bar.ready {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #6ee7b7;
+}
+
+.harvest-status-bar.empty {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fde68a;
+}
+
+.status-svg.success {
+  color: #10b981;
+}
+
+.status-svg.warning {
+  color: #f59e0b;
+}
+
+/* Haul Section */
+.harvest-haul-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.harvest-section-title {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fef08a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vip-bonus-pill {
+  background: #10b981;
+  color: #064e3b;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 6px;
+  margin-left: auto;
+}
+
+.harvest-res-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.haul-res-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.haul-res-card.gold { border-color: rgba(234, 179, 8, 0.3); }
+.haul-res-card.wood { border-color: rgba(34, 197, 94, 0.3); }
+.haul-res-card.stone { border-color: rgba(148, 163, 184, 0.3); }
+.haul-res-card.food { border-color: rgba(249, 115, 22, 0.3); }
+.haul-res-card.gems { border-color: rgba(168, 85, 247, 0.3); }
+.haul-res-card.xp { border-color: rgba(56, 189, 248, 0.3); }
+
+.haul-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.haul-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.haul-name {
+  font-size: 0.6rem;
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.haul-val {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Cost & VIP Section */
+.harvest-cost-card {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.harvest-cost-card.is-vip {
+  background: linear-gradient(135deg, rgba(6, 95, 70, 0.3) 0%, rgba(4, 120, 87, 0.15) 100%);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+.cost-vip-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.vip-crest-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1.5px solid #34d399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vip-crown-svg {
+  color: #34d399;
+}
+
+.vip-cost-details {
+  flex: 1;
+}
+
+.vip-cost-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #6ee7b7;
+  margin-bottom: 2px;
+}
+
+.free-badge {
+  background: #10b981;
+  color: #064e3b;
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.vip-cost-sub {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #a7f3d0;
+  line-height: 1.3;
+}
+
+.harvest-cost-card.requires-cost {
+  background: linear-gradient(180deg, rgba(35, 20, 10, 0.7) 0%, rgba(20, 10, 5, 0.9) 100%);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  padding: 12px 14px;
+}
+
+.cost-row-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cost-title-col, .player-gems-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cost-lead, .player-gems-lead {
+  font-size: 0.68rem;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.cost-gem-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cost-gem-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.cost-number {
+  font-size: 0.95rem;
+  color: #facc15;
+  font-weight: 900;
+}
+
+.player-gems-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.player-gems-tag.sufficient {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #6ee7b7;
+}
+
+.player-gems-tag.insufficient {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.cost-insufficient-warn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.cost-perk-tip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.tip-zap {
+  color: #facc15;
+  flex-shrink: 0;
+}
+
+.btn-link-shop-vip {
+  background: rgba(234, 179, 8, 0.2);
+  border: 1px solid #facc15;
+  color: #fef08a;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.btn-link-shop-vip:hover {
+  background: #facc15;
+  color: #1a0800;
+}
+
+/* Modal Footer */
+.harvest-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  background: rgba(15, 8, 4, 0.95);
+  border-top: 1px solid rgba(234, 179, 8, 0.25);
+}
+
+.btn-harvest-cancel {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-harvest-cancel:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.btn-harvest-primary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 850;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  user-select: none;
+}
+
+.btn-harvest-primary.confirm {
+  background: linear-gradient(180deg, #eab308 0%, #ca8a04 100%);
+  border: 1.5px solid #fef08a;
+  color: #1a0800;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-harvest-primary.confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 179, 8, 0.6);
+  border-color: #ffffff;
+}
+
+.btn-harvest-primary.confirm:active {
+  transform: translateY(1px);
+}
+
+.btn-harvest-primary.get-gems {
+  background: linear-gradient(180deg, #9333ea 0%, #7e22ce 100%);
+  border: 1.5px solid #d8b4fe;
+  color: #fff;
+}
+
+.btn-harvest-primary.get-gems:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6);
+}
+
+.btn-harvest-primary.disabled {
+  background: #374151;
+  border: 1px solid #4b5563;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-horn-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+@media (max-width: 480px) {
+  .harvest-res-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .harvest-hero-img {
+    width: 48px;
+    height: 48px;
+  }
+}

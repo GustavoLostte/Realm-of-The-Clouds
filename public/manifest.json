@@ -1,0 +1,59 @@
+{
+  "name": "PWA Web3 Core Engine",
+  "short_name": "PWA Web3",
+  "description": "Motor PWA Web3 Core Engine con soporte descentralizado, estrategia y juego interactivo.",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#090c10",
+  "theme_color": "#090c10",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": [
+    "games",
+    "strategy",
+    "role playing"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Reino",
+      "short_name": "Reino",
+      "description": "Acceso directo a la plaza de tu reino",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
