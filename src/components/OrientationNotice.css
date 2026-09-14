@@ -39,7 +39,7 @@
   position: absolute;
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.08) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.22) 0%, rgba(2, 132, 199, 0.08) 50%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   filter: blur(40px);
@@ -61,11 +61,11 @@
   width: 100%;
   max-width: 440px;
   background: linear-gradient(180deg, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
-  border: 2px solid rgba(245, 158, 11, 0.55);
+  border: 2px solid rgba(14, 165, 233, 0.55);
   border-radius: 20px;
   padding: 2rem 1.5rem 1.75rem;
   box-shadow: 
-    0 0 45px rgba(245, 158, 11, 0.25),
+    0 0 45px rgba(14, 165, 233, 0.25),
     0 25px 50px -12px rgba(0, 0, 0, 0.75),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
   display: flex;
@@ -84,7 +84,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, transparent, #f59e0b, #fbbf24, #f59e0b, transparent);
+  background: linear-gradient(90deg, transparent, #0ea5e9, #38bdf8, #0ea5e9, transparent);
 }
 
 /* Official Game Logo */
@@ -101,7 +101,7 @@
   width: 55%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 16px rgba(245, 158, 11, 0.35));
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 16px rgba(14, 165, 233, 0.35));
 }
 
 /* Top Imperial Badge */
@@ -110,16 +110,16 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.35rem 0.85rem;
-  background: rgba(245, 158, 11, 0.14);
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: rgba(14, 165, 233, 0.14);
+  border: 1px solid rgba(14, 165, 233, 0.4);
   border-radius: 9999px;
-  color: #fbbf24;
+  color: #38bdf8;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 1.25rem;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
 }
 
 .orientation-badge-icon {
@@ -145,7 +145,7 @@
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  border: 2px dashed rgba(245, 158, 11, 0.3);
+  border: 2px dashed rgba(14, 165, 233, 0.3);
   pointer-events: none;
 }
 
@@ -154,12 +154,12 @@
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  border-top: 3px solid #fbbf24;
-  border-right: 3px solid #fbbf24;
+  border-top: 3px solid #38bdf8;
+  border-right: 3px solid #38bdf8;
   border-bottom: 3px solid transparent;
   border-left: 3px solid transparent;
   animation: orientationOrbitSpin 3s linear infinite;
-  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.6));
+  filter: drop-shadow(0 0 6px rgba(14, 165, 233, 0.6));
 }
 
 /* Animated 3D Smartphone Device */
@@ -168,10 +168,10 @@
   width: 52px;
   height: 94px;
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border: 2.5px solid #fbbf24;
+  border: 2.5px solid #38bdf8;
   border-radius: 12px;
   box-shadow: 
-    0 0 20px rgba(245, 158, 11, 0.35),
+    0 0 20px rgba(14, 165, 233, 0.35),
     inset 0 0 8px rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
@@ -185,7 +185,7 @@
 .orientation-phone-speaker {
   width: 16px;
   height: 3px;
-  background: rgba(251, 191, 36, 0.6);
+  background: rgba(56, 189, 248, 0.6);
   border-radius: 2px;
 }
 
@@ -200,15 +200,15 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   position: relative;
 }
 
 .orientation-screen-icon {
   width: 20px;
   height: 20px;
-  color: #f59e0b;
-  filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.8));
+  color: #0ea5e9;
+  filter: drop-shadow(0 0 4px rgba(14, 165, 233, 0.8));
   animation: orientationScreenPulse 1.6s ease-in-out infinite alternate;
 }
 
@@ -229,7 +229,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   line-height: 1.25;
-  background: linear-gradient(180deg, #ffffff 30%, #fde68a 100%);
+  background: linear-gradient(180deg, #ffffff 30%, #bae6fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
@@ -244,7 +244,7 @@
 }
 
 .orientation-desc strong {
-  color: #fbbf24;
+  color: #38bdf8;
   font-weight: 600;
 }
 
@@ -290,8 +290,8 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.85rem 1.25rem;
-  background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #92400e 100%);
-  border: 1px solid #fbbf24;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #075985 100%);
+  border: 1px solid #38bdf8;
   border-radius: 12px;
   color: #ffffff;
   font-family: 'Cinzel', serif;
@@ -300,14 +300,14 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
   transition: all 0.2s ease;
 }
 
 .orientation-btn-primary:hover {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.55);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.55);
 }
 
 .orientation-btn-primary:active {
@@ -359,7 +359,7 @@
 @keyframes orientationRotatePhone {
   0%, 15% {
     transform: rotate(0deg);
-    border-color: #f59e0b;
+    border-color: #0ea5e9;
   }
   38%, 68% {
     transform: rotate(-90deg) scale(1.08);
@@ -368,7 +368,7 @@
   }
   88%, 100% {
     transform: rotate(0deg);
-    border-color: #f59e0b;
+    border-color: #0ea5e9;
   }
 }
 

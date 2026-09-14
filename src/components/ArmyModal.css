@@ -16,7 +16,7 @@
 /* Overview Strip dentro del cuerpo con scroll */
 .army-modal .army-hero-summary-strip {
   border-radius: 12px;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   background: rgba(15, 23, 42, 0.65);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   margin-bottom: 2px;
@@ -25,7 +25,7 @@
 /* Cola de entrenamiento integrada en el flujo */
 .army-training-queue-section {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   border-radius: 14px;
   padding: 14px 16px;
   margin: 0;
@@ -45,7 +45,7 @@
   padding: 6px 4px;
   margin: 0 -4px;
   border-radius: 10px;
-  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.3);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
@@ -61,7 +61,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #f59e0b, #ef4444, transparent);
+  background: linear-gradient(90deg, transparent, #0ea5e9, #ef4444, transparent);
 }
 
 .queue-section-header {
@@ -76,7 +76,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #fef08a;
+  color: #bae6fd;
   font-family: 'Cinzel', serif;
   font-size: 0.95rem;
   font-weight: 700;
@@ -92,9 +92,9 @@
 }
 
 .cuartel-level-pill {
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.4);
-  color: #fbbf24;
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  color: #38bdf8;
   font-size: 0.72rem;
   font-weight: 600;
   padding: 3px 9px;
@@ -120,9 +120,9 @@
   height: 52px;
   border-radius: 10px;
   overflow: hidden;
-  border: 2px solid #f59e0b;
+  border: 2px solid #0ea5e9;
   flex-shrink: 0;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.3);
 }
 
 .training-unit-avatar {
@@ -198,7 +198,7 @@
   font-family: monospace;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: #38bdf8;
 }
 
 /* Barra de progreso animada */
@@ -213,7 +213,7 @@
 
 .training-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #f59e0b, #ef4444, #eab308);
+  background: linear-gradient(90deg, #0ea5e9, #ef4444, #0284c7);
   background-size: 200% 100%;
   animation: progress-shimmer 2s linear infinite;
   border-radius: 10px;

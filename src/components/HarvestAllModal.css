@@ -10,9 +10,9 @@
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #1e130c 0%, #120904 100%);
-  border: 2px solid #eab308;
+  border: 2px solid #0284c7;
   border-radius: 20px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 30px rgba(234, 179, 8, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 30px rgba(2, 132, 199, 0.25);
   color: #fff;
   font-family: var(--font-sans, system-ui, sans-serif);
   overflow: hidden;
@@ -36,8 +36,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  background: linear-gradient(90deg, rgba(234, 179, 8, 0.15) 0%, rgba(30, 19, 12, 0.8) 100%);
-  border-bottom: 1.5px solid rgba(234, 179, 8, 0.3);
+  background: linear-gradient(90deg, rgba(2, 132, 199, 0.15) 0%, rgba(30, 19, 12, 0.8) 100%);
+  border-bottom: 1.5px solid rgba(2, 132, 199, 0.3);
 }
 
 .harvest-header-left {
@@ -52,10 +52,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(234, 179, 8, 0.35) 0%, rgba(20, 10, 5, 0.9) 100%);
-  border: 1.5px solid #facc15;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.35) 0%, rgba(20, 10, 5, 0.9) 100%);
+  border: 1.5px solid #38bdf8;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
 }
 
 .harvest-header-crest-img {
@@ -70,7 +70,7 @@
   font-size: 0.62rem;
   font-weight: 900;
   letter-spacing: 0.1em;
-  color: #facc15;
+  color: #38bdf8;
   text-transform: uppercase;
 }
 
@@ -78,7 +78,7 @@
   margin: 0;
   font-size: 1.15rem;
   font-weight: 850;
-  color: #fef08a;
+  color: #bae6fd;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
@@ -97,8 +97,8 @@
   align-items: center;
   gap: 14px;
   padding: 12px 14px;
-  background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(20, 12, 6, 0.6) 100%);
-  border: 1px solid rgba(234, 179, 8, 0.25);
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(20, 12, 6, 0.6) 100%);
+  border: 1px solid rgba(2, 132, 199, 0.25);
   border-radius: 14px;
 }
 
@@ -109,7 +109,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(234, 179, 8, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.25) 0%, transparent 70%);
 }
 
 .harvest-hero-img {
@@ -133,9 +133,9 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: rgba(234, 179, 8, 0.2);
-  border: 1px solid rgba(234, 179, 8, 0.4);
-  color: #fef08a;
+  background: rgba(2, 132, 199, 0.2);
+  border: 1px solid rgba(2, 132, 199, 0.4);
+  color: #bae6fd;
   font-size: 0.65rem;
   font-weight: 800;
   padding: 2px 8px;
@@ -168,9 +168,9 @@
 }
 
 .harvest-status-bar.empty {
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  color: #fde68a;
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: #bae6fd;
 }
 
 .status-svg.success {
@@ -178,7 +178,7 @@
 }
 
 .status-svg.warning {
-  color: #f59e0b;
+  color: #0ea5e9;
 }
 
 /* Haul Section */
@@ -192,7 +192,7 @@
   margin: 0;
   font-size: 0.75rem;
   font-weight: 800;
-  color: #fef08a;
+  color: #bae6fd;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -227,7 +227,7 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.haul-res-card.gold { border-color: rgba(234, 179, 8, 0.3); }
+.haul-res-card.gold { border-color: rgba(2, 132, 199, 0.3); }
 .haul-res-card.wood { border-color: rgba(34, 197, 94, 0.3); }
 .haul-res-card.stone { border-color: rgba(148, 163, 184, 0.3); }
 .haul-res-card.food { border-color: rgba(249, 115, 22, 0.3); }
@@ -329,7 +329,7 @@
 
 .harvest-cost-card.requires-cost {
   background: linear-gradient(180deg, rgba(35, 20, 10, 0.7) 0%, rgba(20, 10, 5, 0.9) 100%);
-  border: 1px solid rgba(234, 179, 8, 0.3);
+  border: 1px solid rgba(2, 132, 199, 0.3);
   padding: 12px 14px;
 }
 
@@ -366,7 +366,7 @@
 
 .cost-number {
   font-size: 0.95rem;
-  color: #facc15;
+  color: #38bdf8;
   font-weight: 900;
 }
 
@@ -418,14 +418,14 @@
 }
 
 .tip-zap {
-  color: #facc15;
+  color: #38bdf8;
   flex-shrink: 0;
 }
 
 .btn-link-shop-vip {
-  background: rgba(234, 179, 8, 0.2);
-  border: 1px solid #facc15;
-  color: #fef08a;
+  background: rgba(2, 132, 199, 0.2);
+  border: 1px solid #38bdf8;
+  color: #bae6fd;
   font-size: 0.62rem;
   font-weight: 800;
   padding: 2px 6px;
@@ -437,7 +437,7 @@
 }
 
 .btn-link-shop-vip:hover {
-  background: #facc15;
+  background: #38bdf8;
   color: #1a0800;
 }
 
@@ -449,7 +449,7 @@
   gap: 12px;
   padding: 12px 18px;
   background: rgba(15, 8, 4, 0.95);
-  border-top: 1px solid rgba(234, 179, 8, 0.25);
+  border-top: 1px solid rgba(2, 132, 199, 0.25);
 }
 
 .btn-harvest-cancel {
@@ -486,15 +486,15 @@
 }
 
 .btn-harvest-primary.confirm {
-  background: linear-gradient(180deg, #eab308 0%, #ca8a04 100%);
-  border: 1.5px solid #fef08a;
+  background: linear-gradient(180deg, #0284c7 0%, #ca8a04 100%);
+  border: 1.5px solid #bae6fd;
   color: #1a0800;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .btn-harvest-primary.confirm:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(234, 179, 8, 0.6);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6);
   border-color: #ffffff;
 }
 

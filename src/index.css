@@ -6,13 +6,13 @@
   --bg-surface: #0e131f;
   --bg-panel: rgba(16, 23, 38, 0.82);
   --bg-panel-hover: rgba(23, 33, 54, 0.92);
-  --border-gold: rgba(245, 158, 11, 0.5);
-  --border-gold-glow: rgba(245, 158, 11, 0.8);
+  --border-gold: rgba(14, 165, 233, 0.5);
+  --border-gold-glow: rgba(14, 165, 233, 0.8);
   --border-subtle: rgba(255, 255, 255, 0.12);
 
-  --gold-primary: #f59e0b;
-  --gold-light: #fef08a;
-  --gold-glow: rgba(245, 158, 11, 0.55);
+  --gold-primary: #0ea5e9;
+  --gold-light: #bae6fd;
+  --gold-glow: rgba(14, 165, 233, 0.55);
 
   --wood-color: #ca8a04;
   --stone-color: #94a3b8;
@@ -22,12 +22,12 @@
 
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --text-gold: #fde047;
+  --text-gold: #7dd3fc;
 
   --font-serif: 'Cinzel', 'Noto Serif KR', 'Noto Serif SC', serif, Georgia;
   --font-sans: 'Outfit', 'Noto Sans KR', 'Noto Sans SC', sans-serif, system-ui;
 
-  --shadow-gold: 0 0 25px rgba(245, 158, 11, 0.45);
+  --shadow-gold: 0 0 25px rgba(14, 165, 233, 0.45);
   --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--border-gold);
 }
 

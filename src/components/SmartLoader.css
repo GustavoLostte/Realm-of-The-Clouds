@@ -34,10 +34,10 @@
   inset: 0;
   pointer-events: none;
   background-image: 
-    radial-gradient(2px 2px at 20px 30px, rgba(251, 191, 36, 0.6), transparent),
-    radial-gradient(2px 2px at 40px 70px, rgba(245, 158, 11, 0.5), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(254, 240, 138, 0.7), transparent),
-    radial-gradient(2px 2px at 160px 120px, rgba(251, 191, 36, 0.4), transparent);
+    radial-gradient(2px 2px at 20px 30px, rgba(56, 189, 248, 0.6), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(14, 165, 233, 0.5), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(186, 230, 253, 0.7), transparent),
+    radial-gradient(2px 2px at 160px 120px, rgba(56, 189, 248, 0.4), transparent);
   background-repeat: repeat;
   background-size: 200px 200px;
   animation: emberDrift 20s linear infinite;
@@ -62,11 +62,11 @@
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   border-radius: 20px;
   box-shadow: 
     0 20px 50px rgba(0, 0, 0, 0.8),
-    0 0 40px rgba(245, 158, 11, 0.12),
+    0 0 40px rgba(14, 165, 233, 0.12),
     inset 0 1px 1px rgba(255, 255, 255, 0.15);
   text-align: center;
   animation: loaderCardEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -88,7 +88,7 @@
   position: absolute;
   width: 14px;
   height: 14px;
-  border-color: rgba(251, 191, 36, 0.7);
+  border-color: rgba(56, 189, 248, 0.7);
   pointer-events: none;
 }
 .smart-loader-corner.tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
@@ -110,7 +110,7 @@
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, transparent 70%);
   filter: blur(8px);
   animation: pulseAura 2.4s ease-in-out infinite alternate;
 }
@@ -125,7 +125,7 @@
   z-index: 1;
   max-width: 170px;
   height: auto;
-  filter: drop-shadow(0 4px 16px rgba(245, 158, 11, 0.45));
+  filter: drop-shadow(0 4px 16px rgba(14, 165, 233, 0.45));
   animation: gentleFloat 3s ease-in-out infinite;
 }
 
@@ -137,11 +137,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(180, 83, 9, 0.35) 100%);
-  border: 1px solid rgba(251, 191, 36, 0.5);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.25) 0%, rgba(3, 105, 161, 0.35) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.5);
   border-radius: 50%;
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
-  color: #fbbf24;
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.35);
+  color: #38bdf8;
   animation: gentleFloat 3s ease-in-out infinite;
 }
 
@@ -158,10 +158,10 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin: 0 0 6px 0;
-  background: linear-gradient(180deg, #ffffff 0%, #fef3c7 45%, #f59e0b 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #e0f2fe 45%, #0ea5e9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 14px rgba(245, 158, 11, 0.35);
+  text-shadow: 0 2px 14px rgba(14, 165, 233, 0.35);
 }
 
 .smart-loader-subtitle {
@@ -183,7 +183,7 @@
   width: 100%;
   height: 12px;
   background: rgba(10, 15, 29, 0.85);
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.4);
   border-radius: 9999px;
   overflow: hidden;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7);
@@ -191,11 +191,11 @@
 
 .smart-loader-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #d97706 0%, #f59e0b 50%, #fde047 100%);
+  background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 50%, #7dd3fc 100%);
   border-radius: 9999px;
   transition: width 0.25s ease-out;
   position: relative;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.65);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.65);
 }
 
 .smart-loader-bar-shimmer {
@@ -221,7 +221,7 @@
   align-items: center;
   margin-top: 8px;
   font-size: 0.82rem;
-  color: #fbbf24;
+  color: #38bdf8;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
@@ -239,7 +239,7 @@
   margin-top: 8px;
   padding: 8px 14px;
   background: rgba(15, 23, 42, 0.55);
-  border: 1px dashed rgba(245, 158, 11, 0.25);
+  border: 1px dashed rgba(14, 165, 233, 0.25);
   border-radius: 12px;
   font-size: 0.78rem;
   color: rgba(226, 232, 240, 0.75);
@@ -248,7 +248,7 @@
 }
 
 .smart-loader-tip-icon {
-  color: #f59e0b;
+  color: #0ea5e9;
   flex-shrink: 0;
 }
 
@@ -266,7 +266,7 @@
 }
 
 .smart-loader-overlay.combat-mode .smart-loader-bar-fill {
-  background: linear-gradient(90deg, #dc2626 0%, #f97316 50%, #fde047 100%);
+  background: linear-gradient(90deg, #dc2626 0%, #f97316 50%, #7dd3fc 100%);
   box-shadow: 0 0 12px rgba(239, 68, 68, 0.65);
 }
 
@@ -287,7 +287,7 @@
 }
 
 .smart-loader-overlay.arena-mode .smart-loader-bar-fill {
-  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 50%, #fde047 100%);
+  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 50%, #7dd3fc 100%);
   box-shadow: 0 0 12px rgba(59, 130, 246, 0.65);
 }
 
