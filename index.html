@@ -40,25 +40,20 @@
   <body style="color-scheme: dark !important; background-color: #07090e !important; forced-color-adjust: none !important; -webkit-forced-color-adjust: none !important;">
     <div id="root"></div>
     <script>
-      // Automatically purge development Service Worker and Cache Storage on localhost
-      // to guarantee live ES module updates and avoid stale import caches
-      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.getRegistrations().then(function(regs) {
-            for (var i = 0; i < regs.length; i++) {
-              regs[i].unregister();
-            }
-          });
-        }
-        if ('caches' in window) {
-          caches.keys().then(function(keys) {
-            for (var i = 0; i < keys.length; i++) {
-              if (keys[i].indexOf('toc-foe') !== -1 || keys[i].indexOf('pwa-web3') !== -1) {
-                caches.delete(keys[i]);
-              }
-            }
-          });
-        }
+      // Force purge stale Service Workers and all Cache Storage to guarantee instant asset updates
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          for (var i = 0; i < regs.length; i++) {
+            regs[i].unregister();
+          }
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then(function(keys) {
+          for (var i = 0; i < keys.length; i++) {
+            caches.delete(keys[i]);
+          }
+        });
       }
     </script>
     <script type="module" src="/src/main.jsx"></script>

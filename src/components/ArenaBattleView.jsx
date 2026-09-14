@@ -139,7 +139,7 @@ export function ArenaBattleView({
         id: 'b_castillo',
         name: `Castillo de ${rival.name}`,
         category: 'Sede Imperial',
-        image: '/assets/buildings/castillo/castillo_idle.webp',
+        image: '/assets/buildings/castillo/palacio_soberano.webp?v=1789386000',
         desc: 'Cámara de la corona y bóvedas reales. Alto botín, guardia reforzada.',
         baseChance: 0.65,
         rewards: {
@@ -992,7 +992,7 @@ export function ArenaBattleView({
                           <span className="mock-name">Castillo Imperial</span>
                         </div>
                         <div className="mock-card-preview">
-                          <img src="/assets/buildings/castillo/castillo_idle.webp" alt="Castillo" className="mock-img" />
+                          <img src="/assets/buildings/castillo/palacio_soberano.webp?v=1789386000" alt="Castillo" className="mock-img" />
                         </div>
                         <div className="mock-attack-btn-preview">
                           <Swords size={14} />
