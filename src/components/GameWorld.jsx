@@ -409,26 +409,8 @@ export function GameWorld({
                   onMouseLeave={() => setHoveredSlot(null)}
                 >
                   {/* Empty Slot Footprint */}
-                  {!slot.buildingId && (
-                    <div className={`empty-slot-marker ${isRecommendedPlot ? 'is-recommended-plot' : ''}`}>
-                      {isRecommendedPlot && (
-                        <div className="recommended-plot-beacon">
-                          <span className="beacon-tag">
-                            <img src="/assets/hud_icons/btn_build.webp" alt={t('dock.build')} className="mini-res-icon" /> {t('buildings.buildTargetHere', { name: targetDef ? (t('buildings.slots.' + targetDef.id + '.name') || targetDef.name) : '' })}
-                          </span>
-                        </div>
-                      )}
-                      <div className="iso-tile-guide" />
-                      <button className="build-here-btn" title={t('dock.buildTooltip')}>
-                        <Plus size={16} />
-                      </button>
-                      {isHovered && !isRecommendedPlot && (
-                        <div className="plot-tooltip">
-                          <span>{t('buildings.freePlot')}</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                  {/* Empty Slot Footprint - removed per user request */}
+                  {!slot.buildingId && null}
 
                 {/* Building Under Construction */}
                 {slot.buildingId && slot.isConstructing && buildingDef && (() => {

@@ -932,66 +932,13 @@ img, picture, svg, canvas, [draggable] {
 }
 
 /* Empty plot */
-.empty-slot-marker {
-  position: relative;
-  width: 90px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.iso-tile-guide {
-  position: absolute;
-  width: 74px;
-  height: 42px;
-  border: 2px dashed rgba(14, 165, 233, 0.75) !important;
-  background: rgba(14, 165, 233, 0.16) !important;
-  transform: rotate(45deg);
-  border-radius: 8px;
-  box-shadow: 0 0 12px rgba(14, 165, 233, 0.35) !important;
-  transition: all 0.2s ease;
-  forced-color-adjust: none !important;
-  -webkit-forced-color-adjust: none !important;
-}
-
-.empty-slot-marker:hover .iso-tile-guide,
-.empty-slot-marker:active .iso-tile-guide {
-  border-color: #bae6fd !important;
-  background: rgba(14, 165, 233, 0.32) !important;
-  box-shadow: 0 0 20px rgba(14, 165, 233, 0.7) !important;
-}
-
+.empty-slot-marker,
+.iso-tile-guide,
 .build-here-btn {
-  position: relative;
-  z-index: 2;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #0369a1 100%) !important;
-  color: #1e1b4b !important;
-  border: 1.5px solid #bae6fd !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), 0 0 14px rgba(14, 165, 233, 0.7) !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  forced-color-adjust: none !important;
-  -webkit-forced-color-adjust: none !important;
-}
-
-.build-here-btn svg {
-  stroke: #1e1b4b !important;
-  stroke-width: 2.75px !important;
-  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.4)) !important;
-  forced-color-adjust: none !important;
-  -webkit-forced-color-adjust: none !important;
-}
-
-.empty-slot-marker:hover .build-here-btn,
-.empty-slot-marker:active .build-here-btn {
-  transform: scale(1.18);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.75), 0 0 22px rgba(14, 165, 233, 0.95) !important;
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
 .plot-tooltip {
