@@ -82,7 +82,7 @@ export function SmartLoader({
       }
     }
     return {
-      title: title || 'THRONE OF CHAOS',
+      title: title || 'REINO DE LAS NUBES',
       subtitle: subtitle || t('loader.loadingCity') || 'Construyendo la Ciudadela...',
       icon: null,
     }
@@ -122,7 +122,7 @@ export function SmartLoader({
           {variant === 'city' ? (
             <img 
               src="/assets/logo/logo.webp" 
-              alt="Throne of Chaos" 
+              alt="Reino de las Nubes" 
               className="smart-loader-logo"
               draggable="false"
             />

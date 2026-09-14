@@ -21,7 +21,7 @@ export function ExpeditionModal({ isOpen, onClose, onLaunchExpedition, onOpenDun
   const expeditions = [
     {
       id: 'exp-1',
-      name: t('expeditions.items.exp-1.name') || 'Criptas de la Legión del Caos',
+      name: t('expeditions.items.exp-1.name') || 'Criptas del Abismo Oscuro',
       region: t('expeditions.items.exp-1.region') || 'Frontera Occidental',
       difficulty: t('expeditions.difficulties.easy') || 'Fácil',
       difficultyClass: 'easy',
@@ -29,7 +29,7 @@ export function ExpeditionModal({ isOpen, onClose, onLaunchExpedition, onOpenDun
       recommendedTroops: 3,
       duration: t('expeditions.items.exp-1.duration') || '3 Salas',
       rewards: { gold: 1200, wood: 720, stone: 520, gems: 36 },
-      description: t('expeditions.items.exp-1.description') || 'Avanza por 3 salas subterráneas derrotando goblins, orcos y al Caudillo del Caos.',
+      description: t('expeditions.items.exp-1.description') || 'Avanza por 3 salas subterráneas derrotando goblins, orcos y al Caudillo Vorgath.',
       enemySquad: t('expeditions.items.exp-1.enemySquad') || 'Goblin -> Orco Berserker -> Caudillo Vorgath [BOSS]',
       victoryChance: '98%',
     },
@@ -49,30 +49,30 @@ export function ExpeditionModal({ isOpen, onClose, onLaunchExpedition, onOpenDun
     },
     {
       id: 'exp-3',
-      name: t('expeditions.items.exp-3.name') || 'Fortaleza del Volcán de Obsidiana',
-      region: t('expeditions.items.exp-3.region') || 'Garganta de Fuego',
+      name: t('expeditions.items.exp-3.name') || 'Fortaleza Glacial de los Titanes',
+      region: t('expeditions.items.exp-3.region') || 'Picos Helados',
       difficulty: t('expeditions.difficulties.hard') || 'Difícil',
       difficultyClass: 'hard',
       difficultyStars: 3,
       recommendedTroops: 10,
       duration: t('expeditions.items.exp-3.duration') || '4 Salas',
       rewards: { gold: 2400, wood: 1200, stone: 1100, gems: 80 },
-      description: t('expeditions.items.exp-3.description') || 'Bastión fortificado de la Legión del Caos que acecha la meseta flotante.',
-      enemySquad: t('expeditions.items.exp-3.enemySquad') || '12 Guerreros Demoníacos de Élite',
+      description: t('expeditions.items.exp-3.description') || 'Bastión helado de los titanes que acecha la meseta flotante.',
+      enemySquad: t('expeditions.items.exp-3.enemySquad') || '12 Titanes y Bestias de Escarcha',
       victoryChance: '70%',
     },
     {
       id: 'exp-4',
-      name: t('expeditions.items.exp-4.name') || 'Nido del Dragón de Jade (Jefe de Élite)',
-      region: t('expeditions.items.exp-4.region') || 'Cúspide de las Tormentas',
+      name: t('expeditions.items.exp-4.name') || 'Fisura del Vacío Abisal (Jefe Supremo)',
+      region: t('expeditions.items.exp-4.region') || 'Vacío Astral',
       difficulty: t('expeditions.difficulties.boss') || 'Élite',
       difficultyClass: 'boss',
       difficultyStars: 5,
       recommendedTroops: 14,
       duration: t('expeditions.items.exp-4.duration') || '5 Salas',
       rewards: { gold: 4500, gems: 150 },
-      description: t('expeditions.items.exp-4.description') || 'Antigua criatura legendaria de los cielos que custodia la Reliquia del Caos.',
-      enemySquad: t('expeditions.items.exp-4.enemySquad') || 'Gran Dragón de Jade Ancestral [BOSS]',
+      description: t('expeditions.items.exp-4.description') || 'Fisura cósmica de las profundidades custodiada por seres del abismo.',
+      enemySquad: t('expeditions.items.exp-4.enemySquad') || 'Soberano Oscuro [BOSS SUPREMO]',
       victoryChance: '55%',
     },
   ]
@@ -156,7 +156,7 @@ export function ExpeditionModal({ isOpen, onClose, onLaunchExpedition, onOpenDun
           </div>
         </div>
 
-        {/* Mazmorras del Caos Hero Action Banner */}
+        {/* Mazmorras Celestiales Hero Action Banner */}
         <div 
           style={{
             margin: '0.75rem 1.25rem 0',
@@ -179,10 +179,10 @@ export function ExpeditionModal({ isOpen, onClose, onLaunchExpedition, onOpenDun
             />
             <div>
               <div style={{ fontWeight: 800, color: '#fbbf24', fontSize: '1rem' }}>
-                {t('expeditions.heroBannerTitle') || '¡Mazmorras del Caos: Duelo de Golpe Crítico!'}
+                {t('expeditions.heroBannerTitle') || '¡Mazmorras Celestiales: Duelo de Golpe Crítico!'}
               </div>
               <div style={{ fontSize: '0.78rem', color: '#cbd5e1' }}>
-                {t('expeditions.heroBannerDesc') || 'Combate sala por sala con el medidor de timing y vence al Caudillo del Caos.'}
+                {t('expeditions.heroBannerDesc') || 'Combate sala por sala con el compás perfecto y purifica la amenaza oscura.'}
               </div>
             </div>
           </div>
@@ -256,7 +256,7 @@ export function ExpeditionModal({ isOpen, onClose, onLaunchExpedition, onOpenDun
               </div>
 
               <button className="btn-claim-spoils-candy" onClick={handleClaimVictory}>
-                <Sparkles size={18} /> {t('expeditions.claimSpoilsBtn') || 'Reclamar Botín y Regresar al Trono'}
+                <Sparkles size={18} /> {t('expeditions.claimSpoilsBtn') || 'Reclamar Botín y Regresar al Reino'}
               </button>
             </div>
           ) : (

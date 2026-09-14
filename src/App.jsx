@@ -1289,7 +1289,7 @@ export default function App() {
         setTutorialSeen(false)
         setTutorialKey((prev) => prev + 1)
         setIsTutorialActive(true)
-        console.log('👑 [TOC] Tutorial guiado reiniciado con éxito.')
+        console.log('👑 [ReinoDeLasNubes] Tutorial guiado reiniciado con éxito.')
       }
     }
 
@@ -3799,7 +3799,7 @@ export default function App() {
         onSave={handleSavePlayerName}
       />
 
-      {/* Guided Interactive Tutorial (El Gran Senescal del Trono) */}
+      {/* Guided Interactive Tutorial (El Gran Senescal de las Nubes) */}
       <GuidedTutorial 
         key={tutorialKey}
         isActive={isTutorialRunning}

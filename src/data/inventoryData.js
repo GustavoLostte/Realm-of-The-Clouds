@@ -9,13 +9,13 @@ export const RELIC_SLOTS = [
 export const RELICS = [
   {
     id: 'relic_corona_caos',
-    name: 'Corona del Caos',
+    name: 'Corona del Firmamento',
     slot: 'head',
     rarity: 'legendary',
     avatar: '/assets/hud_icons/btn_ranking.webp',
-    dropSource: 'Caudillo Supremo Vorgath (Jefe Bioma 1)',
+    dropSource: 'Guardián Celestial Supremo (Jefe Bioma 1)',
     dropNodeId: 'node-6',
-    description: 'Forjada con oro volcánico y obsidiana. Otorga una autoridad irresistible sobre los súbditos del feudo.',
+    description: 'Forjada con gemas celestes y plata astral. Otorga una autoridad irresistible sobre el Reino de las Nubes.',
     effect: '+15% de recaudación de oro en la ciudad y +10% de XP en todas las acciones.',
     bonus: { taxMultiplier: 0.15, xpMultiplier: 0.10 },
   },

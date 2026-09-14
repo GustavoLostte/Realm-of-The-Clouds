@@ -1,12 +1,12 @@
 /**
- * Service Worker: Throne of Chaos - Forge of Empire (TOC FOE)
+ * Service Worker: Reino de las Nubes - Aetheria Empires
  * High-performance PWA caching engine for fast loads and offline gameplay.
  */
 
-const CACHE_VERSION = 'v1.0.2'
-const CACHE_STATIC = `toc-foe-static-${CACHE_VERSION}`
-const CACHE_ASSETS = `toc-foe-assets-${CACHE_VERSION}`
-const CACHE_FONTS = `toc-foe-fonts-${CACHE_VERSION}`
+const CACHE_VERSION = 'v1.0.3'
+const CACHE_STATIC = `cloud-realm-static-${CACHE_VERSION}`
+const CACHE_ASSETS = `cloud-realm-assets-${CACHE_VERSION}`
+const CACHE_FONTS = `cloud-realm-fonts-${CACHE_VERSION}`
 
 const PRECACHE_SHELL = [
   '/',
@@ -49,7 +49,7 @@ self.addEventListener('activate', (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((name) => {
-            if (name.startsWith('toc-foe-') && !currentCaches.includes(name)) {
+            if ((name.startsWith('cloud-realm-') || name.startsWith('toc-foe-')) && !currentCaches.includes(name)) {
               console.log(`[SW] Removing outdated cache: ${name}`)
               return caches.delete(name)
             }

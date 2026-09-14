@@ -124,7 +124,7 @@ export function AnimatedMap({ className = 'island-background', isPaused = false 
       ) : (
         <img
           src={videoSources.poster}
-          alt="Throne of Chaos Citadel"
+          alt="Ciudadela del Reino de las Nubes"
           className={className}
           draggable="false"
         />

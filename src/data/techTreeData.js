@@ -1,4 +1,4 @@
-// techTreeData.js - Árbol de Investigaciones Reales para TOC: FOE
+// techTreeData.js - Árbol de Investigaciones Reales para Reino de las Nubes: Aetheria Empires
 
 export const TECH_BRANCHES = [
   {

@@ -522,7 +522,7 @@ export function MenuModal({
               <div className="web3-stats-row">
                 <div className="web3-stat-item">
                   <span className="stat-title">{t('menu.activeNetwork')}</span>
-                  <span className="stat-value">TOC Chaos L2</span>
+                  <span className="stat-value">Aetheria Cloud L2</span>
                 </div>
                 <div className="web3-stat-item">
                   <span className="stat-title">{t('menu.tokenChaos')}</span>
@@ -561,7 +561,7 @@ export function MenuModal({
               <div className="info-logo-wrap">
                 <img 
                   src="/assets/logo/logo.webp" 
-                  alt="Throne of Chaos: Forge of Empire" 
+                  alt="Reino de las Nubes" 
                   className="info-game-logo" 
                   draggable="false" 
                 />

@@ -75,7 +75,7 @@ export default function OrientationNotice() {
         <div className="orientation-logo-wrap">
           <img 
             src="/assets/logo/logo.webp" 
-            alt="Throne of Chaos" 
+            alt="Reino de las Nubes" 
             className="orientation-logo-img" 
             draggable="false" 
           />

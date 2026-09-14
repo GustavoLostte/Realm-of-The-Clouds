@@ -1,4 +1,5 @@
-// supabaseClient.js - Cloud Database Persistence & Sync Engine for Throne of Chaos
+// supabaseClient.js - Cloud Database Persistence & Sync Engine for Realm of the Clouds
+// Aetheria Empires Edition - Fully resilient offline-first Supabase client
 import { createClient } from '@supabase/supabase-js'
 
 const DEFAULT_SUPABASE_URL = 'https://hoghpltpvqfdpxcepqlr.supabase.co'
@@ -329,7 +330,7 @@ export async function saveKingdomToCloud(state) {
       await supabase.from('leaderboard').upsert({
         id: playerId,
         player_name: resolvedName,
-        kingdom_name: state.profile?.kingdomName || 'Trono del Caos',
+        kingdom_name: state.profile?.kingdomName || 'Reino de las Nubes',
         level: state.kingdomLevel || 1,
         trophies: trophies,
         military_power: militaryPower,
@@ -384,7 +385,7 @@ export async function upsertPlayerToLeaderboard(playerData) {
     const { error } = await supabase.from('leaderboard').upsert({
       id: playerId,
       player_name: name,
-      kingdom_name: playerData.kingdomName || 'Trono del Caos',
+      kingdom_name: playerData.kingdomName || 'Reino de las Nubes',
       level: playerData.level || 1,
       trophies: trophies,
       military_power: powerScore,

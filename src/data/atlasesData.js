@@ -1,4 +1,4 @@
-// atlasesData.js - Consolidación de Texture Atlases de TOC FOE
+// atlasesData.js - Consolidación de Texture Atlases del Reino de las Nubes
 export const ATLAS_DATA = {
   'map_toc': {
   "textures": [

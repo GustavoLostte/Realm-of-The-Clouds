@@ -3,7 +3,7 @@
 export const RANKING_CATEGORIES = [
   { id: 'power', label: 'Poder del Reino', icon: '/assets/hud_icons/btn_build.webp', desc: 'Puntuación total según nivel de edificios, nivel soberano y tropas.' },
   { id: 'arena', label: 'Arena de Campeones', icon: '/assets/hud_icons/btn_arena.webp', desc: 'Coronas ganadas en asedios PvP y rango de liga competitiva.' },
-  { id: 'dungeon', label: 'Conquista de Mazmorras', icon: '/assets/hud_icons/btn_expedition.webp', desc: 'Pisos superados en las Mazmorras del Inframundo de Caos.' },
+  { id: 'dungeon', label: 'Conquista de Mazmorras', icon: '/assets/hud_icons/btn_expedition.webp', desc: 'Pisos superados en las Mazmorras Celestiales y Abisales.' },
 ]
 
 export const BASE_SOVEREIGNS = []
@@ -50,7 +50,7 @@ export function getCategoryRanking(category, playerData, cloudPlayers = []) {
     id: playerData.id || 'player_sovereign',
     isPlayer: true,
     name: playerData.playerName || 'Lord King',
-    kingdom: 'Trono del Caos (Tú)',
+    kingdom: 'Reino de las Nubes (Tú)',
     avatar: playerData.avatar || '/assets/avatars/avatar_king.webp',
     title: 'Soberano Supremo',
     score: playerValue,

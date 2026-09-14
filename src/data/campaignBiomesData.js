@@ -32,7 +32,7 @@ export const ENEMY_CONFIGS = {
     avatar: '/assets/mazmorras/minotaur_avatar.webp',
   },
   miniboss: {
-    name: 'Miniboss del Caos',
+    name: 'Guardián de la Tempestad',
     category: 'miniboss',
     idleVideo: '/assets/mazmorras/miniboss_idle_720p.mp4',
     poster: '/assets/mazmorras/miniboss_idle_poster.webp',
@@ -69,17 +69,17 @@ export const CAMPAIGN_SECTORS = [
   { id: 3, name: 'Sector III: Ofensiva Mixta', range: [5, 8], icon: '/assets/hud_icons/btn_expedition.webp', desc: '3 Orcos + 1 Minotauro' },
   { id: 4, name: 'Sector IV: Cripta del Miniboss', range: [9, 9], icon: '/assets/hud_icons/icon_skull.webp', desc: '1 Miniboss' },
   { id: 5, name: 'Sector V: Laberinto de Sombras', range: [10, 13], icon: '/assets/hud_icons/icon_bomb.webp', desc: '3 Minotauros + 1 Orco' },
-  { id: 6, name: 'Sector VI: Trono del Juicio Final', range: [14, 17], icon: '/assets/hud_icons/icon_crown.webp', desc: '3 Minotauros + Boss Supremo' },
+  { id: 6, name: 'Sector VI: Cúspide del Juicio Celestial', range: [14, 17], icon: '/assets/hud_icons/icon_crown.webp', desc: '3 Minotauros + Boss Supremo' },
 ]
 
 export const CAMPAIGN_BIOMES = [
   {
     id: 'biome-1',
-    name: 'Capítulo Único: La Gran Campaña del Caos',
+    name: 'Capítulo Único: La Gran Campaña de las Nubes',
     subtitle: 'La Marcha de los Héroes (17 Encuentros Épicos)',
     icon: '/assets/hud_icons/btn_expedition.webp',
-    theme: 'chaos',
-    accentColor: '#f59e0b',
+    theme: 'cloud_realm',
+    accentColor: '#38bdf8',
     unlocked: true,
     bgImage: '/assets/arena_battle_bg.webp',
     description: 'Avanza a través de 6 sectores implacables: desde la avanzadilla de orcos hasta la temible cúspide custodiada por el Boss Supremo.',
@@ -361,7 +361,7 @@ export const CAMPAIGN_BIOMES = [
         avatar: '/assets/mazmorras/orc_avatar.webp',
         enemyIcon: '/assets/hud_icons/icon_potion.webp',
         connectedTo: ['node-14'],
-        description: 'Hechicero orco que canaliza energías oscuras para resguardar el pasadizo final al Trono.',
+        description: 'Hechicero orco que canaliza energías oscuras para resguardar el pasadizo final al santuario sagrado.',
       },
 
       // ==========================================
@@ -425,7 +425,7 @@ export const CAMPAIGN_BIOMES = [
         avatar: '/assets/mazmorras/minotaur_avatar.webp',
         enemyIcon: '/assets/hud_icons/icon_shield.webp',
         connectedTo: ['node-17'],
-        description: 'El más temido de todos los minotauros del reino subterráneo. Último obstáculo antes del Trono.',
+        description: 'El más temido de todos los minotauros del reino subterráneo. Último obstáculo antes de las alturas sagradas.',
       },
       {
         id: 'node-17',
@@ -445,7 +445,7 @@ export const CAMPAIGN_BIOMES = [
         avatar: '/assets/mazmorras/boss_avatar.webp',
         enemyIcon: '/assets/hud_icons/icon_crown.webp',
         connectedTo: [],
-        description: 'Soberano absoluto de la Mazmorra del Caos. Su espada maldita devora almas enteras.',
+        description: 'Soberano oscuro desterrado del cielo. Pretende consumir la pureza del Reino de las Nubes con su espada impía.',
       },
     ],
   },

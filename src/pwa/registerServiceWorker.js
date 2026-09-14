@@ -139,7 +139,7 @@ export function registerServiceWorker() {
           installingWorker.addEventListener('statechange', () => {
             if (installingWorker.state === 'installed') {
               if (navigator.serviceWorker.controller) {
-                console.log('[PWA] New version of TOC FOE available! Reload to update.')
+                console.log('[PWA] New version of Reino de las Nubes available! Reload to update.')
               } else {
                 console.log('[PWA] Offline caching complete. Ready for offline play!')
               }

@@ -84,8 +84,8 @@ export const us = {
   },
   "start": {
     "welcomeSubtitle": "Build your Medieval Empire • Conquer the Realm",
-    "title": "THRONE OF CHAOS",
-    "subtitle": "FORGE OF EMPIRES",
+    "title": "REALM OF THE CLOUDS",
+    "subtitle": "AETHERIA EMPIRES",
     "touchToStart": "TOUCH ANYWHERE TO BEGIN YOUR REIGN",
     "enterEmailPrompt": "Enter your email to save your kingdom in the cloud:",
     "emailPlaceholder": "your_email@domain.com",
@@ -161,7 +161,7 @@ export const us = {
     "inventoryTooltip": "Relic Chest & Battle Backpack",
     "shopTooltipReady": "Imperial Bazaar • Free Spin Ready on the Wheel!",
     "shopTooltip": "Imperial Bazaar & Sovereign Deals",
-    "questsTooltip": "Throne Quests & Narratives",
+    "questsTooltip": "Realm Quests & Narratives",
     "expeditionTooltip": "Expeditions & World Map",
     "settingsTooltip": "Game Settings & Options"
   },
@@ -200,7 +200,7 @@ export const us = {
     "instantFinishGems": "Finish Instantly ({cost})!",
     "speedupTokensTitle": "Inventory Accelerators:",
     "indestructibleSeat": "Indestructible Imperial Seat",
-    "indestructibleSeatTooltip": "The seat of the imperial throne is impregnable and indestructible.",
+    "indestructibleSeatTooltip": "The central bulwark of the realm is impregnable and indestructible.",
     "demolish": "Demolish",
     "demolishConfirm": "Are you sure you want to demolish {name}? You will recover part of the building materials.",
     "slots": {
@@ -283,17 +283,17 @@ export const us = {
     "heraldSpeech": "Hail Sovereign! The crown requires your decisive leadership to prosper.",
     "chapters": {
       "c1Badge": "Chapter I",
-      "c1Title": "Chapter I: The Feud Reborn",
-      "c1Subtitle": "Rebuild the walls and establish your first settlement on the plateau.",
+      "c1Title": "Chapter I: Awakening in the Skies",
+      "c1Subtitle": "Rebuild the sacred sanctuary and consolidate your first settlement above the sea of clouds.",
       "c2Badge": "Chapter II",
-      "c2Title": "Chapter II: The Wasteland Menace",
-      "c2Subtitle": "Repel the orc incursion and reinforce the city military power.",
+      "c2Title": "Chapter II: Tempest in the Heights",
+      "c2Subtitle": "Repel the abyss invaders and reinforce the defensive fleet of the citadel.",
       "c3Badge": "Chapter III",
-      "c3Title": "Chapter III: Shadow of the Warlord",
-      "c3Subtitle": "Defeat elemental beasts and vanquish the dreaded Vorgath.",
+      "c3Title": "Chapter III: Guardians of the Firmament",
+      "c3Subtitle": "Purify corrupted legendary beasts and restore celestial harmony.",
       "c4Badge": "Chapter IV",
-      "c4Title": "Chapter IV: The Great Empire Era",
-      "c4Subtitle": "Master cosmic rifts and erect the most glorious throne in the realm."
+      "c4Title": "Chapter IV: Glory of the Celestial Realm",
+      "c4Subtitle": "Master astral rifts and erect the most radiant citadel above the clouds."
     },
     "story": {
       "q-c1-1": {
@@ -454,7 +454,7 @@ export const us = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "The Golden Throne",
+        "title": "The Cloud Palace",
         "desc": "Upgrade the Town Hall to Level 3."
       },
       "epic-population-boom": {
@@ -520,7 +520,7 @@ export const us = {
     "owned": "Owned",
     "redeemPrize": "Redeem Prize",
     "yourSovereignty": "Your Sovereignty (You)",
-    "chaosKingdom": "Kingdom of Chaos",
+    "chaosKingdom": "Realm of the Clouds",
     "tabPvp": "Coliseum",
     "tabRanking": "Ranking",
     "tabDefense": "Defense",
@@ -549,7 +549,7 @@ export const us = {
     "leaguePlatinum": "Platinum Principality",
     "leagueDiamond": "Diamond Kingdom",
     "leagueMaster": "Imperial Ascendant",
-    "leagueGrandmaster": "Throne Sovereign",
+    "leagueGrandmaster": "Celestial Sovereign",
     "headerSub": "Conquer rival citadels, amass Crowns and ascend in imperial glory.",
     "lootMultiplier": "Raid Loot Multiplier:",
     "nextLeague": "Next League:",
@@ -640,7 +640,7 @@ export const us = {
       "league_silver": "Guard Silver Chest",
       "league_gold": "Siege Golden Chest",
       "league_platinum": "Heroes Platinum Ark",
-      "league_master": "Chaos Emperor Chest"
+      "league_master": "Celestial Emperor Chest"
     },
     "rivals": {
       "rival_0": {
@@ -791,7 +791,7 @@ export const us = {
     "bonusExtra": "Extra",
     "getForPrice": "Get for {price}",
     "fortuneWheelTitle": "Imperial Fortune Wheel",
-    "fortuneWheelDesc": "Spin the sacred wheel of Chaos to win crystals, gold, elite troops, or battle elixirs!",
+    "fortuneWheelDesc": "Spin the sacred wheel of the Clouds to win crystals, gold, elite troops, or battle elixirs!",
     "youWon": "YOU WON!",
     "claimWithGlory": "Claim with Glory!",
     "pressEscToClose": "Press Esc or click to close",
@@ -819,7 +819,7 @@ export const us = {
         "desc": "Massive lumber, granite and blueprints to rapidly expand your citadel."
       },
       "mythic_pack": {
-        "title": "Chaos Sovereign Bundle",
+        "title": "Celestial Sovereign Bundle",
         "desc": "Supreme chest containing the Paladin Hero, epic relics, and VIP Crown badge."
       }
     },
@@ -869,7 +869,7 @@ export const us = {
         "badge": "BEST VALUE"
       },
       "pack_vault": {
-        "name": "Throne Vault",
+        "name": "Celestial Vault",
         "desc": "Boundless arcane wealth to dominate every biome and forge a legendary empire.",
         "badge": "TITANIC"
       }
@@ -908,7 +908,7 @@ export const us = {
     "tabAchievements": "Achievements",
     "tabAvatars": "Portraits",
     "heroLevel": "Level {level}",
-    "realmTitle": "Sovereign of the Throne Bastion",
+    "realmTitle": "Sovereign of the Cloud Realm",
     "levelProgress": "Level Progress",
     "xpRemaining": "{xp} XP to Level {nextLevel}",
     "statPower": "Imperial Power",
@@ -917,7 +917,7 @@ export const us = {
     "statTech": "Researches",
     "statArena": "Arena Points",
     "passTitle": "Imperial NFT Pass",
-    "passSubtitle": "Sovereign of the Chaos Plateau",
+    "passSubtitle": "Sovereign of the Cloud Realm",
     "passMinted": "Minted on Web3",
     "passConnected": "Wallet Connected",
     "avatarSelectorTitle": "Select Monarch Portrait",
@@ -993,7 +993,7 @@ export const us = {
     "manualSave": "Synchronize Cloud Save Now",
     "selectLanguage": "Choose Game Language / Select Language:",
     "saveSuccess": "Kingdom progress securely synchronized to the cloud archives!",
-    "creditsTitle": "Throne of Chaos: Forge of Empires",
+    "creditsTitle": "Realm of the Clouds: Aetheria Empires",
     "creditsText": "Crafted with passion. An epic cross-platform real-time medieval strategy experience.",
     "modalTitle": "Settings & Menu",
     "modalSubtitle": "System adjustments, audio, graphics & Web3",
@@ -1023,7 +1023,7 @@ export const us = {
     "pwaOfflineReadyDesc": "WebP textures, audio, and realm data stored on your device.",
     "pwaUpdateBtn": "Refresh Cache",
     "identitySectionTitle": "Sovereign Identity",
-    "identityDesc": "Your Sovereign name on the Throne and Leaderboards",
+    "identityDesc": "Your Sovereign name in the Realm and Leaderboards",
     "changeNameTitle": "Change Sovereign Name",
     "changeName": "Change Name",
     "defaultPlayerName": "Lord King",
@@ -1043,7 +1043,7 @@ export const us = {
     "disconnectWallet": "Disconnect",
     "connectWallet": "Connect Wallet",
     "activeNetwork": "Active Network",
-    "tokenChaos": "Token $CHAOS",
+    "tokenChaos": "Token $AETH",
     "gasFee": "Gas Fee",
     "gasless": "0.00 (Gasless)",
     "onChainSync": "On-Chain Synchronization",
@@ -1053,7 +1053,7 @@ export const us = {
     "gameTagline": "Medieval empire strategy and conquest for mobile and desktop.",
     "walletLinkedNotice": "Web3 Wallet linked: {address}",
     "walletDisconnectedNotice": "Web3 Wallet disconnected",
-    "syncingStateNotice": "Synchronizing realm state with TOC Chaos L2..."
+    "syncingStateNotice": "Synchronizing realm state with Aetheria Cloud L2..."
   },
   "levelup": {
     "title": "IMPERIAL ADVANCEMENT!",
@@ -1081,7 +1081,7 @@ export const us = {
   "tutorial": {
     "blockedInTutorial": "Complete or finish the tutorial with the Seneschal first.",
     "blockedInTutorialShort": "In Tutorial...",
-    "characterTitle": "THE GRAND SENESCHAL OF THE THRONE",
+    "characterTitle": "THE GRAND SENESCHAL OF THE CLOUDS",
     "stepCounter": "Step {current} of {total}",
     "skip": "Skip tutorial",
     "prev": "Back",
@@ -1105,20 +1105,20 @@ export const us = {
     "step4Tip": "You can also tap the individual floating bubbles above each building.",
     "step5Title": "Armed Forces & Conquest",
     "step5Subtitle": "Army, Badlands & Colosseum",
-    "step5Desc": "Recruit troops in the Barracks to defend your stronghold, battle beasts in Chaos Dungeons, and challenge other lords in the Colosseum.",
+    "step5Desc": "Recruit troops in the Barracks to defend your stronghold, battle beasts in Celestial Dungeons, and challenge other lords in the Colosseum.",
     "step5Tip": "Trained troops safeguard your realm from enemy invasions.",
     "graduationTitle": "Training Completed!",
-    "graduationSubtitle": "The Grand Seneschal of the Throne bestows the Graduation Tribute",
+    "graduationSubtitle": "The Grand Seneschal of the Clouds bestows the Graduation Tribute",
     "graduationProse": "You have demonstrated the wisdom and determination required to forge a glorious empire. The High Royal Council grants you this founding chest:",
     "graduationClaimBtn": "Claim Tribute & Begin Reign!"
   },
   "starterWelcome": {
     "tag": "FOUNDING ROYAL DECREE",
     "title": "Welcome, My Sovereign!",
-    "subtitle": "The virgin lands of Chaos await the glory of your realm.",
+    "subtitle": "The celestial heights of the Cloud Realm await the glory of your realm.",
     "prose": "You have arrived at the high plateau after a long exodus. In the heart of the central square stands the Imperial Stronghold. Around it lie 11 free plots ready to be transformed into a thriving military and economic metropolis.",
     "roadmapTitle": "Your Step-by-Step Path (Chapter I):",
-    "step1Title": "Throne Decree",
+    "step1Title": "Celestial Decree",
     "step1Desc": "Claim your first decree at the Herald to receive gold and lumber tributes.",
     "step2Title": "Gold Mine & Houses",
     "step2Desc": "Erect your first mine and houses on free plots marked with [+].",
@@ -1126,7 +1126,7 @@ export const us = {
     "step3Desc": "Build the War Barracks to recruit your first soldiers at arms.",
     "step4Title": "Campaign & Dungeons",
     "step4Desc": "March into battle across the Wastelands to repel orcs and claim legendary relics!",
-    "beginBtn": "Take Possession of the Throne & Begin!"
+    "beginBtn": "Take Possession of the Realm & Begin!"
   },
   "starterPack": {
     "bannerTag": "WELCOME OFFER",
@@ -1215,7 +1215,7 @@ export const us = {
     "barmaidName": "Helena the Barmaid",
     "lumberjackName": "Grom the Woodcutter",
     "foresterName": "Torvald the Woodsman",
-    "guardQuote1": "For the Realm and the Throne of Chaos!",
+    "guardQuote1": "For the honor of the Realm of the Clouds!",
     "guardQuote2": "All quiet along the defensive perimeter!",
     "guardQuote3": "Let none disrupt the imperial peace!",
     "sergeantQuote1": "Inspecting the garrison outposts!",
@@ -1242,7 +1242,7 @@ export const us = {
     "constructionCompleteDuringAbsence": "{count} buildings completed during your absence: {names}!",
     "welcomeBack": "Welcome, {name}! Kingdom state synchronized.",
     "newKingdomCreated": "New kingdom created with {email}! Begin your conquest.",
-    "guestWelcome": "Welcome to the Throne of Chaos! Guest mode active.",
+    "guestWelcome": "Welcome to the Realm of the Clouds! Guest mode active.",
     "offlineMode": "📡 No internet connection. Offline mode active (your realm is stored locally).",
     "onlineRestored": "⚡ Connection restored! Realm synchronized with the cloud.",
     "sovereignNameSaved": "Sovereign name saved: {name}!",
@@ -1317,12 +1317,12 @@ export const us = {
     "kingdomReset": "The kingdom has been refounded! You will start from the Imperial Stronghold step by step.",
     "sessionClosed": "Session closed with honor. Progress backed up in the cloud.",
     "empireSaved": "Your empire's legacy has been saved successfully!",
-    "tutorialRestarted": "The Grand Seneschal of the Throne will guide you step by step!",
+    "tutorialRestarted": "The Grand Seneschal of the Clouds will guide you step by step!",
     "speedupFreeComplete": "Free speedup completed: {name} Lv. {level}!",
     "speedupGemComplete": "{name} completed instantly with {cost} gems!",
     "web3WalletLinked": "Web3 wallet linked: {address}",
     "web3WalletDisconnected": "Web3 wallet disconnected",
-    "syncingBlockchain": "Synchronizing kingdom state with TOC Chaos L2...",
+    "syncingBlockchain": "Synchronizing kingdom state with Aetheria Cloud L2...",
     "avatarUpdated": "Avatar updated: {name}",
     "sovereignNameSavedProfile": "Sovereign name saved: {name}",
     "xpDecree": "Decree: {title}",
@@ -1414,7 +1414,7 @@ export const us = {
       "subtitle": "Popular Festivities",
       "emissaryName": "Burgomeister Elric",
       "emissaryRole": "Spokesman of the Colonists",
-      "description": "The fields have yielded good harvests and the colonists request organizing a royal banquet in the main square to boost morale and celebrate the throne.",
+      "description": "The fields have yielded good harvests and the colonists request organizing a celestial banquet in the main square to boost morale and celebrate the realm.",
       "choices": {
         "festival_grand": {
           "label": "Fund Grand Royal Feast",
@@ -1544,7 +1544,7 @@ export const us = {
       },
       "c4": {
         "title": "Chapter IV: The Great Empire Era",
-        "subtitle": "Master cosmic rifts and erect the most glorious throne in the realm.",
+        "subtitle": "Master cosmic rifts and erect the most radiant sanctuary in the skies.",
         "badge": "Chapter IV"
       }
     },
@@ -1668,7 +1668,7 @@ export const us = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "The Golden Throne",
+        "title": "The Cloud Palace",
         "desc": "Upgrade the Town Hall to Level 3."
       },
       "epic-population-boom": {
@@ -1704,13 +1704,13 @@ export const us = {
     "3": {
       "title": "Prosperous County",
       "unlocks": [
-        "Arcane Portal of Chaos",
+        "Arcane Portal of the Clouds",
         "Fortress Upgrades Level II",
         "+10% Global Production"
       ]
     },
     "4": {
-      "title": "Throne of Chaos Kingdom",
+      "title": "Bastion of the Clouds",
       "unlocks": [
         "Paladin Commander",
         "Arcane Dimensional Expeditions",
@@ -1730,7 +1730,7 @@ export const us = {
       "small": "Handful of Gems",
       "medium": "Bag of Gems",
       "large": "Imperial Gem Chest",
-      "vault": "Throne Vault"
+      "vault": "Celestial Vault"
     },
     "bundles": {
       "conqueror": {
@@ -1749,7 +1749,7 @@ export const us = {
     "perks": {
       "oneClickHarvest": "The Herald's Horn (Total Harvest)",
       "secondBuilder": "Second Royal Builder",
-      "dailyBlessing": "Daily Blessing of Chaos (Monthly Pass)",
+      "dailyBlessing": "Daily Celestial Blessing (Monthly Pass)",
       "engineering": "Imperial Engineering Mastery"
     },
     "wheelPrizes": {
@@ -1766,9 +1766,9 @@ export const us = {
     },
     "relics": {
       "relic_corona_caos": {
-        "name": "Crown of Chaos",
+        "name": "Crown of the Firmament",
         "desc": "+15% Gold production in all mines. Increases kingdom level prestige.",
-        "dropSource": "Supreme Warlord Vorgath (Biome 1 Boss)"
+        "dropSource": "Supreme Celestial Guardian (Biome 1 Boss)"
       },
       "relic_espada_jade": {
         "name": "Jade Runic Sword",
@@ -1958,13 +1958,13 @@ export const us = {
     "enemyTypes": {
       "orc": "Orc",
       "minotaur": "Minotaur",
-      "miniboss": "Chaos Miniboss",
+      "miniboss": "Tempest Guardian",
       "boss": "Supreme Boss"
     },
     "biome1": {
-      "name": "Chapter 1: The Great Chaos Campaign",
+      "name": "Chapter 1: The Great Campaign of the Clouds",
       "subtitle": "The March of Heroes (17 Epic Encounters)"
-},
+    },
     "sectors": {
       "1": {
             "name": "Sector I: Orc Vanguard",
@@ -1980,17 +1980,17 @@ export const us = {
       },
       "4": {
             "name": "Sector IV: Miniboss Crypt",
-            "desc": "1 Chaos Miniboss"
+            "desc": "1 Tempest Guardian"
       },
       "5": {
             "name": "Sector V: Shadow Labyrinth",
             "desc": "3 Minotaurs + 1 Orc"
       },
       "6": {
-            "name": "Sector VI: Throne of Doomsday",
+            "name": "Sector VI: Peak of Celestial Judgment",
             "desc": "3 Minotaurs + Supreme Boss"
       }
-},
+    },
     "combat": {
       "dazed": "[DAZED!] -",
       "counter": "[COUNTER!] -"
@@ -2059,7 +2059,7 @@ export const us = {
       "node-13": {
             "name": "Orc Shadow Archmage",
             "subtitle": "Phase 5 · Shaman of the Shadows",
-            "desc": "Orc sorcerer channeling void sorceries to seal the final corridor to the Throne."
+            "desc": "Orc sorcerer channeling void sorceries to seal the final corridor to the sanctuary."
       },
       "node-14": {
             "name": "Blood Sentinel Minotaur",
@@ -2074,14 +2074,14 @@ export const us = {
       "node-16": {
             "name": "King of Horns Minotaur",
             "subtitle": "Phase 6 · Guard Champion",
-            "desc": "The most feared of all subterranean minotaurs. The final obstacle before the Throne."
+            "desc": "The most feared of all subterranean minotaurs. The final obstacle before the sacred heights."
       },
       "node-17": {
             "name": "SUPREME BOSS: Lord of Shadows",
             "subtitle": "Phase 6 · FINAL CAMPAIGN BOSS!",
-            "desc": "Absolute sovereign of the Chaos Dungeon. His cursed blade devours entire souls."
+            "desc": "Dark sovereign banished from the heavens. Seeks to corrupt the purity of the Realm of the Clouds with his unholy blade."
       }
-}
+    }
   },
   "army": {
     "title": "Royal Garrison & Barracks",
@@ -2106,7 +2106,7 @@ export const us = {
     "recruitMaxPossible": "Recruit max possible ({count})",
     "hp": "HEALTH",
     "infantry": {
-      "name": "Throne Guard (Infantry)",
+      "name": "Celestial Guard (Infantry)",
       "role": "Heavy vanguard with blessed armor and lion shield."
     },
     "archers": {
@@ -2180,7 +2180,7 @@ export const us = {
     "sovereigns": {
       "sov-1": {
         "name": "Sovereign Malakor",
-        "kingdom": "Chaos Empire",
+        "kingdom": "Celestial Empire",
         "title": "Primeval Emperor"
       },
       "sov-2": {
@@ -2255,7 +2255,7 @@ export const us = {
       }
     },
     "yourSovereignty": "Your Sovereign Realm",
-    "chaosKingdom": "Throne of Chaos"
+    "chaosKingdom": "Bastion of the Clouds"
   },
   "techTree": {
     "tag": "Grand Academy of the Kingdom",
@@ -2320,13 +2320,13 @@ export const us = {
     "readinessOptimal": "Optimal Readiness",
     "readinessBasic": "Basic Forces",
     "readinessLow": "Scarce Garrison",
-    "heroBannerTitle": "Chaos Dungeons: Critical Strike Duel!",
-    "heroBannerDesc": "Battle room by room with the timing meter and defeat the Chaos Warlord.",
+    "heroBannerTitle": "Celestial Dungeons: Critical Strike Duel!",
+    "heroBannerDesc": "Battle room by room with the timing meter and defeat the Shadow Warlord.",
     "heroBannerBtn": "Enter the Dungeon!",
     "victoryTitle": "Glorious Victory!",
     "victorySubtitle": "Your troops have secured the region: {name}",
     "spoilsTitle": "Rescued Treasures & Spoils:",
-    "claimSpoilsBtn": "Claim Spoils & Return to Throne",
+    "claimSpoilsBtn": "Claim Spoils & Return to Realm",
     "suggestedTroops": "Suggested: {count} troops",
     "enemyLabel": "Enemy:",
     "winChanceLabel": "Chance:",
@@ -2343,10 +2343,10 @@ export const us = {
     },
     "items": {
       "exp-1": {
-        "name": "Crypts of the Chaos Legion",
+        "name": "Crypts of the Abyssal Shadows",
         "region": "Western Frontier",
         "duration": "3 Rooms",
-        "description": "Advance through 3 underground chambers defeating goblins, orcs and the Chaos Warlord.",
+        "description": "Advance through 3 underground chambers defeating invaders and the Shadow Warlord.",
         "enemySquad": "Goblin -> Orc Berserker -> Warlord Vorgath [BOSS]"
       },
       "exp-2": {
@@ -2360,14 +2360,14 @@ export const us = {
         "name": "Obsidian Volcano Stronghold",
         "region": "Gorge of Fire",
         "duration": "4 Rooms",
-        "description": "Fortified bastion of the Chaos Legion lurking near the floating plateau.",
+        "description": "Fortified bastion of dark invaders lurking near the Realm of the Clouds.",
         "enemySquad": "12 Elite Demon Warriors"
       },
       "exp-4": {
         "name": "Jade Dragon's Lair (Elite Boss)",
         "region": "Storm Peak",
         "duration": "5 Rooms",
-        "description": "Ancient legendary creature of the skies guarding the Relic of Chaos.",
+        "description": "Ancient legendary creature of the skies guarding the Celestial Relic.",
         "enemySquad": "Ancient Jade Dragon [BOSS]"
       }
     }
@@ -2480,7 +2480,7 @@ export const us = {
     "stayAndFight": "Keep Fighting",
     "confirmFlee": "Confirm Retreat",
     "biomeConqueredTitle": "BIOME 1 CONQUERED!!",
-    "biomeConqueredSubtitle": "The Fiery Wastelands of Chaos have been purified!",
+    "biomeConqueredSubtitle": "The Skies of the Cloud Realm have been purified!",
     "biomeConqueredDesc": "The Arcane Portal has awakened. The virgin lands of the Mystic Jungle of Ancient Beasts (Biome 2) await with new mysteries, legendary beasts, and colossal treasures.",
     "proceedBiome2": "Travel to Mystic Jungle (Biome 2)!"
   },

@@ -128,7 +128,7 @@ const usAdditions = {
     nftPerk: "+10% Gold Production Speed & Access to Web3 Tournaments",
     completedBadge: "Completed!",
     inProgressBadge: "In Progress...",
-    realmTitle: "Sovereign of the Throne Bastion",
+    realmTitle: "Sovereign of the Cloud Realm",
     achievements: {
       "ach-1": {
         title: "First Settlement",
@@ -150,7 +150,7 @@ const usAdditions = {
   },
   ranking: {
     yourSovereignty: "Your Sovereign Realm",
-    chaosKingdom: "Throne of Chaos"
+    chaosKingdom: "Realm of the Clouds"
   },
   shop: {
     dailyBlessingDesc: "Claim 50 Crystals & 500 Gold every 24 hours directly from the Imperial Vault."
@@ -343,7 +343,7 @@ const esAdditions = {
   },
   ranking: {
     yourSovereignty: "Tu Reino Soberano",
-    chaosKingdom: "Bastión del Trono"
+    chaosKingdom: "Reino de las Nubes"
   },
   shop: {
     dailyBlessingDesc: "Reclama 50 Cristales y 500 de Oro cada 24 horas directamente desde la Cámara Imperial."
@@ -490,7 +490,7 @@ const brAdditions = {
   },
   ranking: {
     yourSovereignty: "Seu Reino Soberano",
-    chaosKingdom: "Bastião do Trono"
+    chaosKingdom: "Reino das Nuvens"
   },
   shop: {
     dailyBlessingDesc: "Reivindique 50 Cristais e 500 de Ouro a cada 24 horas diretamente da Câmara Imperial."
@@ -594,7 +594,7 @@ const krAdditions = {
   },
   ranking: {
     yourSovereignty: "당신의 주권 왕국",
-    chaosKingdom: "혼돈의 왕좌 요새"
+    chaosKingdom: "구름의 왕국"
   },
   shop: {
     dailyBlessingDesc: "제국 금고에서 24시간마다 50개의 크리스탈과 500개의 골드를 수령하세요."
@@ -698,7 +698,7 @@ const cnAdditions = {
   },
   ranking: {
     yourSovereignty: "你的至高王国",
-    chaosKingdom: "混沌王座堡垒"
+    chaosKingdom: "云之王国"
   },
   shop: {
     dailyBlessingDesc: "每24小时直接从帝国金库领取50颗水晶和500枚黄金。"

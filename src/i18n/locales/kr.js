@@ -84,8 +84,8 @@ export const kr = {
   },
   "start": {
     "welcomeSubtitle": "중세 제국 건설 • 전 대륙을 정복하라",
-    "title": "혼돈의 왕좌",
-    "subtitle": "엠파이어 포지",
+    "title": "구름의 왕국",
+    "subtitle": "아이테리아 제국",
     "touchToStart": "통치를 시작하려면 아무 곳이나 터치하세요",
     "enterEmailPrompt": "제국을 클라우드에 안전하게 보관할 이메일을 입력하세요:",
     "emailPlaceholder": "your_email@example.com",
@@ -199,8 +199,8 @@ export const kr = {
     "freeSpeedupBtn": "지금 무료 즉시 가속 (단기 공사)!",
     "instantFinishGems": "즉시 완료 ({cost})!",
     "speedupTokensTitle": "인벤토리 가속 아이템:",
-    "indestructibleSeat": "불멸의 제국 옥좌",
-    "indestructibleSeatTooltip": "황실 옥좌는 난공불락이며 파괴할 수 없습니다.",
+    "indestructibleSeat": "불멸의 제국 요새",
+    "indestructibleSeatTooltip": "황실 요새는 난공불락이며 파괴할 수 없습니다.",
     "demolish": "철거",
     "demolishConfirm": "{name} 건축물을 철거하시겠습니까? 투입 자원 일부를 회수합니다.",
     "slots": {
@@ -283,17 +283,17 @@ export const kr = {
     "heraldSpeech": "군주 폐하 만세! 제국의 번영을 위해 폐하의 현명한 통치령이 필요합니다.",
     "chapters": {
       "c1Badge": "제1장",
-      "c1Title": "제1장: 영지의 부활",
-      "c1Subtitle": "성벽을 재건하고 고원에 첫 정착지를 확립하세요.",
+      "c1Title": "제1장: 부유도의 각성",
+      "c1Subtitle": "성채를 재건하고 구름 바다 위에 첫 번째 정착지를 세우세요.",
       "c2Badge": "제2장",
-      "c2Title": "제2장: 황무지의 위협",
-      "c2Subtitle": "오크의 침략을 격퇴하고 도시의 군사력을 강화하세요.",
+      "c2Title": "제2장: 흑풍의 위협",
+      "c2Subtitle": "심연의 침략자들을 물리치고 성채의 공중 방어 함대를 강화하세요.",
       "c3Badge": "제3장",
-      "c3Title": "제3장: 워로드의 그림자",
-      "c3Subtitle": "원소 야수를 물리치고 공포의 보르가스를 섬멸하세요.",
+      "c3Title": "제3장: 창공의 수호자들",
+      "c3Subtitle": "타락한 전설의 생명체들을 정화하고 하늘의 조화를 되찾으세요.",
       "c4Badge": "제4장",
-      "c4Title": "제4장: 대제국의 시대",
-      "c4Subtitle": "우주 균열을 지배하고 왕국에서 가장 영광스러운 왕좌를 세우세요."
+      "c4Title": "제4장: 천상 제국의 영광",
+      "c4Subtitle": "아스트랄 차원문을 지배하고 구름 위에 가장 찬란한 성채를 세우세요."
     },
     "story": {
       "q-c1-1": {
@@ -454,7 +454,7 @@ export const kr = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "황금 왕좌",
+        "title": "구름 위의 궁전",
         "desc": "마을 회관을 레벨 3으로 업그레이드하세요."
       },
       "epic-population-boom": {
@@ -520,7 +520,7 @@ export const kr = {
     "owned": "보유 중",
     "redeemPrize": "보상 교환",
     "yourSovereignty": "나의 주권 (본인)",
-    "chaosKingdom": "혼돈의 왕국",
+    "chaosKingdom": "구름의 왕국",
     "tabPvp": "콜로세움",
     "tabRanking": "랭킹",
     "tabDefense": "방어",
@@ -549,7 +549,7 @@ export const kr = {
     "leaguePlatinum": "플래티넘 후국",
     "leagueDiamond": "다이아몬드 왕국",
     "leagueMaster": "제국 최고 권력자",
-    "leagueGrandmaster": "절대 옥좌의 군주",
+    "leagueGrandmaster": "창공의 최고 지배자",
     "headerSub": "라이벌 성채를 정복하고 왕관을 모아 제국의 영광으로 승격하세요.",
     "lootMultiplier": "약탈 전리품 배수:",
     "nextLeague": "다음 리그:",
@@ -640,7 +640,7 @@ export const kr = {
       "league_silver": "경비대의 은 상자",
       "league_gold": "공성의 황금 상자",
       "league_platinum": "영웅의 백금 궤",
-      "league_master": "혼돈의 황제 상자"
+      "league_master": "천상 황제의 상자"
     },
     "rivals": {
       "rival_0": {
@@ -791,7 +791,7 @@ export const kr = {
     "bonusExtra": "추가",
     "getForPrice": "{price}에 획득",
     "fortuneWheelTitle": "황실 행운의 룰렛",
-    "fortuneWheelDesc": "신성한 혼돈의 룰렛을 돌려 크리스탈, 골드, 정예 부대 또는 전투 물약을 획득하세요!",
+    "fortuneWheelDesc": "신성한 천상의 룰렛을 돌려 크리스탈, 골드, 정예 부대 또는 전투 물약을 획득하세요!",
     "youWon": "당첨되었습니다!",
     "claimWithGlory": "영광과 함께 수령!",
     "pressEscToClose": "Esc를 누르거나 클릭하여 닫기",
@@ -819,7 +819,7 @@ export const kr = {
         "desc": "대량의 목재, 화강암, 설계도로 요새를 빠르게 확장하세요."
       },
       "mythic_pack": {
-        "title": "혼돈의 군주 번들",
+        "title": "창공의 군주 번들",
         "desc": "성기사 영웅, 에픽 유물 및 VIP 왕관 휘장이 포함된 최고급 상자입니다."
       }
     },
@@ -869,7 +869,7 @@ export const kr = {
         "badge": "최고 가성비"
       },
       "pack_vault": {
-        "name": "왕좌의 금고",
+        "name": "천상의 금고",
         "desc": "모든 생물 군계를 정복하고 전설적인 제국을 건설할 수 있는 무한한 신비한 부.",
         "badge": "타이탄"
       }
@@ -908,7 +908,7 @@ export const kr = {
     "tabAchievements": "업적",
     "tabAvatars": "초상화",
     "heroLevel": "Level {level}",
-    "realmTitle": "왕좌 요새의 영주",
+    "realmTitle": "구름 왕국의 최고 통치자",
     "levelProgress": "레벨 진행도",
     "xpRemaining": "{xp} XP to Level {nextLevel}",
     "statPower": "제국 전투력",
@@ -917,7 +917,7 @@ export const kr = {
     "statTech": "연구 완료",
     "statArena": "아레나 포인트",
     "passTitle": "황실 NFT 패스",
-    "passSubtitle": "혼돈의 고원의 최고 군주",
+    "passSubtitle": "부유하는 제도의 최고 군주",
     "passMinted": "Web3에 발행됨",
     "passConnected": "지갑 연결됨",
     "avatarSelectorTitle": "군주 초상화 선택",
@@ -993,7 +993,7 @@ export const kr = {
     "manualSave": "지금 즉시 클라우드 동기화",
     "selectLanguage": "게임 언어 선택 / Select Language:",
     "saveSuccess": "왕국의 진행 상황이 클라우드 보관소에 안전하게 동기화되었습니다!",
-    "creditsTitle": "혼돈의 왕좌: 엠파이어 포지",
+    "creditsTitle": "구름의 왕국: 아이테리아 제국",
     "creditsText": "열정으로 빚어낸 실시간 크로스 플랫폼 중세 대서사시 전략 시뮬레이션.",
     "modalTitle": "설정 및 메뉴",
     "modalSubtitle": "시스템 설정, 오디오, 그래픽 및 Web3",
@@ -1023,7 +1023,7 @@ export const kr = {
     "pwaOfflineReadyDesc": "WebP textures, audio, and realm data stored on your device.",
     "pwaUpdateBtn": "Refresh Cache",
     "identitySectionTitle": "영주의 신원",
-    "identityDesc": "왕좌 및 랭킹에 표시될 영주 이름",
+    "identityDesc": "구름 왕국 및 랭킹에 표시될 영주 이름",
     "changeNameTitle": "영주 이름 변경",
     "changeName": "이름 변경",
     "defaultPlayerName": "Lord King",
@@ -1043,7 +1043,7 @@ export const kr = {
     "disconnectWallet": "연결 해제",
     "connectWallet": "지갑 연결",
     "activeNetwork": "활성 네트워크",
-    "tokenChaos": "토큰 $CHAOS",
+    "tokenChaos": "토큰 $AETH",
     "gasFee": "가스 수수료",
     "gasless": "0.00 (무료)",
     "onChainSync": "온체인 동기화",
@@ -1053,7 +1053,7 @@ export const kr = {
     "gameTagline": "모바일 및 데스크톱을 위한 중세 제국 전략 및 정복 게임.",
     "walletLinkedNotice": "Web3 지갑 연결됨: {address}",
     "walletDisconnectedNotice": "Web3 지갑 연결 해제됨",
-    "syncingStateNotice": "TOC Chaos L2와 왕국 상태 동기화 중..."
+    "syncingStateNotice": "Aetheria Cloud L2와 왕국 상태 동기화 중..."
   },
   "levelup": {
     "title": "제국 위상 격상!",
@@ -1081,7 +1081,7 @@ export const kr = {
   "tutorial": {
     "blockedInTutorial": "세네샬과의 튜토리얼을 먼저 완료하세요.",
     "blockedInTutorialShort": "튜토리얼 중...",
-    "characterTitle": "왕좌의 대집사",
+    "characterTitle": "구름의 대집사",
     "stepCounter": "단계 {current} / {total}",
     "skip": "튜토리얼 건너뛰기",
     "prev": "이전",
@@ -1105,20 +1105,20 @@ export const kr = {
     "step4Tip": "각 건물 위에 떠 있는 개별 말풍선을 탭해도 됩니다.",
     "step5Title": "군대 및 정복",
     "step5Subtitle": "군대, 황무지 및 콜로세움",
-    "step5Desc": "막사에서 군대를 모집하여 요새를 방어하고, 혼돈의 던전에서 야수를 퇴치하며, 콜로세움에서 다른 군주들에게 도전하세요.",
+    "step5Desc": "막사에서 군대를 모집하여 요새를 방어하고, 창공의 던전에서 야수를 퇴치하며, 콜로세움에서 다른 군주들에게 도전하세요.",
     "step5Tip": "훈련된 군대는 적의 침략으로부터 영지를 지켜줍니다.",
     "graduationTitle": "훈련 완료!",
-    "graduationSubtitle": "왕좌의 대집사가 졸업 공물을 수여합니다",
+    "graduationSubtitle": "구름의 대집사가 졸업 공물을 수여합니다",
     "graduationProse": "영광스러운 제국을 건설하는 데 필요한 지혜와 결의를 증명하셨습니다. 최고 왕실 평의회가 이 창건 상자를 하사합니다:",
     "graduationClaimBtn": "공물 수령 및 통치 시작!"
   },
   "starterWelcome": {
     "tag": "왕실 창건 칙령",
     "title": "환영합니다, 군주님!",
-    "subtitle": "혼돈의 미개척지가 군주님의 영광스러운 통치를 기다립니다.",
+    "subtitle": "광활한 구름 바다가 군주님의 영광스러운 통치를 기다립니다.",
     "prose": "긴 여정 끝에 중앙 고원에 도착하셨습니다. 중앙 광장 중심에는 황실 요새가 서 있으며, 주변에는 번영하는 군사 및 경제 중심지로 발전시킬 11개의 빈 터가 준비되어 있습니다.",
     "roadmapTitle": "단계별 개척 가이드 (제1장):",
-    "step1Title": "왕좌의 칙령",
+    "step1Title": "구름 왕국의 칙령",
     "step1Desc": "전령에서 첫 칙령을 수령하여 골드와 목재 공물을 받으세요.",
     "step2Title": "금광 및 주택",
     "step2Desc": "[+]로 표시된 빈 터에 첫 금광과 주택을 건설하세요.",
@@ -1126,7 +1126,7 @@ export const kr = {
     "step3Desc": "전쟁 막사를 건설하여 첫 군대를 징집하세요.",
     "step4Title": "원정 및 던전",
     "step4Desc": "황무지로 출진하여 오크를 격퇴하고 전설의 유물을 획득하세요!",
-    "beginBtn": "왕좌를 차지하고 통치 시작!"
+    "beginBtn": "왕국을 이끌고 통치 시작!"
   },
   "starterPack": {
     "bannerTag": "환영 특가",
@@ -1215,7 +1215,7 @@ export const kr = {
     "barmaidName": "주모 헬레나",
     "lumberjackName": "나무꾼 그롬",
     "foresterName": "벌목꾼 토르발드",
-    "guardQuote1": "왕국과 혼돈의 왕좌를 위하여!",
+    "guardQuote1": "구름 왕국의 영광을 위하여!",
     "guardQuote2": "방어 경계선 이상 무!",
     "guardQuote3": "제국의 평화를 해치는 자 용서치 않으리라!",
     "sergeantQuote1": "경비 초소 순찰 중!",
@@ -1242,7 +1242,7 @@ export const kr = {
     "constructionCompleteDuringAbsence": "부재 중 {count}개 건물 완료: {names}!",
     "welcomeBack": "환영합니다, {name}! 왕국 상태가 동기화되었습니다.",
     "newKingdomCreated": "{email}로 새 왕국이 생성되었습니다! 정복을 시작하세요.",
-    "guestWelcome": "혼돈의 왕좌에 오신 것을 환영합니다! 게스트 모드 활성화.",
+    "guestWelcome": "구름의 왕국에 오신 것을 환영합니다! 게스트 모드 활성화.",
     "offlineMode": "📡 No internet connection. Offline mode active (your realm is stored locally).",
     "onlineRestored": "⚡ Connection restored! Realm synchronized with the cloud.",
     "sovereignNameSaved": "군주 이름 저장됨: {name}!",
@@ -1317,12 +1317,12 @@ export const kr = {
     "kingdomReset": "왕국이 재건되었습니다! 제국 성채부터 단계별로 시작합니다.",
     "sessionClosed": "명예롭게 세션 종료. 진행 상황이 클라우드에 백업되었습니다.",
     "empireSaved": "제국의 유산이 성공적으로 저장되었습니다!",
-    "tutorialRestarted": "왕좌의 대집사가 단계별로 안내해 드립니다!",
+    "tutorialRestarted": "구름의 대집사가 단계별로 안내해 드립니다!",
     "speedupFreeComplete": "무료 가속 완료: {name} Lv. {level}!",
     "speedupGemComplete": "{cost} 젬으로 {name} 즉시 완료!",
     "web3WalletLinked": "Web3 wallet linked: {address}",
     "web3WalletDisconnected": "Web3 지갑 연결이 해제되었습니다",
-    "syncingBlockchain": "TOC Chaos L2와 왕국 상태 동기화 중...",
+    "syncingBlockchain": "Aetheria Cloud L2와 왕국 상태 동기화 중...",
     "avatarUpdated": "Avatar updated: {name}",
     "sovereignNameSavedProfile": "Sovereign name saved: {name}",
     "xpDecree": "칙령: {title}",
@@ -1414,7 +1414,7 @@ export const kr = {
       "subtitle": "백성들의 축제",
       "emissaryName": "촌장 엘릭",
       "emissaryRole": "정착민 대표",
-      "description": "농경지에서 풍성한 수확을 거두어, 정착민들이 사기를 북돋우고 왕좌를 축하하기 위해 중앙 광장에서 대연회를 열기를 요청합니다.",
+      "description": "농경지에서 풍성한 수확을 거두어, 정착민들이 사기를 북돋우고 왕국을 축하하기 위해 중앙 광장에서 대연회를 열기를 요청합니다.",
       "choices": {
         "festival_grand": {
           "label": "대황실 연회 지원",
@@ -1543,8 +1543,8 @@ export const kr = {
         "badge": "제3장"
       },
       "c4": {
-        "title": "제4장: 대제국의 시대",
-        "subtitle": "우주 균열을 지배하고 왕국에서 가장 영광스러운 왕좌를 세우세요.",
+        "title": "제4장: 천상 제국의 영광",
+        "subtitle": "아스트랄 차원문을 지배하고 구름 위에 가장 찬란한 성채를 세우세요.",
         "badge": "제4장"
       }
     },
@@ -1668,7 +1668,7 @@ export const kr = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "황금 왕좌",
+        "title": "구름 위의 궁전",
         "desc": "마을 회관을 레벨 3으로 업그레이드하세요."
       },
       "epic-population-boom": {
@@ -1704,13 +1704,13 @@ export const kr = {
     "3": {
       "title": "번영하는 백작령",
       "unlocks": [
-        "혼돈의 비전 차원문",
+        "천상의 비전 차원문",
         "요새 2단계 업그레이드",
         "전체 생산량 +10%"
       ]
     },
     "4": {
-      "title": "혼돈의 왕좌 왕국",
+      "title": "구름의 제국",
       "unlocks": [
         "성기사 지휘관",
         "비전 차원 원정",
@@ -1730,7 +1730,7 @@ export const kr = {
       "small": "한 줌의 젬",
       "medium": "젬 자루",
       "large": "황실 젬 보물함",
-      "vault": "왕좌의 금고"
+      "vault": "천상의 금고"
     },
     "bundles": {
       "conqueror": {
@@ -1749,7 +1749,7 @@ export const kr = {
     "perks": {
       "oneClickHarvest": "전령의 나팔 (전체 수확)",
       "secondBuilder": "제2 황실 건축가",
-      "dailyBlessing": "혼돈의 일일 축복 (월간 패스)",
+      "dailyBlessing": "천상의 일일 축복 (월간 패스)",
       "engineering": "황실 공학 마스터리"
     },
     "wheelPrizes": {
@@ -1766,9 +1766,9 @@ export const kr = {
     },
     "relics": {
       "relic_corona_caos": {
-        "name": "혼돈의 왕관",
-        "desc": "모든 광산의 골드 생산량 +15%. 왕국 레벨 명성을 높입니다.",
-        "dropSource": "최고 워로드 보르가스 (바이옴 1 보스)"
+        "name": "창공의 왕관",
+        "desc": "천상의 보석과 별빛 은으로 벼려졌습니다. 모든 광산의 골드 생산량이 15% 증가하고 왕국의 위상을 크게 높입니다.",
+        "dropSource": "천상 최고 수호자 (바이옴 1 보스)"
       },
       "relic_espada_jade": {
         "name": "비취 룬 검",
@@ -1958,11 +1958,11 @@ export const kr = {
     "enemyTypes": {
       "orc": "오크",
       "minotaur": "미노타우로스",
-      "miniboss": "혼돈의 미니보스",
+      "miniboss": "폭풍의 수호자",
       "boss": "최고 보스"
     },
     "biome1": {
-      "name": "유일 챕터: 대혼돈의 원정",
+      "name": "유일 챕터: 구름의 대원정",
       "subtitle": "영웅들의 진군 (17개의 서사시적 조우)"
 },
     "sectors": {
@@ -1987,7 +1987,7 @@ export const kr = {
             "desc": "미노타우로스 3마리 + 오크 1마리"
       },
       "6": {
-            "name": "6구역: 심판의 왕좌",
+            "name": "6구역: 천상 심판의 정점",
             "desc": "미노타우로스 3마리 + 최고 보스"
       }
 },
@@ -2059,7 +2059,7 @@ export const kr = {
       "node-13": {
             "name": "오크 암흑 대마법사",
             "subtitle": "5단계 · 그림자의 주술사",
-            "desc": "왕좌로 향하는 마지막 통로를 봉쇄하기 위해 흑마법을 집중시키는 오크 주술사."
+            "desc": "성소로 향하는 마지막 통로를 봉쇄하기 위해 흑마법을 집중시키는 오크 주술사."
       },
       "node-14": {
             "name": "피의 파수병 미노타우로스",
@@ -2074,12 +2074,12 @@ export const kr = {
       "node-16": {
             "name": "뿔의 제왕 미노타우로스",
             "subtitle": "6단계 · 근위대 챔피언",
-            "desc": "지하 세계에서 가장 공포스러운 미노타우로스. 왕좌에 오르기 전 마지막 장애물입니다."
+            "desc": "지하 세계에서 가장 공포스러운 미노타우로스. 신성한 성소에 오르기 전 마지막 장애물입니다."
       },
       "node-17": {
             "name": "최고 보스: 어둠의 군주",
             "subtitle": "6단계 · 챕터 최종 거대 보스!",
-            "desc": "혼돈의 던전의 절대 군주. 그의 저주받은 검은 영혼을 집어삼킵니다."
+            "desc": "하늘에서 추방된 암흑의 군주. 저주받은 검으로 구름 왕국의 순수한 힘을 집어삼키려 합니다."
       }
 }
   },
@@ -2106,7 +2106,7 @@ export const kr = {
     "recruitMaxPossible": "최대 가능 인원 모집 ({count})",
     "hp": "체력",
     "infantry": {
-      "name": "왕좌 근위대 (보병)",
+      "name": "천상 근위대 (보병)",
       "role": "축복받은 갑옷과 사자 방패를 장착한 중보병 선봉대."
     },
     "archers": {
@@ -2180,7 +2180,7 @@ export const kr = {
     "sovereigns": {
       "sov-1": {
         "name": "군주 말라코르",
-        "kingdom": "혼돈의 제국",
+        "kingdom": "천상의 제국",
         "title": "태고의 황제"
       },
       "sov-2": {
@@ -2255,7 +2255,7 @@ export const kr = {
       }
     },
     "yourSovereignty": "당신의 주권 왕국",
-    "chaosKingdom": "혼돈의 왕좌 요새"
+    "chaosKingdom": "구름의 왕국"
   },
   "techTree": {
     "tag": "왕국 대아카데미",
@@ -2320,13 +2320,13 @@ export const kr = {
     "readinessOptimal": "최적 준비 완료",
     "readinessBasic": "기본 전력",
     "readinessLow": "주둔군 부족",
-    "heroBannerTitle": "혼돈의 던전: 크리티컬 타격 결투!",
-    "heroBannerDesc": "타이밍 게이지를 맞춰 방마다 적과 싸우고 혼돈의 워로드를 격파하세요.",
+    "heroBannerTitle": "창공의 던전: 크리티컬 타격 결투!",
+    "heroBannerDesc": "타이밍 게이지를 맞춰 방마다 적과 싸우고 심연의 위협을 정화하세요.",
     "heroBannerBtn": "던전 입장!",
     "victoryTitle": "영광스러운 승리!",
     "victorySubtitle": "Your troops have secured the region: {name}",
     "spoilsTitle": "획득한 보물 및 전리품:",
-    "claimSpoilsBtn": "전리품 수령 및 왕좌로 복귀",
+    "claimSpoilsBtn": "전리품 수령 및 왕국으로 복귀",
     "suggestedTroops": "Suggested: {count} troops",
     "enemyLabel": "적군:",
     "winChanceLabel": "승률:",
@@ -2343,10 +2343,10 @@ export const kr = {
     },
     "items": {
       "exp-1": {
-        "name": "혼돈 군단의 지하 묘지",
+        "name": "심연의 지하 묘지",
         "region": "서부 국경 지대",
         "duration": "3개 방",
-        "description": "고블린, 오크 및 혼돈의 워로드를 쓰러뜨리며 3개의 지하 방을 돌파하세요.",
+        "description": "고블린, 오크 및 워로드 보르가스를 쓰러뜨리며 3개의 지하 방을 돌파하세요.",
         "enemySquad": "고블린 -> 화염 오크 버서커 -> 워로드 보르가스 [보스]"
       },
       "exp-2": {
@@ -2364,11 +2364,11 @@ export const kr = {
         "enemySquad": "설원 늑대 -> 얼음 골렘 -> 빙결 거인 -> 얼음 타이탄 킹 [보스]"
       },
       "exp-4": {
-        "name": "혼돈의 심연 균열",
+        "name": "심연의 암흑 균열",
         "region": "아스트랄 보이드",
         "duration": "5개 방",
         "description": "시공간의 균열에서 쏟아져 나오는 공허의 군단을 섬멸하세요.",
-        "enemySquad": "공허의 추적자 -> 심연의 마법사 -> 혼돈의 군주 [최종 보스]"
+        "enemySquad": "공허의 추적자 -> 심연의 마법사 -> 어둠의 군주 [최종 보스]"
       }
     }
   },
@@ -2480,7 +2480,7 @@ export const kr = {
     "stayAndFight": "계속 싸우기",
     "confirmFlee": "후퇴 확인",
     "biomeConqueredTitle": "지역 1 정복 완료!!",
-    "biomeConqueredSubtitle": "혼돈의 불타는 황무지가 정화되었습니다!",
+    "biomeConqueredSubtitle": "구름 왕국이 불타는 황무지를 정화했습니다!",
     "biomeConqueredDesc": "비전의 포털이 깨어났습니다. 고대 야수의 신비한 정글(지역 2)의 미개척지가 새로운 미스터리, 전설의 야수, 거대한 보물과 함께 당신을 기다립니다.",
     "proceedBiome2": "신비한 정글(지역 2)로 이동!"
   },

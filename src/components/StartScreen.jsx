@@ -190,7 +190,7 @@ export function StartScreen({ onEnterGame }) {
         <div className="start-screen-logo-container">
           <img 
             src="/assets/logo/logo.webp" 
-            alt="Throne of Chaos: Forge of Empire" 
+            alt="Reino de las Nubes: Aetheria Empires" 
             className="start-screen-game-logo"
             draggable="false"
           />

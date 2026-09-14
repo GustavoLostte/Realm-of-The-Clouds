@@ -118,7 +118,7 @@ export const KINGDOM_EVENTS = [
     avatar: '/assets/avatars/avatar_king.webp',
     emissaryName: 'Burgomeister Elric',
     emissaryRole: 'Spokesman of the Colonists',
-    description: 'The fields have yielded good harvests and the colonists request organizing a royal banquet in the main square to boost morale and celebrate the throne.',
+    description: 'The fields have yielded good harvests and the colonists request organizing a royal banquet in the main square to boost morale and celebrate the kingdom.',
     choices: [
       {
         id: 'festival_grand',

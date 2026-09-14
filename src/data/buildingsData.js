@@ -6,7 +6,7 @@ export const BUILDING_TYPES = {
     minKingdomLevel: 1,
     maxAllowed: 1,
     isUnique: true,
-    description: 'El corazón de tu reino y sede del trono real. Incrementa el límite de población, defensa y la recaudación fiscal.',
+    description: 'El corazón de tu reino y sede de la corona celestial. Incrementa el límite de población, defensa y la recaudación fiscal.',
     image: '/assets/buildings/castillo/castillo_idle.webp',
     animIdle: '/assets/buildings/castillo/castillo_idle.webp',
     animConstruct: '/assets/buildings/castillo/castillo_construccion.webp',
@@ -151,7 +151,7 @@ export const BUILDING_TYPES = {
   },
   PORTAL: {
     id: 'portal',
-    name: 'Portal Arcano del Caos',
+    name: 'Portal Arcano Celestial',
     category: 'arcano',
     minKingdomLevel: 3,
     maxAllowed: 1,
@@ -404,7 +404,7 @@ export const INITIAL_QUESTS = [
   {
     id: 'q1',
     title: 'Establecer la Capital',
-    desc: 'Construye o sube de nivel tu Ayuntamiento Imperial para consolidar el trono.',
+    desc: 'Construye o sube de nivel tu Ayuntamiento Imperial para consolidar tu reino en las alturas.',
     reward: { gold: 150, wood: 100 },
     completed: true,
   },
@@ -425,7 +425,7 @@ export const INITIAL_QUESTS = [
   {
     id: 'q4',
     title: 'Misterios Arcanos',
-    desc: 'Erige un Portal Arcano del Caos para desentrañar el poder cósmico.',
+    desc: 'Erige un Portal Arcano Celestial para desentrañar el poder cósmico.',
     reward: { gems: 15, gold: 300 },
     completed: false,
   },

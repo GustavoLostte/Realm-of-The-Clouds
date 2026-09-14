@@ -1,7 +1,7 @@
 {
-  "name": "PWA Web3 Core Engine",
-  "short_name": "PWA Web3",
-  "description": "Motor PWA Web3 Core Engine con soporte descentralizado, estrategia y juego interactivo.",
+  "name": "Realm of the Clouds",
+  "short_name": "RealmClouds",
+  "description": "Realm of the Clouds - Juego de estrategia y gestión imperial en el reino celestial.",
   "start_url": "/",
   "scope": "/",
   "id": "/",

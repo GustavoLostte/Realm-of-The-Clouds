@@ -50,7 +50,7 @@ export function ArmyModal({
   const unitCatalog = [
     {
       id: 'infantry',
-      name: t('army.infantry.name') || 'Guardia del Trono (Infantería)',
+      name: t('army.infantry.name') || 'Guardia Celestial (Infantería)',
       category: 'melee',
       avatar: '/assets/avatars/avatar_paladin.webp',
       role: t('army.infantry.role') || 'Vanguardia pesada con armadura bendita y escudo de león.',

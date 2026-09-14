@@ -84,8 +84,8 @@ export const cn = {
   },
   "start": {
     "welcomeSubtitle": "建立中世纪帝国 • 征服已知大陆",
-    "title": "混沌王座",
-    "subtitle": "帝国锻造",
+    "title": "云之王国",
+    "subtitle": "苍穹帝国",
     "touchToStart": "点击任意区域开启帝国霸业",
     "enterEmailPrompt": "输入您的电子邮箱以将王国档案保存至云端：",
     "emailPlaceholder": "your_email@example.com",
@@ -161,7 +161,7 @@ export const cn = {
     "inventoryTooltip": "传世圣物匣与出征行囊",
     "shopTooltipReady": "皇家内库 • 幸运转盘免费机会已就绪！",
     "shopTooltip": "皇家内库与领主特惠",
-    "questsTooltip": "帝国王座敕令与史诗叙事",
+    "questsTooltip": "云端帝国敕令与史诗叙事",
     "expeditionTooltip": "远征军团与外域地图",
     "settingsTooltip": "系统设置与游戏选项"
   },
@@ -199,7 +199,7 @@ export const cn = {
     "freeSpeedupBtn": "立即免费加速（简短工程）！",
     "instantFinishGems": "立即竣工（{cost}）！",
     "speedupTokensTitle": "行囊加速道具：",
-    "indestructibleSeat": "永固帝国主城宝座",
+    "indestructibleSeat": "永固帝国主城枢纽",
     "indestructibleSeatTooltip": "帝国主城要塞乃王国中枢，坚不可摧，无法拆除。",
     "demolish": "拆除建筑",
     "demolishConfirm": "您确定要拆除 {name} 吗？将返还部分营建工料。",
@@ -283,17 +283,17 @@ export const cn = {
     "heraldSpeech": "向尊贵的领主致敬！帝国的繁荣强盛正急需您的睿智决断。",
     "chapters": {
       "c1Badge": "第一章",
-      "c1Title": "第一章：领地重生",
-      "c1Subtitle": "重建城墙并在高原建立您的第一个定居点。",
+      "c1Title": "第一章：浮岛的苏醒",
+      "c1Subtitle": "重建城堡并在云海之上建立第一座定居点。",
       "c2Badge": "第二章",
-      "c2Title": "第二章：荒原危机",
-      "c2Subtitle": "击退兽人入侵并强化城市的军事防御。",
+      "c2Title": "第二章：暗风的威胁",
+      "c2Subtitle": "击退深渊侵略者，加固要塞的空中防御。",
       "c3Badge": "第三章",
-      "c3Title": "第三章：军阀阴影",
-      "c3Subtitle": "消灭元素凶兽，彻底粉碎可怕的沃加斯。",
+      "c3Title": "第三章：苍穹守护者",
+      "c3Subtitle": "净化被腐蚀的传奇生灵，恢复天空的和谐。",
       "c4Badge": "第四章",
-      "c4Title": "第四章：伟大帝国时代",
-      "c4Subtitle": "掌控宇宙裂隙，铸造整片大陆最辉煌的王座。"
+      "c4Title": "第四章：天穹帝国的荣耀",
+      "c4Subtitle": "掌控星界传送门，在云海之上建立最璀璨的空中帝国。"
     },
     "story": {
       "q-c1-1": {
@@ -454,7 +454,7 @@ export const cn = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "黄金王座",
+        "title": "云端天宫",
         "desc": "将市政厅升级至3级。"
       },
       "epic-population-boom": {
@@ -520,7 +520,7 @@ export const cn = {
     "owned": "已拥有",
     "redeemPrize": "兑换奖励",
     "yourSovereignty": "你的主权（本人）",
-    "chaosKingdom": "混沌王国",
+    "chaosKingdom": "云之王国",
     "tabPvp": "竞技场",
     "tabRanking": "排行榜",
     "tabDefense": "防御",
@@ -549,7 +549,7 @@ export const cn = {
     "leaguePlatinum": "铂金亲王国",
     "leagueDiamond": "钻石帝国",
     "leagueMaster": "霸业至尊",
-    "leagueGrandmaster": "混沌铁王座主",
+    "leagueGrandmaster": "苍穹至尊",
     "headerSub": "征服对手城池，积累皇冠并在帝国荣耀中晋升。",
     "lootMultiplier": "掠夺战利品倍率:",
     "nextLeague": "下一联赛:",
@@ -640,7 +640,7 @@ export const cn = {
       "league_silver": "守卫白银宝箱",
       "league_gold": "围攻黄金宝箱",
       "league_platinum": "英雄白金圣匣",
-      "league_master": "混沌帝皇宝箱"
+      "league_master": "苍穹帝皇宝箱"
     },
     "rivals": {
       "rival_0": {
@@ -791,7 +791,7 @@ export const cn = {
     "bonusExtra": "额外",
     "getForPrice": "以 {price} 获得",
     "fortuneWheelTitle": "帝国幸运轮盘",
-    "fortuneWheelDesc": "旋转神圣的混沌轮盘，赢取水晶、黄金、精锐部队或战斗药剂！",
+    "fortuneWheelDesc": "旋转神圣的云端轮盘，赢取水晶、黄金、精锐部队或战斗药剂！",
     "youWon": "恭喜获得！",
     "claimWithGlory": "荣耀领取！",
     "pressEscToClose": "按 Esc 或点击关闭",
@@ -819,7 +819,7 @@ export const cn = {
         "desc": "海量木材、坚石与建筑蓝图，急速扩展您的宏伟城堡。"
       },
       "mythic_pack": {
-        "title": "混沌主宰至尊礼盒",
+        "title": "苍穹主宰至尊礼盒",
         "desc": "终极宝箱，包含圣骑士英雄、史诗圣物及VIP黄金皇冠徽章。"
       }
     },
@@ -869,7 +869,7 @@ export const cn = {
         "badge": "超值首选"
       },
       "pack_vault": {
-        "name": "王座金库",
+        "name": "苍穹金库",
         "desc": "无尽的秘术财富，征服每一个生态群落，筑就传奇帝国。",
         "badge": "泰坦级"
       }
@@ -908,7 +908,7 @@ export const cn = {
     "tabAchievements": "成就",
     "tabAvatars": "肖像",
     "heroLevel": "Level {level}",
-    "realmTitle": "王座堡垒的统治者",
+    "realmTitle": "云之王国的至高主宰",
     "levelProgress": "等级进度",
     "xpRemaining": "{xp} XP to Level {nextLevel}",
     "statPower": "帝国战力",
@@ -917,7 +917,7 @@ export const cn = {
     "statTech": "已研发科技",
     "statArena": "竞技场王冠",
     "passTitle": "帝国NFT通行证",
-    "passSubtitle": "混沌高悬群岛至高主宰",
+    "passSubtitle": "浮空群岛至高主宰",
     "passMinted": "Web3链上铸造",
     "passConnected": "钱包已连接",
     "avatarSelectorTitle": "挑选君王肖像",
@@ -993,7 +993,7 @@ export const cn = {
     "manualSave": "立即同步云端备份",
     "selectLanguage": "选择语言 / Select Language:",
     "saveSuccess": "您的王国领地档案已成功同步归档至云端！",
-    "creditsTitle": "混沌王座：帝国锻造",
+    "creditsTitle": "云之王国：苍穹帝国",
     "creditsText": "匠心雕琢。史诗级全平台跨端中世纪即时策略大作。",
     "modalTitle": "设置与菜单",
     "modalSubtitle": "系统设置、音频、画质与 Web3",
@@ -1023,7 +1023,7 @@ export const cn = {
     "pwaOfflineReadyDesc": "WebP textures, audio, and realm data stored on your device.",
     "pwaUpdateBtn": "Refresh Cache",
     "identitySectionTitle": "统治者身份",
-    "identityDesc": "在王座与排行榜上展示的领主之名",
+    "identityDesc": "在云端王国与排行榜上展示的领主之名",
     "changeNameTitle": "修改领主名称",
     "changeName": "修改名称",
     "defaultPlayerName": "Lord King",
@@ -1043,7 +1043,7 @@ export const cn = {
     "disconnectWallet": "断开连接",
     "connectWallet": "连接钱包",
     "activeNetwork": "当前网络",
-    "tokenChaos": "代币 $CHAOS",
+    "tokenChaos": "代币 $AETH",
     "gasFee": "Gas 费用",
     "gasless": "0.00 (免 Gas)",
     "onChainSync": "链上同步",
@@ -1053,7 +1053,7 @@ export const cn = {
     "gameTagline": "适用于移动端与桌面端的史诗中世纪帝国战略与征服游戏。",
     "walletLinkedNotice": "Web3 钱包已绑定: {address}",
     "walletDisconnectedNotice": "Web3 钱包已断开连接",
-    "syncingStateNotice": "正在与 TOC Chaos L2 链上同步王国状态..."
+    "syncingStateNotice": "正在与 Aetheria Cloud L2 链上同步王国状态..."
   },
   "levelup": {
     "title": "帝国等级晋升！",
@@ -1081,7 +1081,7 @@ export const cn = {
   "tutorial": {
     "blockedInTutorial": "请先跟随塞内斯卡尔完成新手教程。",
     "blockedInTutorialShort": "教程中...",
-    "characterTitle": "王座的大总管",
+    "characterTitle": "云端大总管",
     "stepCounter": "步骤 {current} / {total}",
     "skip": "跳过教程",
     "prev": "返回",
@@ -1105,20 +1105,20 @@ export const cn = {
     "step4Tip": "您也可以点击每个建筑物上方的单独浮动气泡。",
     "step5Title": "武装力量与征服",
     "step5Subtitle": "军队、荒原与斗兽场",
-    "step5Desc": "在兵营中招募军队以保卫您的要塞，在混沌地下城中讨伐怪兽，并在斗兽场中挑战其他君主。",
+    "step5Desc": "在兵营中招募军队以保卫您的要塞，在苍穹地下城中讨伐深渊魔兽，并在斗兽场中挑战其他君主。",
     "step5Tip": "训练有素的军队能保护您的领地免受敌人入侵。",
     "graduationTitle": "训练完成！",
-    "graduationSubtitle": "王座大总管向您赐予毕业贡礼",
+    "graduationSubtitle": "云端大总管向您赐予毕业贡礼",
     "graduationProse": "您已展现出建立辉煌帝国所需的智慧与决断力。最高皇家议会特授予您这份立国宝箱：",
     "graduationClaimBtn": "领取贡物并开启统治！"
   },
   "starterWelcome": {
     "tag": "皇家立国法令",
     "title": "欢迎，我的君主！",
-    "subtitle": "混沌的原始土地静候您王国的辉煌崛起。",
+    "subtitle": "辽阔的云海浮岛静候您王国的辉煌崛起。",
     "prose": "历经漫长的迁徙，您终于抵达中央高原。在中心广场核心矗立着帝国要塞。环绕其周的11块空地正等待被开辟为繁荣的军事与经济大都市。",
     "roadmapTitle": "您的步进开辟指南（第一章）：",
-    "step1Title": "王座法令",
+    "step1Title": "云端法令",
     "step1Desc": "在传令官处领取第一道法令以获得黄金和木材贡品。",
     "step2Title": "金矿与民居",
     "step2Desc": "在标记为 [+] 的空地上建造第一座金矿与民居。",
@@ -1126,7 +1126,7 @@ export const cn = {
     "step3Desc": "建造战争兵营以招募第一批武装卫兵。",
     "step4Title": "远征与地牢",
     "step4Desc": "进军荒原讨伐兽人，征服并夺取传奇遗物！",
-    "beginBtn": "接管王座并开启统治！"
+    "beginBtn": "接管王国并开启统治！"
   },
   "starterPack": {
     "bannerTag": "新手特惠",
@@ -1215,7 +1215,7 @@ export const cn = {
     "barmaidName": "酒馆老板娘海伦娜",
     "lumberjackName": "伐木工格罗姆",
     "foresterName": "樵夫托瓦尔德",
-    "guardQuote1": "为了王国与混沌王座！",
+    "guardQuote1": "为了云之王国的荣耀！",
     "guardQuote2": "防线哨所一切正常！",
     "guardQuote3": "绝不容许任何人破坏帝国和平！",
     "sergeantQuote1": "正在视察守卫巡哨！",
@@ -1242,7 +1242,7 @@ export const cn = {
     "constructionCompleteDuringAbsence": "离线期间 {count} 个建筑已完工：{names}！",
     "welcomeBack": "欢迎回来，{name}！王国状态已同步。",
     "newKingdomCreated": "已使用 {email} 创建新王国！开始你的征服吧。",
-    "guestWelcome": "欢迎来到混沌王座！访客模式已激活。",
+    "guestWelcome": "欢迎来到云之王国！访客模式已激活。",
     "offlineMode": "📡 No internet connection. Offline mode active (your realm is stored locally).",
     "onlineRestored": "⚡ Connection restored! Realm synchronized with the cloud.",
     "sovereignNameSaved": "君主名称已保存：{name}！",
@@ -1317,12 +1317,12 @@ export const cn = {
     "kingdomReset": "王国已重建！将从帝国城堡开始逐步发展。",
     "sessionClosed": "光荣退出。进度已备份到云端。",
     "empireSaved": "帝国遗产已成功保存！",
-    "tutorialRestarted": "王座大管家将一步步指引你！",
+    "tutorialRestarted": "云端大管家将一步步指引你！",
     "speedupFreeComplete": "免费加速完成：{name} Lv. {level}！",
     "speedupGemComplete": "使用 {cost} 宝石即时完成 {name}！",
     "web3WalletLinked": "Web3 wallet linked: {address}",
     "web3WalletDisconnected": "Web3 钱包已断开连接",
-    "syncingBlockchain": "正在与 TOC Chaos L2 链上同步王国状态...",
+    "syncingBlockchain": "正在与 Aetheria Cloud L2 链上同步王国状态...",
     "avatarUpdated": "Avatar updated: {name}",
     "sovereignNameSavedProfile": "Sovereign name saved: {name}",
     "xpDecree": "法令：{title}",
@@ -1414,7 +1414,7 @@ export const cn = {
       "subtitle": "全民欢庆大典",
       "emissaryName": "埃里克镇长",
       "emissaryRole": "领地定居者发言人",
-      "description": "麦田连年丰收，全城百姓渴求在王城中央广场举办一场盛大宴会，以振奋士气并向王座致敬。",
+      "description": "麦田连年丰收，全城百姓渴求在王城中央广场举办一场盛大宴会，以振奋士气并向王国致敬。",
       "choices": {
         "festival_grand": {
           "label": "资助豪华皇家宴席",
@@ -1543,8 +1543,8 @@ export const cn = {
         "badge": "第3章"
       },
       "c4": {
-        "title": "第4章：大帝国时代",
-        "subtitle": "掌控宇宙裂隙，铸就王国至高荣耀的王座。",
+        "title": "第4章：天穹帝国的荣耀",
+        "subtitle": "掌控宇宙裂隙，铸就天空最璀璨的云端要塞。",
         "badge": "第4章"
       }
     },
@@ -1668,7 +1668,7 @@ export const cn = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "黄金王座",
+        "title": "云端天宫",
         "desc": "将市政厅升级至3级。"
       },
       "epic-population-boom": {
@@ -1704,13 +1704,13 @@ export const cn = {
     "3": {
       "title": "繁荣伯国",
       "unlocks": [
-        "混沌奥术传送门",
+        "天穹奥术传送门",
         "要塞2阶升级",
         "全境产出 +10%"
       ]
     },
     "4": {
-      "title": "混沌王座王国",
+      "title": "云端帝国",
       "unlocks": [
         "圣骑士指挥官",
         "奥术次元远征",
@@ -1730,7 +1730,7 @@ export const cn = {
       "small": "一把宝石",
       "medium": "一袋宝石",
       "large": "皇家宝石宝箱",
-      "vault": "帝国王座金库"
+      "vault": "苍穹金库"
     },
     "bundles": {
       "conqueror": {
@@ -1749,7 +1749,7 @@ export const cn = {
     "perks": {
       "oneClickHarvest": "传令官号角（全城一键征收）",
       "secondBuilder": "第二位帝国皇家工匠",
-      "dailyBlessing": "混沌每日赐福（尊享月卡）",
+      "dailyBlessing": "天穹每日赐福（尊享月卡）",
       "engineering": "帝国工程精通"
     },
     "wheelPrizes": {
@@ -1766,9 +1766,9 @@ export const cn = {
     },
     "relics": {
       "relic_corona_caos": {
-        "name": "混沌皇冠",
-        "desc": "所有金矿金币产量增加15%，大幅提升王国威望等级。",
-        "dropSource": "最高督军沃尔加斯（首个区域首领）"
+        "name": "苍穹皇冠",
+        "desc": "以天界宝石与星辰纯银锻造。所有金矿金币产量增加15%，大幅提升王国威望等级。",
+        "dropSource": "苍穹守护神（首个区域首领）"
       },
       "relic_espada_jade": {
         "name": "翡翠符文剑",
@@ -1958,11 +1958,11 @@ export const cn = {
     "enemyTypes": {
       "orc": "兽人",
       "minotaur": "牛头魔",
-      "miniboss": "混沌次级领主",
+      "miniboss": "风暴守望者",
       "boss": "终极首领"
     },
     "biome1": {
-      "name": "唯一篇章：大混沌远征战役",
+      "name": "唯一篇章：大云端远征战役",
       "subtitle": "英雄进军之途（17场史诗对决）"
 },
     "sectors": {
@@ -1987,7 +1987,7 @@ export const cn = {
             "desc": "牛头魔 x3 + 兽人 x1"
       },
       "6": {
-            "name": "第VI区域：终末审判王座",
+            "name": "第VI区域：天穹终审之巅",
             "desc": "牛头魔 x3 + 终极领主"
       }
 },
@@ -2059,7 +2059,7 @@ export const cn = {
       "node-13": {
             "name": "暗影兽人大法师",
             "subtitle": "第5阶段 · 暗影萨满",
-            "desc": "引导虚空黑暗秘术、封锁通往王座最后走廊的强力法师。"
+            "desc": "引导虚空黑暗秘术、封锁通往圣所最后走廊的强力法师。"
       },
       "node-14": {
             "name": "血誓卫士牛头魔",
@@ -2074,12 +2074,12 @@ export const cn = {
       "node-16": {
             "name": "万角之王牛头魔",
             "subtitle": "第6阶段 · 近卫军冠军统领",
-            "desc": "地下王国最令人胆寒的牛头魔君王。直面王座前的终极阻碍。"
+            "desc": "地下王国最令人胆寒的牛头魔君王。直面圣所圣境前的终极阻碍。"
       },
       "node-17": {
             "name": "终极领主：暗影主宰",
             "subtitle": "第6阶段 · 全篇终极巨魔首领！",
-            "desc": "混沌地下王国的绝对霸主。其噬魂魔剑足以吞噬整座军团的灵魂。"
+            "desc": "被天界放逐的黑暗主宰。妄图用邪恶之刃吞噬云之王国的纯洁力量。"
       }
 }
   },
@@ -2106,7 +2106,7 @@ export const cn = {
     "recruitMaxPossible": "招募最大可能数量 ({count})",
     "hp": "生命值",
     "infantry": {
-      "name": "王座卫队 (步兵)",
+      "name": "苍穹卫队 (步兵)",
       "role": "装备神圣重甲与雄狮坚盾的重装先锋。"
     },
     "archers": {
@@ -2180,7 +2180,7 @@ export const cn = {
     "sovereigns": {
       "sov-1": {
         "name": "马拉科尔霸王",
-        "kingdom": "混沌帝国",
+        "kingdom": "天穹帝国",
         "title": "太初古帝"
       },
       "sov-2": {
@@ -2255,7 +2255,7 @@ export const cn = {
       }
     },
     "yourSovereignty": "你的至高王国",
-    "chaosKingdom": "混沌王座堡垒"
+    "chaosKingdom": "云之王国"
   },
   "techTree": {
     "tag": "王国皇家最高科学院",
@@ -2320,8 +2320,8 @@ export const cn = {
     "readinessOptimal": "战备极佳",
     "readinessBasic": "基础兵力",
     "readinessLow": "驻军告急",
-    "heroBannerTitle": "混沌地下城：精准致命一击决斗！",
-    "heroBannerDesc": "配合时钟指针节拍逐层击溃敌人，最终诛灭混沌战狂督军。",
+    "heroBannerTitle": "苍穹地下城：精准致命一击决斗！",
+    "heroBannerDesc": "配合时钟指针节拍逐层击溃敌人，肃清深渊暗影的威胁。",
     "heroBannerBtn": "踏入地下城！",
     "victoryTitle": "辉煌大胜！",
     "victorySubtitle": "Your troops have secured the region: {name}",
@@ -2343,10 +2343,10 @@ export const cn = {
     },
     "items": {
       "exp-1": {
-        "name": "混沌军团地宫",
+        "name": "深渊暗影地宫",
         "region": "西陲边防线",
         "duration": "3间密室",
-        "description": "穿过3间地下密室，连续斩杀哥布林、狂暴兽人并直面混沌战狂督军。",
+        "description": "穿过3间地下密室，连续斩杀哥布林、狂暴兽人并直面深渊战狂督军。",
         "enemySquad": "哥布林 -> 烈焰兽人狂战士 -> 督军沃尔加斯 [首领]"
       },
       "exp-2": {
@@ -2364,11 +2364,11 @@ export const cn = {
         "enemySquad": "冰原雪狼 -> 霜岩魔像 -> 极地冰霜巨人 -> 寒冰泰坦王 [首领]"
       },
       "exp-4": {
-        "name": "混沌虚空深渊裂隙",
+        "name": "深渊暗影裂隙",
         "region": "星界虚无",
         "duration": "5间密室",
         "description": "彻底肃清从时空裂缝中不断涌现的虚空军团，守护浮岛根基。",
-        "enemySquad": "虚空猎手 -> 深渊奥术巫师 -> 混沌主宰 [终极首领]"
+        "enemySquad": "虚空猎手 -> 深渊奥术巫师 -> 暗影主宰 [终极首领]"
       }
     }
   },
@@ -2480,7 +2480,7 @@ export const cn = {
     "stayAndFight": "继续死战",
     "confirmFlee": "确认撤退",
     "biomeConqueredTitle": "第一区域全面征服！！",
-    "biomeConqueredSubtitle": "烈焰混沌荒原已被成功净化！",
+    "biomeConqueredSubtitle": "云之王国的苍穹已被成功净化！",
     "biomeConqueredDesc": "奥术传送门已苏醒。远古巨兽的神秘雨林（第二区域）正等待着你，伴随着未知秘辛、远古巨兽与旷世宝藏。",
     "proceedBiome2": "进军神秘雨林（第二区域）！"
   },

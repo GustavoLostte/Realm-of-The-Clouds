@@ -69,7 +69,7 @@ export function ProfileModal({
     { id: 'king', name: 'Rey Fundador', img: '/assets/avatars/avatar_king.webp', title: 'Monarca Heroico' },
     { id: 'valkyrie', name: 'Valquiria', img: '/assets/avatars/avatar_valkyrie.webp', title: 'Señora del Viento' },
     { id: 'paladin', name: 'Paladín Real', img: '/assets/avatars/avatar_paladin.webp', title: 'Guardia de Acero' },
-    { id: 'mage', name: 'Archimago', img: '/assets/avatars/avatar_mage.webp', title: 'Canalizador de Caos' },
+    { id: 'mage', name: 'Archimago', img: '/assets/avatars/avatar_mage.webp', title: 'Maestro de las Tormentas' },
   ]
 
   const handleSelectAvatar = (av) => {
@@ -231,7 +231,7 @@ export function ProfileModal({
                   )}
                 </div>
 
-                <p className="player-realm-title">{t('profile.realmTitle') || 'Soberano del Bastión del Trono'}</p>
+                <p className="player-realm-title">{t('profile.realmTitle') || 'Gobernante del Reino de las Nubes'}</p>
 
                 {/* Level XP Bar */}
                 <div className="profile-xp-box">

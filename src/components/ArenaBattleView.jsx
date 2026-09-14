@@ -140,7 +140,7 @@ export function ArenaBattleView({
         name: `Castillo de ${rival.name}`,
         category: 'Sede Imperial',
         image: '/assets/buildings/castillo/castillo_idle.webp',
-        desc: 'Cámara del trono y bóvedas reales. Alto botín, guardia reforzada.',
+        desc: 'Cámara de la corona y bóvedas reales. Alto botín, guardia reforzada.',
         baseChance: 0.65,
         rewards: {
           gold: Math.round(baseGold * 0.45 * relicLootMultiplier),

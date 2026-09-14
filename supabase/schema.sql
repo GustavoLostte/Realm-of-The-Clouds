@@ -1,5 +1,5 @@
 -- ==============================================================================
--- THRONE OF CHAOS: FORGING OF EMPIRES (TOC FOE)
+-- REINO DE LAS NUBES: AETHERIA EMPIRES
 -- Master Database Schema for Supabase Cloud (PostgreSQL)
 -- ==============================================================================
 
@@ -37,7 +37,7 @@ CREATE INDEX IF NOT EXISTS idx_kingdom_saves_updated_at ON public.kingdom_saves(
 CREATE TABLE IF NOT EXISTS public.leaderboard (
     id TEXT PRIMARY KEY,
     player_name TEXT NOT NULL DEFAULT 'Lord King',
-    kingdom_name TEXT NOT NULL DEFAULT 'Trono del Caos',
+    kingdom_name TEXT NOT NULL DEFAULT 'Reino de las Nubes',
     level INTEGER NOT NULL DEFAULT 1,
     trophies INTEGER NOT NULL DEFAULT 250,
     military_power BIGINT NOT NULL DEFAULT 1200,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS public.leaderboard (
 );
 
 -- Migración segura: agregar columnas si leaderboard ya existía previamente
-ALTER TABLE public.leaderboard ADD COLUMN IF NOT EXISTS kingdom_name TEXT NOT NULL DEFAULT 'Trono del Caos';
+ALTER TABLE public.leaderboard ADD COLUMN IF NOT EXISTS kingdom_name TEXT NOT NULL DEFAULT 'Reino de las Nubes';
 ALTER TABLE public.leaderboard ADD COLUMN IF NOT EXISTS military_power BIGINT NOT NULL DEFAULT 1200;
 ALTER TABLE public.leaderboard ADD COLUMN IF NOT EXISTS avatar TEXT NOT NULL DEFAULT '/assets/avatars/avatar_king.webp';
 ALTER TABLE public.leaderboard ADD COLUMN IF NOT EXISTS league_id TEXT NOT NULL DEFAULT 'league_bronze';

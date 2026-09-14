@@ -84,8 +84,8 @@ export const br = {
   },
   "start": {
     "welcomeSubtitle": "Construa seu Império Medieval • Conquiste o Reino",
-    "title": "TRONO DO CAOS",
-    "subtitle": "FORJA DE IMPÉRIOS",
+    "title": "REINO DAS NUVENS",
+    "subtitle": "AETHERIA EMPIRES",
     "touchToStart": "TOQUE EM QUALQUER LUGAR PARA INICIAR SEU REINADO",
     "enterEmailPrompt": "Digite seu e-mail para salvar seu reino na nuvem:",
     "emailPlaceholder": "seu_email@exemplo.com",
@@ -160,9 +160,9 @@ export const br = {
     "researchTooltip": "Árvore de Pesquisas Reais",
     "inventoryTooltip": "Baú de Relíquias e Mochila de Batalha",
     "shopTooltipReady": "Bazar Imperial • Giro Grátis na Roleta!",
-    "shopTooltip": "Bazar Imperial e Ofertas do Soberano",
-    "questsTooltip": "Missões do Trono",
-    "expeditionTooltip": "Expedições e Mapa Exterior",
+    "shopTooltip": "Bazar Imperial & Ofertas do Soberano",
+    "questsTooltip": "Missões do Reino",
+    "expeditionTooltip": "Expedições & Mapa Exterior",
     "settingsTooltip": "Configurações do Jogo"
   },
   "buildings": {
@@ -200,7 +200,7 @@ export const br = {
     "instantFinishGems": "Finalizar Imediatamente ({cost})!",
     "speedupTokensTitle": "Aceleradores de Inventário:",
     "indestructibleSeat": "Sede Imperial Indestrutível",
-    "indestructibleSeatTooltip": "A sede do trono imperial é inexpugnável e indestrutível.",
+    "indestructibleSeatTooltip": "O baluarte central do reino é inexpugnável e indestrutível.",
     "demolish": "Demolir",
     "demolishConfirm": "Tem certeza de que deseja demolir {name}? Você recuperará parte dos materiais.",
     "slots": {
@@ -283,17 +283,17 @@ export const br = {
     "heraldSpeech": "Saudações, Soberano! A coroa precisa de vossa sábia liderança para prosperar.",
     "chapters": {
       "c1Badge": "Capítulo I",
-      "c1Title": "Capítulo I: O Renascer do Feudo",
-      "c1Subtitle": "Reconstrua as muralhas e consolide seu primeiro assentamento no planalto.",
+      "c1Title": "Capítulo I: O Despertar nas Alturas",
+      "c1Subtitle": "Reconstrua o santuário sagrado e consolide seu primeiro assentamento sobre o mar de nuvens.",
       "c2Badge": "Capítulo II",
-      "c2Title": "Capítulo II: A Ameaça dos Ermos",
-      "c2Subtitle": "Repila a incursão orc e fortaleça o poder militar da cidade.",
+      "c2Title": "Capítulo II: A Tempestade nas Alturas",
+      "c2Subtitle": "Repila os invasores do abismo e reforce a frota defensiva da cidadela.",
       "c3Badge": "Capítulo III",
-      "c3Title": "Capítulo III: A Sombra do Senhor da Guerra",
-      "c3Subtitle": "Derrote feras elementais e destrua o temido Vorgath.",
+      "c3Title": "Capítulo III: Os Guardiões do Firmamento",
+      "c3Subtitle": "Purifique as criaturas lendárias corrompidas e restaure a harmonia do céu.",
       "c4Badge": "Capítulo IV",
-      "c4Title": "Capítulo IV: A Era do Grande Império",
-      "c4Subtitle": "Domine fendas cósmicas e erga o trono mais glorioso do reino."
+      "c4Title": "Capítulo IV: A Glória do Reino Celestial",
+      "c4Subtitle": "Domine os portais astrais e erga a cidadela mais resplandecente sobre as nuvens."
     },
     "story": {
       "q-c1-1": {
@@ -454,7 +454,7 @@ export const br = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "O Trono Dourado",
+        "title": "O Palácio das Nuvens",
         "desc": "Evolua a Prefeitura para o Nível 3."
       },
       "epic-population-boom": {
@@ -520,7 +520,7 @@ export const br = {
     "owned": "Possui",
     "redeemPrize": "Resgatar Prêmio",
     "yourSovereignty": "Sua Soberania (Você)",
-    "chaosKingdom": "Reino do Caos",
+    "chaosKingdom": "Reino das Nuvens",
     "tabPvp": "Coliseu",
     "tabRanking": "Classificação",
     "tabDefense": "Defesa",
@@ -549,7 +549,7 @@ export const br = {
     "leaguePlatinum": "Principado de Platina",
     "leagueDiamond": "Reino de Diamante",
     "leagueMaster": "Ascendente Imperial",
-    "leagueGrandmaster": "Soberano do Trono",
+    "leagueGrandmaster": "Soberano Celestial",
     "headerSub": "Conquiste ciudadelas rivais, acumule Coroas e suba na glória imperial.",
     "lootMultiplier": "Multiplicador de saque:",
     "nextLeague": "Próxima Liga:",
@@ -640,7 +640,7 @@ export const br = {
       "league_silver": "Baú de Prata da Guarda",
       "league_gold": "Baú Dourado de Cerco",
       "league_platinum": "Arca de Platina dos Heróis",
-      "league_master": "Baú do Imperador do Caos"
+      "league_master": "Baú do Imperador Celestial"
     },
     "rivals": {
       "rival_0": {
@@ -791,7 +791,7 @@ export const br = {
     "bonusExtra": "Extra",
     "getForPrice": "Obter por {price}",
     "fortuneWheelTitle": "Roda Imperial da Fortuna",
-    "fortuneWheelDesc": "Gire a roda sagrada do Caos para ganhar gemas, ouro, tropas de elite ou consumíveis de batalha!",
+    "fortuneWheelDesc": "Gire a roda sagrada das Nuvens para ganhar gemas, ouro, tropas de elite ou consumíveis de batalha!",
     "youWon": "VOCÊ GANHOU!",
     "claimWithGlory": "Reivindicar com Glória!",
     "pressEscToClose": "Pressione Esc ou clique para fechar",
@@ -819,7 +819,7 @@ export const br = {
         "desc": "Madeira maciça, granito e projetos para expandir sua fortaleza rapidamente."
       },
       "mythic_pack": {
-        "title": "Pacote Supremo do Soberano do Caos",
+        "title": "Pacote Supremo do Soberano Celestial",
         "desc": "Baú lendário contendo o Herói Paladino, relíquias épicas e distintivo VIP de Coroa."
       }
     },
@@ -869,7 +869,7 @@ export const br = {
         "badge": "MELHOR VALOR"
       },
       "pack_vault": {
-        "name": "Cofre do Trono",
+        "name": "Cofre Celestial",
         "desc": "Riqueza arcana ilimitada para dominar todos os biomas e forjar um império lendário.",
         "badge": "TITÂNICO"
       }
@@ -908,7 +908,7 @@ export const br = {
     "tabAchievements": "Conquistas",
     "tabAvatars": "Retratos",
     "heroLevel": "Level {level}",
-    "realmTitle": "Soberano do Bastião do Trono",
+    "realmTitle": "Soberano do Reino das Nuvens",
     "levelProgress": "Progresso do Nível",
     "xpRemaining": "{xp} XP to Level {nextLevel}",
     "statPower": "Poder Imperial",
@@ -917,7 +917,7 @@ export const br = {
     "statTech": "Pesquisas Concluídas",
     "statArena": "Pontos de Arena",
     "passTitle": "Passe NFT Imperial",
-    "passSubtitle": "Soberano do Planalto do Caos",
+    "passSubtitle": "Soberano do Reino das Nuvens",
     "passMinted": "Cunhado na Web3",
     "passConnected": "Carteira Conectada",
     "avatarSelectorTitle": "Selecionar Retrato do Monarca",
@@ -993,7 +993,7 @@ export const br = {
     "manualSave": "Sincronizar Backup na Nuvem Agora",
     "selectLanguage": "Selecionar Idioma / Select Language:",
     "saveSuccess": "O progresso do seu reino foi salvo na nuvem com sucesso!",
-    "creditsTitle": "Trono do Caos: Forja de Impérios",
+    "creditsTitle": "Reino das Nuvens: Aetheria Empires",
     "creditsText": "Criado com dedicação. Uma experiência épica de estratégia medieval em tempo real.",
     "modalTitle": "Configurações e Menu",
     "modalSubtitle": "Ajustes do sistema, áudio, gráficos e Web3",
@@ -1023,7 +1023,7 @@ export const br = {
     "pwaOfflineReadyDesc": "WebP textures, audio, and realm data stored on your device.",
     "pwaUpdateBtn": "Refresh Cache",
     "identitySectionTitle": "Identidade do Soberano",
-    "identityDesc": "Seu nome de Soberano no Trono e no Ranking",
+    "identityDesc": "Seu nome de Soberano no Reino e no Ranking",
     "changeNameTitle": "Mudar Nome de Soberano",
     "changeName": "Mudar Nome",
     "defaultPlayerName": "Lord King",
@@ -1043,7 +1043,7 @@ export const br = {
     "disconnectWallet": "Desconectar",
     "connectWallet": "Conectar Carteira",
     "activeNetwork": "Rede Ativa",
-    "tokenChaos": "Token $CHAOS",
+    "tokenChaos": "Token $AETH",
     "gasFee": "Taxa de Gas",
     "gasless": "0.00 (Sem Gas)",
     "onChainSync": "Sincronização On-Chain",
@@ -1053,7 +1053,7 @@ export const br = {
     "gameTagline": "Estratégia e conquista de impérios medievais para celular e desktop.",
     "walletLinkedNotice": "Carteira Web3 vinculada: {address}",
     "walletDisconnectedNotice": "Carteira Web3 desconectada",
-    "syncingStateNotice": "Sincronizando estado do reino com TOC Chaos L2..."
+    "syncingStateNotice": "Sincronizando estado do reino com Aetheria Cloud L2..."
   },
   "levelup": {
     "title": "ASCENSÃO IMPERIAL!",
@@ -1081,7 +1081,7 @@ export const br = {
   "tutorial": {
     "blockedInTutorial": "Complete ou finalize o tutorial com o Senescal primeiro.",
     "blockedInTutorialShort": "Em Tutorial...",
-    "characterTitle": "O GRANDE SENESCAL DO TRONO",
+    "characterTitle": "O GRANDE SENESCAL DAS NUVENS",
     "stepCounter": "Passo {current} de {total}",
     "skip": "Pular tutorial",
     "prev": "Voltar",
@@ -1105,20 +1105,20 @@ export const br = {
     "step4Tip": "Você também pode tocar nas bolhas flutuantes individuais sobre cada edifício.",
     "step5Title": "Forças Armadas & Conquista",
     "step5Subtitle": "Exército, Ermos e Coliseu",
-    "step5Desc": "Recrute tropas no Quartel para defender sua fortaleza, combata feras nas Masmorras do Caos e desafie outros soberanos no Coliseu.",
+    "step5Desc": "Recrute tropas no Quartel para defender sua fortaleza, combata feras nas Masmorras Celestiais e desafie outros soberanos no Coliseu.",
     "step5Tip": "Tropas treinadas protegem seu feudo contra invasões inimigas.",
     "graduationTitle": "Treinamento Concluído!",
-    "graduationSubtitle": "O Grande Senescal do Trono concede a você o Tributo de Formatura",
+    "graduationSubtitle": "O Grande Senescal das Nuvens concede a você o Tributo de Formatura",
     "graduationProse": "Você demonstrou a sabedoria e a determinação necessárias para forjar um império glorioso. O Alto Conselho Real confere a você este baú de fundação:",
     "graduationClaimBtn": "Reivindicar Tributo e Começar Reinado!"
   },
   "starterWelcome": {
     "tag": "DECRETO REAL DE FUNDAÇÃO",
     "title": "Bem-vindo, Meu Soberano!",
-    "subtitle": "As terras virgens do Caos aguardam a glória do seu feudo.",
+    "subtitle": "As cúpulas celestiais do Reino das Nuvens aguardam a glória do seu feudo.",
     "prose": "Você chegou ao planalto central após um longo êxodo. No coração da praça principal ergue-se a Fortaleza Imperial. Ao seu redor estendem-se 11 lotes livres prontos para serem transformados em uma próspera metrópole militar e econômica.",
     "roadmapTitle": "Seu Caminho Passo a Passo (Capítulo I):",
-    "step1Title": "Decreto do Trono",
+    "step1Title": "Decreto Celestial",
     "step1Desc": "Reivindique seu primeiro decreto no Heraldo para receber tributos de ouro e madeira.",
     "step2Title": "Mina de Ouro & Casas",
     "step2Desc": "Erga sua primeira mina e casas em lotes livres marcados com [+].",
@@ -1126,7 +1126,7 @@ export const br = {
     "step3Desc": "Construa o Quartel de Guerra para recrutar seus primeiros soldados.",
     "step4Title": "Campanha & Masmorras",
     "step4Desc": "Marche para a batalha nos Ermos para repelir orcs e conquistar relíquias lendárias!",
-    "beginBtn": "Tomar Posse do Trono & Começar!"
+    "beginBtn": "Tomar Posse do Reino & Começar!"
   },
   "starterPack": {
     "bannerTag": "OFERTA DE BOAS-VINDAS",
@@ -1215,7 +1215,7 @@ export const br = {
     "barmaidName": "Helena a Taverneira",
     "lumberjackName": "Grom o Lenhador",
     "foresterName": "Torvald o Machadeiro",
-    "guardQuote1": "Pelo Reino e pelo Trono do Caos!",
+    "guardQuote1": "Pela honra do Reino das Nuvens!",
     "guardQuote2": "Tudo calmo no perímetro defensivo!",
     "guardQuote3": "Que ninguém perturbe a paz imperial!",
     "sergeantQuote1": "Inspecionando os postos da guarda!",
@@ -1242,7 +1242,7 @@ export const br = {
     "constructionCompleteDuringAbsence": "{count} obras terminadas durante sua ausência: {names}!",
     "welcomeBack": "Bem-vindo, {name}! Estado do reino sincronizado.",
     "newKingdomCreated": "Novo reino criado com {email}! Comece sua conquista.",
-    "guestWelcome": "Bem-vindo ao Trono do Caos! Modo Convidado ativo.",
+    "guestWelcome": "Bem-vindo ao Reino das Nuvens! Modo Convidado ativo.",
     "offlineMode": "📡 No internet connection. Offline mode active (your realm is stored locally).",
     "onlineRestored": "⚡ Connection restored! Realm synchronized with the cloud.",
     "sovereignNameSaved": "Nome do Soberano salvo: {name}!",
@@ -1317,12 +1317,12 @@ export const br = {
     "kingdomReset": "O reino foi refundado! Você começará pelo Castelo Imperial passo a passo.",
     "sessionClosed": "Sessão encerrada com honra. Progresso salvo na nuvem.",
     "empireSaved": "O legado do seu império foi salvo com sucesso!",
-    "tutorialRestarted": "O Grande Senescal do Trono irá guiá-lo passo a passo!",
+    "tutorialRestarted": "O Grande Senescal das Nuvens irá guiá-lo passo a passo!",
     "speedupFreeComplete": "Aceleração gratuita completada: {name} Nv. {level}!",
     "speedupGemComplete": "{name} concluído instantaneamente com {cost} gemas!",
     "web3WalletLinked": "Web3 wallet linked: {address}",
     "web3WalletDisconnected": "Carteira Web3 desconectada",
-    "syncingBlockchain": "Sincronizando estado do reino com TOC Chaos L2...",
+    "syncingBlockchain": "Sincronizando estado do reino com Aetheria Cloud L2...",
     "avatarUpdated": "Avatar updated: {name}",
     "sovereignNameSavedProfile": "Sovereign name saved: {name}",
     "xpDecree": "Decreto: {title}",
@@ -1414,7 +1414,7 @@ export const br = {
       "subtitle": "Festividades Populares",
       "emissaryName": "Burgomestre Elric",
       "emissaryRole": "Porta-voz dos Colonos",
-      "description": "Os campos renderam boas colheitas e os colonos pedem para organizar um banquete na praça principal para elevar a moral e celebrar o trono.",
+      "description": "Os campos renderam boas colheitas e os colonos pedem para organizar um banquete celestial na praça principal para elevar a moral e celebrar o reino.",
       "choices": {
         "festival_grand": {
           "label": "Financiar Banquete Real Grandioso",
@@ -1544,7 +1544,7 @@ export const br = {
       },
       "c4": {
         "title": "Capítulo IV: A Era do Grande Império",
-        "subtitle": "Domine os portais cósmicos e erga o trono mais glorioso do reino.",
+        "subtitle": "Domine os portais astrais e erga a cidadela mais resplandecente sobre as nuvens.",
         "badge": "Capítulo IV"
       }
     },
@@ -1668,7 +1668,7 @@ export const br = {
     },
     "epic": {
       "epic-castle-tier": {
-        "title": "O Trono Dourado",
+        "title": "O Palácio das Nuvens",
         "desc": "Evolua a Prefeitura para o Nível 3."
       },
       "epic-population-boom": {
@@ -1704,13 +1704,13 @@ export const br = {
     "3": {
       "title": "Condado Próspero",
       "unlocks": [
-        "Portal Arcano do Caos",
+        "Portal Arcano Celestial",
         "Melhorias de Fortaleza Nível II",
         "+10% de Produção Global"
       ]
     },
     "4": {
-      "title": "Reino do Trono do Caos",
+      "title": "Bastião das Nuvens",
       "unlocks": [
         "Comandante Paladino",
         "Expedições Dimensionais Arcanas",
@@ -1730,7 +1730,7 @@ export const br = {
       "small": "Punhado de Gemas",
       "medium": "Bolsa de Gemas",
       "large": "Baú Imperial de Gemas",
-      "vault": "Cofre do Trono"
+      "vault": "Cofre Celestial"
     },
     "bundles": {
       "conqueror": {
@@ -1749,7 +1749,7 @@ export const br = {
     "perks": {
       "oneClickHarvest": "Berrante do Arauto (Colheita Total)",
       "secondBuilder": "Segundo Construtor Real",
-      "dailyBlessing": "Bênção Diária do Caos (Passe Mensal)",
+      "dailyBlessing": "Bênção Diária Celestial (Passe Mensal)",
       "engineering": "Mestria em Engenharia Imperial"
     },
     "wheelPrizes": {
@@ -1766,9 +1766,9 @@ export const br = {
     },
     "relics": {
       "relic_corona_caos": {
-        "name": "Coroa do Caos",
+        "name": "Coroa do Firmamento",
         "desc": "+15% de produção de Ouro em todas as minas. Eleva o prestígio do reino.",
-        "dropSource": "Senhor Supremo Vorgath (Chefe do Bioma 1)"
+        "dropSource": "Guardião Celestial Supremo (Chefe do Bioma 1)"
       },
       "relic_espada_jade": {
         "name": "Espada Rúnica de Jade",
@@ -1958,13 +1958,13 @@ export const br = {
     "enemyTypes": {
       "orc": "Orc",
       "minotaur": "Minotauro",
-      "miniboss": "Minichefe do Caos",
+      "miniboss": "Guardião da Tempestade",
       "boss": "Chefe Supremo"
     },
     "biome1": {
-      "name": "Capítulo Único: A Grande Campanha do Caos",
+      "name": "Capítulo Único: A Grande Campanha das Nuvens",
       "subtitle": "A Marcha dos Heróis (17 Encontros Épicos)"
-},
+    },
     "sectors": {
       "1": {
             "name": "Setor I: Vanguarda Orc",
@@ -1980,17 +1980,17 @@ export const br = {
       },
       "4": {
             "name": "Setor IV: Cripta do Minichefe",
-            "desc": "1 Minichefe"
+            "desc": "1 Guardião da Tempestade"
       },
       "5": {
             "name": "Setor V: Labirinto das Sombras",
             "desc": "3 Minotauros + 1 Orc"
       },
       "6": {
-            "name": "Setor VI: Trono do Juízo Final",
+            "name": "Setor VI: Cúpula do Juízo Celestial",
             "desc": "3 Minotauros + Chefe Supremo"
       }
-},
+    },
     "combat": {
       "dazed": "[ATORDISSO!] -",
       "counter": "[CONTRA-ATAQUE!] -"
@@ -2074,12 +2074,12 @@ export const br = {
       "node-16": {
             "name": "Minotauro Rei dos Chifres",
             "subtitle": "Fase 6 · Campeão da Guarda",
-            "desc": "O mais temido dos minotauros do reino subterrâneo. Último obstáculo antes do Trono."
+            "desc": "O mais temido dos minotauros do reino subterrâneo. Último obstáculo antes das alturas sagradas."
       },
       "node-17": {
             "name": "CHEFE SUPREMO: Senhor das Trevas",
             "subtitle": "Fase 6 · ¡GRANDE CHEFE FINAL DO CAPÍTULO!",
-            "desc": "Soberano absoluto da Masmorra do Caos. Sua lâmina amaldiçoada devora almas inteiras."
+            "desc": "Soberano sombrio banido do céu. Pretende corromper a pureza do Reino das Nuvens com sua espada ímpia."
       }
 }
   },
@@ -2106,7 +2106,7 @@ export const br = {
     "recruitMaxPossible": "Recrutar máx possível ({count})",
     "hp": "VIDA",
     "infantry": {
-      "name": "Guarda do Trono (Infantaria)",
+      "name": "Guarda Celestial (Infantaria)",
       "role": "Vanguarda pesada com armadura abençoada e escudo de leão."
     },
     "archers": {
@@ -2180,7 +2180,7 @@ export const br = {
     "sovereigns": {
       "sov-1": {
         "name": "Soberano Malakor",
-        "kingdom": "Império do Caos",
+        "kingdom": "Império Celestial",
         "title": "Imperador Primordial"
       },
       "sov-2": {
@@ -2255,7 +2255,7 @@ export const br = {
       }
     },
     "yourSovereignty": "Seu Reino Soberano",
-    "chaosKingdom": "Bastião do Trono"
+    "chaosKingdom": "Bastião das Nuvens"
   },
   "techTree": {
     "tag": "Grande Academia do Reino",
@@ -2320,13 +2320,13 @@ export const br = {
     "readinessOptimal": "Prontidão Ótima",
     "readinessBasic": "Forças Básicas",
     "readinessLow": "Guarnição Escassa",
-    "heroBannerTitle": "Masmorras do Caos: Duelo com Golpe Crítico!",
-    "heroBannerDesc": "Lute sala por sala ajustando o medidor de precisão e derrote o Senhor da Guerra do Caos.",
+    "heroBannerTitle": "Masmorras Celestiais: Duelo com Golpe Crítico!",
+    "heroBannerDesc": "Lute sala por sala ajustando o medidor de precisão e derrote o Senhor das Sombras.",
     "heroBannerBtn": "Entrar na Masmorra!",
     "victoryTitle": "Vitória Gloriosa!",
     "victorySubtitle": "Your troops have secured the region: {name}",
     "spoilsTitle": "Tesouros e Espólios Resgatados:",
-    "claimSpoilsBtn": "Reivindicar Espólios e Retornar ao Trono",
+    "claimSpoilsBtn": "Reivindicar Espólios e Retornar ao Reino",
     "suggestedTroops": "Suggested: {count} troops",
     "enemyLabel": "Inimigo:",
     "winChanceLabel": "Chance:",
@@ -2343,10 +2343,10 @@ export const br = {
     },
     "items": {
       "exp-1": {
-        "name": "Criptas da Legião do Caos",
+        "name": "Criptas das Sombras Abissais",
         "region": "Fronteira Ocidental",
         "duration": "3 Salas",
-        "description": "Avance por 3 câmaras subterrâneas derrotando goblins, orcs e o Senhor do Caos.",
+        "description": "Avance por 3 câmaras subterrâneas derrotando invasores e o Senhor das Sombras.",
         "enemySquad": "Goblin -> Orc Berserker -> Senhor Vorgath [CHEFE]"
       },
       "exp-2": {
@@ -2364,11 +2364,11 @@ export const br = {
         "enemySquad": "Lobo da Neve -> Golem de Gelo -> Gigante Glacial -> Rei Titã de Gelo [CHEFE]"
       },
       "exp-4": {
-        "name": "Fenda Abissal do Caos",
+        "name": "Fenda Abissal das Sombras",
         "region": "Vazio Astral",
         "duration": "5 Salas",
         "description": "Erradique as legiões do vazio que emergem das fraturas dimensionais.",
-        "enemySquad": "Rastreador do Vazio -> Feiticeiro Abissal -> Senhor do Caos [CHEFE FINAL]"
+        "enemySquad": "Rastreador do Vazio -> Feiticeiro Abissal -> Senhor das Sombras [CHEFE FINAL]"
       }
     }
   },
@@ -2480,7 +2480,7 @@ export const br = {
     "stayAndFight": "Continuar Lutando",
     "confirmFlee": "Confirmar Fuga",
     "biomeConqueredTitle": "BIOMA 1 CONQUISTADO!!",
-    "biomeConqueredSubtitle": "Os Ermos Flamejantes do Caos foram purificados!",
+    "biomeConqueredSubtitle": "Os Céus do Reino das Nuvens foram purificados!",
     "biomeConqueredDesc": "O Portal Arcano despertou. As terras virgens da Selva Mística das Bestas Ancestrais (Bioma 2) aguardam por você com novos mistérios, feras lendárias e tesouros colossais.",
     "proceedBiome2": "Viajar para a Selva Mística (Bioma 2)!"
   },

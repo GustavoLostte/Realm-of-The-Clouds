@@ -25,7 +25,7 @@ const AVATAR_LIST = [
   { id: 'king', name: 'Rey Fundador', img: '/assets/avatars/avatar_king.webp', title: 'Monarca Heroico' },
   { id: 'valkyrie', name: 'Valquiria', img: '/assets/avatars/avatar_valkyrie.webp', title: 'Señora del Viento' },
   { id: 'paladin', name: 'Paladín Real', img: '/assets/avatars/avatar_paladin.webp', title: 'Guardia de Acero' },
-  { id: 'mage', name: 'Archimago', img: '/assets/avatars/avatar_mage.webp', title: 'Canalizador del Caos' },
+  { id: 'mage', name: 'Archimago', img: '/assets/avatars/avatar_mage.webp', title: 'Maestro de las Tormentas' },
 ]
 
 export function UsernameModal({ 
