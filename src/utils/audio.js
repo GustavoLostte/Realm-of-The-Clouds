@@ -74,8 +74,9 @@ class SoundController {
     this.hasUserInteracted = false
     this.bgmVolume = 0.35
     this.sfxVolume = 0.85
-    this.ambientVolume = 0.20
+    this.ambientVolume = 0.55
     this.ambientAudio = null
+    this.isMusicInBreak = false
     this.activeConstructions = new Map() // slotId -> HTMLAudioElement
     this.currentBuildingAudio = null
     this.soundCache = {}
@@ -123,10 +124,34 @@ class SoundController {
         this.bgmAudio.volume = this.bgmVolume
         this.bgmAudio.preload = 'auto'
 
+        // Detect musical cut / loop boundary and swell map ambient sounds during the break
+        this.bgmAudio.addEventListener('timeupdate', () => {
+          if (!this.bgmAudio) return
+          // The song cadences at 169s, silence/pause is from ~171.2s to 174s (loop restart)
+          const inBreak = this.bgmAudio.currentTime >= 169.5 && this.bgmAudio.currentTime <= 174.0
+          if (this.isMusicInBreak !== inBreak) {
+            this.isMusicInBreak = inBreak
+            this.updateAmbientVolume()
+          }
+        })
+
+        this.bgmAudio.addEventListener('pause', () => {
+          this.isMusicInBreak = true
+          this.updateAmbientVolume()
+        })
+
+        this.bgmAudio.addEventListener('play', () => {
+          this.isMusicInBreak = false
+          this.updateAmbientVolume()
+          if (this.canPlayGameSound() && this.ambientAudio && this.ambientAudio.paused) {
+            this.ambientAudio.play().catch(() => {})
+          }
+        })
+
         // Fallback error listener
         this.bgmAudio.addEventListener('error', () => {
           if (this.bgmAudio && this.bgmAudio.src.includes('The_Keep_at_First_Light.ogg')) {
-            this.bgmAudio.src = '/assets/FX%20Sound/Map1/Background_sound/The_Keep_at_First_Light.ogg'
+            this.bgmAudio.src = '/assets/audio/The_Keep_at_First_Light.ogg'
             if (this.enabled && this.hasUserInteracted && this.gameStarted) {
               this.bgmAudio.play().catch(() => {})
             }
@@ -136,16 +161,24 @@ class SoundController {
         // ignore
       }
 
-      // 2. Ambient FX: Environmental waterfall & birds loop
+      // 2. Ambient FX: Environmental waterfall, cloud breeze, birds & celestial chimes
       try {
         this.ambientAudio = new Audio('/assets/audio/background_ambient.ogg')
         this.ambientAudio.loop = true
         this.ambientAudio.volume = this.ambientVolume
         this.ambientAudio.preload = 'auto'
 
+        // Resilient loop recovery for mobile / safari tab backgrounding
+        this.ambientAudio.addEventListener('ended', () => {
+          if (this.canPlayGameSound()) {
+            this.ambientAudio.currentTime = 0
+            this.ambientAudio.play().catch(() => {})
+          }
+        })
+
         this.ambientAudio.addEventListener('error', () => {
           if (this.ambientAudio && this.ambientAudio.src.includes('background_ambient.ogg')) {
-            this.ambientAudio.src = '/assets/FX%20Sound/Map1/FX/Timeline%201.ogg'
+            this.ambientAudio.src = '/assets/audio/background_ambient_vorbis.ogg'
             if (this.enabled && this.hasUserInteracted && this.gameStarted) {
               this.ambientAudio.play().catch(() => {})
             }
@@ -161,6 +194,7 @@ class SoundController {
           this.hasUserInteracted = true
           this.initCtx()
           if (this.enabled && this.gameStarted) {
+            this.playAmbient()
             this.playBGM()
           }
           window.removeEventListener('pointerdown', unlockAudio)
@@ -176,7 +210,7 @@ class SoundController {
   setGameStarted(started) {
     this.gameStarted = !!started
     if (!this.gameStarted) {
-      this.pauseBGM()
+      this.pauseBGM(true)
       this.stopBuildingSound()
       this.activeConstructions.forEach((audio) => {
         try {
@@ -185,6 +219,9 @@ class SoundController {
         } catch {}
       })
       this.activeConstructions.clear()
+    } else {
+      this.playAmbient()
+      this.playBGM()
     }
   }
 
@@ -205,6 +242,25 @@ class SoundController {
     }
   }
 
+  updateAmbientVolume() {
+    if (!this.ambientAudio) return
+    const base = this.ambientVolume
+    // During musical breaks, pauses, or cuts, boost map sound effects so they stand out clearly!
+    const targetVol = (this.isMusicInBreak || !this.bgmAudio || this.bgmAudio.paused)
+      ? Math.min(1.0, base * 1.35)
+      : base * 0.85
+    this.ambientAudio.volume = targetVol
+  }
+
+  playAmbient() {
+    if (!this.canPlayGameSound() || !this.ambientAudio) return
+    this.updateAmbientVolume()
+    const ambientPromise = this.ambientAudio.play()
+    if (ambientPromise !== undefined) {
+      ambientPromise.catch(() => {})
+    }
+  }
+
   playBGM() {
     if (!this.canPlayGameSound()) return
     if (this.bgmAudio) {
@@ -216,21 +272,39 @@ class SoundController {
         playPromise.catch(() => {})
       }
     }
-    if (this.ambientAudio) {
-      this.ambientAudio.volume = this.ambientVolume
-      const ambientPromise = this.ambientAudio.play()
-      if (ambientPromise !== undefined) {
-        ambientPromise.catch(() => {})
+    this.playAmbient()
+  }
+
+  pauseBGM(pauseAmbient = false) {
+    if (this.bgmAudio) {
+      this.bgmAudio.pause()
+    }
+    if (pauseAmbient && this.ambientAudio) {
+      this.ambientAudio.pause()
+    } else {
+      // If only music is paused/cut, keep playing map sound effects!
+      this.isMusicInBreak = true
+      this.updateAmbientVolume()
+      if (this.canPlayGameSound() && this.ambientAudio && this.ambientAudio.paused) {
+        this.ambientAudio.play().catch(() => {})
       }
     }
   }
 
-  pauseBGM() {
+  stopBGM(stopAmbient = false) {
     if (this.bgmAudio) {
       this.bgmAudio.pause()
+      this.bgmAudio.currentTime = 0
     }
-    if (this.ambientAudio) {
+    if (stopAmbient && this.ambientAudio) {
       this.ambientAudio.pause()
+      this.ambientAudio.currentTime = 0
+    } else {
+      this.isMusicInBreak = true
+      this.updateAmbientVolume()
+      if (this.canPlayGameSound() && this.ambientAudio && this.ambientAudio.paused) {
+        this.ambientAudio.play().catch(() => {})
+      }
     }
   }
 
@@ -241,6 +315,7 @@ class SoundController {
         ? Math.max(0.05, this.bgmVolume * 0.35) 
         : this.bgmVolume
     }
+    this.updateAmbientVolume()
   }
 
   setSFXVolume(vol) {
@@ -255,9 +330,7 @@ class SoundController {
 
   setAmbientVolume(vol) {
     this.ambientVolume = Math.max(0, Math.min(1, vol))
-    if (this.ambientAudio) {
-      this.ambientAudio.volume = this.ambientVolume
-    }
+    this.updateAmbientVolume()
   }
 
   getRandomPitch(amount = 0.12) {
@@ -1317,9 +1390,10 @@ class SoundController {
   toggleSound() {
     this.enabled = !this.enabled
     if (this.enabled && this.gameStarted) {
+      this.playAmbient()
       this.playBGM()
     } else {
-      this.pauseBGM()
+      this.pauseBGM(true)
       this.stopBuildingSound()
       this.activeConstructions.forEach((audio) => {
         try {

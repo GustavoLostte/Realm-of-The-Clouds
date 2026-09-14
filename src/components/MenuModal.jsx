@@ -46,6 +46,7 @@ export function MenuModal({
   const [activeTab, setActiveTab] = useState('settings') // 'settings' | 'web3' | 'info'
   const [bgmVolume, setBgmVolume] = useState(Math.round((soundManager.bgmVolume || 0.35) * 100))
   const [sfxVolume, setSfxVolume] = useState(Math.round((soundManager.sfxVolume || 0.85) * 100))
+  const [ambientVolume, setAmbientVolume] = useState(Math.round((soundManager.ambientVolume || 0.55) * 100))
   const [walletConnected, setWalletConnected] = useState(false)
   const [walletAddress, setWalletAddress] = useState('0x71C8...4F2A')
   const [confirmReset, setConfirmReset] = useState(false)
@@ -254,6 +255,22 @@ export function MenuModal({
                         const val = Number(e.target.value)
                         setSfxVolume(val)
                         soundManager.setSFXVolume(val / 100)
+                      }}
+                      className="candy-slider"
+                    />
+                  </div>
+
+                  <div className="menu-slider-row">
+                    <span className="slider-label">{t('menu.ambientVolume', { volume: ambientVolume }) || `Efectos del Mapa (${ambientVolume}%)`}</span>
+                    <input 
+                      type="range" 
+                      min="0" 
+                      max="100" 
+                      value={ambientVolume} 
+                      onChange={(e) => {
+                        const val = Number(e.target.value)
+                        setAmbientVolume(val)
+                        soundManager.setAmbientVolume(val / 100)
                       }}
                       className="candy-slider"
                     />

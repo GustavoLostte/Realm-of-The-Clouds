@@ -1001,6 +1001,7 @@ export const kr = {
     "musicDesc": "오케스트라 음악 및 음향 활성화",
     "bgmVolume": "음악 음량 ({volume}%)",
     "sfxVolume": "효과음 음량 ({volume}%)",
+    "ambientVolume": "지도 환경 음향 ({volume}%)",
     "displaySectionTitle": "화면 및 성능",
     "fpsTitle": "프레임 레이트",
     "fpsDesc": "최대 부드러움의 60 FPS 또는 배터리 절약 30 FPS",

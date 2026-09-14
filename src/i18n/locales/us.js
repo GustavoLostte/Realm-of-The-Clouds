@@ -1001,6 +1001,7 @@ export const us = {
     "musicDesc": "Enable orchestral music and sounds",
     "bgmVolume": "Music Volume ({volume}%)",
     "sfxVolume": "Sound Effects ({volume}%)",
+    "ambientVolume": "Map Ambience ({volume}%)",
     "displaySectionTitle": "Display & Performance",
     "fpsTitle": "Frame Rate",
     "fpsDesc": "60 FPS for maximum smoothness or 30 FPS for battery saving",

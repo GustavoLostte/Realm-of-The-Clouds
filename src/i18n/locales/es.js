@@ -1001,6 +1001,7 @@ export const es = {
     "musicDesc": "Activar música sinfónica y sonidos",
     "bgmVolume": "Volumen Música ({volume}%)",
     "sfxVolume": "Efectos Sonoros ({volume}%)",
+    "ambientVolume": "Efectos del Mapa ({volume}%)",
     "displaySectionTitle": "Pantalla & Rendimiento",
     "fpsTitle": "Tasa de Fotogramas",
     "fpsDesc": "60 FPS para máxima fluidez o 30 FPS para ahorrar batería",

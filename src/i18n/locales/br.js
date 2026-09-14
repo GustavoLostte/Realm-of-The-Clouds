@@ -1001,6 +1001,7 @@ export const br = {
     "musicDesc": "Ativar música orquestral e sons",
     "bgmVolume": "Volume da Música ({volume}%)",
     "sfxVolume": "Efeitos Sonoros ({volume}%)",
+    "ambientVolume": "Efeitos do Mapa ({volume}%)",
     "displaySectionTitle": "Tela e Desempenho",
     "fpsTitle": "Taxa de Quadros",
     "fpsDesc": "60 FPS para máxima fluidez ou 30 FPS para economizar bateria",
