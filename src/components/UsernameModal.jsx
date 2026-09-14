@@ -22,10 +22,10 @@ const NOBLE_NAME_SUGGESTIONS = [
 ]
 
 const AVATAR_LIST = [
-  { id: 'king', name: 'Rey Fundador', img: '/assets/avatars/avatar_king.webp', title: 'Monarca Heroico' },
-  { id: 'valkyrie', name: 'Valquiria', img: '/assets/avatars/avatar_valkyrie.webp', title: 'Señora del Viento' },
-  { id: 'paladin', name: 'Paladín Real', img: '/assets/avatars/avatar_paladin.webp', title: 'Guardia de Acero' },
-  { id: 'mage', name: 'Archimago', img: '/assets/avatars/avatar_mage.webp', title: 'Maestro de las Tormentas' },
+  { id: 'king', name: 'Arcángel Soberano', img: '/assets/avatars/avatar_king.webp', title: 'Monarca Celestial' },
+  { id: 'valkyrie', name: 'Valquiria Celestial', img: '/assets/avatars/avatar_valkyrie.webp', title: 'Seraphim de Batalla' },
+  { id: 'paladin', name: 'Paladín Divino', img: '/assets/avatars/avatar_paladin.webp', title: 'Custodio de la Luz' },
+  { id: 'mage', name: 'Archimago Astral', img: '/assets/avatars/avatar_mage.webp', title: 'Maestro de las Estrellas' },
 ]
 
 export function UsernameModal({ 
