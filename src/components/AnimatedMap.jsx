@@ -87,6 +87,21 @@ export function AnimatedMap({ className = 'island-background', isPaused = false 
     }
   }, [isPaused])
 
+  const [isMobile] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+  })
+
+  const videoSources = isMobile ? {
+    webm: '/assets/video/map_animated_mobile.webm',
+    mp4: '/assets/video/map_animated_mobile.mp4',
+    poster: '/assets/map_background_mobile.webp'
+  } : {
+    webm: '/assets/video/map_animated_desktop.webm',
+    mp4: '/assets/video/map_animated_desktop.mp4',
+    poster: '/assets/map_background.webp'
+  }
+
   return (
     <div className="animated-map-wrapper">
       {useVideo ? (
@@ -99,16 +114,16 @@ export function AnimatedMap({ className = 'island-background', isPaused = false 
           preload="auto"
           disablePictureInPicture
           disableRemotePlayback
-          poster="/assets/map_background.webp"
+          poster={videoSources.poster}
           className={`${className} map-video-anim`}
           onError={() => setUseVideo(false)}
         >
-          <source src="/assets/video/map_animated.webm" type="video/webm" />
-          <source src="/assets/video/map_animated.mp4" type="video/mp4" />
+          <source src={videoSources.webm} type="video/webm" />
+          <source src={videoSources.mp4} type="video/mp4" />
         </video>
       ) : (
         <img
-          src="/assets/map_background.webp"
+          src={videoSources.poster}
           alt="Throne of Chaos Citadel"
           className={className}
           draggable="false"
