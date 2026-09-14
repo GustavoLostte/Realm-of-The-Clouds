@@ -1345,8 +1345,8 @@ img, picture, svg, canvas, [draggable] {
 
 .sprite-castillo,
 .sprite-ayuntamiento {
-  width: 260px;
-  height: 196px;
+  width: 250px;
+  height: 235px;
   max-width: none;
   max-height: none;
   transform-origin: 50% 90%;
