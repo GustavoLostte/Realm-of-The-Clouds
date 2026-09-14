@@ -2,8 +2,8 @@
 // Aetheria Empires Edition - Fully resilient offline-first Supabase client
 import { createClient } from '@supabase/supabase-js'
 
-const DEFAULT_SUPABASE_URL = 'https://hoghpltpvqfdpxcepqlr.supabase.co'
-const DEFAULT_SUPABASE_KEY = 'sb_publishable_BtISgMp6lgm6kD6vXCQWzw_WheXO0cf'
+const DEFAULT_SUPABASE_URL = 'https://ugdzhydclffxwaflomex.supabase.co'
+const DEFAULT_SUPABASE_KEY = 'sb_publishable_eqTBcAWlley9TbPyP3v89Q_J3cDJJZL'
 
 const SUPABASE_URL = 
   (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_URL) ||
