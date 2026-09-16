@@ -203,6 +203,7 @@ export function ModalHost({
           onOpenPvE={() => setCampaignWindowOpen(true)}
           onOpenPvP={() => handleOpenArena('pvp')}
           arenaTickets={arenaData.tickets}
+          showNotification={showNotification}
         />
       )}
 
@@ -579,7 +580,7 @@ export function ModalHost({
           }}
           onOpenCampaign={() => {
             setRankingModalOpen(false)
-            setCampaignWindowOpen(true)
+            showNotification(t('combatModal.campaignNotice') || '¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Aetheria.', 'info')
           }}
         />
       )}

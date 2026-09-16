@@ -2587,6 +2587,7 @@ export default function App() {
     const awardedWood = loot.wood || 0
     const awardedFood = loot.food || 0
     const awardedGems = loot.gems || 0
+    const awardedShards = loot.celestialShards !== undefined ? loot.celestialShards : (rival.rewards?.celestialShards || 3)
 
     setResources((prev) => ({
       ...prev,
@@ -2595,6 +2596,7 @@ export default function App() {
       wood: (prev.wood || 0) + awardedWood,
       food: (prev.food || 0) + awardedFood,
       gems: (prev.gems || 0) + awardedGems,
+      celestialShards: (prev.celestialShards || 0) + awardedShards,
     }))
 
     // Award speedup token on victory (65% 5m, 35% 1m)

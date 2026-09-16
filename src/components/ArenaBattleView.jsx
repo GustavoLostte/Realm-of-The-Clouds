@@ -1,1084 +1,711 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import './ArenaBattleView.css'
 import { 
   Swords, 
   Flame, 
-  ShieldAlert, 
   Shield, 
-  CheckCircle2, 
-  XCircle, 
   Sparkles, 
   Crown, 
-  Target,
-  HelpCircle,
-  ChevronRight,
-  ChevronLeft,
-  Info,
-  X,
+  Zap, 
+  Heart, 
+  Trophy, 
+  X, 
+  Award
 } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
-import { SmartLoader } from './SmartLoader'
-import { preloadImages, getArenaCriticalAssets } from '../utils/smartAssetLoader'
+import { getLeagueForTrophies } from '../data/arenaData'
 
 export function ArenaBattleView({
   isOpen,
   onClose,
   rival,
-  troops,
+  troops = {},
   equippedRelics = {},
   unlockedTechIds = [],
+  consumables = {},
+  onUseConsumable,
   onVictory,
   onDefeat,
   resources = {},
   onRetreatCost,
 }) {
   const { t } = useTranslation()
-  const [attemptsLeft, setAttemptsLeft] = useState(3)
-  const [buildings, setBuildings] = useState([])
-  const [attackingBuildingId, setAttackingBuildingId] = useState(null)
+
+  // Base fighter statistics derived from player progression & army
+  const playerInfantry = troops?.infantry || 0
+  const playerArchers = troops?.archers || 0
+  const playerCommanders = troops?.commander || 0
+  const relicBonusHp = equippedRelics?.accessory === 'relic_manto_vencedor' ? 150 : 0
+  const techAttackBonus = unlockedTechIds.includes('tech-tactics') ? 1.15 : 1.0
+
+  const maxPlayerHp = Math.round((1000 + (playerCommanders * 60) + (playerInfantry * 15) + relicBonusHp))
+  const [playerHp, setPlayerHp] = useState(maxPlayerHp)
+  const [playerFury, setPlayerFury] = useState(20) // Starts at 20/100
+  const [playerShield, setPlayerShield] = useState(0) // Damage reduction percentage (0 to 0.65)
+  const [playerAnim, setPlayerAnim] = useState('idle') // 'idle' | 'attacking' | 'hit' | 'defending'
+
+  // Rival fighter statistics
+  const rivalPower = rival?.power || 350
+  const maxRivalHp = Math.round(900 + (rivalPower * 1.8))
+  const [rivalHp, setRivalHp] = useState(maxRivalHp)
+  const [rivalFury, setRivalFury] = useState(10)
+  const [rivalShield, setRivalShield] = useState(0)
+  const [rivalAnim, setRivalAnim] = useState('idle')
+
+  // Combat turn state
+  const [turn, setTurn] = useState('player') // 'player' | 'rival' | 'resolving'
+  const [turnCount, setTurnCount] = useState(1)
+  const [combatLog, setCombatLog] = useState([
+    { id: 1, text: `¡El combate ha comenzado! Kael entra a la arena de ${rival?.name || 'Soberano Rival'}.`, type: 'info' }
+  ])
+  const [floatingTexts, setFloatingTexts] = useState([])
   const [battleResult, setBattleResult] = useState(null) // 'victory' | 'defeat' | null
-  const [battleLog, setBattleLog] = useState([])
-  const [lootedTotals, setLootedTotals] = useState({
-    gold: 0,
-    stone: 0,
-    wood: 0,
-    food: 0,
-    honor: 0,
-    trophies: 0,
-    gems: 0,
-  })
   const [shakeScreen, setShakeScreen] = useState(false)
   const [showRetreatConfirm, setShowRetreatConfirm] = useState(false)
-  const [showAssaultTutorial, setShowAssaultTutorial] = useState(false)
-  const [tutorialStep, setTutorialStep] = useState(0)
-  const [floatingTexts, setFloatingTexts] = useState([]) // Array of { id, text, type, x, y }
-  const [isArenaLoading, setIsArenaLoading] = useState(true)
-  const [arenaLoadProgress, setArenaLoadProgress] = useState(0)
 
-  // Tutorial handlers
-  const handleOpenTutorial = () => {
-    soundManager?.playClick?.()
-    setTutorialStep(0)
-    setShowAssaultTutorial(true)
-  }
+  const isCombatActive = isOpen && !battleResult
+  const timerRef = useRef(null)
 
-  const handleCloseTutorial = () => {
-    soundManager?.playClick?.()
-    setShowAssaultTutorial(false)
-    try {
-      localStorage.setItem('toc_assault_tutorial_seen', 'true')
-    } catch (e) {
-      console.warn('Could not save tutorial preference', e)
-    }
-  }
-
-  const handleNextTutorialStep = () => {
-    soundManager?.playClick?.()
-    if (tutorialStep < 2) {
-      setTutorialStep((prev) => prev + 1)
-    } else {
-      handleCloseTutorial()
-    }
-  }
-
-  const handlePrevTutorialStep = () => {
-    soundManager?.playClick?.()
-    if (tutorialStep > 0) {
-      setTutorialStep((prev) => prev - 1)
-    }
-  }
-
-  // Bonuses from player army, relics, and tech
-  const troopBreachBonus = Math.min(0.25, ((troops?.infantry || 0) * 0.02) + ((troops?.commander || 0) * 0.10))
-  const relicLootMultiplier = equippedRelics?.accessory === 'relic_manto_vencedor' ? 1.25 : 1.0
-  const techBreachBonus = unlockedTechIds.includes('tech-tactics') ? 0.08 : 0
-
-  // Total breach success rate boost
-  const playerBreachBonus = troopBreachBonus + techBreachBonus
-
-  // Generate 6 buildings for the rival kingdom when battle opens
-  useEffect(() => {
-    if (!isOpen || !rival) return
-
-    setIsArenaLoading(true)
-    setArenaLoadProgress(20)
-
-    const criticalAssets = getArenaCriticalAssets(rival)
-    preloadImages(criticalAssets, (pct) => {
-      setArenaLoadProgress(Math.max(20, pct))
-    }, 450).then(() => {
-      setArenaLoadProgress(100)
-    })
-
-    setAttemptsLeft(3)
-    setBattleResult(null)
-    setAttackingBuildingId(null)
-    setFloatingTexts([])
-    setLootedTotals({
-      gold: 0,
-      stone: 0,
-      wood: 0,
-      food: 0,
-      honor: 0,
-      trophies: 0,
-      gems: 0,
-    })
-    setBattleLog([
-      `[Ciudadela] ¡Has arribado a los dominios del ${rival.kingdom}!`,
-      `[Misión] Tienes 3 intentos para saquear sus edificaciones. ¡Elige sabiamente!`,
-    ])
-
-    const rivalLevel = rival.level || 1
-    const baseGold = rival.rewards?.gold || 2200
-    const baseStone = rival.rewards?.stone || 900
-    const baseHonor = rival.rewards?.honor || 30
-    const baseTrophies = rival.rewards?.trophies || 24
-
-    const generatedBuildings = [
-      {
-        id: 'b_castillo',
-        name: `Castillo de ${rival.name}`,
-        category: 'Sede Imperial',
-        image: '/assets/buildings/castillo/palacio_soberano.webp?v=1789386000',
-        desc: 'Cámara de la corona y bóvedas reales. Alto botín, guardia reforzada.',
-        baseChance: 0.65,
-        rewards: {
-          gold: Math.round(baseGold * 0.45 * relicLootMultiplier),
-          stone: Math.round(baseStone * 0.35 * relicLootMultiplier),
-          trophies: Math.round(baseTrophies * 0.6),
-          honor: Math.round(baseHonor * 0.5),
-          gems: Math.random() < 0.4 ? 2 : 0,
-        },
-        status: 'intact', // 'intact' | 'attacking' | 'looted' | 'defended'
-        resultText: '',
-      },
-      {
-        id: 'b_almacen',
-        name: 'Gran Almacén Real',
-        category: 'Bóveda de Recursos',
-        image: '/assets/buildings/almacen/almacen.webp',
-        desc: 'Reservas de construcción: madera refinada, granito y lingotes.',
-        baseChance: 0.72,
-        rewards: {
-          gold: Math.round(baseGold * 0.30 * relicLootMultiplier),
-          stone: Math.round(baseStone * 0.65 * relicLootMultiplier),
-          wood: Math.round((baseGold * 0.45 + 300) * relicLootMultiplier),
-        },
-        status: 'intact',
-        resultText: '',
-      },
-      {
-        id: 'b_gold_mine',
-        name: 'Mina de Oro Profunda',
-        category: 'Yacimiento Aurífero',
-        image: '/assets/buildings/gold_mine/gold_mine_idle.webp',
-        desc: 'Vetas subterráneas de oro puro y cofres de los mineros.',
-        baseChance: 0.78,
-        rewards: {
-          gold: Math.round(baseGold * 0.48 * relicLootMultiplier),
-        },
-        status: 'intact',
-        resultText: '',
-      },
-      {
-        id: 'b_molino',
-        name: 'Molino y Granero Real',
-        category: 'Suministros Agrícolas',
-        image: '/assets/buildings/molino/molino_idle.webp',
-        desc: 'Silos repletos de grano, trigo imperial y caudales agrícolas.',
-        baseChance: 0.85,
-        rewards: {
-          food: Math.round((450 + rivalLevel * 140) * relicLootMultiplier),
-          gold: Math.round(baseGold * 0.18 * relicLootMultiplier),
-        },
-        status: 'intact',
-        resultText: '',
-      },
-      {
-        id: 'b_cuartel',
-        name: 'Cuartel de la Guarnición',
-        category: 'Bastión Militar',
-        image: '/assets/buildings/cuartel/cuartel_idle.webp',
-        desc: 'Armería de la guardia rival. Alto honor militar y botín bélico.',
-        baseChance: 0.60,
-        rewards: {
-          honor: Math.round(baseHonor * 0.65),
-          gold: Math.round(baseGold * 0.22 * relicLootMultiplier),
-          trophies: Math.round(baseTrophies * 0.4),
-        },
-        status: 'intact',
-        resultText: '',
-      },
-      {
-        id: 'b_archer_tower',
-        name: 'Torre de Balistas y Vigía',
-        category: 'Torreón Defensivo',
-        image: '/assets/buildings/archer_tower/archer_tower_idle.webp',
-        desc: 'Puesto de vigía fronterizo con pertrechos de piedra y arquería.',
-        baseChance: 0.68,
-        rewards: {
-          stone: Math.round(baseStone * 0.45 * relicLootMultiplier),
-          gold: Math.round(baseGold * 0.16 * relicLootMultiplier),
-        },
-        status: 'intact',
-        resultText: '',
-      },
-    ]
-
-    setBuildings(generatedBuildings)
-  }, [isOpen, rival, relicLootMultiplier])
-
-  // Auto-launch tutorial on first time player enters Assault
-  useEffect(() => {
-    if (!isOpen || !rival) return
-    try {
-      const hasSeen = localStorage.getItem('toc_assault_tutorial_seen')
-      if (hasSeen !== 'true') {
-        setShowAssaultTutorial(true)
-        setTutorialStep(0)
-      }
-    } catch {
-      // ignore
-    }
-  }, [isOpen, rival])
-
-  // Handle attack click on a building (1 of 3 taps)
-  const handleAttackBuilding = (buildingId) => {
-    if (attemptsLeft <= 0 || attackingBuildingId || battleResult) return
-
-    const targetIndex = buildings.findIndex((b) => b.id === buildingId)
-    if (targetIndex === -1) return
-
-    const targetBuilding = buildings[targetIndex]
-    if (targetBuilding.status !== 'intact') return
-
-    // Play attack sound
-    soundManager.playSwordSwing?.()
-
-    // Screen impact
-    setShakeScreen(true)
-    setTimeout(() => setShakeScreen(false), 260)
-
-    setAttackingBuildingId(buildingId)
-
-    // Calculate breach success
-    const finalSuccessChance = Math.min(0.95, targetBuilding.baseChance + playerBreachBonus)
-    const isSuccess = Math.random() < finalSuccessChance
-
-    const newAttempts = attemptsLeft - 1
-    setAttemptsLeft(newAttempts)
-
+  // Floating text helper
+  const addFloatingText = useCallback((target, text, type = 'damage') => {
+    const id = Date.now() + Math.random()
+    setFloatingTexts((prev) => [...prev, { id, target, text, type }])
     setTimeout(() => {
-      setBuildings((prev) => {
-        return prev.map((b) => {
-          if (b.id !== buildingId) return b
+      setFloatingTexts((prev) => prev.filter((item) => item.id !== id))
+    }, 1200)
+  }, [])
 
-          if (isSuccess) {
-            return {
-              ...b,
-              status: 'looted',
-              resultText: `¡SAQUEADO!`,
-            }
-          } else {
-            return {
-              ...b,
-              status: 'defended',
-              resultText: `¡DEFENDIDO!`,
-            }
-          }
-        })
-      })
+  // Trigger screen shake on heavy impact
+  const triggerShake = useCallback(() => {
+    setShakeScreen(true)
+    setTimeout(() => setShakeScreen(false), 450)
+  }, [])
 
-      setAttackingBuildingId(null)
+  // League info
+  const rivalTrophies = rival?.trophies || 250
+  const currentLeague = getLeagueForTrophies(rivalTrophies)
+  const winTrophies = rival?.rewards?.trophies || 28
+  const lossTrophies = Math.abs(rival?.rewards?.lossTrophies || 12)
+  const winGold = rival?.rewards?.gold || 450
+  const winShards = 3
 
-      if (isSuccess) {
-        soundManager.playVictory?.()
-
-        // Accumulate loot
-        const rew = targetBuilding.rewards
-        setLootedTotals((prev) => ({
-          gold: prev.gold + (rew.gold || 0),
-          stone: prev.stone + (rew.stone || 0),
-          wood: prev.wood + (rew.wood || 0),
-          food: prev.food + (rew.food || 0),
-          honor: prev.honor + (rew.honor || 0),
-          trophies: prev.trophies + (rew.trophies || 0),
-          gems: prev.gems + (rew.gems || 0),
-        }))
-
-        // Log message
-        const lootParts = []
-        if (rew.gold) lootParts.push(`+${rew.gold} Oro`)
-        if (rew.stone) lootParts.push(`+${rew.stone} Piedra`)
-        if (rew.wood) lootParts.push(`+${rew.wood} Madera`)
-        if (rew.food) lootParts.push(`+${rew.food} Víveres`)
-        if (rew.honor) lootParts.push(`+${rew.honor} Honor`)
-        if (rew.gems) lootParts.push(`+${rew.gems} Cristales`)
-
-        setBattleLog((prev) => [
-          `[Asalto Exitoso] ¡Botín asegurado en ${targetBuilding.name}: ${lootParts.join(', ')}!`,
-          ...prev.slice(0, 3),
-        ])
-
-        // Add floating text
-        const floatId = Date.now()
-        setFloatingTexts((prev) => [
-          ...prev,
-          { id: floatId, text: lootParts.join(' '), type: 'success', buildingId },
-        ])
-        setTimeout(() => {
-          setFloatingTexts((prev) => prev.filter((f) => f.id !== floatId))
-        }, 1800)
-      } else {
-        soundManager.playHit?.()
-        setBattleLog((prev) => [
-          `[Defendido] ¡La guarnición enemiga defendió el ${targetBuilding.name}! Bóveda protegida (0 botín).`,
-          ...prev.slice(0, 3),
-        ])
-
-        const floatId = Date.now()
-        setFloatingTexts((prev) => [
-          ...prev,
-          { id: floatId, text: '¡Defendido / Vacío! 0 🪙', type: 'defense', buildingId },
-        ])
-        setTimeout(() => {
-          setFloatingTexts((prev) => prev.filter((f) => f.id !== floatId))
-        }, 1800)
-      }
-
-      // Check if all 3 attempts have been exhausted
-      if (newAttempts <= 0) {
-        setTimeout(() => {
-          setLootedTotals((currLoot) => {
-            const hasLoot = currLoot.gold > 0 || currLoot.stone > 0 || currLoot.trophies > 0 || currLoot.food > 0
-
-            // If player got loot, guarantee at least the base trophies if not reached
-            if (hasLoot) {
-              const finalTrophies = Math.max(rival.rewards?.trophies || 15, currLoot.trophies)
-              const finalHonor = Math.max(rival.rewards?.honor || 20, currLoot.honor)
-              const finalLoot = {
-                ...currLoot,
-                trophies: finalTrophies,
-                honor: finalHonor,
-              }
-              setBattleResult('victory')
-              soundManager.playArenaVictory?.()
-              return finalLoot
-            } else {
-              setBattleResult('defeat')
-              soundManager.playArenaDefeat?.()
-              return currLoot
-            }
-          })
-        }, 1100)
-      }
-    }, 450)
-  }
-
-  // Close or retreat click handler
-  const handleCloseClick = () => {
-    if (battleResult) {
-      if (battleResult === 'victory') {
-        onVictory?.(rival, lootedTotals)
-      } else {
-        onDefeat?.(rival)
-      }
-      return
-    }
-
-    // If the player hasn't attacked any building yet (still on attempt 3 and untouched),
-    // allow clean, penalty-free exit immediately back to the arena menu
-    const hasAttackedAny = buildings.some((b) => b.status !== 'intact')
-    if (attemptsLeft >= 3 && !hasAttackedAny) {
-      soundManager.playClick?.()
-      onClose?.()
-      return
-    }
-
-    setShowRetreatConfirm(true)
-  }
-
-  // Support Escape key to exit or retreat
+  // Reset battle when opened
   useEffect(() => {
     if (!isOpen) return
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        handleCloseClick()
+    setPlayerHp(maxPlayerHp)
+    setPlayerFury(20)
+    setPlayerShield(0)
+    setPlayerAnim('idle')
+
+    setRivalHp(maxRivalHp)
+    setRivalFury(10)
+    setRivalShield(0)
+    setRivalAnim('idle')
+
+    setTurn('player')
+    setTurnCount(1)
+    setBattleResult(null)
+    setCombatLog([
+      { id: Date.now(), text: `¡Duelo de Soberanos iniciado! Kael se enfrenta a ${rival?.name || 'Soberano Rival'}.`, type: 'info' }
+    ])
+    setFloatingTexts([])
+    soundManager?.playButtonClick?.()
+  }, [isOpen, maxPlayerHp, maxRivalHp, rival])
+
+  // ==============================================================================
+  // PLAYER TACTICAL ACTIONS
+  // ==============================================================================
+
+  const executePlayerAttack = (actionType) => {
+    if (turn !== 'player' || battleResult) return
+
+    setTurn('resolving')
+
+    let baseDamage = 0
+    let furyGain = 0
+    let furyCost = 0
+    let isCrit = false
+    let actionName = ''
+
+    if (actionType === 'basic') {
+      // 1. Corte Celestial
+      baseDamage = Math.round((130 + Math.random() * 40) * techAttackBonus)
+      furyGain = 25
+      actionName = 'Corte Celestial'
+      soundManager?.playHeroAttack?.()
+      setPlayerAnim('attacking')
+    } else if (actionType === 'shield') {
+      // 2. Baluarte de Aetheria (Defensa)
+      const healAmount = Math.round(maxPlayerHp * 0.10)
+      setPlayerShield(0.65)
+      setPlayerHp((prev) => Math.min(maxPlayerHp, prev + healAmount))
+      setPlayerFury((prev) => Math.min(100, prev + 15))
+      actionName = 'Baluarte de Aetheria'
+      soundManager?.playPopChime?.(1.4)
+      setPlayerAnim('defending')
+      addFloatingText('player', `+${healAmount} HP (Escudo -65%)`, 'heal')
+      
+      setCombatLog((prev) => [
+        { id: Date.now(), text: `🛡️ Kael levantó el Baluarte de Aetheria: Escudo divino activo y regeneró ${healAmount} HP.`, type: 'heal' },
+        ...prev.slice(0, 4)
+      ])
+
+      setTimeout(() => {
+        setPlayerAnim('idle')
+        advanceToRivalTurn()
+      }, 700)
+      return
+    } else if (actionType === 'special') {
+      // 3. Juicio Arcano
+      if (playerFury < 40) return
+      furyCost = 40
+      baseDamage = Math.round((280 + Math.random() * 80) * techAttackBonus)
+      actionName = 'Juicio Arcano'
+      isCrit = Math.random() < 0.4
+      if (isCrit) baseDamage = Math.round(baseDamage * 1.35)
+      soundManager?.playPurchaseFanfare?.()
+      setPlayerAnim('attacking')
+      triggerShake()
+    } else if (actionType === 'ultimate') {
+      // 4. Ira del Rey Celestial (Ultimate)
+      if (playerFury < 100) return
+      furyCost = 100
+      baseDamage = Math.round((600 + Math.random() * 140) * techAttackBonus)
+      actionName = '⚡ Ira del Rey Celestial'
+      isCrit = true
+      soundManager?.playVictory?.()
+      setPlayerAnim('attacking')
+      triggerShake()
+    }
+
+    // Apply damage to rival
+    const mitigation = rivalShield > 0 ? rivalShield : 0
+    const finalDamage = Math.max(10, Math.round(baseDamage * (1 - mitigation)))
+
+    if (furyCost > 0) {
+      setPlayerFury((prev) => Math.max(0, prev - furyCost))
+    }
+    if (furyGain > 0) {
+      setPlayerFury((prev) => Math.min(100, prev + furyGain))
+    }
+    setRivalShield(0) // Rival shield consumed by hit
+
+    setRivalAnim('hit')
+    addFloatingText('rival', isCrit ? `¡CRÍTICO! -${finalDamage}` : `-${finalDamage}`, isCrit ? 'crit' : 'damage')
+
+    setCombatLog((prev) => [
+      { id: Date.now(), text: `⚔️ Kael usó [${actionName}] e infligió ${finalDamage} de daño a ${rival?.name || 'Rival'}.`, type: isCrit ? 'crit' : 'attack' },
+      ...prev.slice(0, 4)
+    ])
+
+    const nextRivalHp = Math.max(0, rivalHp - finalDamage)
+    setRivalHp(nextRivalHp)
+
+    setTimeout(() => {
+      setPlayerAnim('idle')
+      setRivalAnim('idle')
+
+      if (nextRivalHp <= 0) {
+        handleVictoryTrigger()
+      } else {
+        advanceToRivalTurn()
       }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, battleResult, attemptsLeft, buildings])
+    }, 750)
+  }
 
-  // Confirm retreat with cost & loss
-  const handleConfirmRetreat = () => {
-    setShowRetreatConfirm(false)
-    soundManager.playButtonClick?.()
+  // Use Healing Potion
+  const handleUsePotion = () => {
+    if (turn !== 'player' || battleResult) return
+    const healAmount = Math.round(maxPlayerHp * 0.35)
+    setPlayerHp((prev) => Math.min(maxPlayerHp, prev + healAmount))
+    addFloatingText('player', `+${healAmount} HP`, 'heal')
+    soundManager?.playPopChime?.(1.6)
+    onUseConsumable?.('potion_healing')
+    setCombatLog((prev) => [
+      { id: Date.now(), text: `🧪 Kael bebió una Pócima Sagrada y recuperó ${healAmount} HP.`, type: 'heal' },
+      ...prev.slice(0, 4)
+    ])
+  }
 
-    if (onRetreatCost) {
-      onRetreatCost({ gold: 50, food: 25 })
-    }
+  // ==============================================================================
+  // RIVAL TACTICAL AI TURN
+  // ==============================================================================
 
-    if (onDefeat && rival) {
-      onDefeat(rival)
+  const advanceToRivalTurn = () => {
+    setTurn('rival')
+
+    timerRef.current = setTimeout(() => {
+      executeRivalTurn()
+    }, 900)
+  }
+
+  const executeRivalTurn = () => {
+    if (battleResult) return
+
+    let baseDamage = 0
+    let actionName = ''
+    let isCrit = false
+    let isShielding = false
+
+    // AI Decision Tree
+    if (rivalFury >= 100) {
+      // Rival Ultimate
+      baseDamage = 340 + Math.round(Math.random() * 100)
+      setRivalFury(0)
+      actionName = 'Devastación Umbría'
+      isCrit = true
+      triggerShake()
+    } else if (rivalHp < maxRivalHp * 0.35 && rivalShield === 0 && Math.random() < 0.5) {
+      // Rival Shield
+      isShielding = true
+      setRivalShield(0.60)
+      setRivalFury((prev) => Math.min(100, prev + 20))
+      actionName = 'Guardia Oscura'
+      setRivalAnim('defending')
+      addFloatingText('rival', '¡ESCUDO -60%!', 'heal')
+    } else if (rivalFury >= 40 && Math.random() < 0.65) {
+      // Rival Special Strike
+      baseDamage = 210 + Math.round(Math.random() * 70)
+      setRivalFury((prev) => Math.max(0, prev - 40))
+      actionName = 'Corte del Vacío'
     } else {
-      onClose()
+      // Rival Basic Strike
+      baseDamage = 110 + Math.round(Math.random() * 50)
+      setRivalFury((prev) => Math.min(100, prev + 25))
+      actionName = 'Asalto Sombrío'
+    }
+
+    if (isShielding) {
+      soundManager?.playPopChime?.(0.9)
+      setCombatLog((prev) => [
+        { id: Date.now(), text: `🛡️ ${rival?.name || 'El Rival'} activó [${actionName}] preparándose para tu próximo golpe.`, type: 'info' },
+        ...prev.slice(0, 4)
+      ])
+
+      setTimeout(() => {
+        setRivalAnim('idle')
+        setTurn('player')
+        setTurnCount((c) => c + 1)
+      }, 700)
+      return
+    }
+
+    // Apply damage to player
+    setRivalAnim('attacking')
+    soundManager?.playHeroAttack?.()
+
+    const mitigation = playerShield > 0 ? playerShield : 0
+    const finalDamage = Math.max(10, Math.round(baseDamage * (1 - mitigation)))
+    setPlayerShield(0) // Player shield consumed
+
+    setPlayerAnim('hit')
+    addFloatingText('player', mitigation > 0 ? `¡BLOQUEADO! -${finalDamage}` : `-${finalDamage}`, mitigation > 0 ? 'heal' : 'damage')
+
+    setCombatLog((prev) => [
+      { id: Date.now(), text: `💥 ${rival?.name || 'Rival'} usó [${actionName}] causando ${finalDamage} de daño a Kael.`, type: 'damage' },
+      ...prev.slice(0, 4)
+    ])
+
+    const nextPlayerHp = Math.max(0, playerHp - finalDamage)
+    setPlayerHp(nextPlayerHp)
+
+    setTimeout(() => {
+      setRivalAnim('idle')
+      setPlayerAnim('idle')
+
+      if (nextPlayerHp <= 0) {
+        handleDefeatTrigger()
+      } else {
+        setTurn('player')
+        setTurnCount((c) => c + 1)
+        soundManager?.playPopChime?.(1.2)
+      }
+    }, 750)
+  }
+
+  // ==============================================================================
+  // VICTORY & DEFEAT RESOLUTION
+  // ==============================================================================
+
+  const handleVictoryTrigger = () => {
+    setBattleResult('victory')
+    soundManager?.playArenaVictory?.()
+  }
+
+  const handleDefeatTrigger = () => {
+    setBattleResult('defeat')
+    soundManager?.playArenaDefeat?.()
+  }
+
+  const handleClaimVictory = () => {
+    const battleLoot = {
+      trophies: winTrophies,
+      gold: winGold,
+      honor: 25,
+      celestialShards: winShards,
+    }
+    onVictory?.(rival, battleLoot)
+  }
+
+  const handleAcceptDefeat = () => {
+    onDefeat?.(rival, { lossTrophies })
+  }
+
+  const handleRetreat = () => {
+    if (playerHp < maxPlayerHp * 0.9) {
+      handleAcceptDefeat()
+    } else {
+      onClose?.()
     }
   }
 
-  // Claim final loot and return
-  const handleClaimAndFinish = () => {
-    if (battleResult === 'victory') {
-      onVictory?.(rival, lootedTotals)
-    } else {
-      onDefeat?.(rival)
+  // Clean timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
     }
-  }
+  }, [])
 
-  if (!isOpen || !rival) return null
+  if (!isOpen) return null
 
   return (
-    <div className="arena-battle-overlay">
-      {isArenaLoading && (
-        <SmartLoader
-          isOpen={isArenaLoading}
-          variant="arena"
-          title={rival.kingdom || t('loader.preparingSiege')}
-          subtitle={rival.name || t('loader.deployingTroops')}
-          progress={arenaLoadProgress}
-          onFinished={() => setIsArenaLoading(false)}
-        />
-      )}
-
-      <div 
-        className={`arena-battle-stage pvp-siege-realm ${shakeScreen ? 'screen-shake' : ''}`}
-        style={{ backgroundImage: `url('/assets/arena_battle_bg.webp')` }}
-      >
-        {/* Top Header Bar: Rival Realm & Attempts Counter */}
-        <header className="arena-battle-header pvp-siege-header">
-          {/* Rival Profile Identity */}
-          <div className="pvp-rival-identity">
-            <div className="pvp-rival-avatar-wrap">
-              <img 
-                src={rival.avatar || '/assets/avatars/avatar_king.webp'} 
-                alt={rival.name} 
-                className="pvp-rival-avatar" 
-              />
-              <span className="pvp-rival-lvl-badge">Nv.{rival.level || 1}</span>
-            </div>
-            <div className="pvp-rival-text">
-              <div className="pvp-rival-title-row">
-                <h2 className="pvp-rival-kingdom">{rival.kingdom}</h2>
-                <span className="pvp-rival-league-pill" style={{ background: rival.league?.gradient }}>
-                  <img 
-                    src={rival.league?.image || '/assets/hud_icons/btn_ranking.webp'} 
-                    alt={rival.league?.name} 
-                    className="pvp-mini-icon" 
-                  />
-                  {t(`arenaItems.leagues.${rival.league?.id}`) || rival.league?.name || t('arena.league')}
-                </span>
-              </div>
-              <span className="pvp-rival-ruler">{t('arena.sovereignRuler', { name: rival.name })}</span>
-            </div>
+    <div className={`arena-battle-overlay ${shakeScreen ? 'screen-shake' : ''}`}>
+      <div className="arena-battle-stage" style={{ backgroundImage: "url('/assets/arena_battle_bg.webp')" }}>
+        
+        {/* Top Battle Header */}
+        <div className="battle-top-hud">
+          <div className="battle-league-pill">
+            <Trophy size={16} className="league-icon-trophy" />
+            <span className="league-title-txt">{currentLeague.name}</span>
+            <span className="league-stake-txt">🏆 +{winTrophies} / -{lossTrophies}</span>
           </div>
 
-          {/* 3-Attempts Remaining Counter */}
-          <div className="pvp-attempts-box">
-            <div className="attempts-header-label">
-              <Swords size={16} className="swords-icon-anim" />
-              <span>{t('arena.attemptsCount', { attempts: attemptsLeft })}</span>
-            </div>
-            <div className="attempts-indicators-row">
-              {[1, 2, 3].map((slot) => {
-                const isAvailable = slot <= attemptsLeft
-                return (
-                  <div 
-                    key={slot} 
-                    className={`attempt-orb ${isAvailable ? 'available' : 'consumed'}`}
-                    title={isAvailable ? t('arena.attemptAvailable', { slot }) : t('arena.attemptConsumed', { slot })}
-                  >
-                    <Flame size={16} />
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Live Loot Stash & Close */}
-          <div className="pvp-header-right">
-            {/* Assault Help / Tutorial Trigger Button */}
-            <button 
-              type="button"
-              className="pvp-tutorial-trigger-btn"
-              onClick={handleOpenTutorial}
-              title={t('arena.assaultTutorial.btnTooltip')}
-              aria-label={t('arena.assaultTutorial.btnTooltip')}
-            >
-              <HelpCircle size={15} className="pvp-help-icon" />
-              <span className="pvp-tutorial-btn-text">{t('arena.assaultTutorial.btnLabel')}</span>
-            </button>
-
-            <div className="pvp-live-loot-pill" title={t('arena.liveLootTooltip')}>
-              <div className="loot-chip gold">
-                <img src="/assets/hud_icons/icon_gold.webp" alt={t('resources.gold')} className="chip-icon" />
-                <span>+{lootedTotals.gold}</span>
-              </div>
-              {lootedTotals.stone > 0 && (
-                <div className="loot-chip stone">
-                  <img src="/assets/hud_icons/icon_stone.webp" alt={t('resources.stone')} className="chip-icon" />
-                  <span>+{lootedTotals.stone}</span>
-                </div>
-              )}
-              {lootedTotals.wood > 0 && (
-                <div className="loot-chip wood">
-                  <img src="/assets/hud_icons/btn_build.webp" alt={t('resources.wood')} className="chip-icon" />
-                  <span>+{lootedTotals.wood}</span>
-                </div>
-              )}
-              {lootedTotals.food > 0 && (
-                <div className="loot-chip food">
-                  <img src="/assets/hud_icons/icon_wheat.webp" alt={t('resources.food')} className="chip-icon" />
-                  <span>+{lootedTotals.food}</span>
-                </div>
-              )}
-              {lootedTotals.honor > 0 && (
-                <div className="loot-chip honor">
-                  <img src="/assets/hud_icons/btn_ranking.webp" alt={t('arena.honor')} className="chip-icon" />
-                  <span>+{lootedTotals.honor}</span>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Guaranteed Permanent "X" Exit Button (Always top-right, unclipped, accessible at all times) */}
-          <button 
-            className="modal-close-candy-btn pvp-arena-close-btn"
-            onClick={handleCloseClick}
-            title={t('arena.retreatTitle')}
-            aria-label={t('common.close')}
-          >
-            <img src="/assets/hud_icons/btn_close.webp" alt={t('common.close')} draggable="false" />
-          </button>
-        </header>
-
-        {/* Tactical Directive Banner */}
-        <div className="pvp-siege-banner-strip pvp-tactical-directive">
-          <div className="directive-dot-pulse" />
-          <Swords size={18} className="banner-swords-icon" />
-          <div className="directive-content">
-            <strong className="directive-title">
-              {attemptsLeft > 0 
-                ? t('arena.directiveTitle') 
-                : t('arena.directiveTitleDone')}
-            </strong>
-            <span className="directive-sub">
-              {attemptsLeft > 0 
-                ? t('arena.directiveSub', { attempts: attemptsLeft }) 
-                : t('arena.directiveSubDone')}
+          <div className="battle-turn-indicator">
+            <span className="turn-count-badge">Ronda {turnCount}</span>
+            <span className={`turn-status-badge ${turn === 'player' ? 'player-turn' : 'rival-turn'}`}>
+              {turn === 'player' ? '⚔️ ¡TU TURNO!' : `⏳ Turno de ${rival?.name || 'Rival'}...`}
             </span>
           </div>
+
           <button 
-            type="button" 
-            className="directive-help-pill"
-            onClick={handleOpenTutorial}
-            title={t('arena.assaultTutorial.btnTooltip')}
+            className="battle-retreat-btn" 
+            onClick={() => setShowRetreatConfirm(true)}
+            title="Retirarse del combate"
           >
-            <HelpCircle size={13} />
-            <span>{t('arena.assaultTutorial.btnLabel')}</span>
+            <X size={18} />
+            <span className="retreat-txt">Retirarse</span>
           </button>
         </div>
 
-        {/* Rival Kingdom Citadel: 6 Interactive Buildings */}
-        <div className="pvp-citadel-container">
-          <div className="pvp-buildings-grid">
-            {buildings.map((b, idx) => {
-              const isIntact = b.status === 'intact'
-              const isLooted = b.status === 'looted'
-              const isDefended = b.status === 'defended'
-              const isAttacking = attackingBuildingId === b.id
-              const canClick = isIntact && attemptsLeft > 0 && !attackingBuildingId && !battleResult
-              const chancePercent = Math.min(95, Math.round((b.baseChance + playerBreachBonus) * 100))
-              const hasAttackedAny = attemptsLeft < 3 || attackingBuildingId !== null || buildings.some((item) => item.status !== 'intact')
+        {/* The Duelists Arena Field */}
+        <div className="duel-arena-field">
+          
+          {/* LEFT FIGHTER: KAEL (PLAYER CHAMPION) */}
+          <div className={`fighter-side player-side ${playerAnim}`}>
+            {/* Fighter Info Card */}
+            <div className="fighter-status-card">
+              <div className="fighter-identity">
+                <Crown size={16} className="crown-icon-gold" />
+                <span className="fighter-name">Rey Celestial (Kael)</span>
+                {playerShield > 0 && <span className="shield-active-badge">🛡️ -65%</span>}
+              </div>
 
-              return (
+              {/* HP Bar */}
+              <div className="hp-bar-container">
                 <div 
-                  key={b.id}
-                  className={`citadel-building-card ${b.status} ${isAttacking ? 'attacking' : ''} ${canClick ? 'clickable' : 'locked'}`}
-                  onClick={() => canClick && handleAttackBuilding(b.id)}
-                  title={canClick ? t('arena.tapToAttackTooltip', { name: b.name, chance: chancePercent }) : b.name}
-                >
-                  {/* Top Badges Row: Breach Chance & Status */}
-                  <div className="building-card-top-row">
-                    <span className="building-chance-badge" title={t('arena.chanceTooltip')}>
-                      🎯 {chancePercent}%
-                    </span>
+                  className="hp-bar-fill player-hp" 
+                  style={{ width: `${Math.max(0, (playerHp / maxPlayerHp) * 100)}%` }} 
+                />
+                <span className="hp-numeric-txt">{playerHp} / {maxPlayerHp} HP</span>
+              </div>
 
-                    {/* Status Overlay Badge */}
-                    {isLooted && (
-                      <div className="building-status-pill looted">
-                        <CheckCircle2 size={13} />
-                        <span>{b.resultText || t('arena.statusLooted')}</span>
-                      </div>
-                    )}
-                    {isDefended && (
-                      <div className="building-status-pill defended">
-                        <Shield size={13} />
-                        <span>{b.resultText || t('arena.statusDefended')}</span>
-                      </div>
-                    )}
-                  </div>
+              {/* Fury Bar */}
+              <div className="fury-bar-container" title="Furia Celestial para Juicio e Ira">
+                <div 
+                  className="fury-bar-fill" 
+                  style={{ width: `${playerFury}%` }} 
+                />
+                <span className="fury-numeric-txt">
+                  <Flame size={10} /> {playerFury}/100 Furia
+                  {playerFury >= 100 && ' — ¡ULTIMATE LISTO!'}
+                </span>
+              </div>
+            </div>
 
-                  {/* Building Visual Sprite */}
-                  <div className="building-sprite-frame">
-                    <img 
-                      src={b.image} 
-                      alt={b.name} 
-                      className={`building-sprite-img ${isLooted ? 'looted-sprite' : ''} ${isDefended ? 'defended-sprite' : ''}`}
-                      draggable="false" 
-                    />
+            {/* Fighter Visual Sprite */}
+            <div className="fighter-visual-wrap">
+              <div className="fighter-shadow" />
+              <img 
+                src="/assets/characters/fullbody_cutout/01_rey_celestial.webp" 
+                alt="Kael Rey Celestial" 
+                className="fighter-sprite player-sprite" 
+                draggable="false" 
+              />
+              {playerShield > 0 && <div className="divine-shield-aura" />}
+            </div>
 
-                    {/* First-time guidance pointer for first building */}
-                    {idx === 0 && canClick && attemptsLeft === 3 && !hasAttackedAny && !showAssaultTutorial && !isArenaLoading && (
-                      <div 
-                        className="first-time-assault-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleAttackBuilding(b.id)
-                        }}
-                      >
-                        <div className="pointer-arrow-bounce">👇</div>
-                        <span className="pointer-text">{t('arena.assaultTutorial.firstBuildingPointer')}</span>
-                      </div>
-                    )}
-
-                    {/* Floating callout when building can be attacked */}
-                    {canClick && (
-                      <div className="building-touch-callout">
-                        <span>{t('arena.tapToAttack')}</span>
-                      </div>
-                    )}
-
-                    {/* Floating text if active for this building */}
-                    {floatingTexts.filter((f) => f.buildingId === b.id).map((f) => (
-                      <div key={f.id} className={`citadel-floating-loot ${f.type}`}>
-                        {f.text}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Loot Preview Chips (What you're attacking for) */}
-                  <div className="building-loot-preview-row" title={t('arena.buildingLootTooltip')}>
-                    {Boolean(b.rewards.gold) && (
-                      <span className="loot-tag gold">
-                        <img src="/assets/hud_icons/icon_gold.webp" alt={t('resources.gold')} className="loot-tag-icon" />
-                        +{b.rewards.gold}
-                      </span>
-                    )}
-                    {Boolean(b.rewards.stone) && (
-                      <span className="loot-tag stone">
-                        <img src="/assets/hud_icons/icon_stone.webp" alt={t('resources.stone')} className="loot-tag-icon" />
-                        +{b.rewards.stone}
-                      </span>
-                    )}
-                    {Boolean(b.rewards.wood) && (
-                      <span className="loot-tag wood">
-                        <img src="/assets/hud_icons/btn_build.webp" alt={t('resources.wood')} className="loot-tag-icon" />
-                        +{b.rewards.wood}
-                      </span>
-                    )}
-                    {Boolean(b.rewards.food) && (
-                      <span className="loot-tag food">
-                        <img src="/assets/hud_icons/icon_wheat.webp" alt={t('resources.food')} className="loot-tag-icon" />
-                        +{b.rewards.food}
-                      </span>
-                    )}
-                    {Boolean(b.rewards.honor) && (
-                      <span className="loot-tag honor">
-                        <img src="/assets/hud_icons/btn_ranking.webp" alt={t('arena.honor')} className="loot-tag-icon" />
-                        +{b.rewards.honor}H
-                      </span>
-                    )}
-                    {Boolean(b.rewards.trophies) && (
-                      <span className="loot-tag trophies">
-                        <Crown size={11} color="#fef08a" />
-                        +{b.rewards.trophies}
-                      </span>
-                    )}
-                    {Boolean(b.rewards.gems) && (
-                      <span className="loot-tag gems">
-                        <img src="/assets/hud_icons/icon_gem.webp" alt={t('resources.gems')} className="loot-tag-icon" />
-                        +{b.rewards.gems}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Building Meta Details */}
-                  <div className="building-info-bar">
-                    <div className="building-title-wrap">
-                      <h4 className="building-name">{b.name}</h4>
-                      <span className="building-category">{b.category}</span>
-                    </div>
-                  </div>
-
-                  {/* Explicit Action Button for Mobile & Desktop Ergonomics */}
-                  <div className="building-card-action-wrap">
-                    {canClick ? (
-                      <button 
-                        type="button" 
-                        className="building-attack-btn tactical-attack-glow"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleAttackBuilding(b.id)
-                        }}
-                      >
-                        <Swords size={15} className="attack-btn-swords" />
-                        <span>{t('arena.attackThisBuilding')}</span>
-                      </button>
-                    ) : isLooted ? (
-                      <div className="building-action-status looted">
-                        <CheckCircle2 size={14} />
-                        <span>{t('arena.lootedStatus')}</span>
-                      </div>
-                    ) : isDefended ? (
-                      <div className="building-action-status defended">
-                        <Shield size={14} />
-                        <span>{t('arena.defendedStatus')}</span>
-                      </div>
-                    ) : (
-                      <div className="building-action-status locked">
-                        <span>{t('arena.noAttempts')}</span>
-                      </div>
-                    )}
-                  </div>
+            {/* Floating Texts for Player */}
+            <div className="floating-text-container player-floats">
+              {floatingTexts.filter((t) => t.target === 'player').map((item) => (
+                <div key={item.id} className={`floating-msg ${item.type}`}>
+                  {item.text}
                 </div>
-              )
-            })}
+              ))}
+            </div>
           </div>
+
+          {/* VS Center Emblem */}
+          <div className="vs-center-emblem">
+            <div className="vs-circle">
+              <Swords size={26} className="vs-swords-icon" />
+              <span className="vs-text">VS</span>
+            </div>
+          </div>
+
+          {/* RIGHT FIGHTER: RIVAL SOVEREIGN (MALAKOR / RIVAL) */}
+          <div className={`fighter-side rival-side ${rivalAnim}`}>
+            {/* Fighter Info Card */}
+            <div className="fighter-status-card rival-card">
+              <div className="fighter-identity">
+                <span className="fighter-name">{rival?.name || 'Lord Malakor'}</span>
+                <span className="fighter-title">[{rival?.kingdom || 'Caudillo Celestial'}]</span>
+                {rivalShield > 0 && <span className="shield-active-badge dark">🛡️ -60%</span>}
+              </div>
+
+              {/* HP Bar */}
+              <div className="hp-bar-container">
+                <div 
+                  className="hp-bar-fill rival-hp" 
+                  style={{ width: `${Math.max(0, (rivalHp / maxRivalHp) * 100)}%` }} 
+                />
+                <span className="hp-numeric-txt">{rivalHp} / {maxRivalHp} HP</span>
+              </div>
+
+              {/* Fury Bar */}
+              <div className="fury-bar-container rival-fury-container">
+                <div 
+                  className="fury-bar-fill rival-fury" 
+                  style={{ width: `${rivalFury}%` }} 
+                />
+                <span className="fury-numeric-txt">
+                  <Zap size={10} /> {rivalFury}/100 Furia
+                </span>
+              </div>
+            </div>
+
+            {/* Fighter Visual Sprite */}
+            <div className="fighter-visual-wrap">
+              <div className="fighter-shadow" />
+              <img 
+                src={rival?.avatar || '/assets/champions/malakor.jpg'} 
+                alt="Soberano Rival" 
+                className="fighter-sprite rival-sprite" 
+                draggable="false"
+                onError={(e) => {
+                  e.target.onerror = null
+                  e.target.src = '/assets/characters/fullbody_cutout/03_paladin_sagrado.webp'
+                }}
+              />
+              {rivalShield > 0 && <div className="dark-shield-aura" />}
+            </div>
+
+            {/* Floating Texts for Rival */}
+            <div className="floating-text-container rival-floats">
+              {floatingTexts.filter((t) => t.target === 'rival').map((item) => (
+                <div key={item.id} className={`floating-msg ${item.type}`}>
+                  {item.text}
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
 
-        {/* Live Battle Log Feed */}
-        <div className="arena-battle-log-dock pvp-siege-log">
-          {battleLog.map((log, idx) => (
-            <div key={idx} className="arena-log-line">{log}</div>
-          ))}
+        {/* Combat Action Log Ribbon */}
+        <div className="combat-action-ribbon">
+          <p className="last-action-txt">
+            {combatLog[0]?.text}
+          </p>
         </div>
 
-        {/* VICTORY OUTCOME MODAL */}
+        {/* BOTTOM TACTICAL ACTION BAR */}
+        <div className="tactical-actions-dock">
+          {/* Action 1: Basic Attack */}
+          <button 
+            className="action-btn basic-btn" 
+            onClick={() => executePlayerAttack('basic')}
+            disabled={turn !== 'player' || battleResult !== null}
+            title="Corte Celestial: Ataque físico básico (+25 Furia)"
+          >
+            <div className="action-icon-wrap basic">
+              <Swords size={22} />
+            </div>
+            <div className="action-info">
+              <span className="action-name">Corte Celestial</span>
+              <span className="action-gain">+25 Furia</span>
+            </div>
+          </button>
+
+          {/* Action 2: Shield / Defense */}
+          <button 
+            className="action-btn shield-btn" 
+            onClick={() => executePlayerAttack('shield')}
+            disabled={turn !== 'player' || battleResult !== null}
+            title="Baluarte de Aetheria: Reduce 65% el próximo golpe y sana +90 HP"
+          >
+            <div className="action-icon-wrap shield">
+              <Shield size={22} />
+            </div>
+            <div className="action-info">
+              <span className="action-name">Baluarte Aetheria</span>
+              <span className="action-gain">-65% Daño / +HP</span>
+            </div>
+          </button>
+
+          {/* Action 3: Special Attack */}
+          <button 
+            className={`action-btn special-btn ${playerFury < 40 ? 'locked-fury' : ''}`} 
+            onClick={() => executePlayerAttack('special')}
+            disabled={turn !== 'player' || playerFury < 40 || battleResult !== null}
+            title="Juicio Arcano: Daño crítico de luz celestial (Consume 40 Furia)"
+          >
+            <div className="action-icon-wrap special">
+              <Sparkles size={22} />
+            </div>
+            <div className="action-info">
+              <span className="action-name">Juicio Arcano</span>
+              <span className="action-cost">40 Furia</span>
+            </div>
+          </button>
+
+          {/* Action 4: Ultimate Attack */}
+          <button 
+            className={`action-btn ultimate-btn ${playerFury >= 100 ? 'ultimate-ready' : 'locked-fury'}`} 
+            onClick={() => executePlayerAttack('ultimate')}
+            disabled={turn !== 'player' || playerFury < 100 || battleResult !== null}
+            title="Ira del Rey Celestial: Golpe cósmico demoledor (Consume 100 Furia)"
+          >
+            <div className="action-icon-wrap ultimate">
+              <Zap size={24} />
+            </div>
+            <div className="action-info">
+              <span className="action-name">⚡ Ira Celestial</span>
+              <span className="action-cost">{playerFury >= 100 ? '¡LISTO!' : '100 Furia'}</span>
+            </div>
+          </button>
+
+          {/* Action 5: Health Potion */}
+          {(consumables?.potion_healing > 0 || true) && (
+            <button 
+              className="action-btn potion-btn" 
+              onClick={handleUsePotion}
+              disabled={turn !== 'player' || playerHp >= maxPlayerHp || battleResult !== null}
+              title="Pócima Sagrada: Recupera 35% de vida máxima"
+            >
+              <div className="action-icon-wrap potion">
+                <Heart size={20} />
+              </div>
+              <div className="action-info">
+                <span className="action-name">Pócima</span>
+                <span className="action-gain">+35% HP</span>
+              </div>
+            </button>
+          )}
+        </div>
+
+        {/* VICTORY MODAL OVERLAY */}
         {battleResult === 'victory' && (
-          <div className="arena-outcome-modal victory">
-            <div className="outcome-card-content">
-              <div className="outcome-icon-box">
-                <Crown size={38} color="#fef08a" />
+          <div className="battle-outcome-overlay victory-flow">
+            <div className="outcome-card candy-victory">
+              <div className="outcome-crown-wrap">
+                <Crown size={52} className="outcome-crown" />
               </div>
-              <h2 className="outcome-title">{t('arena.victoryAssaultTitle')}</h2>
-              <p className="outcome-desc">
-                {t('arena.victoryAssaultDesc', { kingdom: rival.kingdom })}
+
+              <h2 className="outcome-title victory-txt">¡VICTORIA GLORIOSA!</h2>
+              <p className="outcome-subtitle">
+                Has derrotado al campeón de <strong className="rival-highlight">{rival?.name || 'Soberano Rival'}</strong> en el Coliseo.
               </p>
 
-              <div className="outcome-rewards-pills">
-                <div className="reward-item trophies">
-                  <img src="/assets/hud_icons/btn_ranking.webp" alt={t('resources.trophies')} className="pill-icon-img" />
-                  <span className="pill-val">+{lootedTotals.trophies || rival.rewards.trophies} {t('resources.trophies')}</span>
+              {/* Loot Grid */}
+              <div className="outcome-loot-grid">
+                <div className="loot-card trophy-loot">
+                  <Trophy size={22} className="loot-icon gold" />
+                  <span className="loot-val">+{winTrophies}</span>
+                  <span className="loot-label">Coronas ELO</span>
                 </div>
-                {lootedTotals.gold > 0 && (
-                  <div className="reward-item gold">
-                    <img src="/assets/hud_icons/icon_gold.webp" alt={t('resources.gold')} className="pill-icon-img" />
-                    <span className="pill-val">+{lootedTotals.gold} {t('resources.gold')}</span>
-                  </div>
-                )}
-                {lootedTotals.stone > 0 && (
-                  <div className="reward-item stone">
-                    <img src="/assets/hud_icons/icon_stone.webp" alt={t('resources.stone')} className="pill-icon-img" />
-                    <span className="pill-val">+{lootedTotals.stone} {t('resources.stone')}</span>
-                  </div>
-                )}
-                {lootedTotals.wood > 0 && (
-                  <div className="reward-item wood">
-                    <img src="/assets/hud_icons/btn_build.webp" alt={t('resources.wood')} className="pill-icon-img" />
-                    <span className="pill-val">+{lootedTotals.wood} {t('resources.wood')}</span>
-                  </div>
-                )}
-                {lootedTotals.food > 0 && (
-                  <div className="reward-item food">
-                    <img src="/assets/hud_icons/icon_wheat.webp" alt={t('resources.food')} className="pill-icon-img" />
-                    <span className="pill-val">+{lootedTotals.food} {t('resources.food')}</span>
-                  </div>
-                )}
-                <div className="reward-item honor">
-                  <img src="/assets/hud_icons/btn_ranking.webp" alt={t('arena.honor')} className="pill-icon-img" />
-                  <span className="pill-val">+{lootedTotals.honor || rival.rewards.honor} {t('resources.honor')}</span>
+
+                <div className="loot-card gold-loot">
+                  <img src="/assets/hud_icons/icon_gold.webp" alt="Oro" className="loot-img" />
+                  <span className="loot-val">+{winGold}</span>
+                  <span className="loot-label">Oro Imperial</span>
                 </div>
-                {lootedTotals.gems > 0 && (
-                  <div className="reward-item gems">
-                    <img src="/assets/hud_icons/icon_gem.webp" alt={t('resources.gems')} className="pill-icon-img" />
-                    <span className="pill-val">+{lootedTotals.gems} {t('resources.gems')}</span>
-                  </div>
-                )}
+
+                <div className="loot-card shard-loot">
+                  <Sparkles size={22} className="loot-icon cyan" />
+                  <span className="loot-val">+{winShards}</span>
+                  <span className="loot-label">Fragmentos</span>
+                </div>
+
+                <div className="loot-card honor-loot">
+                  <Award size={22} className="loot-icon purple" />
+                  <span className="loot-val">+25</span>
+                  <span className="loot-label">Honor de Liga</span>
+                </div>
               </div>
 
-              <button 
-                className="btn-claim-arena-loot"
-                onClick={handleClaimAndFinish}
-              >
-                {t('common.claim')}
+              <button className="outcome-claim-btn" onClick={handleClaimVictory}>
+                <span>¡Reclamar Triunfo y Volver!</span>
               </button>
             </div>
           </div>
         )}
 
-        {/* DEFEAT / REPELLED OUTCOME MODAL */}
+        {/* DEFEAT MODAL OVERLAY */}
         {battleResult === 'defeat' && (
-          <div className="arena-outcome-modal defeat">
-            <div className="outcome-card-content">
-              <div className="outcome-icon-box defeat">
-                <XCircle size={38} color="#fca5a5" />
+          <div className="battle-outcome-overlay defeat-flow">
+            <div className="outcome-card candy-defeat">
+              <div className="outcome-defeat-icon">
+                <Shield size={48} className="defeat-shield" />
               </div>
-              <h2 className="outcome-title defeat">{t('combat.defeatTitle')}</h2>
-              <p className="outcome-desc">
-                {t('combat.defeatDesc')}
+
+              <h2 className="outcome-title defeat-txt">DERROTA EN EL COLISEO</h2>
+              <p className="outcome-subtitle">
+                Tu escuadrón cayó ante la táctica de <strong>{rival?.name || 'Soberano Rival'}</strong>.
               </p>
 
-              <div className="outcome-rewards-pills">
-                <div className="reward-item trophies-lost">
-                  <img src="/assets/hud_icons/btn_ranking.webp" alt={t('resources.trophies')} className="pill-icon-img" />
-                  <span className="pill-val">{rival.rewards.lossTrophies} {t('resources.trophies')}</span>
-                </div>
+              <div className="outcome-penalty-box">
+                <Trophy size={20} className="penalty-trophy" />
+                <span className="penalty-txt">Pérdida de Coronas: -{lossTrophies}</span>
               </div>
 
-              <button 
-                className="btn-claim-arena-loot"
-                onClick={handleClaimAndFinish}
-              >
-                {t('common.close')}
+              <button className="outcome-retreat-btn" onClick={handleAcceptDefeat}>
+                <span>Retirarse y Reagrupar Héroes</span>
               </button>
             </div>
           </div>
         )}
 
-        {/* Retreat Confirmation Modal */}
+        {/* RETREAT CONFIRMATION MODAL */}
         {showRetreatConfirm && (
-          <div className="retreat-confirm-modal-backdrop" onClick={() => setShowRetreatConfirm(false)}>
+          <div className="retreat-confirm-modal" onClick={() => setShowRetreatConfirm(false)}>
             <div className="retreat-confirm-card" onClick={(e) => e.stopPropagation()}>
-              <div className="retreat-header">
-                <div className="retreat-warning-icon">
-                  <ShieldAlert size={36} color="#ef4444" />
-                </div>
-                <h4>{t('arena.retreatConfirmTitle')}</h4>
-                <p className="retreat-desc">
-                  {t('arena.retreatConfirmDesc')}
-                </p>
-              </div>
-
-              <div className="retreat-cost-breakdown">
-                <span className="cost-title">{t('arena.retreatCostsTitle')}</span>
-                <div className="cost-pills">
-                  <div className="retreat-pill danger">
-                    <img src="/assets/hud_icons/btn_ranking.webp" alt={t('resources.trophies')} className="pill-res-icon" style={{ width: 18, height: 18 }} />
-                    <span>-{Math.abs(rival?.rewards?.lossTrophies || 15)} {t('resources.trophies')}</span>
-                  </div>
-                  <div className="retreat-pill gold">
-                    <img src="/assets/hud_icons/icon_gold.webp" alt={t('resources.gold')} className="pill-res-icon" style={{ width: 18, height: 18 }} />
-                    <span>-50 {t('resources.gold')}</span>
-                  </div>
-                  <div className="retreat-pill food">
-                    <img src="/assets/hud_icons/icon_wheat.webp" alt={t('resources.food')} className="pill-res-icon" style={{ width: 18, height: 18 }} />
-                    <span>-25 {t('resources.food')}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="retreat-actions-row">
-                <button 
-                  className="btn-stay-fight"
-                  onClick={() => setShowRetreatConfirm(false)}
-                >
-                  {t('arena.continueAssault')}
+              <h3 className="retreat-title">¿Abandonar el Duelo?</h3>
+              <p className="retreat-desc">
+                Si te rindes en medio del combate, se contará como una derrota y perderás {lossTrophies} Coronas de Liga.
+              </p>
+              <div className="retreat-actions">
+                <button className="retreat-cancel-btn" onClick={() => setShowRetreatConfirm(false)}>
+                  Seguir Luchando
                 </button>
-                <button 
-                  className="btn-confirm-retreat"
-                  onClick={handleConfirmRetreat}
-                >
-                  {t('arena.confirmRetreat')}
+                <button className="retreat-confirm-btn" onClick={handleRetreat}>
+                  Rendirse
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* ASSAULT STEP-BY-STEP TUTORIAL MODAL */}
-        {showAssaultTutorial && (
-          <div className="assault-tutorial-backdrop" onClick={handleCloseTutorial}>
-            <div className="assault-tutorial-card" onClick={(e) => e.stopPropagation()}>
-              {/* Header */}
-              <div className="tutorial-card-header">
-                <div className="tutorial-header-icon-wrap">
-                  <Swords size={22} color="#fef08a" />
-                </div>
-                <div className="tutorial-header-text">
-                  <h3 className="tutorial-modal-title">{t('arena.assaultTutorial.modalTitle')}</h3>
-                  <span className="tutorial-modal-subtitle">{t('arena.assaultTutorial.modalSubtitle')}</span>
-                </div>
-                <button 
-                  type="button" 
-                  className="tutorial-close-btn"
-                  onClick={handleCloseTutorial}
-                  aria-label={t('common.close')}
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              {/* Step indicator dots */}
-              <div className="tutorial-step-dots-row">
-                {[0, 1, 2].map((stepIdx) => (
-                  <button
-                    key={stepIdx}
-                    type="button"
-                    className={`tutorial-dot-pill ${tutorialStep === stepIdx ? 'active' : ''} ${stepIdx < tutorialStep ? 'completed' : ''}`}
-                    onClick={() => {
-                      soundManager?.playClick?.()
-                      setTutorialStep(stepIdx)
-                    }}
-                    title={`Paso ${stepIdx + 1}`}
-                  >
-                    <span className="dot-number">{stepIdx + 1}</span>
-                    <span className="dot-label">
-                      {stepIdx === 0 ? '1. Intentos' : stepIdx === 1 ? '2. Edificios' : '3. Botín & Salida'}
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              {/* Slide Content */}
-              <div className="tutorial-slide-body">
-                {tutorialStep === 0 && (
-                  <div className="tutorial-step-content anim-slide-in">
-                    <div className="tutorial-visual-card visual-attempts">
-                      <div className="showcase-orbs-row">
-                        <div className="showcase-orb flame-glow">
-                          <Flame size={24} color="#f97316" />
-                          <span>Intento 1</span>
-                        </div>
-                        <div className="showcase-orb flame-glow">
-                          <Flame size={24} color="#f97316" />
-                          <span>Intento 2</span>
-                        </div>
-                        <div className="showcase-orb flame-glow">
-                          <Flame size={24} color="#f97316" />
-                          <span>Intento 3</span>
-                        </div>
-                      </div>
-                      <div className="showcase-badge safe-troops">
-                        <Shield size={16} color="#4ade80" />
-                        <span>¡Tropas del Cuartel seguras al 100%!</span>
-                      </div>
-                    </div>
-                    <h4 className="tutorial-step-title">{t('arena.assaultTutorial.step1Title')}</h4>
-                    <p className="tutorial-step-desc">{t('arena.assaultTutorial.step1Desc')}</p>
-                    <div className="tutorial-tip-box">
-                      <Info size={16} className="tip-icon" />
-                      <span>{t('arena.assaultTutorial.step1Tip')}</span>
-                    </div>
-                  </div>
-                )}
-
-                {tutorialStep === 1 && (
-                  <div className="tutorial-step-content anim-slide-in">
-                    <div className="tutorial-visual-card visual-building">
-                      <div className="showcase-mock-card">
-                        <div className="mock-card-top">
-                          <span className="mock-chance">🎯 85% Probabilidad</span>
-                          <span className="mock-name">Castillo Imperial</span>
-                        </div>
-                        <div className="mock-card-preview">
-                          <img src="/assets/buildings/castillo/palacio_soberano.webp?v=1789386000" alt="Castillo" className="mock-img" />
-                        </div>
-                        <div className="mock-attack-btn-preview">
-                          <Swords size={14} />
-                          <span>¡ATACAR ESTE EDIFICIO!</span>
-                        </div>
-                      </div>
-                    </div>
-                    <h4 className="tutorial-step-title">{t('arena.assaultTutorial.step2Title')}</h4>
-                    <p className="tutorial-step-desc">{t('arena.assaultTutorial.step2Desc')}</p>
-                    <div className="tutorial-tip-box">
-                      <Sparkles size={16} className="tip-icon gold" />
-                      <span>{t('arena.assaultTutorial.step2Tip')}</span>
-                    </div>
-                  </div>
-                )}
-
-                {tutorialStep === 2 && (
-                  <div className="tutorial-step-content anim-slide-in">
-                    <div className="tutorial-visual-card visual-loot">
-                      <div className="showcase-loot-chips">
-                        <div className="showcase-chip gold">
-                          <img src="/assets/hud_icons/icon_gold.webp" alt="Oro" />
-                          <span>Oro + Botín</span>
-                        </div>
-                        <div className="showcase-chip crowns">
-                          <Crown size={16} color="#fef08a" />
-                          <span>Coronas de Liga</span>
-                        </div>
-                        <div className="showcase-chip exit">
-                          <img src="/assets/hud_icons/btn_close.webp" alt="Salir" className="mock-close-img" />
-                          <span>Salida Segura</span>
-                        </div>
-                      </div>
-                    </div>
-                    <h4 className="tutorial-step-title">{t('arena.assaultTutorial.step3Title')}</h4>
-                    <p className="tutorial-step-desc">{t('arena.assaultTutorial.step3Desc')}</p>
-                    <div className="tutorial-tip-box safe-tip">
-                      <CheckCircle2 size={16} className="tip-icon green" />
-                      <span>{t('arena.assaultTutorial.step3Tip')}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Footer Controls */}
-              <div className="tutorial-card-footer">
-                <div className="footer-left-actions">
-                  {tutorialStep > 0 ? (
-                    <button 
-                      type="button" 
-                      className="tutorial-btn-prev"
-                      onClick={handlePrevTutorialStep}
-                    >
-                      <ChevronLeft size={16} />
-                      <span>{t('arena.assaultTutorial.btnPrev')}</span>
-                    </button>
-                  ) : (
-                    <button 
-                      type="button" 
-                      className="tutorial-btn-skip"
-                      onClick={handleCloseTutorial}
-                    >
-                      <span>{t('arena.assaultTutorial.btnSkip')}</span>
-                    </button>
-                  )}
-                </div>
-
-                <div className="footer-step-counter">
-                  <span>{tutorialStep + 1} / 3</span>
-                </div>
-
-                <div className="footer-right-actions">
-                  <button 
-                    type="button" 
-                    className={`tutorial-btn-next ${tutorialStep === 2 ? 'btn-finish' : ''}`}
-                    onClick={handleNextTutorialStep}
-                  >
-                    <span>{tutorialStep === 2 ? t('arena.assaultTutorial.btnGotIt') : t('arena.assaultTutorial.btnNext')}</span>
-                    {tutorialStep < 2 && <ChevronRight size={16} />}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )

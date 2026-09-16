@@ -335,6 +335,120 @@
   transform: translateY(-1px);
 }
 
+/* Coming Soon Card Styles */
+.combat-card.coming-soon {
+  opacity: 0.85;
+  border-color: rgba(234, 179, 8, 0.35);
+  background: linear-gradient(180deg, rgba(30, 27, 20, 0.95) 0%, rgba(15, 13, 10, 0.98) 100%);
+  cursor: pointer;
+  position: relative;
+}
+
+.combat-card.coming-soon:hover {
+  opacity: 0.96;
+  border-color: rgba(234, 179, 8, 0.6);
+  transform: translateY(-2px);
+}
+
+.coming-soon-badge {
+  background: linear-gradient(135deg, #b45309 0%, #78350f 100%) !important;
+  border-color: #fde047 !important;
+  color: #fef08a !important;
+}
+
+.locked-filter {
+  filter: grayscale(0.6) brightness(0.85);
+}
+
+.coming-soon-lock-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid #eab308;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fde047;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
+.floating-lock-icon {
+  animation: lockFloatPulse 2s ease-in-out infinite;
+}
+
+@keyframes lockFloatPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); color: #fff; }
+}
+
+.locked-tag {
+  background: rgba(234, 179, 8, 0.08) !important;
+  border-color: rgba(234, 179, 8, 0.25) !important;
+  color: #fde047 !important;
+}
+
+.coming-soon-btn {
+  background: linear-gradient(135deg, #451a03 0%, #78350f 100%) !important;
+  color: #fef08a !important;
+  border: 1px solid #ca8a04 !important;
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.3) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.coming-soon-btn:hover {
+  background: linear-gradient(135deg, #78350f 0%, #92400e 100%) !important;
+}
+
+/* Featured Active Card Styles */
+.combat-card.featured-active {
+  border-color: rgba(239, 68, 68, 0.65) !important;
+  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.25), inset 0 1px 1px rgba(254, 202, 202, 0.3) !important;
+}
+
+.combat-card.featured-active:hover {
+  border-color: #f87171 !important;
+  box-shadow: 0 12px 36px rgba(220, 38, 38, 0.4), inset 0 1px 1px rgba(254, 202, 202, 0.4) !important;
+}
+
+.active-badge {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+  border-color: #fca5a5 !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6) !important;
+}
+
+.active-tag {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #fecaca !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pulse-action {
+  animation: pvpPulseButton 2.4s ease-in-out infinite;
+}
+
+@keyframes pvpPulseButton {
+  0%, 100% {
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.45);
+  }
+  50% {
+    box-shadow: 0 4px 22px rgba(239, 68, 68, 0.8), 0 0 12px rgba(254, 202, 202, 0.5);
+    transform: scale(1.02);
+  }
+}
+
 /* Mobile Responsive */
 @media (max-width: 640px) {
   .combat-mode-overlay {

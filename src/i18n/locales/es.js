@@ -149,15 +149,20 @@ export const es = {
   },
   "combatModal": {
     "title": "Centro de Combate",
-    "subtitle": "Elige tu modo de enfrentamiento por turnos con tus héroes",
+    "subtitle": "Elige tu modo de enfrentamiento: ¡Duelos tácticos de campeones y coliseo!",
     "pveTitle": "Campaña y Mazmorras",
     "pveBadge": "Single Player (PvE)",
-    "pveDesc": "Avanza por las mazmorras celestiales enfrentando monstruos y jefes supremos por turnos.",
+    "pveDesc": "La senda celestial de Aetheria se abrirá con nuevas mazmorras épicas, jefes supremos y reliquias arcanas.",
     "pveBtn": "Iniciar Campaña",
-    "pvpTitle": "Arena de Campeones",
-    "pvpBadge": "Multijugador (PvP)",
-    "pvpDesc": "Reta a escuadrones de otros soberanos en duelos de estrategia y escala en la clasificación.",
-    "pvpBtn": "Desafiar en Arena"
+    "comingSoon": "Próximamente (Capítulo 2)",
+    "comingSoonBadge": "Próximamente",
+    "comingSoonBtn": "En Desarrollo",
+    "comingSoonTooltip": "En desarrollo activo para la próxima expansión",
+    "campaignNotice": "¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Aetheria.",
+    "pvpTitle": "Coliseo de los Soberanos",
+    "pvpBadge": "⭐ Duelo de Soberanos (PvP Activo)",
+    "pvpDesc": "Despliega a tu campeón en duelos tácticos por turnos contra otros reyes celestiales para ganar Coronas y Fragmentos.",
+    "pvpBtn": "¡Entrar al Coliseo!"
   },
   "rightControls": {
     "battle": "Batalla",

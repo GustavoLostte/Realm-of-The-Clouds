@@ -1,5 +1,5 @@
 import React from 'react'
-import { Swords, Sparkles, X, Flame } from 'lucide-react'
+import { Swords, Lock, X, Flame, Shield, Trophy } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'
 import './CombatModeModal.css'
@@ -7,18 +7,30 @@ import './CombatModeModal.css'
 export function CombatModeModal({
   isOpen,
   onClose,
-  onOpenPvE,
+  _onOpenPvE,
   onOpenPvP,
   arenaTickets = 0,
+  showNotification,
 }) {
   const { t } = useTranslation()
 
   if (!isOpen) return null
 
-  const handleSelect = (action) => {
+  const handlePvPSelect = () => {
     soundManager?.playClick?.()
     onClose?.()
-    action?.()
+    onOpenPvP?.()
+  }
+
+  const handleCampaignComingSoon = (e) => {
+    e?.stopPropagation?.()
+    soundManager?.playClick?.()
+    if (showNotification) {
+      showNotification(
+        t('combatModal.campaignNotice') || '¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Aetheria.',
+        'info'
+      )
+    }
   }
 
   return (
@@ -33,7 +45,7 @@ export function CombatModeModal({
             <div>
               <h2 className="combat-mode-title">{t('combatModal.title') || 'Centro de Combate'}</h2>
               <p className="combat-mode-subtitle">
-                {t('combatModal.subtitle') || 'Elige tu modo de enfrentamiento por turnos con tus héroes'}
+                {t('combatModal.subtitle') || 'Elige tu modo de enfrentamiento: ¡Duelos tácticos de campeones y coliseo!'}
               </p>
             </div>
           </div>
@@ -51,55 +63,63 @@ export function CombatModeModal({
 
         {/* 2 Big Mode Cards */}
         <div className="combat-mode-grid">
-          {/* Card 1: Single Player (PvE) */}
+          {/* Card 1: Single Player (PvE) - COMING SOON */}
           <div 
-            className="combat-card pve-card"
-            onClick={() => handleSelect(onOpenPvE)}
+            className="combat-card pve-card coming-soon"
+            onClick={handleCampaignComingSoon}
             role="button"
             tabIndex={0}
+            title={t('combatModal.comingSoonTooltip') || 'En desarrollo activo para la próxima expansión'}
           >
-            <div className="combat-card-badge pve">
-              <Sparkles size={14} />
-              <span>{t('combatModal.pveBadge') || 'Single Player (PvE)'}</span>
+            <div className="combat-card-badge coming-soon-badge">
+              <Lock size={13} />
+              <span>{t('combatModal.comingSoonBadge') || 'Próximamente (Capítulo 2)'}</span>
             </div>
 
             <div className="combat-card-visual">
               <img 
                 src="/assets/hud_icons/btn_expedition.webp" 
                 alt="PvE Mazmorras" 
-                className="combat-card-icon-img pve-glow" 
+                className="combat-card-icon-img pve-glow locked-filter" 
                 draggable="false" 
               />
+              <div className="coming-soon-lock-overlay">
+                <Lock size={28} className="floating-lock-icon" />
+              </div>
             </div>
 
             <div className="combat-card-info">
               <h3 className="combat-card-title">{t('combatModal.pveTitle') || 'Campaña y Mazmorras'}</h3>
               <p className="combat-card-desc">
-                {t('combatModal.pveDesc') || 'Avanza por las mazmorras celestiales enfrentando monstruos y jefes supremos por turnos.'}
+                {t('combatModal.pveDesc') || 'La senda celestial de Aetheria se abrirá con nuevas mazmorras épicas, jefes supremos y reliquias arcanas.'}
               </p>
 
               <div className="combat-card-features">
-                <span className="feature-tag">⚔️ Jefes Abisales</span>
-                <span className="feature-tag">💎 Botín Épico</span>
-                <span className="feature-tag">📜 Modo Historia</span>
+                <span className="feature-tag locked-tag">🔒 Mazmorras Abisales</span>
+                <span className="feature-tag locked-tag">🔒 Campaña de Héroes</span>
+                <span className="feature-tag locked-tag">🔒 Reliquias Sagradas</span>
               </div>
             </div>
 
-            <button className="combat-card-action-btn pve-btn">
-              <span>{t('combatModal.pveBtn') || 'Iniciar Mazmorra'}</span>
+            <button 
+              className="combat-card-action-btn coming-soon-btn"
+              onClick={handleCampaignComingSoon}
+            >
+              <Lock size={15} />
+              <span>{t('combatModal.comingSoonBtn') || 'Próximamente'}</span>
             </button>
           </div>
 
-          {/* Card 2: Multiplayer (PvP) */}
+          {/* Card 2: Multiplayer (PvP) - ACTIVE DUEL OF SOVEREIGNS */}
           <div 
-            className="combat-card pvp-card"
-            onClick={() => handleSelect(onOpenPvP)}
+            className="combat-card pvp-card featured-active"
+            onClick={handlePvPSelect}
             role="button"
             tabIndex={0}
           >
-            <div className="combat-card-badge pvp">
-              <Flame size={14} />
-              <span>{t('combatModal.pvpBadge') || 'Multijugador (PvP)'}</span>
+            <div className="combat-card-badge pvp active-badge">
+              <Flame size={14} className="active-flame-icon" />
+              <span>{t('combatModal.pvpBadge') || '⭐ Duelo de Soberanos (PvP Activo)'}</span>
             </div>
 
             <div className="combat-card-visual">
@@ -117,20 +137,20 @@ export function CombatModeModal({
             </div>
 
             <div className="combat-card-info">
-              <h3 className="combat-card-title">{t('combatModal.pvpTitle') || 'Arena de Campeones'}</h3>
+              <h3 className="combat-card-title">{t('combatModal.pvpTitle') || 'Coliseo de los Soberanos'}</h3>
               <p className="combat-card-desc">
-                {t('combatModal.pvpDesc') || 'Reta a escuadrones de otros soberanos en duelos de estrategia y escala en la clasificación.'}
+                {t('combatModal.pvpDesc') || 'Despliega a tu campeón en duelos tácticos por turnos contra otros reyes celestiales para ganar Coronas y Fragmentos.'}
               </p>
 
               <div className="combat-card-features">
-                <span className="feature-tag">🏆 Ligas & Coronas</span>
-                <span className="feature-tag">🛡️ Duelos Tácticos</span>
-                <span className="feature-tag">👑 Rango Global</span>
+                <span className="feature-tag active-tag"><Swords size={12} /> Duelos por Turnos</span>
+                <span className="feature-tag active-tag"><Trophy size={12} /> Ligas & Coronas</span>
+                <span className="feature-tag active-tag"><Shield size={12} /> Fragmentos Divinos</span>
               </div>
             </div>
 
-            <button className="combat-card-action-btn pvp-btn">
-              <span>{t('combatModal.pvpBtn') || 'Desafiar en Arena'}</span>
+            <button className="combat-card-action-btn pvp-btn pulse-action">
+              <span>{t('combatModal.pvpBtn') || '¡Entrar al Coliseo!'}</span>
             </button>
           </div>
         </div>
@@ -138,3 +158,6 @@ export function CombatModeModal({
     </div>
   )
 }
+
+
+

@@ -2555,15 +2555,20 @@ export const us = {
   },
   "combatModal": {
     "title": "Combat Center",
-    "subtitle": "Choose your turn-based tactical mode with your heroes",
+    "subtitle": "Choose your confrontation mode: Turn-based hero duels & coliseum!",
     "pveTitle": "Campaign & Dungeons",
     "pveBadge": "Single Player (PvE)",
-    "pveDesc": "Advance through celestial dungeons facing monsters and supreme bosses in turn-based combat.",
+    "pveDesc": "The celestial path of Aetheria will unlock with new epic dungeons, supreme bosses, and arcane relics.",
     "pveBtn": "Start Campaign",
-    "pvpTitle": "Champions Arena",
-    "pvpBadge": "Multiplayer (PvP)",
-    "pvpDesc": "Challenge squads of other sovereigns in strategic duels and climb the leaderboards.",
-    "pvpBtn": "Challenge in Arena"
+    "comingSoon": "Coming Soon (Chapter 2)",
+    "comingSoonBadge": "Coming Soon",
+    "comingSoonBtn": "In Development",
+    "comingSoonTooltip": "Under active development for the next expansion",
+    "campaignNotice": "Coming Soon! The Celestial Campaign will be available in the next Aetheria update.",
+    "pvpTitle": "Coliseum of Sovereigns",
+    "pvpBadge": "⭐ Sovereign Duel (Active PvP)",
+    "pvpDesc": "Deploy your champion in tactical turn-based duels against other cloud sovereigns to earn Crowns and Shards.",
+    "pvpBtn": "Enter the Coliseum!"
   },
   "kingdomHub": {
     "title": "Imperial Council Chamber",
