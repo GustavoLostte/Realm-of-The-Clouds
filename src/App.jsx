@@ -18,6 +18,7 @@ import { StarterPackBanner } from './components/StarterPackBanner'
 import { FlyToHudLayer } from './components/FlyToHudLayer'
 import { GuidedTutorial } from './components/GuidedTutorial'
 import { StartScreen } from './components/StartScreen'
+import { PvpScene } from './components/PvpScene'
 import { SmartLoader } from './components/SmartLoader'
 import { preloadImages, getCityCriticalAssets } from './utils/smartAssetLoader'
 import OrientationNotice from './components/OrientationNotice'
@@ -246,6 +247,7 @@ export default function App() {
   const [flyingParticles, setFlyingParticles] = useState([])
   const [poppingResource, setPoppingResource] = useState(null)
   const [isCinematicMode, setIsCinematicMode] = useState(false)
+  const [currentScene, setCurrentScene] = useState('kingdom') // 'kingdom' | 'pvp'
 
   // FPS Performance & Eco Mode (Default 60fps for silky-smooth experience everywhere)
   const [fpsMode, setFpsModeState] = useState(() => {
@@ -491,11 +493,15 @@ export default function App() {
         e.preventDefault()
         soundManager.playClick()
         setIsCinematicMode(false)
+      } else if (e.key === 'Escape' && currentScene === 'pvp') {
+        e.preventDefault()
+        soundManager.playClick()
+        setCurrentScene('kingdom')
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isCinematicMode])
+  }, [isCinematicMode, currentScene])
 
   // Ensure rivals exist for the arena
   useEffect(() => {
@@ -2531,7 +2537,9 @@ export default function App() {
   // ============================================================
   const handleOpenArena = (tab = 'pvp') => {
     setArenaInitialTab(tab)
-    setArenaModalOpen(true)
+    setCombatModeModalOpen(false)
+    setArenaModalOpen(false)
+    setCurrentScene('pvp')
   }
 
   const handleRefreshRivals = () => {
@@ -3364,72 +3372,74 @@ export default function App() {
       <FpsOverlay fpsMode={fpsMode} />
 
       {/* Top HUD */}
-      <TopBar 
-        resources={resources} 
-        soundEnabled={soundEnabled} 
-        onToggleSound={handleToggleSound}
-        onOpenProfile={() => setProfileModalOpen(true)}
-        onOpenMenu={() => setMenuModalOpen(true)}
-        onOpenShop={handleOpenShop}
-        onOpenArena={() => handleOpenArena('pvp')}
-        onOpenRanking={handleOpenRanking}
-        trophies={arenaData.trophies}
-        peaceShieldUntil={arenaData.peaceShieldUntil}
-        onOneClickHarvest={handleOneClickHarvestAll}
-        onOpenHarvestModal={() => setHarvestModalOpen(true)}
-        hasOneClickHarvest={vipStatus.hasOneClickHarvest}
-        kingdomLevel={kingdomLevel}
-        kingdomXp={kingdomXp}
-        xpProgress={xpProgress}
-        storageCapacity={storageCapacity}
-        poppingResource={poppingResource}
-        onToggleCinematic={() => setIsCinematicMode((prev) => !prev)}
-        isCinematicMode={isCinematicMode}
-        playerName={playerName || t('common.sovereign')}
-        playerAvatar={playerAvatar}
-        onOpenChangeName={() => setUsernameModalOpen(true)}
-        isTutorialActive={isTutorialRunning}
-        isFullscreen={isFullscreen}
-        onToggleFullscreen={handleToggleFullscreen}
-        questHeraldNode={
-          hasStartedGame && !isCinematicMode ? (
-            <QuestHerald 
-              activeQuest={activeStoryQuest}
-              chapterData={activeChapterData}
-              questProgress={activeQuestProgress}
-              onClaimQuest={handleClaimQuest}
-              onOpenBuild={handleOpenBuildMenu}
-              onOpenArmy={() => setArmyModalOpen(true)}
-              onOpenCampaign={() => setCampaignWindowOpen(true)}
-              onOpenQuestsModal={() => setQuestsModalOpen(true)}
-              onOpenProfile={() => setProfileModalOpen(true)}
-              forceExpanded={isTutorialActive}
-              isTutorialActive={isTutorialRunning}
+      {hasStartedGame && currentScene === 'kingdom' && (
+        <TopBar 
+          resources={resources} 
+          soundEnabled={soundEnabled} 
+          onToggleSound={handleToggleSound}
+          onOpenProfile={() => setProfileModalOpen(true)}
+          onOpenMenu={() => setMenuModalOpen(true)}
+          onOpenShop={handleOpenShop}
+          onOpenArena={() => handleOpenArena('pvp')}
+          onOpenRanking={handleOpenRanking}
+          trophies={arenaData.trophies}
+          peaceShieldUntil={arenaData.peaceShieldUntil}
+          onOneClickHarvest={handleOneClickHarvestAll}
+          onOpenHarvestModal={() => setHarvestModalOpen(true)}
+          hasOneClickHarvest={vipStatus.hasOneClickHarvest}
+          kingdomLevel={kingdomLevel}
+          kingdomXp={kingdomXp}
+          xpProgress={xpProgress}
+          storageCapacity={storageCapacity}
+          poppingResource={poppingResource}
+          onToggleCinematic={() => setIsCinematicMode((prev) => !prev)}
+          isCinematicMode={isCinematicMode}
+          playerName={playerName || t('common.sovereign')}
+          playerAvatar={playerAvatar}
+          onOpenChangeName={() => setUsernameModalOpen(true)}
+          isTutorialActive={isTutorialRunning}
+          isFullscreen={isFullscreen}
+          onToggleFullscreen={handleToggleFullscreen}
+          questHeraldNode={
+            hasStartedGame && !isCinematicMode ? (
+              <QuestHerald 
+                activeQuest={activeStoryQuest}
+                chapterData={activeChapterData}
+                questProgress={activeQuestProgress}
+                onClaimQuest={handleClaimQuest}
+                onOpenBuild={handleOpenBuildMenu}
+                onOpenArmy={() => setArmyModalOpen(true)}
+                onOpenCampaign={() => setCampaignWindowOpen(true)}
+                onOpenQuestsModal={() => setQuestsModalOpen(true)}
+                onOpenProfile={() => setProfileModalOpen(true)}
+                forceExpanded={isTutorialActive}
+                isTutorialActive={isTutorialRunning}
+              />
+            ) : null
+          }
+          notificationBellNode={
+            <NotificationBell 
+              notifications={notificationHistory}
+              onClearNotifications={handleClearNotifications}
+              isOpen={notificationsModalOpen}
+              onOpenChange={setNotificationsModalOpen}
             />
-          ) : null
-        }
-        notificationBellNode={
-          <NotificationBell 
-            notifications={notificationHistory}
-            onClearNotifications={handleClearNotifications}
-            isOpen={notificationsModalOpen}
-            onOpenChange={setNotificationsModalOpen}
-          />
-        }
-        toastDockNode={
-          hasStartedGame ? (
-            <div className="game-notifications-dock" aria-live="polite">
-              {notifications.map((n) => (
-                <SwipeableToast
-                  key={n.id}
-                  toast={n}
-                  onDismiss={handleDismissNotification}
-                />
-              ))}
-            </div>
-          ) : null
-        }
-      />
+          }
+          toastDockNode={
+            hasStartedGame ? (
+              <div className="game-notifications-dock" aria-live="polite">
+                {notifications.map((n) => (
+                  <SwipeableToast
+                    key={n.id}
+                    toast={n}
+                    onDismiss={handleDismissNotification}
+                  />
+                ))}
+              </div>
+            ) : null
+          }
+        />
+      )}
 
       {/* Main Interactive Game World Canvas */}
       <main className="game-main-viewport">
@@ -3447,14 +3457,14 @@ export default function App() {
           soundEnabled={soundEnabled}
           onToggleSound={handleToggleSound}
           fpsMode={fpsMode}
-          isSuspended={isAnyModalOpen || campaignWindowOpen || dungeonCombatOpen || arenaBattleOpen}
+          isSuspended={isAnyModalOpen || campaignWindowOpen || dungeonCombatOpen || arenaBattleOpen || currentScene === 'pvp'}
           isFullscreen={isFullscreen}
           onToggleFullscreen={handleToggleFullscreen}
         />
       </main>
 
       {/* Lateral Events & Deals Dock (Royal Messenger, Daily Roulette, Starter Pack) */}
-      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
         <aside className="hud-lateral-events-dock" aria-label="Avisos y Ofertas">
           <EventBadge 
             activeEvent={activeEvent}
@@ -3477,7 +3487,7 @@ export default function App() {
       )}
 
       {/* Bottom-Left Kingdom Button & Chat Button */}
-      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
         <LeftActionControls 
           onOpenKingdom={() => setKingdomHubModalOpen(true)}
           onOpenChat={() => setChatModalOpen(true)}
@@ -3488,7 +3498,7 @@ export default function App() {
       )}
 
       {/* Bottom-Right Battle & Settings Action Controls (Swapped with Kingdom) */}
-      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
         <RightActionControls 
           onOpenBattle={() => setCombatModeModalOpen(true)}
           onOpenSettings={() => setMenuModalOpen(true)}
@@ -3498,7 +3508,7 @@ export default function App() {
       )}
 
       {/* Lateral Ranking Button (Kept in Place) */}
-      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
         <RankingLateralButton 
           onOpenRanking={handleOpenRanking}
           trophies={arenaData.trophies}
@@ -3508,7 +3518,7 @@ export default function App() {
       )}
 
       {/* Lateral Store Button (Placed Next to Ranking) */}
-      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
         <StoreLateralButton 
           onOpenShop={() => handleOpenShop('offers')}
           wheelFreeSpinReady={isWheelFreeSpinReady}
@@ -3517,12 +3527,41 @@ export default function App() {
       )}
 
       {/* Lateral Inventory Button (Placed Next to Store) */}
-      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
         <InventoryLateralButton 
           onOpenInventory={() => setInventoryModalOpen(true)}
           itemCount={(ownedRelicIds?.length || 0) + Object.values(consumables || {}).reduce((acc, v) => acc + (typeof v === 'number' ? v : 0), 0)}
           isTutorialActive={isTutorialRunning}
         />
+      )}
+
+      {/* Dedicated Fullscreen PvP Scene */}
+      {currentScene === 'pvp' && (
+        <PvpScene 
+          onBack={() => setCurrentScene('kingdom')}
+          resources={resources}
+          arenaData={arenaData}
+          playerName={playerName}
+          playerAvatar={playerAvatar}
+          kingdomLevel={kingdomLevel}
+          troops={troops}
+          onStartBattle={handleStartArenaBattle}
+          onRefreshRivals={handleRefreshRivals}
+          showNotification={showNotification}
+        />
+      )}
+
+      {/* Floating Toast Notifications Dock while in PvP Scene */}
+      {currentScene === 'pvp' && hasStartedGame && (
+        <div className="game-notifications-dock" aria-live="polite">
+          {notifications.map((n) => (
+            <SwipeableToast
+              key={n.id}
+              toast={n}
+              onDismiss={handleDismissNotification}
+            />
+          ))}
+        </div>
       )}
 
       {/* Centralized Asynchronous Modal Host (React.lazy Code Splitting) */}
@@ -3714,7 +3753,7 @@ export default function App() {
       {/* Mobile & Vertical Portrait Orientation Warning Overlay (only during active city gameplay) */}
       {hasStartedGame && <OrientationNotice />}
 
-      {/* Global Custom Context Menu for ZiaRocks on Right-Click */}
+      {/* Global Custom Context Menu for WizzarDev Studios on Right-Click */}
       <CustomContextMenu />
     </div>
   )

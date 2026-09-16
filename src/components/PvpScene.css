@@ -1,0 +1,1014 @@
+/* ==========================================================================
+   PVP DEDICATED SCENE (COLISEO DE LOS SOBERANOS)
+   Compact, Ergonomic & Zero-Overflow Layout
+   60 FPS Candy Performance Aesthetics
+   ========================================================================== */
+
+.pvp-scene-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 99990;
+  background-color: #050814;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: pvpSceneFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+@keyframes pvpSceneFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.015);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Background Atmosphere & Vignette */
+.pvp-scene-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(10, 15, 30, 0.45) 0%, rgba(3, 5, 12, 0.88) 75%, rgba(1, 2, 6, 0.96) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pvp-scene-ambient-glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85vw;
+  max-width: 1100px;
+  height: 320px;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.16) 0%, rgba(234, 179, 8, 0.08) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   TOP HEADER BAR
+   ========================================================================== */
+.pvp-scene-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: max(8px, env(safe-area-inset-top, 8px)) max(18px, env(safe-area-inset-right, 18px)) 8px max(18px, env(safe-area-inset-left, 18px));
+  background: linear-gradient(180deg, rgba(8, 12, 26, 0.95) 0%, rgba(8, 12, 26, 0.82) 85%, rgba(8, 12, 26, 0) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.15);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+
+/* Left: Return Button */
+.pvp-header-left {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pvp-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 8px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.55);
+  border-radius: 9999px;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    0 0 14px rgba(56, 189, 248, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pvp-back-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border-color: #93c5fd;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 18px rgba(37, 99, 235, 0.5),
+    0 0 20px rgba(147, 197, 253, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.pvp-back-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.pvp-back-icon-wrap {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(37, 99, 235, 0.45) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.pvp-back-btn:hover .pvp-back-icon-wrap {
+  color: #ffffff;
+  transform: translateX(-2px);
+}
+
+.pvp-back-txt-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+.pvp-back-title {
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: #f8fafc;
+}
+
+.pvp-back-sub {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Center: Title & League */
+.pvp-header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.pvp-scene-title-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  padding: 5px 16px 5px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.pvp-badge-swords {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ca8a04 0%, #854d0e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fef08a;
+  box-shadow: 0 2px 8px rgba(202, 138, 4, 0.4);
+}
+
+.pvp-title-text-wrap {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.pvp-scene-title {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fef08a 50%, #eab308 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pvp-league-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.70rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.pvp-league-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.pvp-league-name-highlight {
+  color: #fef08a;
+  font-weight: 700;
+}
+
+.pvp-league-sep {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.pvp-league-status {
+  color: #38bdf8;
+}
+
+/* Right: Resources Pill */
+.pvp-header-right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pvp-hud-resource-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 4px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.pvp-res-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.pvp-res-val-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.pvp-res-val {
+  font-size: 0.80rem;
+  font-weight: 800;
+}
+
+.pvp-res-label {
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.pvp-res-img {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+}
+
+.pvp-res-icon.gold { color: #f59e0b; }
+.pvp-res-icon.red { color: #ef4444; }
+.pvp-res-icon.purple { color: #a855f7; }
+.pvp-res-icon.cyan { color: #38bdf8; }
+
+/* ==========================================================================
+   COMPACT MODE SELECTOR BANNER
+   ========================================================================== */
+.pvp-mode-selector-banner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1360px;
+  margin: 10px auto 0;
+  padding: 0 16px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.selector-inner {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 15, 30, 0.98) 100%);
+  border: 1.5px solid rgba(147, 197, 253, 0.25);
+  border-radius: 16px;
+  padding: 8px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.mode-toggle-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.mode-toggle-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+  user-select: none;
+}
+
+.mode-toggle-card.active {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(29, 78, 216, 0.9) 100%);
+  border-color: #60a5fa;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.mode-toggle-card.locked-card {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+  opacity: 0.75;
+}
+
+.mode-toggle-card.locked-card:hover {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+.mode-toggle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ca8a04 0%, #854d0e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fef08a;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(202, 138, 4, 0.4);
+}
+
+.mode-toggle-icon.squad-locked {
+  background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
+  color: #94a3b8;
+  box-shadow: none;
+}
+
+.mode-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+}
+
+.mode-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mode-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.mode-name.text-muted {
+  color: #94a3b8;
+}
+
+.mode-active-pill {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(34, 197, 94, 0.25);
+  border: 1px solid #22c55e;
+  color: #4ade80;
+}
+
+.mode-coming-soon-pill {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(234, 179, 8, 0.2);
+  border: 1px solid #eab308;
+  color: #fde047;
+}
+
+.mode-desc {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   MAIN SCENE BODY (NO EXCESSIVE HEIGHT / COMPACT ERGONOMIC)
+   ========================================================================== */
+.pvp-scene-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 18px;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 12px 16px 20px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   LEFT COLUMN: PLAYER LEAGUE & RECORD CARD
+   ========================================================================== */
+.pvp-player-league-card {
+  width: 340px;
+  flex-shrink: 0;
+}
+
+.league-profile-card {
+  background: linear-gradient(165deg, rgba(17, 24, 43, 0.96) 0%, rgba(10, 15, 30, 0.98) 100%);
+  border: 1.8px solid rgba(234, 179, 8, 0.35);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(234, 179, 8, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 1. Header: Avatar next to Name */
+.league-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 10px;
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #facc15;
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
+  overflow: hidden;
+  background: #1e293b;
+  flex-shrink: 0;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-lvl-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 23, 42, 0.92);
+  color: #38bdf8;
+  font-size: 0.60rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.profile-info-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 2px;
+}
+
+.profile-player-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.profile-badge-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.award-icon {
+  color: #38bdf8;
+}
+
+/* 2. Prominent League Display */
+.league-prominent-banner {
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(180, 83, 9, 0.25) 100%);
+  border: 1.5px solid rgba(234, 179, 8, 0.45);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.league-banner-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ca8a04 0%, #854d0e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(202, 138, 4, 0.4);
+}
+
+.league-trophy-gold {
+  color: #fef08a;
+  filter: drop-shadow(0 0 6px rgba(254, 240, 138, 0.6));
+}
+
+.league-banner-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.league-pre-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #fde047;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.league-title-main {
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+.league-points-badge {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+/* 3. Combat Stats Record (Winrate %, Wins, Losses, Points) */
+.pvp-record-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.record-section-title {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.pvp-record-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.record-stat-box {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.stat-icon-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-sub-icon.cyan { color: #38bdf8; }
+.stat-sub-icon.gold { color: #f59e0b; }
+.stat-sub-icon.green { color: #22c55e; }
+.stat-sub-icon.red { color: #ef4444; }
+
+.stat-hdr {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.stat-main-number {
+  font-size: 1.10rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.stat-main-number.cyan { color: #38bdf8; }
+.stat-main-number.gold { color: #f59e0b; }
+.stat-main-number.green { color: #22c55e; }
+.stat-main-number.red { color: #ef4444; }
+
+.winrate-bar-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 3px;
+}
+
+.winrate-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  border-radius: 9999px;
+  box-shadow: 0 0 6px #38bdf8;
+}
+
+.stat-sub-tag {
+  font-size: 0.62rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.league-perk-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  text-align: left;
+}
+
+.perk-zap-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN: BATTLE ROOMS (SALAS DE BATALLA 1 VS 1)
+   ========================================================================== */
+.pvp-arena-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.rivals-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  text-align: left;
+}
+
+.rivals-headline {
+  margin: 0 0 2px 0;
+  font-size: 1.10rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.rivals-sub {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.pvp-refresh-rivals-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.pvp-refresh-rivals-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #475569 0%, #334155 100%);
+  border-color: #93c5fd;
+}
+
+.animate-spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Rooms Grid */
+.rivals-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.pvp-rival-card.room-card {
+  background: linear-gradient(165deg, rgba(15, 23, 42, 0.92) 0%, rgba(10, 15, 30, 0.96) 100%);
+  border: 1.5px solid rgba(147, 197, 253, 0.22);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.pvp-rival-card.room-card:hover {
+  border-color: rgba(56, 189, 248, 0.55);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 16px rgba(56, 189, 248, 0.2);
+}
+
+.room-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
+}
+
+.room-number-tag {
+  font-size: 0.70rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+}
+
+.room-diff-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.rival-card-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.rival-avatar-wrap {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #1e293b;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.rival-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rival-lvl-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(15, 23, 42, 0.92);
+  color: #38bdf8;
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.rival-main-info {
+  flex: 1;
+  text-align: left;
+}
+
+.rival-name {
+  margin: 0;
+  font-size: 0.90rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.rival-kingdom {
+  display: block;
+  font-size: 0.70rem;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+.rival-trophies-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #f59e0b;
+  margin-top: 2px;
+}
+
+.trophy-mini-icon {
+  color: #f59e0b;
+}
+
+/* Rewards Row */
+.rival-rewards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  background: rgba(10, 15, 30, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.reward-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.rew-label {
+  font-size: 0.60rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.rew-val {
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.rew-val.trophies { color: #f59e0b; }
+.rew-val.gold { color: #eab308; }
+.rew-val.honor { color: #38bdf8; }
+
+/* Enter Room Button */
+.enter-room-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 9px 14px;
+  background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #78350f 100%);
+  border: 1.5px solid #fde047;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.45);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.enter-room-btn:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #92400e 100%);
+  border-color: #fef08a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.55);
+}
+
+.enter-room-btn:active {
+  transform: translateY(1px);
+}
+
+.duel-btn-arrow {
+  transition: transform 0.2s ease;
+}
+
+.enter-room-btn:hover .duel-btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MOBILE & TABLET ERGONOMICS)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .pvp-scene-header {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .pvp-header-left { order: 1; }
+  .pvp-header-right { order: 2; }
+  .pvp-header-center { order: 3; width: 100%; }
+
+  .pvp-scene-title-badge {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pvp-scene-body {
+    flex-direction: column;
+    padding: 10px 12px 24px;
+    gap: 14px;
+  }
+
+  .pvp-player-league-card {
+    width: 100%;
+  }
+
+  .mode-toggle-group {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .pvp-hud-resource-pill {
+    gap: 6px;
+    padding: 3px 8px;
+  }
+
+  .pvp-res-label {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .pvp-back-btn {
+    padding: 5px 10px 5px 6px;
+  }
+
+  .pvp-back-title {
+    font-size: 0.78rem;
+  }
+
+  .pvp-back-sub {
+    font-size: 0.60rem;
+  }
+
+  .pvp-scene-title {
+    font-size: 0.88rem;
+  }
+
+  .pvp-hud-resource-pill .gems-res,
+  .pvp-hud-resource-pill .shard-res {
+    display: none;
+  }
+
+  .rivals-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

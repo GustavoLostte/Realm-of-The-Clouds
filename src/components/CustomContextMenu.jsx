@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { ExternalLink, Globe, Sparkles, X } from 'lucide-react'
 import './CustomContextMenu.css'
 
-const ZIAROCKS_URL = 'https://ziarocks.com/'
+const STUDIO_URL = 'https://wizzardev.com/'
 
 export function CustomContextMenu() {
   const [visible, setVisible] = useState(false)
@@ -17,8 +17,8 @@ export function CustomContextMenu() {
       const clickY = e.clientY
 
       // Dimensions estimate for clamping within viewport
-      const menuWidth = 230
-      const menuHeight = 85
+      const menuWidth = 245
+      const menuHeight = 90
 
       const screenW = window.innerWidth || document.documentElement.clientWidth
       const screenH = window.innerHeight || document.documentElement.clientHeight
@@ -69,7 +69,7 @@ export function CustomContextMenu() {
   }, [])
 
   const handleOpenLink = () => {
-    window.open(ZIAROCKS_URL, '_blank', 'noopener,noreferrer')
+    window.open(STUDIO_URL, '_blank', 'noopener,noreferrer')
     setVisible(false)
   }
 
@@ -81,12 +81,12 @@ export function CustomContextMenu() {
       className="custom-context-menu"
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
       role="menu"
-      aria-label="Menú ZiaRocks"
+      aria-label="Menú WizzarDev Studios"
     >
       <div className="custom-context-header">
         <div className="custom-context-brand">
           <Sparkles size={14} className="brand-icon" />
-          <span className="brand-name">ZiaRocks</span>
+          <span className="brand-name">WizzarDev Studios</span>
         </div>
         <button
           className="custom-context-close"
@@ -107,8 +107,8 @@ export function CustomContextMenu() {
           <div className="btn-left">
             <Globe size={16} className="item-icon" />
             <div className="btn-labels">
-              <span className="btn-title">Web ZiaRocks</span>
-              <span className="btn-url">ziarocks.com</span>
+              <span className="btn-title">WizzarDev Studios</span>
+              <span className="btn-url">wizzardev.com</span>
             </div>
           </div>
           <ExternalLink size={14} className="item-arrow" />
