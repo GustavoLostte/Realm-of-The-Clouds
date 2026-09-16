@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './TechTreeModal.css'
 import { Check, Lock, Sparkles } from 'lucide-react'
 import { TECH_BRANCHES, TECHNOLOGIES } from '../data/techTreeData'
 import { soundManager } from '../utils/audio'

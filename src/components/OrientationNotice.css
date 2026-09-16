@@ -12,8 +12,6 @@
   justify-content: center;
   padding: 1.25rem;
   background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.98) 0%, rgba(2, 6, 23, 0.99) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   color: #f8fafc;
   font-family: 'Outfit', sans-serif;
   overflow: hidden;
@@ -39,17 +37,16 @@
   position: absolute;
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.22) 0%, rgba(2, 132, 199, 0.08) 50%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(14, 165, 233, 0.22) 0%, rgba(2, 132, 199, 0.08) 35%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(40px);
   animation: orientationGlowPulse 4s ease-in-out infinite alternate;
 }
 
 .orientation-backdrop-glow.glow-secondary {
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(147, 51, 234, 0.18) 0%, rgba(79, 70, 229, 0.06) 50%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(147, 51, 234, 0.18) 0%, rgba(79, 70, 229, 0.06) 35%, transparent 70%);
   bottom: 10%;
   right: 15%;
   animation: orientationGlowPulse 5s ease-in-out infinite alternate-reverse;
@@ -318,11 +315,9 @@
 @keyframes orientationNoticeFadeIn {
   from {
     opacity: 0;
-    backdrop-filter: blur(0px);
   }
   to {
     opacity: 1;
-    backdrop-filter: blur(16px);
   }
 }
 

@@ -1,13 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Scroll, Bell, Clock, ChevronRight, X } from 'lucide-react'
 import { useTranslation } from '../i18n/index.jsx'
 import { soundManager } from '../utils/audio'
+import './EventBadge.css'
 
-export function EventBadge({ activeEvent, timeLeft, onClick, onDismiss }) {
+export function EventBadge({ activeEvent, timeLeft: externalTimeLeft, onClick, onDismiss, onExpire }) {
   const { t } = useTranslation()
   const [isMinimized, setIsMinimized] = useState(false)
-  
+  const [now, setNow] = useState(() => Date.now())
+
+  // Stable callback ref prevents interval churn on parent re-renders
+  const onExpireRef = useRef(onExpire)
+  onExpireRef.current = onExpire
+
+  // Autonomous local 1-second countdown: keeps ticks strictly inside EventBadge
+  useEffect(() => {
+    if (!activeEvent || !activeEvent.expiresAt) return
+    const interval = setInterval(() => {
+      const currentNow = Date.now()
+      setNow(currentNow)
+      if (currentNow >= activeEvent.expiresAt) {
+        onExpireRef.current?.()
+      }
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [activeEvent?.expiresAt])
+
   if (!activeEvent) return null
+
+  const displayTimeLeft = activeEvent.expiresAt
+    ? Math.max(0, Math.ceil((activeEvent.expiresAt - now) / 1000))
+    : (externalTimeLeft ?? 0)
 
   const handleExpand = (e) => {
     e.stopPropagation()
@@ -67,7 +90,7 @@ export function EventBadge({ activeEvent, timeLeft, onClick, onDismiss }) {
         <span className="event-badge-title">{t(`kingdomEvents.${activeEvent.id}.title`) || activeEvent.title}</span>
         <div className="event-badge-timer">
           <Clock size={11} />
-          <span>{t('events.secondsToAnswer', { time: timeLeft })}</span>
+          <span>{t('events.secondsToAnswer', { time: displayTimeLeft })}</span>
         </div>
       </div>
 

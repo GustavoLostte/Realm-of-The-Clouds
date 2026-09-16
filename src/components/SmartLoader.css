@@ -59,9 +59,7 @@
   max-width: 460px;
   width: 100%;
   padding: 32px 28px;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.94);
   border: 1px solid rgba(14, 165, 233, 0.35);
   border-radius: 20px;
   box-shadow: 
@@ -110,8 +108,7 @@
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, transparent 70%);
-  filter: blur(8px);
+  background: radial-gradient(circle at center, rgba(14, 165, 233, 0.45) 0%, rgba(14, 165, 233, 0.15) 45%, transparent 70%);
   animation: pulseAura 2.4s ease-in-out infinite alternate;
 }
 

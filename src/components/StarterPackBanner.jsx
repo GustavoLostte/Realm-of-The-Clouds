@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Clock, ChevronRight, X } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
+import './StarterPackBanner.css'
 
 export function StarterPackBanner({ 
   claimed = false, 

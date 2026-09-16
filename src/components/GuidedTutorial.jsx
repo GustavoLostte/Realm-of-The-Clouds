@@ -137,7 +137,7 @@ export function GuidedTutorial({
     window.addEventListener('scroll', handleResizeOrScroll, true)
 
     // Repeat check in case DOM element transitions into view
-    const interval = setInterval(updateRect, 300)
+    const interval = setInterval(updateRect, 1000)
 
     return () => {
       window.removeEventListener('resize', handleResizeOrScroll)

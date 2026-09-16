@@ -67,7 +67,9 @@ export const us = {
     },
     "decree": "Decree",
     "research": "Research",
-    "construction": "Construction"
+    "construction": "Construction",
+    "minimize": "Minimize",
+    "units": "units"
   },
   "resources": {
     "gold": "Gold",
@@ -141,7 +143,9 @@ export const us = {
     "resPop": "Population: {val} / {max} colonists",
     "resCelestialShards": "Celestial Shards: {val} shards",
     "clickToHarvest": "Click to harvest resources!",
-    "inspectProduction": "Collect production of {name} ({produced}) {status}"
+    "inspectProduction": "Collect production of {name} ({produced}) {status}",
+    "shop": "Shop",
+    "inventory": "Inventory"
   },
   "rightControls": {
     "battle": "Battle",
@@ -176,7 +180,8 @@ export const us = {
     "shopTooltip": "Imperial Bazaar & Sovereign Deals",
     "questsTooltip": "Realm Quests & Narratives",
     "expeditionTooltip": "Expeditions & World Map",
-    "settingsTooltip": "Game Settings & Options"
+    "settingsTooltip": "Game Settings & Options",
+    "expeditions": "Expeditions"
   },
   "buildings": {
     "openExpeditionsBtn": "Open Cosmic Rift & Expeditions",
@@ -280,7 +285,8 @@ export const us = {
       }
     },
     "freePlot": "Free Plot",
-    "buildTargetHere": "Build {name} Here!"
+    "buildTargetHere": "Build {name} Here!",
+    "level": "Level {level}"
   },
   "quests": {
     "heraldName": "Royal Seneschal & Herald",
@@ -478,7 +484,9 @@ export const us = {
         "title": "Invincible Legion",
         "desc": "Recruit a contingent of more than 12 troops in your garrison."
       }
-    }
+    },
+    "allQuestsTooltip": "View all kingdom quests",
+    "viewAllQuests": "View Quests"
   },
   "tech": {
     "title": "Grand Royal Academy",
@@ -1997,119 +2005,119 @@ export const us = {
     },
     "sectors": {
       "1": {
-            "name": "Sector I: Orc Vanguard",
-            "desc": "3 Orcs"
+        "name": "Sector I: Orc Vanguard",
+        "desc": "3 Orcs"
       },
       "2": {
-            "name": "Sector II: Beast Pit",
-            "desc": "1 Minotaur"
+        "name": "Sector II: Beast Pit",
+        "desc": "1 Minotaur"
       },
       "3": {
-            "name": "Sector III: Mixed Assault",
-            "desc": "3 Orcs + 1 Minotaur"
+        "name": "Sector III: Mixed Assault",
+        "desc": "3 Orcs + 1 Minotaur"
       },
       "4": {
-            "name": "Sector IV: Miniboss Crypt",
-            "desc": "1 Tempest Guardian"
+        "name": "Sector IV: Miniboss Crypt",
+        "desc": "1 Tempest Guardian"
       },
       "5": {
-            "name": "Sector V: Shadow Labyrinth",
-            "desc": "3 Minotaurs + 1 Orc"
+        "name": "Sector V: Shadow Labyrinth",
+        "desc": "3 Minotaurs + 1 Orc"
       },
       "6": {
-            "name": "Sector VI: Peak of Celestial Judgment",
-            "desc": "3 Minotaurs + Supreme Boss"
+        "name": "Sector VI: Peak of Celestial Judgment",
+        "desc": "3 Minotaurs + Supreme Boss"
       }
     },
     "combat": {
       "dazed": "[DAZED!] -",
       "counter": "[COUNTER!] -"
-},
+    },
     "nodes": {
       "node-1": {
-            "name": "Orc Scout",
-            "subtitle": "Phase 1 · Moorland Vanguard",
-            "desc": "Swift scout sent to probe your bastion's defenses. Agile but fragile."
+        "name": "Orc Scout",
+        "subtitle": "Phase 1 · Moorland Vanguard",
+        "desc": "Swift scout sent to probe your bastion's defenses. Agile but fragile."
       },
       "node-2": {
-            "name": "Orc Berserker",
-            "subtitle": "Phase 1 · Flame Axe Warrior",
-            "desc": "Armored brute wielding twin axes wreathed in living fire. Ferocious direct strikes."
+        "name": "Orc Berserker",
+        "subtitle": "Phase 1 · Flame Axe Warrior",
+        "desc": "Armored brute wielding twin axes wreathed in living fire. Ferocious direct strikes."
       },
       "node-3": {
-            "name": "Orc Iron Captain",
-            "subtitle": "Phase 1 · Outpost Bastion",
-            "desc": "Commander of the vanguard horde. Carries a massive cast-iron spiked buckler."
+        "name": "Orc Iron Captain",
+        "subtitle": "Phase 1 · Outpost Bastion",
+        "desc": "Commander of the vanguard horde. Carries a massive cast-iron spiked buckler."
       },
       "node-4": {
-            "name": "Red-Horn Minotaur",
-            "subtitle": "Phase 2 · Terror of the Pit",
-            "desc": "Colossal mythical beast armed with a crushing club. Your first major trial."
+        "name": "Red-Horn Minotaur",
+        "subtitle": "Phase 2 · Terror of the Pit",
+        "desc": "Colossal mythical beast armed with a crushing club. Your first major trial."
       },
       "node-5": {
-            "name": "Blood Spear Orc",
-            "subtitle": "Phase 3 · Ash Harasser",
-            "desc": "Relentless skirmisher throwing venomous javelins that decimate defensive lines."
+        "name": "Blood Spear Orc",
+        "subtitle": "Phase 3 · Ash Harasser",
+        "desc": "Relentless skirmisher throwing venomous javelins that decimate defensive lines."
       },
       "node-6": {
-            "name": "Orc Devastator",
-            "subtitle": "Phase 3 · Trench Breaker",
-            "desc": "Elite shock-warrior of the horde, encased in rusted plate armor and thirsty for blood."
+        "name": "Orc Devastator",
+        "subtitle": "Phase 3 · Trench Breaker",
+        "desc": "Elite shock-warrior of the horde, encased in rusted plate armor and thirsty for blood."
       },
       "node-7": {
-            "name": "Orc Warlord",
-            "subtitle": "Phase 3 · Blood Chieftain",
-            "desc": "Division general commanding the orc phalanx, guarding the gateway to the sanctum."
+        "name": "Orc Warlord",
+        "subtitle": "Phase 3 · Blood Chieftain",
+        "desc": "Division general commanding the orc phalanx, guarding the gateway to the sanctum."
       },
       "node-8": {
-            "name": "Cavern Minotaur",
-            "subtitle": "Phase 3 · Horde Colossus",
-            "desc": "Primeval brute bred by the orcs to pulverize any legion that dares approach."
+        "name": "Cavern Minotaur",
+        "subtitle": "Phase 3 · Horde Colossus",
+        "desc": "Primeval brute bred by the orcs to pulverize any legion that dares approach."
       },
       "node-9": {
-            "name": "Miniboss: Abyss Sentinel",
-            "subtitle": "Phase 4 · MID-SECTOR MINIBOSS!",
-            "desc": "Armored titan bearing a cyclopean warhammer. Its footsteps shake the subterranean depths."
+        "name": "Miniboss: Abyss Sentinel",
+        "subtitle": "Phase 4 · MID-SECTOR MINIBOSS!",
+        "desc": "Armored titan bearing a cyclopean warhammer. Its footsteps shake the subterranean depths."
       },
       "node-10": {
-            "name": "Ebony Gladiator Minotaur",
-            "subtitle": "Phase 5 · Combat Beast I",
-            "desc": "First combat bull of the inner guard. Razor horns capable of splitting reinforced shields."
+        "name": "Ebony Gladiator Minotaur",
+        "subtitle": "Phase 5 · Combat Beast I",
+        "desc": "First combat bull of the inner guard. Razor horns capable of splitting reinforced shields."
       },
       "node-11": {
-            "name": "Crypt Raging Minotaur",
-            "subtitle": "Phase 5 · Combat Beast II",
-            "desc": "Taurine barbarian frenzied by the stench of battle. Strikes with unstoppable fury."
+        "name": "Crypt Raging Minotaur",
+        "subtitle": "Phase 5 · Combat Beast II",
+        "desc": "Taurine barbarian frenzied by the stench of battle. Strikes with unstoppable fury."
       },
       "node-12": {
-            "name": "Armored Titan Minotaur",
-            "subtitle": "Phase 5 · Combat Beast III",
-            "desc": "Colossus plated in forged iron slabs. Immense physical resilience and devastating charges."
+        "name": "Armored Titan Minotaur",
+        "subtitle": "Phase 5 · Combat Beast III",
+        "desc": "Colossus plated in forged iron slabs. Immense physical resilience and devastating charges."
       },
       "node-13": {
-            "name": "Orc Shadow Archmage",
-            "subtitle": "Phase 5 · Shaman of the Shadows",
-            "desc": "Orc sorcerer channeling void sorceries to seal the final corridor to the sanctuary."
+        "name": "Orc Shadow Archmage",
+        "subtitle": "Phase 5 · Shaman of the Shadows",
+        "desc": "Orc sorcerer channeling void sorceries to seal the final corridor to the sanctuary."
       },
       "node-14": {
-            "name": "Blood Sentinel Minotaur",
-            "subtitle": "Phase 6 · Praetorian Guard I",
-            "desc": "Blood sentinel bound by oath to guard the Supreme Boss with its very life."
+        "name": "Blood Sentinel Minotaur",
+        "subtitle": "Phase 6 · Praetorian Guard I",
+        "desc": "Blood sentinel bound by oath to guard the Supreme Boss with its very life."
       },
       "node-15": {
-            "name": "Hell Executioner Minotaur",
-            "subtitle": "Phase 6 · Praetorian Guard II",
-            "desc": "Executioner with massive horns wielding a spiked mace chained in hellfire."
+        "name": "Hell Executioner Minotaur",
+        "subtitle": "Phase 6 · Praetorian Guard II",
+        "desc": "Executioner with massive horns wielding a spiked mace chained in hellfire."
       },
       "node-16": {
-            "name": "King of Horns Minotaur",
-            "subtitle": "Phase 6 · Guard Champion",
-            "desc": "The most feared of all subterranean minotaurs. The final obstacle before the sacred heights."
+        "name": "King of Horns Minotaur",
+        "subtitle": "Phase 6 · Guard Champion",
+        "desc": "The most feared of all subterranean minotaurs. The final obstacle before the sacred heights."
       },
       "node-17": {
-            "name": "SUPREME BOSS: Lord of Shadows",
-            "subtitle": "Phase 6 · FINAL CAMPAIGN BOSS!",
-            "desc": "Dark sovereign banished from the heavens. Seeks to corrupt the purity of the Realm of the Clouds with his unholy blade."
+        "name": "SUPREME BOSS: Lord of Shadows",
+        "subtitle": "Phase 6 · FINAL CAMPAIGN BOSS!",
+        "desc": "Dark sovereign banished from the heavens. Seeks to corrupt the purity of the Realm of the Clouds with his unholy blade."
       }
     }
   },
@@ -2166,7 +2174,8 @@ export const us = {
     "trainingCancelled": "Training cancelled. Resources and population refunded.",
     "instantRecruited": "Soldier trained instantly with gems!",
     "recruitTroopsDirectBtn": "Recruit Military Troops",
-    "populationLimitReached": "Population limit reached! Build or upgrade Houses."
+    "populationLimitReached": "Population limit reached! Build or upgrade Houses.",
+    "soldierUnit": "Soldier"
   },
   "ranking": {
     "ranking": "Ranking",
@@ -2532,6 +2541,44 @@ export const us = {
   },
   "speedup": {
     "noSpeedupsAvailable": "No hourglass speedups available.",
-    "usedNotification": "Training time accelerated!"
+    "usedNotification": "Training time accelerated!",
+    "useSpeedupTooltip": "Use time speedup",
+    "useSpeedup": "Speed Up"
+  },
+  "chat": {
+    "title": "Kingdom Chat",
+    "subtitle": "Real-time communications between sovereigns",
+    "global": "Global",
+    "alliance": "Alliance",
+    "system": "System",
+    "placeholder": "Write a message to the kingdom..."
+  },
+  "combatModal": {
+    "title": "Combat Center",
+    "subtitle": "Choose your turn-based tactical mode with your heroes",
+    "pveTitle": "Campaign & Dungeons",
+    "pveBadge": "Single Player (PvE)",
+    "pveDesc": "Advance through celestial dungeons facing monsters and supreme bosses in turn-based combat.",
+    "pveBtn": "Start Campaign",
+    "pvpTitle": "Champions Arena",
+    "pvpBadge": "Multiplayer (PvP)",
+    "pvpDesc": "Challenge squads of other sovereigns in strategic duels and climb the leaderboards.",
+    "pvpBtn": "Challenge in Arena"
+  },
+  "kingdomHub": {
+    "title": "Imperial Council Chamber",
+    "subtitle": "Centralized management of your sovereign cloud fortress",
+    "build": "Construction",
+    "buildDesc": "Erect and upgrade buildings in your plaza",
+    "shop": "Imperial Bazaar",
+    "shopDesc": "Treasures, gems and wheel of fortune",
+    "inventory": "Relics",
+    "inventoryDesc": "Sacred artifacts and gear",
+    "quests": "Quests",
+    "questsDesc": "Imperial deeds and royal decrees",
+    "ranking": "Ranking",
+    "rankingDesc": "Supreme sovereigns leaderboard",
+    "settings": "Settings",
+    "settingsDesc": "Audio, language and account"
   }
 };

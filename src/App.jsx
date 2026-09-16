@@ -1,48 +1,23 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { EyeOff, Maximize2, Minimize2 } from 'lucide-react'
 import { TopBar } from './components/TopBar'
 import { GameWorld } from './components/GameWorld'
 import { LeftActionControls } from './components/LeftActionControls'
 import { RightActionControls } from './components/RightActionControls'
-import { CombatModeModal } from './components/CombatModeModal'
-import { KingdomHubModal } from './components/KingdomHubModal'
 import { NotificationBell } from './components/NotificationBell'
 import { QuestHerald } from './components/QuestHerald'
 import { RankingLateralButton } from './components/RankingLateralButton'
 import { StoreLateralButton } from './components/StoreLateralButton'
 import { InventoryLateralButton } from './components/InventoryLateralButton'
-import { ChatModal } from './components/ChatModal'
 import { FpsOverlay } from './components/FpsOverlay'
-import { BuildModal } from './components/BuildModal'
-import { BuildingDetailsModal } from './components/BuildingDetailsModal'
-import { QuestsModal } from './components/QuestsModal'
-import { ArmyModal } from './components/ArmyModal'
-import { ExpeditionModal } from './components/ExpeditionModal'
-import { DungeonCombatModal } from './components/DungeonCombatModal'
-import { DungeonCampaignWindow } from './components/DungeonCampaignWindow'
-import { ErrorBoundary } from './components/ErrorBoundary'
-import { MenuModal } from './components/MenuModal'
-import { ProfileModal } from './components/ProfileModal'
-import { LevelUpModal } from './components/LevelUpModal'
-import { OfflineEarningsModal } from './components/OfflineEarningsModal'
-import { KingdomEventModal } from './components/KingdomEventModal'
+import { ModalHost } from './components/ModalHost'
 import { EventBadge } from './components/EventBadge'
 import { SwipeableToast } from './components/SwipeableToast'
-import { TechTreeModal } from './components/TechTreeModal'
-import { InventoryModal } from './components/InventoryModal'
-import { ShopModal } from './components/ShopModal'
 import { RouletteNotification } from './components/RouletteNotification'
 import { StarterPackBanner } from './components/StarterPackBanner'
-import { ArenaModal } from './components/ArenaModal'
-import { SeasonEndModal } from './components/SeasonEndModal'
-import { RankingModal } from './components/RankingModal'
-import { HarvestAllModal } from './components/HarvestAllModal'
-import { ArenaBattleView } from './components/ArenaBattleView'
 import { FlyToHudLayer } from './components/FlyToHudLayer'
-import { StarterWelcomeModal } from './components/StarterWelcomeModal'
 import { GuidedTutorial } from './components/GuidedTutorial'
 import { StartScreen } from './components/StartScreen'
-import { UsernameModal } from './components/UsernameModal'
 import { SmartLoader } from './components/SmartLoader'
 import { preloadImages, getCityCriticalAssets } from './utils/smartAssetLoader'
 import OrientationNotice from './components/OrientationNotice'
@@ -261,7 +236,6 @@ export default function App() {
   const [recommendedBuildId, setRecommendedBuildId] = useState(null)
   const [activeEvent, setActiveEvent] = useState(null)
   const [eventModalOpen, setEventModalOpen] = useState(false)
-  const [eventTimeLeft, setEventTimeLeft] = useState(0)
 
   // Tech Tree, Inventory & Visual Juice states
   const [techTreeModalOpen, setTechTreeModalOpen] = useState(false)
@@ -466,7 +440,7 @@ export default function App() {
   }, [])
 
   // Universal condition tracking if ANY modal or sub-window is currently active
-  const isAnyModalOpen = Boolean(
+  const isAnyModalOpen = useMemo(() => Boolean(
     buildModalOpen ||
     detailsModalOpen ||
     questsModalOpen ||
@@ -493,7 +467,15 @@ export default function App() {
     arenaBattleOpen ||
     usernameModalOpen ||
     welcomeModalOpen
-  )
+  ), [
+    buildModalOpen, detailsModalOpen, questsModalOpen, armyModalOpen,
+    expeditionModalOpen, dungeonCombatOpen, campaignWindowOpen, menuModalOpen,
+    profileModalOpen, levelUpModalOpen, offlineModalOpen, eventModalOpen,
+    techTreeModalOpen, inventoryModalOpen, combatModeModalOpen, kingdomHubModalOpen,
+    chatModalOpen, shopModalOpen, arenaModalOpen, seasonEndModalOpen,
+    rankingModalOpen, harvestModalOpen, notificationsModalOpen, isMobileScreen,
+    arenaBattleOpen, usernameModalOpen, welcomeModalOpen
+  ])
 
 
   // Keyboard shortcut: Press 'H' to toggle Cinematic View, 'Escape' to exit
@@ -584,43 +566,26 @@ export default function App() {
   const lastWarehouseWarningRef = useRef(0)
 
   // Central helper: builds the full save-state object from current state.
-  // Previously this was duplicated 8 times across App.jsx.
-  // Now every save call uses: gameStorage.save(buildSaveState())
-  const buildSaveState = useCallback((overrides = {}) => ({
-    resources,
-    slots,
-    troops,
-    trainingQueue,
-    kingdomLevel,
-    kingdomXp,
-    completedNodes,
-    unlockedBiomes,
-    claimedQuestIds,
-    unlockedTechIds,
-    ownedRelicIds,
-    equippedRelics,
-    consumables,
-    speedups,
-    vipStatus,
-    lastWheelFreeSpinTime,
-    arenaData,
-    totalHarvests,
-    claimedDailyIds,
-    lastDailyReset,
-    tutorialSeen: tutorialSeen,
-    profile: {
-      name: playerName || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 'Lord King',
-      avatar: playerAvatar || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_avatar')) || '/assets/avatars/avatar_king.webp'
-    },
-    ...overrides,
-  }), [
+  // Uses a ref to snapshot volatile state so the useCallback has ZERO dependencies
+  // and never re-creates, eliminating cascade re-renders through the autosave useEffect.
+  const saveStateRef = useRef({})
+  saveStateRef.current = {
     resources, slots, troops, trainingQueue, kingdomLevel, kingdomXp,
     completedNodes, unlockedBiomes, claimedQuestIds,
     unlockedTechIds, ownedRelicIds, equippedRelics,
     consumables, speedups, vipStatus, lastWheelFreeSpinTime,
     arenaData, totalHarvests, tutorialSeen,
-    playerName, playerAvatar, claimedDailyIds, lastDailyReset,
-  ])
+    claimedDailyIds, lastDailyReset,
+    profile: {
+      name: playerName || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 'Lord King',
+      avatar: playerAvatar || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_avatar')) || '/assets/avatars/avatar_king.webp'
+    },
+  }
+
+  const buildSaveState = useCallback((overrides = {}) => ({
+    ...saveStateRef.current,
+    ...overrides,
+  }), []) // ← ZERO dependencies: reads from ref, never re-creates
 
   // Anti-rebound deduplication tracker for notifications (1.5s window)
   const recentNotificationsRef = useRef(new Map())
@@ -1203,106 +1168,125 @@ export default function App() {
   }
 
   // Real-time passive resource generation & construction timer tick
+  // Uses refs for slots/trainingQueue to prevent interval recreation on every state change
+  const slotsRef = useRef(slots)
+  slotsRef.current = slots
+  const trainingQueueRef = useRef(trainingQueue)
+  trainingQueueRef.current = trainingQueue
+
   useEffect(() => {
     if (!hasStartedGame) return
+
+    const hasActiveConstruction = slotsRef.current.some((s) => s.isConstructing)
+    const hasActiveTraining = Boolean(trainingQueueRef.current && trainingQueueRef.current.length > 0)
+
+    // Idle Optimization: If nothing is constructing and no troops are training, DO NOT spin a 1s interval.
+    // This completely eliminates background CPU wakeups and state checks during normal idle gameplay.
+    if (!hasActiveConstruction && !hasActiveTraining) return
+
     const interval = setInterval(() => {
       const now = Date.now()
 
-      setSlots((prevSlots) => {
-        let hasChanges = false
-        const updated = prevSlots.map((slot) => {
-          if (slot.isConstructing) {
-            hasChanges = true
-            const durationSec = slot.constructionDurationSec || 60
-            const startedAt = slot.constructionStartedAt || (now - ((slot.progress || 0) / 100) * durationSec * 1000)
-            const elapsedSec = (now - startedAt) / 1000
+      // Read current values from refs (not stale closure captures)
+      const currentSlots = slotsRef.current
+      const currentQueue = trainingQueueRef.current
+      const hasConstruction = currentSlots.some((s) => s.isConstructing)
+      const hasTraining = Boolean(currentQueue && currentQueue.length > 0)
 
-            if (elapsedSec >= durationSec) {
-              soundManager.stopConstructionAudio(slot.id)
-              soundManager.playBuildComplete()
-              if (typeof navigator !== 'undefined' && navigator.vibrate) {
-                navigator.vibrate([40, 30, 40])
-              }
-              const bDef = BUILDING_TYPES[slot.buildingId?.toUpperCase()]
-              const finalLevel = slot.targetLevel || slot.level || 1
-              showNotification(
-                t('notifications.constructionFinished', { name: t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || 'Building', level: finalLevel }),
-                'success'
-              )
-              addKingdomXp(85 * finalLevel, t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || t('common.construction'))
-              return {
-                ...slot,
-                isConstructing: false,
-                progress: 100,
-                level: finalLevel,
-                targetLevel: undefined,
-                constructionStartedAt: undefined,
-                constructionDurationSec: undefined,
-                lastHarvestAt: now,
-              }
-            }
+      if (hasConstruction) {
+        setSlots((prevSlots) => {
+          let hasChanges = false
+          const updated = prevSlots.map((slot) => {
+            if (slot.isConstructing) {
+              const durationSec = slot.constructionDurationSec || 60
+              const startedAt = slot.constructionStartedAt || (now - ((slot.progress || 0) / 100) * durationSec * 1000)
+              const elapsedSec = (now - startedAt) / 1000
 
-            const nextProgress = Math.min(99, Math.floor((elapsedSec / durationSec) * 100))
-            return {
-              ...slot,
-              progress: nextProgress,
-              constructionStartedAt: startedAt,
-              constructionDurationSec: durationSec,
-            }
-          }
-          return slot
-        })
-        return hasChanges ? updated : prevSlots
-      })
-
-      // Real-time military training queue progression
-      setTrainingQueue((prevQueue) => {
-        if (!prevQueue || prevQueue.length === 0) return prevQueue
-        const activeJob = prevQueue[0]
-        const duration = activeJob.durationPerUnit || 15
-        const startedAt = activeJob.unitStartedAt || now
-        const elapsed = (now - startedAt) / 1000
-
-        if (elapsed >= duration) {
-          const unitsNeeded = activeJob.count - (activeJob.completedCount || 0)
-          const unitsToComplete = Math.min(
-            unitsNeeded,
-            Math.max(1, Math.floor(elapsed / duration))
-          )
-
-          if (unitsToComplete > 0) {
-            setTroops((prevTroops) => ({
-              ...prevTroops,
-              [activeJob.unitId]: (prevTroops[activeJob.unitId] || 0) + unitsToComplete,
-            }))
-
-            addKingdomXp(30 * unitsToComplete, t('notifications.xpRecruit') || 'Reclutamiento Militar')
-            soundManager.playBuildComplete?.()
-            showNotification(t('notifications.troopRecruited') || '¡Soldado adiestrado y listo para el combate!', 'success')
-
-            const newCompleted = (activeJob.completedCount || 0) + unitsToComplete
-            if (newCompleted >= activeJob.count) {
-              const remaining = prevQueue.slice(1)
-              if (remaining.length > 0) {
-                remaining[0] = {
-                  ...remaining[0],
-                  unitStartedAt: now,
+              if (elapsedSec >= durationSec) {
+                hasChanges = true
+                soundManager.stopConstructionAudio(slot.id)
+                soundManager.playBuildComplete()
+                if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                  navigator.vibrate([40, 30, 40])
+                }
+                const bDef = BUILDING_TYPES[slot.buildingId?.toUpperCase()]
+                const finalLevel = slot.targetLevel || slot.level || 1
+                showNotification(
+                  t('notifications.constructionFinished', { name: t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || 'Building', level: finalLevel }),
+                  'success'
+                )
+                addKingdomXp(85 * finalLevel, t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || t('common.construction'))
+                return {
+                  ...slot,
+                  isConstructing: false,
+                  progress: 100,
+                  level: finalLevel,
+                  targetLevel: undefined,
+                  constructionStartedAt: undefined,
+                  constructionDurationSec: undefined,
+                  lastHarvestAt: now,
                 }
               }
-              return remaining
-            } else {
-              const timeConsumed = unitsToComplete * duration * 1000
-              const updatedFirst = {
-                ...activeJob,
-                completedCount: newCompleted,
-                unitStartedAt: startedAt + timeConsumed,
+
+              // In-flight progress is smoothly rendered by GameWorld & Modals locally without waking up App.jsx
+              return slot
+            }
+            return slot
+          })
+          return hasChanges ? updated : prevSlots
+        })
+      }
+
+      // Real-time military training queue progression
+      if (hasTraining) {
+        setTrainingQueue((prevQueue) => {
+          if (!prevQueue || prevQueue.length === 0) return prevQueue
+          const activeJob = prevQueue[0]
+          const duration = activeJob.durationPerUnit || 15
+          const startedAt = activeJob.unitStartedAt || now
+          const elapsed = (now - startedAt) / 1000
+
+          if (elapsed >= duration) {
+            const unitsNeeded = activeJob.count - (activeJob.completedCount || 0)
+            const unitsToComplete = Math.min(
+              unitsNeeded,
+              Math.max(1, Math.floor(elapsed / duration))
+            )
+
+            if (unitsToComplete > 0) {
+              setTroops((prevTroops) => ({
+                ...prevTroops,
+                [activeJob.unitId]: (prevTroops[activeJob.unitId] || 0) + unitsToComplete,
+              }))
+
+              addKingdomXp(30 * unitsToComplete, t('notifications.xpRecruit') || 'Reclutamiento Militar')
+              soundManager.playBuildComplete?.()
+              showNotification(t('notifications.troopRecruited') || '¡Soldado adiestrado y listo para el combate!', 'success')
+
+              const newCompleted = (activeJob.completedCount || 0) + unitsToComplete
+              if (newCompleted >= activeJob.count) {
+                const remaining = prevQueue.slice(1)
+                if (remaining.length > 0) {
+                  remaining[0] = {
+                    ...remaining[0],
+                    unitStartedAt: now,
+                  }
+                }
+                return remaining
+              } else {
+                const timeConsumed = unitsToComplete * duration * 1000
+                const updatedFirst = {
+                  ...activeJob,
+                  completedCount: newCompleted,
+                  unitStartedAt: startedAt + timeConsumed,
+                }
+                return [updatedFirst, ...prevQueue.slice(1)]
               }
-              return [updatedFirst, ...prevQueue.slice(1)]
             }
           }
-        }
-        return prevQueue
-      })
+          return prevQueue
+        })
+      }
     }, 1000)
 
     return () => clearInterval(interval)
@@ -1315,8 +1299,10 @@ export default function App() {
       if (activeEvent) return
       const randomEv = KINGDOM_EVENTS[Math.floor(Math.random() * KINGDOM_EVENTS.length)]
       if (randomEv) {
-        setActiveEvent(randomEv)
-        setEventTimeLeft(90)
+        setActiveEvent({
+          ...randomEv,
+          expiresAt: Date.now() + 90000,
+        })
         soundManager.playHorn()
         showNotification(t('notifications.royalMessengerArrived', { name: t(`kingdomEvents.${randomEv.id}.emissaryName`) || randomEv.emissaryName }), 'info')
       }
@@ -1332,8 +1318,10 @@ export default function App() {
           ? KINGDOM_EVENTS.find(e => e.id === eventId) 
           : KINGDOM_EVENTS[Math.floor(Math.random() * KINGDOM_EVENTS.length)]
         if (ev) {
-          setActiveEvent(ev)
-          setEventTimeLeft(90)
+          setActiveEvent({
+            ...ev,
+            expiresAt: Date.now() + 90000,
+          })
           soundManager.playHorn()
           showNotification(t('notifications.royalMessengerReturned', { name: t(`kingdomEvents.${ev.id}.emissaryName`) || ev.emissaryName }), 'info')
         }
@@ -1404,22 +1392,6 @@ export default function App() {
       return () => clearTimeout(timer)
     }
   }, [hasStartedGame, lastWheelFreeSpinTime, showNotification])
-
-  // Countdown timer for active event
-  useEffect(() => {
-    if (!activeEvent || eventTimeLeft <= 0) return
-    const timer = setInterval(() => {
-      setEventTimeLeft((prev) => {
-        if (prev <= 1) {
-          setActiveEvent(null)
-          setEventModalOpen(false)
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [activeEvent, eventTimeLeft])
 
   const isResolvingEventRef = useRef(false)
 
@@ -3387,7 +3359,7 @@ export default function App() {
       )}
 
       {/* Superimposed Top Realtime FPS Performance Counter */}
-      <FpsOverlay />
+      <FpsOverlay fpsMode={fpsMode} />
 
       {/* Top HUD */}
       <TopBar 
@@ -3484,7 +3456,10 @@ export default function App() {
         <aside className="hud-lateral-events-dock" aria-label="Avisos y Ofertas">
           <EventBadge 
             activeEvent={activeEvent}
-            timeLeft={eventTimeLeft}
+            onExpire={() => {
+              setActiveEvent(null)
+              setEventModalOpen(false)
+            }}
             onClick={() => setEventModalOpen(true)}
             onDismiss={() => setActiveEvent(null)}
           />
@@ -3548,390 +3523,167 @@ export default function App() {
         />
       )}
 
-      {/* Combat Mode Selector Modal (Single Player PvE vs Multiplayer PvP) */}
-      <CombatModeModal 
-        isOpen={combatModeModalOpen}
-        onClose={() => setCombatModeModalOpen(false)}
-        onOpenPvE={() => setCampaignWindowOpen(true)}
-        onOpenPvP={() => handleOpenArena('pvp')}
-        arenaTickets={arenaData.tickets}
-      />
-
-      {/* Kingdom Hub Modal (Clean Centralized Access for Kingdom, Shop, Inventory, Quests, etc.) */}
-      <KingdomHubModal 
-        isOpen={kingdomHubModalOpen}
-        onClose={() => setKingdomHubModalOpen(false)}
-        onOpenBuild={() => handleOpenBuildMenu(null)}
-        onOpenShop={() => handleOpenShop('offers')}
-        onOpenInventory={() => setInventoryModalOpen(true)}
-        onOpenQuests={() => setQuestsModalOpen(true)}
-        onOpenRanking={handleOpenRanking}
-        onOpenSettings={() => setMenuModalOpen(true)}
-        questPendingCount={totalPendingQuests}
-        wheelFreeSpinReady={isWheelFreeSpinReady}
-      />
-
-      {/* Royal Kingdom & Global Chat Modal */}
-      <ChatModal 
-        isOpen={chatModalOpen}
-        onClose={() => setChatModalOpen(false)}
-        playerName={playerName || 'Lord King'}
-      />
-
-
-      {/* Full Campaign Window (System Architecture Map & Dungeons) */}
-      <ErrorBoundary onReset={() => setCampaignWindowOpen(false)}>
-        <DungeonCampaignWindow 
-          isOpen={campaignWindowOpen}
-          onClose={() => setCampaignWindowOpen(false)}
-          onClaimLoot={handleCampaignClaimLoot}
-          onRetreatCost={handleCombatRetreatCost}
-          resources={resources}
-          troops={troops}
-          completedNodes={completedNodes}
-          setCompletedNodes={setCompletedNodes}
-          unlockedBiomes={unlockedBiomes}
-          setUnlockedBiomes={setUnlockedBiomes}
-          onNodeDefeated={handleNodeDefeated}
-          consumables={consumables}
-          onUseConsumable={handleUseConsumable}
-          equippedRelics={equippedRelics}
-          unlockedTechIds={unlockedTechIds}
-          onObtainRelic={handleObtainRelic}
-          gems={resources.gems}
-          onDungeonRevive={handleDungeonRevive}
-          onOpenShop={handleOpenShop}
-        />
-      </ErrorBoundary>
-
-      {/* Build Catalog Modal */}
-      <BuildModal 
-        isOpen={buildModalOpen}
-        onClose={() => {
-          setBuildModalOpen(false)
-          setRecommendedBuildId(null)
-        }}
-        onSelectBuilding={handleSelectBuilding}
-        targetSlot={selectedSlot}
+      {/* Centralized Asynchronous Modal Host (React.lazy Code Splitting) */}
+      <ModalHost
+        combatModeModalOpen={combatModeModalOpen}
+        setCombatModeModalOpen={setCombatModeModalOpen}
+        kingdomHubModalOpen={kingdomHubModalOpen}
+        setKingdomHubModalOpen={setKingdomHubModalOpen}
+        chatModalOpen={chatModalOpen}
+        setChatModalOpen={setChatModalOpen}
+        campaignWindowOpen={campaignWindowOpen}
+        setCampaignWindowOpen={setCampaignWindowOpen}
+        buildModalOpen={buildModalOpen}
+        setBuildModalOpen={setBuildModalOpen}
+        detailsModalOpen={detailsModalOpen}
+        setDetailsModalOpen={setDetailsModalOpen}
+        questsModalOpen={questsModalOpen}
+        setQuestsModalOpen={setQuestsModalOpen}
+        armyModalOpen={armyModalOpen}
+        setArmyModalOpen={setArmyModalOpen}
+        welcomeModalOpen={welcomeModalOpen}
+        setWelcomeModalOpen={setWelcomeModalOpen}
+        expeditionModalOpen={expeditionModalOpen}
+        setExpeditionModalOpen={setExpeditionModalOpen}
+        dungeonCombatOpen={dungeonCombatOpen}
+        setDungeonCombatOpen={setDungeonCombatOpen}
+        menuModalOpen={menuModalOpen}
+        setMenuModalOpen={setMenuModalOpen}
+        profileModalOpen={profileModalOpen}
+        setProfileModalOpen={setProfileModalOpen}
+        levelUpModalOpen={levelUpModalOpen}
+        setLevelUpModalOpen={setLevelUpModalOpen}
+        offlineModalOpen={offlineModalOpen}
+        setOfflineModalOpen={setOfflineModalOpen}
+        eventModalOpen={eventModalOpen}
+        setEventModalOpen={setEventModalOpen}
+        techTreeModalOpen={techTreeModalOpen}
+        setTechTreeModalOpen={setTechTreeModalOpen}
+        inventoryModalOpen={inventoryModalOpen}
+        setInventoryModalOpen={setInventoryModalOpen}
+        shopModalOpen={shopModalOpen}
+        setShopModalOpen={setShopModalOpen}
+        arenaModalOpen={arenaModalOpen}
+        setArenaModalOpen={setArenaModalOpen}
+        seasonEndModalOpen={seasonEndModalOpen}
+        setSeasonEndModalOpen={setSeasonEndModalOpen}
+        arenaBattleOpen={arenaBattleOpen}
+        setArenaBattleOpen={setArenaBattleOpen}
+        rankingModalOpen={rankingModalOpen}
+        setRankingModalOpen={setRankingModalOpen}
+        harvestModalOpen={harvestModalOpen}
+        setHarvestModalOpen={setHarvestModalOpen}
+        usernameModalOpen={usernameModalOpen}
+        setUsernameModalOpen={setUsernameModalOpen}
         resources={resources}
-        kingdomLevel={kingdomLevel}
-        recommendedBuildingId={recommendedBuildId || activeStoryQuest?.targetBuilding || null}
         slots={slots}
-      />
-
-      {/* Building Details Modal */}
-      <BuildingDetailsModal 
-        isOpen={detailsModalOpen}
-        onClose={() => {
-          soundManager.stopBuildingSound()
-          setDetailsModalOpen(false)
-        }}
-        slot={selectedSlot ? slots.find((s) => s.id === selectedSlot.id) || selectedSlot : null}
-        resources={resources}
+        troops={troops}
+        trainingQueue={trainingQueue}
         speedups={speedups}
         vipStatus={vipStatus}
-        onUpgradeBuilding={handleUpgradeBuilding}
-        onDemolishBuilding={handleDemolishBuilding}
-        onCollect={handleCollectFromSlot}
-        onSpeedupBuilding={handleSpeedupBuilding}
-        onUseSpeedup={handleUseSpeedup}
-        storageCapacity={storageCapacity}
-        onOpenArmy={() => setArmyModalOpen(true)}
-        onOpenExpeditions={() => setExpeditionModalOpen(true)}
-        onOpenInventory={() => setInventoryModalOpen(true)}
-        onOpenTechTree={() => setTechTreeModalOpen(true)}
-      />
-
-      {/* Quests Modal */}
-      <QuestsModal 
-        isOpen={questsModalOpen}
-        onClose={() => setQuestsModalOpen(false)}
-        quests={evaluatedStoryQuests}
-        dailyQuests={evaluatedDailyQuests}
-        epicFeats={evaluatedEpicFeats}
-        onClaimQuest={handleClaimQuest}
-        chapterData={activeChapterData}
-        currentChapter={currentChapterNum}
-      />
-
-      {/* Army & Garrison Modal */}
-      {(() => {
-        const cuartelSlot = slots.find((s) => s.buildingId === 'cuartel' && !s.isConstructing)
-        const cuartelLevel = cuartelSlot ? (cuartelSlot.level || 1) : 1
-        return (
-          <ArmyModal 
-            isOpen={armyModalOpen}
-            onClose={() => setArmyModalOpen(false)}
-            resources={resources}
-            troops={troops}
-            hasCuartel={Boolean(cuartelSlot)}
-            cuartelLevel={cuartelLevel}
-            trainingQueue={trainingQueue}
-            onQueueTroops={handleQueueTroops}
-            onCancelTrainingJob={handleCancelTrainingJob}
-            onSpeedupTraining={handleSpeedupTraining}
-            onInstantFinishTraining={handleInstantFinishTraining}
-            speedups={speedups}
-            onOpenBuild={handleOpenBuildMenu}
-          />
-        )
-      })()}
-
-      {/* Starter Narrative Welcome & Onboarding Modal */}
-      <StarterWelcomeModal 
-        isOpen={welcomeModalOpen && hasStartedGame && !usernameModalOpen}
-        onClose={() => {
-          setWelcomeModalOpen(false)
-          const activeEmail = gameStorage.getEmail()
-          const accountKey = getTutorialAccountKey(activeEmail)
-          if (!tutorialSeen && localStorage.getItem(accountKey) !== 'true') {
-            setIsTutorialActive(true)
-          }
-        }}
-        onStartTutorial={() => {
-          setWelcomeModalOpen(false)
-          setIsTutorialActive(true)
-        }}
-      />
-
-      {/* Expedition Modal (Quick Patrols) */}
-      <ExpeditionModal 
-        isOpen={expeditionModalOpen}
-        onClose={() => setExpeditionModalOpen(false)}
-        onLaunchExpedition={handleLaunchExpedition}
-        onOpenDungeonCombat={handleOpenDungeonCombat}
-        troops={troops}
-      />
-
-      {/* Dungeon Combat Fallback Modal */}
-      <DungeonCombatModal
-        isOpen={dungeonCombatOpen}
-        onClose={() => setDungeonCombatOpen(false)}
-        onVictory={handleDungeonVictory}
-        troops={troops}
-      />
-
-      {/* Menu / Settings Modal */}
-      <MenuModal 
-        isOpen={menuModalOpen}
-        onClose={() => setMenuModalOpen(false)}
-        soundEnabled={soundEnabled}
-        onToggleSound={handleToggleSound}
-        onResetGame={handleResetGame}
-        onManualSave={handleManualSave}
-        onLogout={handleLogout}
-        showNotification={showNotification}
-        playerName={playerName || 'Lord King'}
-        onOpenChangeName={() => setUsernameModalOpen(true)}
-        onRestartTutorial={() => {
-          const activeEmail = gameStorage.getEmail()
-          const accountKey = getTutorialAccountKey(activeEmail)
-          localStorage.removeItem(accountKey)
-          localStorage.removeItem('toc_tutorial_completed')
-          setTutorialSeen(false)
-          setTutorialKey((prev) => prev + 1)
-          setIsTutorialActive(true)
-          showNotification(t('notifications.tutorialRestarted'), 'info')
-        }}
-        fpsMode={fpsMode}
-        onSetFpsMode={handleSetFpsMode}
-        particlesEnabled={particlesEnabled}
-        onToggleParticles={handleToggleParticles}
-      />
-
-      {/* Profile & Achievements Modal */}
-      <ProfileModal 
-        isOpen={profileModalOpen}
-        onClose={() => setProfileModalOpen(false)}
-        resources={resources}
-        slots={slots}
-        troops={troops}
+        arenaData={arenaData}
+        completedNodes={completedNodes}
+        setCompletedNodes={setCompletedNodes}
+        unlockedBiomes={unlockedBiomes}
+        setUnlockedBiomes={setUnlockedBiomes}
+        unlockedTechIds={unlockedTechIds}
+        ownedRelicIds={ownedRelicIds}
+        equippedRelics={equippedRelics}
+        consumables={consumables}
         kingdomLevel={kingdomLevel}
         kingdomXp={kingdomXp}
         xpProgress={xpProgress}
-        showNotification={showNotification}
-        playerName={playerName || 'Lord King'}
+        storageCapacity={storageCapacity}
+        currentLevelDef={currentLevelDef}
+        levelUpInfo={levelUpInfo}
+        playerName={playerName}
         playerAvatar={playerAvatar}
-        onOpenChangeName={() => setUsernameModalOpen(true)}
-        onSaveName={handleSavePlayerName}
-        onLogout={handleLogout}
-      />
-
-      {/* Level Up Celebration Modal */}
-      <LevelUpModal
-        isOpen={levelUpModalOpen && hasStartedGame}
-        onClose={() => setLevelUpModalOpen(false)}
-        newLevel={levelUpInfo?.newLevel || kingdomLevel}
-        levelData={levelUpInfo?.levelData || currentLevelDef}
-        onClaimRewards={handleClaimLevelUpRewards}
-      />
-
-      {/* Offline Earnings Welcome Back Modal */}
-      <OfflineEarningsModal 
-        isOpen={offlineModalOpen && hasStartedGame}
-        earnings={offlineEarnings}
-        onCollect={handleCollectOfflineEarnings}
-      />
-
-
-
-
-      {/* Kingdom Event & Dilemmas Modal */}
-      <KingdomEventModal 
-        isOpen={eventModalOpen && hasStartedGame}
-        onClose={() => setEventModalOpen(false)}
-        event={activeEvent}
-        resources={resources}
-        troops={troops}
-        onResolveChoice={handleResolveEventChoice}
+        soundEnabled={soundEnabled}
+        fpsMode={fpsMode}
+        particlesEnabled={particlesEnabled}
+        selectedSlot={selectedSlot}
+        recommendedBuildId={recommendedBuildId}
+        setRecommendedBuildId={setRecommendedBuildId}
+        evaluatedStoryQuests={evaluatedStoryQuests}
+        evaluatedDailyQuests={evaluatedDailyQuests}
+        evaluatedEpicFeats={evaluatedEpicFeats}
+        activeChapterData={activeChapterData}
+        currentChapterNum={currentChapterNum}
+        activeStoryQuest={activeStoryQuest}
+        activeEvent={activeEvent}
+        offlineEarnings={offlineEarnings}
+        pendingSeasonData={pendingSeasonData}
+        selectedArenaRival={selectedArenaRival}
+        arenaInitialTab={arenaInitialTab}
+        shopInitialTab={shopInitialTab}
+        rankingCategory={rankingCategory}
+        totalPendingQuests={totalPendingQuests}
+        isWheelFreeSpinReady={isWheelFreeSpinReady}
+        lastWheelFreeSpinTime={lastWheelFreeSpinTime}
+        hasStartedGame={hasStartedGame}
+        tutorialSeen={tutorialSeen}
+        setTutorialSeen={setTutorialSeen}
+        setTutorialKey={setTutorialKey}
+        setIsTutorialActive={setIsTutorialActive}
+        getTutorialAccountKey={getTutorialAccountKey}
+        handleOpenArena={handleOpenArena}
+        handleOpenBuildMenu={handleOpenBuildMenu}
+        handleOpenShop={handleOpenShop}
+        handleOpenRanking={handleOpenRanking}
+        handleCampaignClaimLoot={handleCampaignClaimLoot}
+        handleCombatRetreatCost={handleCombatRetreatCost}
+        handleNodeDefeated={handleNodeDefeated}
+        handleUseConsumable={handleUseConsumable}
+        handleObtainRelic={handleObtainRelic}
+        handleDungeonRevive={handleDungeonRevive}
+        handleSelectBuilding={handleSelectBuilding}
+        handleUpgradeBuilding={handleUpgradeBuilding}
+        handleDemolishBuilding={handleDemolishBuilding}
+        handleCollectFromSlot={handleCollectFromSlot}
+        handleSpeedupBuilding={handleSpeedupBuilding}
+        handleUseSpeedup={handleUseSpeedup}
+        handleClaimQuest={handleClaimQuest}
+        handleQueueTroops={handleQueueTroops}
+        handleCancelTrainingJob={handleCancelTrainingJob}
+        handleSpeedupTraining={handleSpeedupTraining}
+        handleInstantFinishTraining={handleInstantFinishTraining}
+        handleLaunchExpedition={handleLaunchExpedition}
+        handleOpenDungeonCombat={handleOpenDungeonCombat}
+        handleDungeonVictory={handleDungeonVictory}
+        handleToggleSound={handleToggleSound}
+        handleResetGame={handleResetGame}
+        handleManualSave={handleManualSave}
+        handleLogout={handleLogout}
+        showNotification={showNotification}
+        handleSetFpsMode={handleSetFpsMode}
+        handleToggleParticles={handleToggleParticles}
+        handleSavePlayerName={handleSavePlayerName}
+        handleClaimLevelUpRewards={handleClaimLevelUpRewards}
+        handleCollectOfflineEarnings={handleCollectOfflineEarnings}
+        handleResolveEventChoice={handleResolveEventChoice}
+        handleResearchTech={handleResearchTech}
+        handleEquipRelic={handleEquipRelic}
+        handleUnequipRelic={handleUnequipRelic}
+        handleCraftConsumable={handleCraftConsumable}
+        handleBuyGems={handleBuyGems}
+        handleBuyStarterPack={handleBuyStarterPack}
+        handleActivateVipPerk={handleActivateVipPerk}
+        handleSpinWheelReward={handleSpinWheelReward}
+        handleRefreshRivals={handleRefreshRivals}
+        handleStartArenaBattle={handleStartArenaBattle}
+        handleArenaRevenge={handleArenaRevenge}
+        handleBuyArenaTicket={handleBuyArenaTicket}
+        handleBuyHonorItem={handleBuyHonorItem}
+        handleClaimSeasonRewards={handleClaimSeasonRewards}
+        handleArenaBattleVictory={handleArenaBattleVictory}
+        handleArenaBattleDefeat={handleArenaBattleDefeat}
+        handleOneClickHarvestAll={handleOneClickHarvestAll}
       />
 
       {/* Fly-to-HUD Flying Particles Layer */}
       <FlyToHudLayer 
         particles={flyingParticles} 
         onParticleComplete={handleParticleComplete} 
-      />
-
-      {/* Royal Tech Tree Modal */}
-      <TechTreeModal 
-        isOpen={techTreeModalOpen}
-        onClose={() => setTechTreeModalOpen(false)}
-        resources={resources}
-        kingdomLevel={kingdomLevel}
-        unlockedTechIds={unlockedTechIds}
-        onResearchTech={handleResearchTech}
-      />
-
-      {/* Treasury Relics & Combat Consumables Backpack Modal */}
-      <InventoryModal 
-        isOpen={inventoryModalOpen}
-        onClose={() => setInventoryModalOpen(false)}
-        ownedRelicIds={ownedRelicIds}
-        equippedRelics={equippedRelics}
-        consumables={consumables}
-        resources={resources}
-        onEquipRelic={handleEquipRelic}
-        onUnequipRelic={handleUnequipRelic}
-        onCraftConsumable={handleCraftConsumable}
-      />
-
-
-
-
-      {/* Royal Bazaar & Monetization Shop Modal */}
-      <ShopModal
-        isOpen={shopModalOpen}
-        onClose={() => setShopModalOpen(false)}
-        initialTab={shopInitialTab}
-        resources={resources}
-        vipStatus={vipStatus}
-        lastWheelFreeSpinTime={lastWheelFreeSpinTime}
-        lastFreeSpinTime={lastWheelFreeSpinTime}
-        onBuyGems={handleBuyGems}
-        onBuyStarterPack={handleBuyStarterPack}
-        onActivateVipPerk={handleActivateVipPerk}
-        onSpinWheelReward={handleSpinWheelReward}
-      />
-
-      {/* Competitive Coliseo / Arena Modal */}
-      <ArenaModal
-        isOpen={arenaModalOpen}
-        onClose={() => setArenaModalOpen(false)}
-        initialTab={arenaInitialTab}
-        trophies={arenaData.trophies}
-        tickets={arenaData.tickets}
-        honorPoints={arenaData.honorPoints}
-        peaceShieldUntil={arenaData.peaceShieldUntil}
-        rivals={arenaData.rivals || []}
-        onRefreshRivals={handleRefreshRivals}
-        onStartBattle={handleStartArenaBattle}
-        defenseLog={arenaData.defenseLog || []}
-        onRevengeBattle={handleArenaRevenge}
-        onBuyTickets={handleBuyArenaTicket}
-        onBuyHonorItem={handleBuyHonorItem}
-        ownedRelicIds={ownedRelicIds}
-        troops={troops}
-        kingdomLevel={kingdomLevel}
-      />
-
-      {/* Competitive Arena Season End Ceremony Modal */}
-      {pendingSeasonData && (
-        <SeasonEndModal
-          isOpen={seasonEndModalOpen}
-          onClose={() => setSeasonEndModalOpen(false)}
-          seasonNumber={pendingSeasonData.seasonNumber}
-          seasonTitle={pendingSeasonData.seasonTitle}
-          league={pendingSeasonData.league}
-          chestName={pendingSeasonData.chestName}
-          rewards={pendingSeasonData.rewards}
-          trophiesBefore={pendingSeasonData.trophiesBefore}
-          trophiesAfter={pendingSeasonData.trophiesAfter}
-          onClaimRewards={handleClaimSeasonRewards}
-        />
-      )}
-
-      {/* PvP Tactical Siege Battle View */}
-      <ArenaBattleView
-        isOpen={arenaBattleOpen}
-        onClose={() => setArenaBattleOpen(false)}
-        rival={selectedArenaRival}
-        troops={troops}
-        equippedRelics={equippedRelics}
-        unlockedTechIds={unlockedTechIds}
-        consumables={consumables}
-        onUseConsumable={handleUseConsumable}
-        onVictory={handleArenaBattleVictory}
-        onDefeat={handleArenaBattleDefeat}
-        resources={resources}
-        onRetreatCost={handleCombatRetreatCost}
-      />
-
-      {/* Global Leaderboard & Sovereign Ranking Modal */}
-      <RankingModal 
-        isOpen={rankingModalOpen}
-        onClose={() => setRankingModalOpen(false)}
-        initialCategory={rankingCategory}
-        kingdomLevel={kingdomLevel}
-        buildings={slots.filter((s) => s.buildingId && !s.isConstructing)}
-        troops={troops}
-        trophies={arenaData.trophies}
-        completedNodes={completedNodes}
-        unlockedTechIds={unlockedTechIds}
-        playerName={playerName || 'Lord King'}
-        onOpenArena={() => {
-          setRankingModalOpen(false)
-          handleOpenArena('pvp')
-        }}
-        onOpenCampaign={() => {
-          setRankingModalOpen(false)
-          setCampaignWindowOpen(true)
-        }}
-      />
-
-      {/* Imperial Instant Harvest All Decree Modal */}
-      <HarvestAllModal
-        isOpen={harvestModalOpen}
-        onClose={() => setHarvestModalOpen(false)}
-        onConfirmHarvest={() => {
-          handleOneClickHarvestAll()
-          setHarvestModalOpen(false)
-        }}
-        onOpenShop={handleOpenShop}
-        hasOneClickHarvest={vipStatus.hasOneClickHarvest}
-        hasEngineering={vipStatus.hasEngineering}
-        gems={resources.gems}
-        slots={slots}
-        unlockedTechIds={unlockedTechIds}
-        equippedRelics={equippedRelics}
-      />
-
-      {/* Sovereign Username & Identity Modal */}
-      <UsernameModal 
-        isOpen={usernameModalOpen}
-        onClose={() => setUsernameModalOpen(false)}
-        currentName={playerName}
-        currentAvatar={playerAvatar}
-        onSave={handleSavePlayerName}
       />
 
       {/* Guided Interactive Tutorial (El Gran Senescal de las Nubes) */}

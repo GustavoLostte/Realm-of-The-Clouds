@@ -268,9 +268,16 @@ function getActiveCitizensConfig(hasHouse) {
  * vigilando el reino en estado idle y ejecutando periódicamente (cada 12-18s) su épica animación
  * de acción, además de responder interactivamente al clic del jugador.
  */
+// Preload commander action sprite once on module load to avoid 4.8MB decode spike on first click
+if (typeof Image !== 'undefined') {
+  const _preload = new Image()
+  _preload.src = '/assets/npcs/comandante_action.webp'
+}
+
 const SkyCommander = React.memo(function SkyCommander({
   isSuspended = false,
   onCitizenGift,
+  fpsMode = '60fps',
 }) {
   const { t } = useTranslation()
   const [isPlayingAction, setIsPlayingAction] = useState(false)
@@ -290,13 +297,13 @@ const SkyCommander = React.memo(function SkyCommander({
     }, 5080) // 127 fotogramas a 40ms = 5080ms
   }
 
-  // Periodic autonomous action every 12 to 18 seconds
+  // Periodic autonomous action every 16 to 26 seconds (idle-optimized, disabled in eco mode)
   useEffect(() => {
-    if (isSuspended) return
+    if (isSuspended || fpsMode === 'eco') return
 
     let timer = null
     const scheduleNextAction = () => {
-      const delay = 12000 + Math.random() * 6000
+      const delay = 16000 + Math.random() * 10000
       timer = setTimeout(() => {
         if (!document.hidden && !isSuspended) {
           triggerAction()
@@ -312,7 +319,7 @@ const SkyCommander = React.memo(function SkyCommander({
       if (actionTimerRef.current) clearTimeout(actionTimerRef.current)
       if (speechTimerRef.current) clearTimeout(speechTimerRef.current)
     }
-  }, [isSuspended, isPlayingAction])
+  }, [isSuspended, fpsMode])
 
   const handleClick = (e) => {
     e.stopPropagation()
@@ -345,7 +352,7 @@ const SkyCommander = React.memo(function SkyCommander({
 
   const commanderName = t('citizens.commanderName') || 'Comandante del Cielo'
   const spriteSrc = isPlayingAction
-    ? `/assets/npcs/comandante_action.webp?k=${actionKey}`
+    ? '/assets/npcs/comandante_action.webp'
     : '/assets/npcs/comandante_idle.webp'
 
   return (
@@ -607,12 +614,12 @@ export const CitizensLayer = React.memo(function CitizensLayer({
       // Advance base progress along the conveyor cycle
       baseProgressRef.current = (baseProgressRef.current + WALKING_SPEED * dt) % CYCLE_LENGTH
 
-      // Throttle direct DOM update ONLY in eco mode (to ~30fps).
-      // In 60fps mode, match browser vsync perfectly without 16ms jitter skips!
-      if (fpsMode === 'eco') {
-        if (now - lastRenderTimeRef.current < 30) {
-          return
-        }
+      // Throttle direct DOM update:
+      // In eco mode: capped to ~30 FPS (min interval 30.0ms)
+      // In 60fps mode: capped to ~60 FPS (min interval 15.0ms) so 120Hz mobile displays never waste cycles running 120 DOM transforms/sec
+      const minRenderInterval = fpsMode === 'eco' ? 30.0 : 15.0
+      if (now - lastRenderTimeRef.current < minRenderInterval) {
+        return
       }
       lastRenderTimeRef.current = now
 
@@ -699,6 +706,7 @@ export const CitizensLayer = React.memo(function CitizensLayer({
       <SkyCommander 
         isSuspended={isSuspended} 
         onCitizenGift={onCitizenGift} 
+        fpsMode={fpsMode}
       />
 
       {/* Sentry Soldiers stationed at the platform left corners */}
@@ -731,7 +739,6 @@ export const CitizensLayer = React.memo(function CitizensLayer({
               pointerEvents: 'none',
               zIndex: 10,
               transition: 'none',
-              willChange: 'left, top, opacity',
             }}
             onClick={(e) => handleCitizenClick(e, citizen)}
             title={citizenLabel}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import './RankingModal.css'
 import { 
   Trophy, 
   Crown, 
@@ -35,7 +36,7 @@ export function RankingModal({
   useEffect(() => {
     if (!isOpen) return
     setCurrentTime(Date.now())
-    const interval = setInterval(() => setCurrentTime(Date.now()), 1000)
+    const interval = setInterval(() => setCurrentTime(Date.now()), 15000)
     return () => clearInterval(interval)
   }, [isOpen])
 

@@ -67,7 +67,9 @@ export const es = {
     },
     "decree": "Decreto",
     "research": "Investigación",
-    "construction": "Construcción"
+    "construction": "Construcción",
+    "minimize": "Minimizar",
+    "units": "unidades"
   },
   "resources": {
     "gold": "Oro",
@@ -141,7 +143,9 @@ export const es = {
     "resCelestialShards": "Fragmentos Celestiales: {val} fragmentos",
     "resPop": "Población: {val} / {max} colonos",
     "clickToHarvest": "¡Clic para cosechar recursos!",
-    "inspectProduction": "¡Recolectar producción de {name}! ({produced}) {status}"
+    "inspectProduction": "¡Recolectar producción de {name}! ({produced}) {status}",
+    "shop": "Tienda",
+    "inventory": "Inventario"
   },
   "combatModal": {
     "title": "Centro de Combate",
@@ -204,7 +208,8 @@ export const es = {
     "shopTooltip": "Bazar Imperial & Ofertas del Soberano",
     "questsTooltip": "Misiones del Reino",
     "expeditionTooltip": "Expediciones & Mapa Exterior",
-    "settingsTooltip": "Configuración y Ajustes del Juego"
+    "settingsTooltip": "Configuración y Ajustes del Juego",
+    "expeditions": "Expediciones"
   },
   "buildings": {
     "openExpeditionsBtn": "Abrir Grieta Cósmica & Expediciones",
@@ -308,7 +313,8 @@ export const es = {
       }
     },
     "freePlot": "Parcela libre",
-    "buildTargetHere": "¡Construir {name} aquí!"
+    "buildTargetHere": "¡Construir {name} aquí!",
+    "level": "Nivel {level}"
   },
   "quests": {
     "heraldName": "Gran Senescal y Heraldo",
@@ -506,7 +512,9 @@ export const es = {
         "title": "Legión Invencible",
         "desc": "Recluta un contingente de más de 12 tropas en tu guarnición."
       }
-    }
+    },
+    "allQuestsTooltip": "Ver todas las misiones del reino",
+    "viewAllQuests": "Ver Misiones"
   },
   "tech": {
     "title": "Gran Academia Real",
@@ -1854,7 +1862,8 @@ export const es = {
     "trainingCancelled": "Entrenamiento cancelado. Recursos y población devueltos.",
     "instantRecruited": "¡Soldado adiestrado de inmediato con gemas!",
     "recruitTroopsDirectBtn": "Reclutar Tropas Militares",
-    "populationLimitReached": "¡Límite de población alcanzado! Construye o mejora Casas."
+    "populationLimitReached": "¡Límite de población alcanzado! Construye o mejora Casas.",
+    "soldierUnit": "Soldado"
   },
   "ranking": {
     "ranking": "Ranking",
@@ -2560,6 +2569,16 @@ export const es = {
   },
   "speedup": {
     "noSpeedupsAvailable": "No tienes relojes de arena disponibles.",
-    "usedNotification": "¡Tiempo de entrenamiento acelerado!"
+    "usedNotification": "¡Tiempo de entrenamiento acelerado!",
+    "useSpeedupTooltip": "Usar acelerador de tiempo",
+    "useSpeedup": "Acelerar"
+  },
+  "chat": {
+    "title": "Chat del Reino",
+    "subtitle": "Comunicaciones en tiempo real entre soberanos",
+    "global": "Global",
+    "alliance": "Alianza",
+    "system": "Sistema",
+    "placeholder": "Escribe un mensaje al reino..."
   }
 };

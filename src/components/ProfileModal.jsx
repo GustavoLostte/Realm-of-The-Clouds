@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './ProfileModal.css'
 import { 
   Edit3, 
   Check, 

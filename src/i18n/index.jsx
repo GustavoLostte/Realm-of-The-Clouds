@@ -81,6 +81,9 @@ const LanguageContext = createContext({
   activeLocale: us,
 })
 
+// Deduplicate DEV warnings to prevent flooding the console on rapid re-renders
+const warnedMissingKeys = new Set()
+
 export function LanguageProvider({ children }) {
   const [currentLang, setCurrentLang] = useState(() => {
     const initial = resolveInitialLanguage()
@@ -181,17 +184,30 @@ export function LanguageProvider({ children }) {
       // If missing in both active locale and English fallback locale:
       if (value === undefined) {
         if (explicitFallback) {
-          value = explicitFallback
+          return explicitFallback
         } else {
-          if (import.meta.env?.DEV) {
+          if (import.meta.env?.DEV && !warnedMissingKeys.has(keyPath)) {
+            warnedMissingKeys.add(keyPath)
             console.warn(`[i18n] Missing translation key: "${keyPath}"`)
           }
           return ''
         }
       }
 
+      // Safety shield: Never return an object to React JSX as children
       if (typeof value !== 'string') {
-        return value !== undefined && value !== null ? value : ''
+        if (typeof value === 'number') {
+          value = String(value)
+        } else {
+          if (explicitFallback) {
+            return explicitFallback
+          }
+          if (import.meta.env?.DEV && !warnedMissingKeys.has(keyPath)) {
+            warnedMissingKeys.add(keyPath)
+            console.warn(`[i18n] Translation key is not a string (found ${typeof value}): "${keyPath}"`)
+          }
+          return ''
+        }
       }
 
       // Variable interpolation {varName}

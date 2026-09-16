@@ -9,4 +9,10 @@ export default defineConfig({
     port: 5173,
     host: true,
   },
+  build: {
+    sourcemap: false, // Desactiva generación de source maps en producción para proteger el código fuente
+    minify: true,
+    chunkSizeWarningLimit: 1600,
+  },
 })
+

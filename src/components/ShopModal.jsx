@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import './ShopModal.css'
 import { 
   Sparkles, 
   Crown, 

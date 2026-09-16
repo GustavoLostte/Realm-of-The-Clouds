@@ -1,0 +1,248 @@
+/* ============================================================
+   EXPEDITION MODAL STYLES (CAMPAIGN MAP)
+   ============================================================ */
+.expedition-garrison-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.garrison-troops-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+
+.garrison-troops-info strong {
+  color: #0ea5e9;
+}
+
+.readiness-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.expeditions-candy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expedition-candy-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: all 0.18s ease;
+}
+
+.expedition-candy-card.easy { border-left: 4px solid #10b981; }
+.expedition-candy-card.medium { border-left: 4px solid #0ea5e9; }
+.expedition-candy-card.hard { border-left: 4px solid #ef4444; }
+.expedition-candy-card.boss { border-left: 4px solid #a855f7; background: radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%); }
+
+.exp-tier-badge-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 68px;
+  flex-shrink: 0;
+}
+
+.exp-diff-badge {
+  font-size: 0.68rem;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+
+.exp-diff-badge.easy { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
+.exp-diff-badge.medium { background: rgba(14, 165, 233, 0.2); color: #0ea5e9; border: 1px solid rgba(14, 165, 233, 0.4); }
+.exp-diff-badge.hard { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+.exp-diff-badge.boss { background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.4); }
+
+.exp-region-name {
+  font-size: 0.62rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.exp-candy-info-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.exp-title-row h4 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.exp-desc-text {
+  margin: 0;
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+
+.exp-intel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+}
+
+.intel-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.exp-loot-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.loot-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.btn-dispatch-candy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-dispatch-candy.primary {
+  background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+  color: #fff;
+  border: 1px solid #93c5fd;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-dispatch-candy.primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn-dispatch-candy.disabled {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Battle Victory Spoils Screen */
+.battle-victory-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(15, 23, 42, 0.6) 100%);
+  border-radius: 20px;
+  border: 2px solid #0ea5e9;
+  box-shadow: 0 0 30px rgba(14, 165, 233, 0.35);
+}
+
+.victory-crown-box {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.2);
+  border: 3px solid #0ea5e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.victory-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--text-gold);
+  margin: 0 0 4px;
+}
+
+.victory-subtitle {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  margin: 0 0 18px;
+}
+
+.victory-spoils-card {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 14px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.spoils-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0 0 10px;
+}
+
+.spoils-pills-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-claim-spoils-candy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #0ea5e9 0%, #0369a1 100%);
+  color: #1a0e02;
+  border: 2px solid #bae6fd;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-claim-spoils-candy:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}

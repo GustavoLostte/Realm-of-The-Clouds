@@ -1,0 +1,2186 @@
+/* ============================================================
+   ARENA BATTLE VIEW (TACTICAL PVP SIEGE)
+   ============================================================ */
+.arena-battle-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arena-battle-stage {
+  width: 100vw;
+  height: 100%;
+  height: 100dvh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.arena-battle-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(14, 20, 32, 0.3) 0%, rgba(10, 14, 24, 0.88) 100%);
+  pointer-events: none;
+}
+
+.arena-battle-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(14, 20, 32, 0.9);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 12px 24px;
+}
+
+.arena-tag-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #bae6fd;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.arena-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+}
+
+.arena-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.arena-close-btn:hover {
+  background: #ef4444;
+  border-color: #fca5a5;
+  transform: scale(1.1);
+}
+
+/* ============================================================
+   PVP RIVAL CITADEL SIEGE & 3-ATTEMPT BUILDING RAID STYLES
+   ============================================================ */
+.pvp-siege-realm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.pvp-siege-header {
+  position: relative !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 58px 10px 20px !important;
+}
+
+.pvp-arena-close-btn {
+  position: absolute !important;
+  top: 50% !important;
+  right: 14px !important;
+  transform: translateY(-50%) !important;
+  z-index: 1000 !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.7)) !important;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.pvp-arena-close-btn:hover {
+  transform: translateY(-50%) scale(1.12) rotate(6deg) !important;
+}
+
+.pvp-arena-close-btn:active {
+  transform: translateY(-50%) scale(0.92) !important;
+}
+
+.pvp-rival-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pvp-rival-avatar-wrap {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #0284c7;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  flex-shrink: 0;
+}
+
+.pvp-rival-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pvp-rival-lvl-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: #bae6fd;
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-align: center;
+  padding: 1px 0;
+}
+
+.pvp-rival-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pvp-rival-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pvp-rival-kingdom {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.pvp-rival-league-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.pvp-mini-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.pvp-rival-ruler {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+/* 3 Attempts Counter Indicator */
+.pvp-attempts-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: rgba(14, 20, 32, 0.8);
+  border: 1.5px solid rgba(2, 132, 199, 0.5);
+  border-radius: 16px;
+  padding: 8px 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.attempts-header-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #bae6fd;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.swords-icon-anim {
+  color: #0ea5e9;
+  animation: pulse 1.8s infinite;
+}
+
+.attempts-indicators-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.attempt-orb {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.attempt-orb.available {
+  background: radial-gradient(circle, #0ea5e9 0%, #0369a1 80%);
+  border: 2px solid #bae6fd;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(14, 165, 233, 0.8), inset 0 1px 3px rgba(255, 255, 255, 0.6);
+  animation: pulse 1.6s infinite ease-in-out;
+  transform: scale(1.05);
+}
+
+.attempt-orb.consumed {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1.5px solid rgba(148, 163, 184, 0.3);
+  color: #64748b;
+  opacity: 0.45;
+  filter: grayscale(1);
+  transform: scale(0.9);
+}
+
+/* Header Right: Live Loot Bar */
+.pvp-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pvp-live-loot-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 20, 32, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 6px 14px;
+}
+
+.loot-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.chip-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* Tactical Directive Banner */
+.pvp-siege-banner-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 20, 40, 0.92) 100%);
+  border: 1.5px solid rgba(2, 132, 199, 0.45);
+  border-radius: 14px;
+  padding: 8px 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(186, 230, 253, 0.2);
+  margin: 0 auto;
+  max-width: 860px;
+  width: 95%;
+  text-align: center;
+}
+
+.pvp-siege-banner-strip.pvp-tactical-directive {
+  border-color: #0ea5e9;
+  background: linear-gradient(135deg, rgba(20, 26, 45, 0.95) 0%, rgba(45, 20, 30, 0.95) 100%);
+}
+
+.directive-dot-pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+  flex-shrink: 0;
+  animation: directiveDotAnim 1.4s infinite ease-in-out;
+}
+
+@keyframes directiveDotAnim {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.banner-swords-icon {
+  color: #bae6fd;
+  flex-shrink: 0;
+  animation: pulse-swords 1.8s infinite;
+}
+
+.directive-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.directive-title {
+  font-size: 0.92rem;
+  font-weight: 900;
+  color: #bae6fd;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.3px;
+}
+
+.directive-sub {
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* Citadel Container & Buildings Grid */
+.pvp-citadel-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.pvp-buildings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+/* Individual Building Card */
+.citadel-building-card {
+  position: relative;
+  background: rgba(15, 23, 42, 0.88);
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  user-select: none;
+}
+
+.citadel-building-card.clickable {
+  cursor: pointer;
+  border-color: rgba(2, 132, 199, 0.45);
+}
+
+.citadel-building-card.clickable:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: #0284c7;
+  background: rgba(30, 41, 59, 0.95);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.8), 0 0 20px rgba(2, 132, 199, 0.4);
+}
+
+.citadel-building-card.attacking {
+  animation: screenShake 0.26s ease-in-out infinite;
+  border-color: #ef4444;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.6);
+}
+
+.citadel-building-card.looted {
+  border-color: #22c55e;
+  background: rgba(6, 78, 59, 0.45);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  opacity: 0.95;
+}
+
+.citadel-building-card.defended {
+  border-color: #ef4444;
+  background: rgba(69, 10, 10, 0.45);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.25);
+  opacity: 0.88;
+}
+
+.citadel-building-card.locked {
+  cursor: not-allowed;
+}
+
+.citadel-building-card.locked:not(.looted):not(.defended) {
+  opacity: 0.45;
+  filter: grayscale(0.5);
+}
+
+/* Building Card Top Row: Chance badge and status */
+.building-card-top-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  z-index: 5;
+}
+
+.building-chance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(2, 132, 199, 0.5);
+  color: #bae6fd;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.building-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-left: auto;
+}
+
+.building-status-pill.looted {
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+  color: #fff;
+  border: 1px solid #86efac;
+}
+
+.building-status-pill.defended {
+  background: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
+  color: #fff;
+  border: 1px solid #fca5a5;
+}
+
+/* Building Visual Sprite */
+.building-sprite-frame {
+  position: relative;
+  width: 100%;
+  height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0;
+}
+
+.building-sprite-img {
+  max-width: 95px;
+  max-height: 82px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.75));
+  transition: transform 0.2s ease;
+}
+
+.citadel-building-card.clickable:hover .building-sprite-img {
+  transform: scale(1.06);
+}
+
+.building-sprite-img.looted-sprite {
+  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.6)) brightness(1.05);
+}
+
+.building-sprite-img.defended-sprite {
+  filter: grayscale(0.4) drop-shadow(0 0 8px rgba(239, 68, 68, 0.4));
+}
+
+/* Floating Loot Animation */
+.citadel-floating-loot {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  white-space: nowrap;
+  font-size: 0.92rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: floatUpLoot 1.6s ease-out forwards;
+}
+
+.citadel-floating-loot.success {
+  background: rgba(16, 185, 129, 0.95);
+  color: #fff;
+  border: 1.5px solid #a7f3d0;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.6);
+}
+
+.citadel-floating-loot.defense {
+  background: rgba(239, 68, 68, 0.95);
+  color: #fff;
+  border: 1.5px solid #fecaca;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6);
+}
+
+@keyframes floatUpLoot {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 15px) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -10px) scale(1.1);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -35px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -55px) scale(0.9);
+  }
+}
+
+/* Building Loot Preview Chips Row */
+.building-loot-preview-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 2px 0;
+}
+
+.loot-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.loot-tag.gold {
+  border-color: rgba(14, 165, 233, 0.6);
+  color: #7dd3fc;
+  background: rgba(3, 105, 161, 0.3);
+}
+
+.loot-tag.stone {
+  border-color: rgba(148, 163, 184, 0.6);
+  color: #e2e8f0;
+  background: rgba(71, 85, 105, 0.3);
+}
+
+.loot-tag.wood {
+  border-color: rgba(2, 132, 199, 0.6);
+  color: #fcd34d;
+  background: rgba(146, 64, 14, 0.3);
+}
+
+.loot-tag.food {
+  border-color: rgba(132, 204, 22, 0.6);
+  color: #bef264;
+  background: rgba(54, 83, 20, 0.3);
+}
+
+.loot-tag.honor {
+  border-color: rgba(168, 85, 247, 0.6);
+  color: #d8b4fe;
+  background: rgba(107, 33, 168, 0.3);
+}
+
+.loot-tag.trophies {
+  border-color: rgba(2, 132, 199, 0.6);
+  color: #bae6fd;
+  background: rgba(161, 98, 7, 0.3);
+}
+
+.loot-tag.gems {
+  border-color: rgba(56, 189, 248, 0.6);
+  color: #7dd3fc;
+  background: rgba(3, 105, 161, 0.3);
+}
+
+.loot-tag-icon {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
+}
+
+/* Building Info Bar */
+.building-info-bar {
+  width: 100%;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 3px 6px;
+}
+
+.building-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.building-name {
+  font-size: 0.80rem;
+  font-weight: 900;
+  color: #bae6fd;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.building-category {
+  font-size: 0.62rem;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+/* Building Action Button / Status (Visible & Touch-Friendly) */
+.building-card-action-wrap {
+  width: 100%;
+  margin-top: 2px;
+}
+
+/* Touch Callout Badge on Building Sprite */
+.building-touch-callout {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  border: 1px solid #fecaca;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.6);
+  animation: touchCalloutBounce 1.6s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes touchCalloutBounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -3px); }
+}
+
+.building-attack-btn {
+  width: 100%;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+  color: #1e1b4b;
+  border: 1.5px solid #bae6fd;
+  border-radius: 10px;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.45);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.building-attack-btn.tactical-attack-glow {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+  color: #ffffff;
+  border: 1.5px solid #fca5a5;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6);
+  animation: tacticalBtnPulse 2s infinite ease-in-out;
+}
+
+.building-attack-btn.tactical-attack-glow:hover {
+  transform: translateY(-2px) scale(1.02);
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+  border-color: #bae6fd;
+  box-shadow: 0 6px 22px rgba(239, 68, 68, 0.85), 0 0 12px rgba(186, 230, 253, 0.5);
+}
+
+.building-attack-btn:active {
+  transform: scale(0.97);
+}
+
+.attack-btn-swords {
+  color: #bae6fd;
+  flex-shrink: 0;
+}
+
+@keyframes tacticalBtnPulse {
+  0%, 100% {
+    box-shadow: 0 3px 12px rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    box-shadow: 0 5px 20px rgba(239, 68, 68, 0.85), 0 0 10px rgba(56, 189, 248, 0.45);
+  }
+}
+
+.building-action-status {
+  width: 100%;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.building-action-status.looted {
+  background: rgba(22, 101, 52, 0.45);
+  color: #86efac;
+  border: 1px solid rgba(74, 222, 128, 0.45);
+}
+
+.building-action-status.defended {
+  background: rgba(153, 27, 27, 0.45);
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.45);
+}
+
+.building-action-status.locked {
+  background: rgba(30, 41, 59, 0.6);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Live Siege Log */
+.pvp-siege-log {
+  max-width: 600px;
+  min-height: 32px;
+}
+
+.arena-log-line {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  animation: popIn 0.25s ease;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVENESS FOR PVP SIEGE (LANDSCAPE & PORTRAIT)
+   ============================================================ */
+
+/* 1. MOBILE LANDSCAPE: Height <= 580px (Optimal for Gaming) */
+@media (max-height: 580px), (orientation: landscape) and (max-height: 580px) {
+  .arena-battle-stage.pvp-siege-realm {
+    padding: 6px 12px !important;
+    gap: 4px !important;
+    height: 100dvh !important;
+    justify-content: space-between !important;
+  }
+
+  .pvp-siege-header {
+    padding: 4px 46px 4px 10px !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    min-height: 38px !important;
+    border-radius: 12px !important;
+  }
+
+  .pvp-arena-close-btn {
+    right: 8px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+  }
+
+  .pvp-rival-identity {
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .pvp-rival-avatar-wrap {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .pvp-rival-lvl-badge {
+    font-size: 0.55rem !important;
+    padding: 0 !important;
+  }
+
+  .pvp-rival-kingdom {
+    font-size: 0.86rem !important;
+  }
+
+  .pvp-rival-league-pill {
+    padding: 1px 6px !important;
+    font-size: 0.60rem !important;
+    gap: 3px !important;
+  }
+
+  .pvp-mini-icon {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .pvp-rival-ruler {
+    display: none !important;
+  }
+
+  .pvp-attempts-box {
+    flex-direction: row !important;
+    padding: 3px 8px !important;
+    gap: 6px !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .attempts-header-label {
+    font-size: 0.68rem !important;
+    gap: 4px !important;
+  }
+
+  .attempts-indicators-row {
+    gap: 5px !important;
+  }
+
+  .attempt-orb {
+    width: 18px !important;
+    height: 18px !important;
+    border-width: 1px !important;
+  }
+
+  .attempt-orb svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .pvp-header-right {
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .pvp-live-loot-pill {
+    padding: 2px 6px !important;
+    gap: 5px !important;
+  }
+
+  .loot-chip {
+    font-size: 0.65rem !important;
+    gap: 2px !important;
+  }
+
+  .chip-icon {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .modal-close-candy-btn {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+  }
+
+  .pvp-siege-banner-strip {
+    padding: 2px 8px !important;
+    font-size: 0.68rem !important;
+    gap: 6px !important;
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+    max-width: 680px !important;
+    width: 98% !important;
+  }
+
+  .banner-target-icon {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .pvp-citadel-container {
+    padding: 2px !important;
+    overflow-y: auto !important;
+    flex: 1 !important;
+  }
+
+  .pvp-buildings-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+
+  .citadel-building-card {
+    padding: 4px 6px !important;
+    border-radius: 10px !important;
+    gap: 2px !important;
+    border-width: 1.5px !important;
+  }
+
+  .building-card-top-row {
+    gap: 3px !important;
+  }
+
+  .building-chance-badge {
+    font-size: 0.58rem !important;
+    padding: 1px 4px !important;
+  }
+
+  .building-status-pill {
+    font-size: 0.56rem !important;
+    padding: 1px 5px !important;
+    gap: 2px !important;
+  }
+
+  .building-sprite-frame {
+    height: 38px !important;
+    margin: 0 !important;
+  }
+
+  .building-sprite-img {
+    max-width: 44px !important;
+    max-height: 36px !important;
+  }
+
+  .building-loot-preview-row {
+    gap: 2px !important;
+    margin: 0 !important;
+  }
+
+  .loot-tag {
+    padding: 1px 3px !important;
+    font-size: 0.58rem !important;
+    gap: 2px !important;
+    border-radius: 4px !important;
+  }
+
+  .loot-tag-icon {
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  .building-info-bar {
+    padding: 1px 4px !important;
+    border-radius: 5px !important;
+  }
+
+  .building-name {
+    font-size: 0.68rem !important;
+  }
+
+  .building-category {
+    display: none !important;
+  }
+
+  .building-card-action-wrap {
+    margin-top: 1px !important;
+  }
+
+  .building-attack-btn {
+    height: 22px !important;
+    font-size: 0.66rem !important;
+    padding: 0 4px !important;
+    border-radius: 6px !important;
+    gap: 3px !important;
+  }
+
+  .attack-btn-swords {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .building-action-status {
+    height: 20px !important;
+    font-size: 0.62rem !important;
+    padding: 0 4px !important;
+    border-radius: 6px !important;
+    gap: 3px !important;
+  }
+
+  .pvp-siege-log {
+    min-height: 20px !important;
+    max-height: 22px !important;
+    padding: 1px 8px !important;
+    border-radius: 6px !important;
+  }
+
+  .arena-log-line {
+    font-size: 0.66rem !important;
+  }
+
+  /* Modals in Mobile Landscape */
+  .outcome-card-content {
+    padding: 12px 18px !important;
+    max-height: 94vh !important;
+    overflow-y: auto !important;
+    gap: 6px !important;
+    border-radius: 16px !important;
+    max-width: 400px !important;
+  }
+
+  .outcome-icon-box {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 12px !important;
+  }
+
+  .outcome-icon-box svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .outcome-title {
+    font-size: 1.1rem !important;
+  }
+
+  .outcome-desc {
+    font-size: 0.72rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .outcome-rewards-pills {
+    margin: 4px 0 !important;
+    gap: 5px !important;
+  }
+
+  .reward-item {
+    padding: 3px 8px !important;
+    font-size: 0.70rem !important;
+  }
+
+  .btn-claim-arena-loot {
+    padding: 7px 14px !important;
+    font-size: 0.82rem !important;
+    height: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .retreat-confirm-card {
+    padding: 12px 16px !important;
+    max-height: 94vh !important;
+    overflow-y: auto !important;
+    gap: 8px !important;
+    border-radius: 14px !important;
+    max-width: 400px !important;
+  }
+
+  .retreat-header h4 {
+    font-size: 1.05rem !important;
+  }
+
+  .retreat-desc {
+    font-size: 0.72rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .retreat-cost-breakdown {
+    padding: 6px 8px !important;
+    gap: 4px !important;
+  }
+
+  .cost-title {
+    font-size: 0.65rem !important;
+  }
+
+  .retreat-pill {
+    padding: 3px 8px !important;
+    font-size: 0.74rem !important;
+  }
+
+  .retreat-actions-row {
+    margin-top: 2px !important;
+    gap: 6px !important;
+  }
+
+  .btn-stay-fight, .btn-confirm-retreat {
+    padding: 6px 10px !important;
+    height: 32px !important;
+    font-size: 0.74rem !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* 2. MOBILE PORTRAIT: Width <= 640px and Height > 580px */
+@media (max-width: 640px) and (min-height: 581px) {
+  .arena-battle-stage.pvp-siege-realm {
+    padding: 10px 8px !important;
+    gap: 8px !important;
+  }
+
+  .pvp-siege-header {
+    padding: 8px 46px 8px 10px !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .pvp-arena-close-btn {
+    top: 10px !important;
+    right: 8px !important;
+    transform: none !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+  }
+
+  .pvp-rival-identity {
+    gap: 8px !important;
+  }
+
+  .pvp-rival-avatar-wrap {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .pvp-rival-kingdom {
+    font-size: 0.98rem !important;
+  }
+
+  .pvp-rival-league-pill {
+    padding: 2px 7px !important;
+    font-size: 0.66rem !important;
+  }
+
+  .pvp-attempts-box {
+    padding: 5px 10px !important;
+    gap: 4px !important;
+  }
+
+  .attempt-orb {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .attempt-orb svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .pvp-live-loot-pill {
+    padding: 4px 8px !important;
+    gap: 6px !important;
+  }
+
+  .loot-chip {
+    font-size: 0.70rem !important;
+  }
+
+  .pvp-siege-banner-strip {
+    font-size: 0.76rem !important;
+    padding: 6px 10px !important;
+  }
+
+  .pvp-buildings-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .citadel-building-card {
+    padding: 8px 10px !important;
+    border-radius: 14px !important;
+    gap: 4px !important;
+  }
+
+  .building-sprite-frame {
+    height: 65px !important;
+  }
+
+  .building-sprite-img {
+    max-width: 72px !important;
+    max-height: 62px !important;
+  }
+
+  .building-name {
+    font-size: 0.78rem !important;
+  }
+
+  .building-attack-btn {
+    height: 30px !important;
+    font-size: 0.76rem !important;
+  }
+
+  .building-action-status {
+    height: 28px !important;
+    font-size: 0.72rem !important;
+  }
+}
+
+/* Victory / Defeat Modal in Arena */
+.arena-outcome-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outcome-card-content {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 2px solid #0284c7;
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(2, 132, 199, 0.4);
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.arena-outcome-modal.defeat .outcome-card-content {
+  border-color: #ef4444;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(239, 68, 68, 0.4);
+}
+
+.outcome-icon-box {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.3) 0%, rgba(0, 0, 0, 0.5) 80%);
+  border: 2px solid #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(2, 132, 199, 0.4);
+}
+
+.outcome-icon-box.defeat {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, rgba(0, 0, 0, 0.5) 80%);
+  border-color: #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+.outcome-icon-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+}
+
+.pill-icon-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+
+.outcome-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #bae6fd;
+  margin: 0;
+}
+
+.outcome-title.defeat {
+  color: #f87171;
+}
+
+.outcome-desc {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.outcome-rewards-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.reward-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.reward-item.trophies {
+  border-color: #0284c7;
+  color: #bae6fd;
+}
+
+.reward-item.gold {
+  border-color: #0ea5e9;
+  color: #7dd3fc;
+}
+
+.reward-item.stone {
+  border-color: #94a3b8;
+  color: #e2e8f0;
+}
+
+.reward-item.wood {
+  border-color: #0369a1;
+  color: #fcd34d;
+}
+
+.reward-item.food {
+  border-color: #84cc16;
+  color: #bef264;
+}
+
+.reward-item.gems {
+  border-color: #38bdf8;
+  color: #7dd3fc;
+}
+
+.reward-item.trophies-lost {
+  border-color: #ef4444;
+  color: #f87171;
+}
+
+.reward-item.honor {
+  border-color: #a855f7;
+  color: #d8b4fe;
+}
+
+.btn-claim-arena-loot {
+  width: 100%;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #0284c7 0%, #ca8a04 100%);
+  color: #1e1b4b;
+  border: 1px solid #bae6fd;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.5);
+  transition: transform 0.15s ease;
+}
+
+.btn-claim-arena-loot:hover {
+  transform: scale(1.03);
+}
+
+/* RETREAT CONFIRMATION MODAL & PENALTY STYLES */
+.retreat-confirm-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+.retreat-confirm-card {
+  width: 90%;
+  max-width: 440px;
+  background: linear-gradient(180deg, #1e1b2e 0%, #0f0d19 100%);
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(239, 68, 68, 0.25);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.retreat-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.retreat-warning-icon {
+  color: #f87171;
+  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.6));
+}
+
+.retreat-header h4 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.retreat-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.retreat-cost-breakdown {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cost-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+}
+
+.cost-pills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.retreat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.retreat-pill.gold {
+  background: rgba(2, 132, 199, 0.2);
+  color: #7dd3fc;
+  border: 1px solid rgba(2, 132, 199, 0.45);
+}
+
+.retreat-pill.food {
+  background: rgba(249, 115, 22, 0.2);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.45);
+}
+
+.retreat-pill.danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.45);
+}
+
+.retreat-loot-warning {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #38bdf8;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.retreat-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-stay-fight {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-stay-fight:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.btn-confirm-retreat {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  transition: all 0.15s ease;
+}
+
+.btn-confirm-retreat:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   ASSAULT / SIEGE INTERACTIVE TUTORIAL & GUIDANCE SYSTEM
+   ========================================================================== */
+
+/* Tutorial Trigger Button in Header */
+.pvp-tutorial-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.28) 0%, rgba(3, 105, 161, 0.42) 100%);
+  border: 1px solid rgba(186, 230, 253, 0.7);
+  border-radius: 9999px;
+  color: #bae6fd;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(2, 132, 199, 0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.pvp-tutorial-trigger-btn:hover {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.5) 0%, rgba(3, 105, 161, 0.65) 100%);
+  border-color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(2, 132, 199, 0.6);
+}
+
+.pvp-help-icon {
+  color: #bae6fd;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Tutorial Pill in Tactical Directive Banner */
+.directive-help-pill {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  background: rgba(2, 132, 199, 0.22);
+  border: 1px solid rgba(186, 230, 253, 0.6);
+  border-radius: 9999px;
+  color: #bae6fd;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.directive-help-pill:hover {
+  background: rgba(2, 132, 199, 0.4);
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* First-time Guidance Callout Pointer on 1st Building */
+.first-time-assault-pointer {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);
+  border: 1.5px solid #bae6fd;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 18px rgba(2, 132, 199, 0.7);
+  border-radius: 12px;
+  padding: 4px 10px;
+  cursor: pointer;
+  pointer-events: auto;
+  animation: assaultPointerBounce 1.3s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+.first-time-assault-pointer .pointer-arrow-bounce {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.first-time-assault-pointer .pointer-text {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.2px;
+}
+
+@keyframes assaultPointerBounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+/* Tutorial Backdrop & Modal Card */
+.assault-tutorial-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(3, 7, 18, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeInModal 0.25s ease-out;
+}
+
+.assault-tutorial-card {
+  background: linear-gradient(145deg, #0b1120 0%, #1e1b4b 60%, #0f172a 100%);
+  border: 2px solid rgba(2, 132, 199, 0.7);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(2, 132, 199, 0.35);
+  border-radius: 24px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tutorial-card-header {
+  padding: 16px 20px 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.tutorial-header-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.35) 0%, rgba(0, 0, 0, 0.6) 100%);
+  border: 1.5px solid rgba(2, 132, 199, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(2, 132, 199, 0.4);
+  flex-shrink: 0;
+}
+
+.tutorial-header-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tutorial-modal-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #bae6fd;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.4px;
+}
+
+.tutorial-modal-subtitle {
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.tutorial-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tutorial-close-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.tutorial-step-dots-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px 4px 20px;
+}
+
+.tutorial-dot-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tutorial-dot-pill.active {
+  background: rgba(2, 132, 199, 0.25);
+  border-color: #bae6fd;
+  color: #bae6fd;
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.35);
+  transform: scale(1.03);
+}
+
+.tutorial-dot-pill.completed {
+  color: #86efac;
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+.dot-number {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+}
+
+.tutorial-dot-pill.active .dot-number {
+  background: #0284c7;
+  color: #0f172a;
+  font-weight: 900;
+}
+
+.tutorial-slide-body {
+  padding: 14px 22px 18px 22px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.anim-slide-in {
+  animation: fadeInModal 0.25s ease-out;
+}
+
+.tutorial-visual-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.showcase-orbs-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.showcase-orb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(249, 115, 22, 0.6);
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.35);
+}
+
+.showcase-orb span {
+  font-size: 0.70rem;
+  font-weight: 800;
+  color: #fed7aa;
+}
+
+.showcase-badge.safe-troops {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: rgba(22, 101, 52, 0.45);
+  border: 1px solid rgba(74, 222, 128, 0.5);
+  color: #86efac;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.showcase-mock-card {
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid #0284c7;
+  border-radius: 14px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 20px rgba(2, 132, 199, 0.4);
+  width: 80%;
+  max-width: 260px;
+}
+
+.mock-card-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.mock-chance {
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: #bae6fd;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px 6px;
+  border-radius: 9999px;
+  border: 1px solid rgba(2, 132, 199, 0.5);
+}
+
+.mock-name {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.mock-card-preview {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-img {
+  max-height: 46px;
+  object-fit: contain;
+}
+
+.mock-attack-btn-preview {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #0284c7 0%, #ca8a04 100%);
+  color: #1e1b4b;
+  font-size: 0.70rem;
+  font-weight: 900;
+  padding: 5px 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5);
+}
+
+.showcase-loot-chips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.showcase-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.showcase-chip.gold {
+  background: rgba(2, 132, 199, 0.2);
+  border: 1px solid rgba(2, 132, 199, 0.5);
+  color: #7dd3fc;
+}
+
+.showcase-chip.gold img {
+  width: 16px;
+  height: 16px;
+}
+
+.showcase-chip.crowns {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  color: #e9d5ff;
+}
+
+.showcase-chip.exit {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+}
+
+.mock-close-img {
+  width: 16px;
+  height: 16px;
+}
+
+.tutorial-step-title {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #bae6fd;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.tutorial-step-desc {
+  margin: 0 0 12px 0;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.tutorial-tip-box {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(2, 132, 199, 0.4);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: #7dd3fc;
+  line-height: 1.35;
+}
+
+.tutorial-tip-box.safe-tip {
+  border-color: rgba(74, 222, 128, 0.5);
+  color: #86efac;
+}
+
+.tip-icon {
+  flex-shrink: 0;
+}
+
+.tip-icon.gold {
+  color: #bae6fd;
+}
+
+.tip-icon.green {
+  color: #4ade80;
+}
+
+.tutorial-card-footer {
+  padding: 12px 20px 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tutorial-btn-prev,
+.tutorial-btn-skip {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.tutorial-btn-prev:hover,
+.tutorial-btn-skip:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.footer-step-counter {
+  font-size: 0.80rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.tutorial-btn-next {
+  background: linear-gradient(135deg, #0284c7 0%, #ca8a04 100%);
+  border: 1px solid #bae6fd;
+  color: #1e1b4b;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.45);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tutorial-btn-next:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6);
+}
+
+.tutorial-btn-next.btn-finish {
+  background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+  border-color: #86efac;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.5);
+}
+
+.tutorial-btn-next.btn-finish:hover {
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.7);
+}
+
+/* Mobile landscape adjustments */
+@media (max-height: 580px) {
+  .assault-tutorial-card {
+    max-height: 96vh !important;
+    max-width: 460px !important;
+  }
+  .tutorial-card-header {
+    padding: 8px 14px !important;
+  }
+  .tutorial-header-icon-wrap {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .tutorial-modal-title {
+    font-size: 0.90rem !important;
+  }
+  .tutorial-modal-subtitle {
+    display: none !important;
+  }
+  .tutorial-step-dots-row {
+    padding: 6px 14px 2px 14px !important;
+    gap: 4px !important;
+  }
+  .tutorial-dot-pill {
+    padding: 2px 8px !important;
+    font-size: 0.65rem !important;
+  }
+  .tutorial-slide-body {
+    padding: 8px 14px !important;
+  }
+  .tutorial-visual-card {
+    padding: 6px !important;
+    margin-bottom: 6px !important;
+    gap: 4px !important;
+  }
+  .showcase-orb {
+    padding: 4px 8px !important;
+  }
+  .showcase-orb svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .showcase-mock-card {
+    padding: 6px 10px !important;
+    max-width: 210px !important;
+  }
+  .tutorial-step-title {
+    font-size: 0.88rem !important;
+    margin-bottom: 3px !important;
+  }
+  .tutorial-step-desc {
+    font-size: 0.74rem !important;
+    margin-bottom: 6px !important;
+    line-height: 1.25 !important;
+  }
+  .tutorial-tip-box {
+    padding: 5px 8px !important;
+    font-size: 0.70rem !important;
+  }
+  .tutorial-card-footer {
+    padding: 6px 14px 8px 14px !important;
+  }
+  .tutorial-btn-next, .tutorial-btn-prev, .tutorial-btn-skip {
+    padding: 5px 10px !important;
+    font-size: 0.76rem !important;
+  }
+  .pvp-tutorial-trigger-btn {
+    padding: 2px 6px !important;
+    font-size: 0.65rem !important;
+  }
+  .directive-help-pill {
+    padding: 1px 6px !important;
+    font-size: 0.62rem !important;
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './InventoryModal.css'
 import { Shield, Sparkles, Check, Plus, Package } from 'lucide-react'
 import { RELIC_SLOTS, RELICS, CONSUMABLES } from '../data/inventoryData'
 import { soundManager } from '../utils/audio'

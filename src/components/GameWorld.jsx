@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { Plus, Hammer, Eye, EyeOff, Maximize2, Minimize2 } from 'lucide-react'
 import { BUILDING_TYPES, getMaxProductionBatches, getBuildingDef, getBuildingAnimationDuration } from '../data/buildingsData'
 import { soundManager } from '../utils/audio'
@@ -90,13 +90,17 @@ export function GameWorld({
     }
   }, [])
 
-  // Local tick to ensure countdowns, ghost transitions and harvest states re-render smoothly (1s interval, suspended in combat)
+  // Local tick to ensure countdowns, ghost transitions and harvest states re-render smoothly (suspended in combat)
   const [, setWorldTick] = useState(0)
+  const hasActiveConstruction = useMemo(() => slots.some((s) => s.isConstructing), [slots])
   useEffect(() => {
     if (isSuspended) return
-    const timer = setInterval(() => setWorldTick((t) => t + 1), 1000)
+    // When buildings are constructing, tick every 1000ms for accurate progress bar countdowns.
+    // When idle / harvesting, tick every 10,000ms (reduces 90% of idle re-renders).
+    const intervalMs = hasActiveConstruction ? 1000 : 10000
+    const timer = setInterval(() => setWorldTick((t) => t + 1), intervalMs)
     return () => clearInterval(timer)
-  }, [isSuspended])
+  }, [isSuspended, hasActiveConstruction])
   const [zoom, setZoom] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
@@ -217,8 +221,11 @@ export function GameWorld({
         const targetZoom = Math.min(2.5, Math.max(1.0, Number((initialZoomRef.current * factor).toFixed(3))))
 
         if (!rafIdRef.current) {
-          rafIdRef.current = requestAnimationFrame(() => {
+          rafIdRef.current = requestAnimationFrame((timestamp) => {
             rafIdRef.current = null
+            const minInterval = fpsMode === 'eco' ? 30.0 : 15.0
+            if (timestamp - lastPanTimeRef.current < minInterval) return
+            lastPanTimeRef.current = timestamp
             setZoom(targetZoom)
           })
         }
@@ -250,9 +257,17 @@ export function GameWorld({
       if (!rafIdRef.current) {
         rafIdRef.current = requestAnimationFrame((timestamp) => {
           rafIdRef.current = null
-          // Eco throttle only if explicitly requested
-          if (fpsMode === 'eco') {
-            if (timestamp - lastPanTimeRef.current < 30) return
+          const minPanInterval = fpsMode === 'eco' ? 30.0 : 15.0
+          if (timestamp - lastPanTimeRef.current < minPanInterval) {
+            // Re-schedule for next frame so the last position is never lost on high-refresh mobile screens
+            rafIdRef.current = requestAnimationFrame((nextTimestamp) => {
+              rafIdRef.current = null
+              lastPanTimeRef.current = nextTimestamp
+              if (pendingPanRef.current) {
+                setPan(pendingPanRef.current)
+              }
+            })
+            return
           }
           lastPanTimeRef.current = timestamp
           if (pendingPanRef.current) {
@@ -490,7 +505,11 @@ export function GameWorld({
         }}
       >
         {/* Animated Island Map */}
-        <AnimatedMap className="island-background" />
+        <AnimatedMap 
+          className="island-background" 
+          isPaused={isSuspended || isDragging} 
+          fpsMode={fpsMode} 
+        />
 
         {/* Plaza Building Slots */}
         <div className="plaza-slots-layer">

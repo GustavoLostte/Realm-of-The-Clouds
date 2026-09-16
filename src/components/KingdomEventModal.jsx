@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import './KingdomEventModal.css'
 import { Shield, ArrowRight } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'

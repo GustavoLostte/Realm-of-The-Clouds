@@ -67,7 +67,9 @@ export const cn = {
     },
     "decree": "法令",
     "research": "科技研发",
-    "construction": "建造"
+    "construction": "建造",
+    "minimize": "最小化",
+    "units": "个"
   },
   "resources": {
     "gold": "金币",
@@ -139,7 +141,9 @@ export const cn = {
     "resGems": "奥术水晶：{val} - 点击打开内库！",
     "resPop": "人口：{val} / {max} 领民",
     "clickToHarvest": "点击征收资源！",
-    "inspectProduction": "征收 {name} 产出 ({produced}) {status}"
+    "inspectProduction": "征收 {name} 产出 ({produced}) {status}",
+    "shop": "商店",
+    "inventory": "背包"
   },
   "dock": {
     "build": "建造",
@@ -163,7 +167,8 @@ export const cn = {
     "shopTooltip": "皇家内库与领主特惠",
     "questsTooltip": "云端帝国敕令与史诗叙事",
     "expeditionTooltip": "远征军团与外域地图",
-    "settingsTooltip": "系统设置与游戏选项"
+    "settingsTooltip": "系统设置与游戏选项",
+    "expeditions": "远征"
   },
   "buildings": {
     "openExpeditionsBtn": "开启宇宙裂缝与远征",
@@ -267,7 +272,8 @@ export const cn = {
       }
     },
     "freePlot": "空闲地块",
-    "buildTargetHere": "在此建造 {name}！"
+    "buildTargetHere": "在此建造 {name}！",
+    "level": "{level} 级"
   },
   "quests": {
     "heraldName": "宫廷总管兼传令官",
@@ -465,7 +471,9 @@ export const cn = {
         "title": "无敌军团",
         "desc": "在驻军中招募超过12名士兵的精锐军团。"
       }
-    }
+    },
+    "allQuestsTooltip": "查看王国所有任务",
+    "viewAllQuests": "查看任务"
   },
   "tech": {
     "title": "皇家高等学院",
@@ -1977,124 +1985,124 @@ export const cn = {
     "biome1": {
       "name": "唯一篇章：大云端远征战役",
       "subtitle": "英雄进军之途（17场史诗对决）"
-},
+    },
     "sectors": {
       "1": {
-            "name": "第I区域：兽人先锋",
-            "desc": "兽人 x3"
+        "name": "第I区域：兽人先锋",
+        "desc": "兽人 x3"
       },
       "2": {
-            "name": "第II区域：狂兽深渊",
-            "desc": "牛头魔 x1"
+        "name": "第II区域：狂兽深渊",
+        "desc": "牛头魔 x1"
       },
       "3": {
-            "name": "第III区域：联军突击",
-            "desc": "兽人 x3 + 牛头魔 x1"
+        "name": "第III区域：联军突击",
+        "desc": "兽人 x3 + 牛头魔 x1"
       },
       "4": {
-            "name": "第IV区域：统领地宫",
-            "desc": "次级领主 x1"
+        "name": "第IV区域：统领地宫",
+        "desc": "次级领主 x1"
       },
       "5": {
-            "name": "第V区域：暗影迷宫",
-            "desc": "牛头魔 x3 + 兽人 x1"
+        "name": "第V区域：暗影迷宫",
+        "desc": "牛头魔 x3 + 兽人 x1"
       },
       "6": {
-            "name": "第VI区域：天穹终审之巅",
-            "desc": "牛头魔 x3 + 终极领主"
+        "name": "第VI区域：天穹终审之巅",
+        "desc": "牛头魔 x3 + 终极领主"
       }
-},
+    },
     "combat": {
       "dazed": "[眩晕!] -",
       "counter": "[反击!] -"
-},
+    },
     "nodes": {
       "node-1": {
-            "name": "兽人侦察兵",
-            "subtitle": "第1阶段 · 荒原前锋",
-            "desc": "被派来探测你堡垒防御的敏捷斥候。身手敏捷但防御脆弱。"
+        "name": "兽人侦察兵",
+        "subtitle": "第1阶段 · 荒原前锋",
+        "desc": "被派来探测你堡垒防御的敏捷斥候。身手敏捷但防御脆弱。"
       },
       "node-2": {
-            "name": "兽人狂战士",
-            "subtitle": "第1阶段 · 烈焰战斧武士",
-            "desc": "手持燃魂双斧的重装狂战士。招式凶猛残暴。"
+        "name": "兽人狂战士",
+        "subtitle": "第1阶段 · 烈焰战斧武士",
+        "desc": "手持燃魂双斧的重装狂战士。招式凶猛残暴。"
       },
       "node-3": {
-            "name": "黑铁兽人统领",
-            "subtitle": "第1阶段 · 前哨要塞",
-            "desc": "兽人先锋指挥官。手持铸铁重盾，防御严密。"
+        "name": "黑铁兽人统领",
+        "subtitle": "第1阶段 · 前哨要塞",
+        "desc": "兽人先锋指挥官。手持铸铁重盾，防御严密。"
       },
       "node-4": {
-            "name": "赤角牛头魔",
-            "subtitle": "第2阶段 · 深渊巨恐",
-            "desc": "手持巨型碎骨重槌的庞然凶兽。领主面临的首个巨大考验。"
+        "name": "赤角牛头魔",
+        "subtitle": "第2阶段 · 深渊巨恐",
+        "desc": "手持巨型碎骨重槌的庞然凶兽。领主面临的首个巨大考验。"
       },
       "node-5": {
-            "name": "血矛掷弹兽人",
-            "subtitle": "第3阶段 · 灰烬袭扰者",
-            "desc": "投掷剧毒标枪撕裂防线的凶狠突击手。"
+        "name": "血矛掷弹兽人",
+        "subtitle": "第3阶段 · 灰烬袭扰者",
+        "desc": "投掷剧毒标枪撕裂防线的凶狠突击手。"
       },
       "node-6": {
-            "name": "荒原毁灭者兽人",
-            "subtitle": "第3阶段 · 战壕先锋",
-            "desc": "身披锈甲、渴望血与荣耀的兽人重甲精锐。"
+        "name": "荒原毁灭者兽人",
+        "subtitle": "第3阶段 · 战壕先锋",
+        "desc": "身披锈甲、渴望血与荣耀的兽人重甲精锐。"
       },
       "node-7": {
-            "name": "兽人战争领主",
-            "subtitle": "第3阶段 · 嗜血酋长",
-            "desc": "统帅整个兽人方阵、镇守圣殿入口的军团统领。"
+        "name": "兽人战争领主",
+        "subtitle": "第3阶段 · 嗜血酋长",
+        "desc": "统帅整个兽人方阵、镇守圣殿入口的军团统领。"
       },
       "node-8": {
-            "name": "洞窟巨角牛头魔",
-            "subtitle": "第3阶段 · 部落巨像",
-            "desc": "被兽人驯化、专门粉碎来犯之敌的远古庞然凶兽。"
+        "name": "洞窟巨角牛头魔",
+        "subtitle": "第3阶段 · 部落巨像",
+        "desc": "被兽人驯化、专门粉碎来犯之敌的远古庞然凶兽。"
       },
       "node-9": {
-            "name": "次级领主：深渊守望者",
-            "subtitle": "第4阶段 · 核心区域统领！",
-            "desc": "手握独眼巨锤的重装泰坦巨怪。他的脚步让深渊大地颤动。"
+        "name": "次级领主：深渊守望者",
+        "subtitle": "第4阶段 · 核心区域统领！",
+        "desc": "手握独眼巨锤的重装泰坦巨怪。他的脚步让深渊大地颤动。"
       },
       "node-10": {
-            "name": "黑曜角斗牛魔",
-            "subtitle": "第5阶段 · 狂暴凶兽 I",
-            "desc": "内圈近卫军先头战兽。利角可轻易刺穿精钢盾牌。"
+        "name": "黑曜角斗牛魔",
+        "subtitle": "第5阶段 · 狂暴凶兽 I",
+        "desc": "内圈近卫军先头战兽。利角可轻易刺穿精钢盾牌。"
       },
       "node-11": {
-            "name": "地宫狂暴牛魔",
-            "subtitle": "第5阶段 · 狂暴凶兽 II",
-            "desc": "被血腥战意激怒的狂暴蛮兽。连续挥击势不可挡。"
+        "name": "地宫狂暴牛魔",
+        "subtitle": "第5阶段 · 狂暴凶兽 II",
+        "desc": "被血腥战意激怒的狂暴蛮兽。连续挥击势不可挡。"
       },
       "node-12": {
-            "name": "铁甲泰坦牛头魔",
-            "subtitle": "第5阶段 · 狂暴凶兽 III",
-            "desc": "身裹厚重铸铁甲板的巨兽。物理防御极高，冲锋极具杀伤力。"
+        "name": "铁甲泰坦牛头魔",
+        "subtitle": "第5阶段 · 狂暴凶兽 III",
+        "desc": "身裹厚重铸铁甲板的巨兽。物理防御极高，冲锋极具杀伤力。"
       },
       "node-13": {
-            "name": "暗影兽人大法师",
-            "subtitle": "第5阶段 · 暗影萨满",
-            "desc": "引导虚空黑暗秘术、封锁通往圣所最后走廊的强力法师。"
+        "name": "暗影兽人大法师",
+        "subtitle": "第5阶段 · 暗影萨满",
+        "desc": "引导虚空黑暗秘术、封锁通往圣所最后走廊的强力法师。"
       },
       "node-14": {
-            "name": "血誓卫士牛头魔",
-            "subtitle": "第6阶段 · 禁卫近卫军 I",
-            "desc": "立下血之誓言誓死守护终极领主的顽强守卫。"
+        "name": "血誓卫士牛头魔",
+        "subtitle": "第6阶段 · 禁卫近卫军 I",
+        "desc": "立下血之誓言誓死守护终极领主的顽强守卫。"
       },
       "node-15": {
-            "name": "炼狱行刑牛魔",
-            "subtitle": "第6阶段 · 禁卫近卫军 II",
-            "desc": "挥舞锁链烈焰流星锤的凶残巨角刽子手。"
+        "name": "炼狱行刑牛魔",
+        "subtitle": "第6阶段 · 禁卫近卫军 II",
+        "desc": "挥舞锁链烈焰流星锤的凶残巨角刽子手。"
       },
       "node-16": {
-            "name": "万角之王牛头魔",
-            "subtitle": "第6阶段 · 近卫军冠军统领",
-            "desc": "地下王国最令人胆寒的牛头魔君王。直面圣所圣境前的终极阻碍。"
+        "name": "万角之王牛头魔",
+        "subtitle": "第6阶段 · 近卫军冠军统领",
+        "desc": "地下王国最令人胆寒的牛头魔君王。直面圣所圣境前的终极阻碍。"
       },
       "node-17": {
-            "name": "终极领主：暗影主宰",
-            "subtitle": "第6阶段 · 全篇终极巨魔首领！",
-            "desc": "被天界放逐的黑暗主宰。妄图用邪恶之刃吞噬云之王国的纯洁力量。"
+        "name": "终极领主：暗影主宰",
+        "subtitle": "第6阶段 · 全篇终极巨魔首领！",
+        "desc": "被天界放逐的黑暗主宰。妄图用邪恶之刃吞噬云之王国的纯洁力量。"
       }
-}
+    }
   },
   "army": {
     "title": "皇家驻军与军营",
@@ -2149,7 +2157,8 @@ export const cn = {
     "trainingCancelled": "Training cancelled. Resources and population refunded.",
     "instantRecruited": "Soldier trained instantly with gems!",
     "recruitTroopsDirectBtn": "Recruit Military Troops",
-    "populationLimitReached": "Population limit reached! Build or upgrade Houses."
+    "populationLimitReached": "Population limit reached! Build or upgrade Houses.",
+    "soldierUnit": "士兵"
   },
   "ranking": {
     "tag": "帝国荣誉殿堂",
@@ -2513,6 +2522,55 @@ export const cn = {
   },
   "speedup": {
     "noSpeedupsAvailable": "No hourglass speedups available.",
-    "usedNotification": "Training time accelerated!"
+    "usedNotification": "Training time accelerated!",
+    "useSpeedupTooltip": "使用时间加速道具",
+    "useSpeedup": "加速"
+  },
+  "chat": {
+    "title": "王国聊天",
+    "subtitle": "领主之间的实时交流",
+    "global": "世界",
+    "alliance": "联盟",
+    "system": "系统",
+    "placeholder": "向王国发送消息..."
+  },
+  "rightControls": {
+    "battle": "战斗",
+    "battleSub": "PvP / PvE",
+    "heroes": "英雄",
+    "heroesSub": "小队",
+    "kingdom": "王国",
+    "kingdomSub": "菜单",
+    "battleTooltip": "回合制战斗 (单人与多人对决)",
+    "heroesTooltip": "英雄管理、等级与技能",
+    "kingdomTooltip": "王国菜单：建造、商店、背包等"
+  },
+  "combatModal": {
+    "title": "战斗中心",
+    "subtitle": "与您的英雄一起选择回合制战术对决模式",
+    "pveTitle": "战役与地下城",
+    "pveBadge": "单人战役 (PvE)",
+    "pveDesc": "勇闯天空地下城，在回合制战斗中迎战怪物和巅峰Boss。",
+    "pveBtn": "开始战役",
+    "pvpTitle": "王者竞技场",
+    "pvpBadge": "多人对决 (PvP)",
+    "pvpDesc": "在策略对决中挑战其他领主的英雄小队，登顶霸主榜。",
+    "pvpBtn": "在竞技场挑战"
+  },
+  "kingdomHub": {
+    "title": "帝国议会大厅",
+    "subtitle": "天空堡垒与王国主权的一站式统筹管理",
+    "build": "建造",
+    "buildDesc": "在广场上建造并升级各类建筑",
+    "shop": "帝国集市",
+    "shopDesc": "宝藏、宝石与幸运转盘",
+    "inventory": "遗物",
+    "inventoryDesc": "圣物神器与装备管理",
+    "quests": "任务",
+    "questsDesc": "帝国壮举与皇家法令",
+    "ranking": "排行榜",
+    "rankingDesc": "巅峰领主排行榜",
+    "settings": "设置",
+    "settingsDesc": "音频、语言与账户"
   }
 };

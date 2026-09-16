@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './BuildingDetailsModal.css'
 import { 
   ArrowUpCircle, 
   Trash2, 
@@ -42,7 +43,7 @@ export function BuildingDetailsModal({
   const [selectedSpeedup, setSelectedSpeedup] = useState(null)
   const [showDemolishConfirm, setShowDemolishConfirm] = useState(false)
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || !slot?.isConstructing) {
       soundManager.stopBuildingSound()
       return
     }
@@ -51,7 +52,7 @@ export function BuildingDetailsModal({
       clearInterval(timer)
       soundManager.stopBuildingSound()
     }
-  }, [isOpen])
+  }, [isOpen, slot?.isConstructing])
 
   if (!isOpen || !slot || !slot.buildingId) return null
 
@@ -107,6 +108,9 @@ export function BuildingDetailsModal({
   const durationSec = slot.constructionDurationSec || 60
   const elapsedSec = Math.max(0, (now - startedAt) / 1000)
   const remainingSec = Math.max(0, Math.ceil(durationSec - elapsedSec))
+  const progressPct = durationSec > 0 
+    ? Math.min(100, Math.max(0, Math.floor((elapsedSec / durationSec) * 100))) 
+    : 100
   const remainingMin = Math.floor(remainingSec / 60)
   const remainingSecRem = remainingSec % 60
   const countdownFormatted = `${remainingMin.toString().padStart(2, '0')}:${remainingSecRem.toString().padStart(2, '0')}`
@@ -170,7 +174,7 @@ export function BuildingDetailsModal({
               <div className="details-progress-track">
                 <div 
                   className="details-progress-fill" 
-                  style={{ width: `${slot.progress || 10}%` }} 
+                  style={{ width: `${progressPct}%` }} 
                 />
               </div>
 

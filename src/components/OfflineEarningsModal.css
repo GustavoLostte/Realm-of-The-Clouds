@@ -1,0 +1,288 @@
+/* ============================================================
+   OFFLINE EARNINGS MODAL
+   ============================================================ */
+.offline-backdrop {
+  z-index: 1000;
+  background: rgba(4, 7, 14, 0.88);
+}
+
+.offline-earnings-modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 92dvh;
+  background: linear-gradient(135deg, rgba(14, 20, 32, 0.96) 0%, rgba(20, 28, 44, 0.94) 100%);
+  border: 1.5px solid var(--border-gold);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+  border-radius: 20px;
+  padding: 20px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.offline-header {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.offline-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 4px;
+}
+
+.offline-footer {
+  flex-shrink: 0;
+  margin-top: 14px;
+  width: 100%;
+}
+
+.offline-crest-icon img {
+  width: 54px;
+  height: 54px;
+  filter: drop-shadow(0 4px 12px rgba(14, 165, 233, 0.5));
+}
+
+.offline-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: #fff;
+  margin: 0;
+}
+
+.offline-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 9999px;
+  padding: 3px 12px;
+}
+
+.offline-message {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.offline-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.offline-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.offline-pill img {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.offline-pill-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.pill-qty {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.pill-name {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.offline-collect-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+
+.offline-collect-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(16, 185, 129, 0.6);
+}
+
+/* ============================================================
+   MOBILE & COMPACT RESPONSIVE FOR OFFLINE EARNINGS MODAL
+   ============================================================ */
+@media (max-width: 768px) {
+  .offline-earnings-modal {
+    max-width: min(400px, 92vw);
+    max-height: 88dvh;
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
+
+  .offline-header {
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  .offline-crest-icon img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .offline-header h3 {
+    font-size: 1.05rem;
+  }
+
+  .offline-time-badge {
+    font-size: 0.72rem;
+    padding: 2px 10px;
+  }
+
+  .offline-message {
+    font-size: 0.76rem;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .offline-pills-grid {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .offline-pill {
+    padding: 6px 10px;
+    gap: 8px;
+    border-radius: 10px;
+  }
+
+  .offline-pill img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .pill-qty {
+    font-size: 0.85rem;
+  }
+
+  .pill-name {
+    font-size: 0.64rem;
+  }
+
+  .offline-footer {
+    margin-top: 10px;
+  }
+
+  .offline-collect-btn {
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    border-radius: 12px;
+  }
+}
+
+/* Extra compact optimization for landscape or short screens */
+@media (max-height: 520px), ((orientation: landscape) and (max-height: 600px) and (max-width: 960px)) {
+  .offline-earnings-modal {
+    max-width: min(460px, 94vw);
+    max-height: 94dvh;
+    padding: 8px 14px;
+    border-radius: 12px;
+  }
+
+  .offline-header {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .offline-crest-icon img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .offline-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .offline-time-badge {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+  }
+
+  .offline-message {
+    font-size: 0.7rem;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .offline-pills-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .offline-pill {
+    padding: 4px 6px;
+    gap: 6px;
+    border-radius: 8px;
+  }
+
+  .offline-pill img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .pill-qty {
+    font-size: 0.78rem;
+  }
+
+  .pill-name {
+    font-size: 0.58rem;
+  }
+
+  .offline-footer {
+    margin-top: 6px;
+  }
+
+  .offline-collect-btn {
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    border-radius: 9px;
+  }
+}

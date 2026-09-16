@@ -231,8 +231,7 @@
 
 .fighter-card {
   flex: 1;
-  background: rgba(10, 15, 28, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(10, 15, 28, 0.94);
   padding: 0.5rem 0.75rem;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -566,8 +565,7 @@
   position: absolute;
   inset: 0;
   z-index: 30;
-  background: rgba(4, 8, 16, 0.65);
-  backdrop-filter: blur(5px);
+  background: rgba(4, 8, 16, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;

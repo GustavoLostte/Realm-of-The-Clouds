@@ -67,7 +67,9 @@ export const br = {
     },
     "decree": "Decreto",
     "research": "Pesquisa",
-    "construction": "Construção"
+    "construction": "Construção",
+    "minimize": "Minimizar",
+    "units": "unidades"
   },
   "resources": {
     "gold": "Ouro",
@@ -139,7 +141,9 @@ export const br = {
     "resGems": "Cristais Arcanos: {val} - Clique para abrir o Bazar!",
     "resPop": "População: {val} / {max} colonos",
     "clickToHarvest": "Clique para colher recursos!",
-    "inspectProduction": "Coletar produção de {name} ({produced}) {status}"
+    "inspectProduction": "Coletar produção de {name} ({produced}) {status}",
+    "shop": "Loja",
+    "inventory": "Inventário"
   },
   "dock": {
     "build": "Construir",
@@ -163,7 +167,8 @@ export const br = {
     "shopTooltip": "Bazar Imperial & Ofertas do Soberano",
     "questsTooltip": "Missões do Reino",
     "expeditionTooltip": "Expedições & Mapa Exterior",
-    "settingsTooltip": "Configurações do Jogo"
+    "settingsTooltip": "Configurações do Jogo",
+    "expeditions": "Expedições"
   },
   "buildings": {
     "openExpeditionsBtn": "Abrir Fenda Cósmica e Expedições",
@@ -267,7 +272,8 @@ export const br = {
       }
     },
     "freePlot": "Lote livre",
-    "buildTargetHere": "Construir {name} aqui!"
+    "buildTargetHere": "Construir {name} aqui!",
+    "level": "Nível {level}"
   },
   "quests": {
     "heraldName": "Grande Senescal e Arauto",
@@ -465,7 +471,9 @@ export const br = {
         "title": "Legião Invencível",
         "desc": "Recrute um contingente de mais de 12 tropas na sua guarnição."
       }
-    }
+    },
+    "allQuestsTooltip": "Ver todas as missões do reino",
+    "viewAllQuests": "Ver Missões"
   },
   "tech": {
     "title": "Grande Academia Real",
@@ -1980,121 +1988,121 @@ export const br = {
     },
     "sectors": {
       "1": {
-            "name": "Setor I: Vanguarda Orc",
-            "desc": "3 Orcs"
+        "name": "Setor I: Vanguarda Orc",
+        "desc": "3 Orcs"
       },
       "2": {
-            "name": "Setor II: Fosso das Feras",
-            "desc": "1 Minotauro"
+        "name": "Setor II: Fosso das Feras",
+        "desc": "1 Minotauro"
       },
       "3": {
-            "name": "Setor III: Ofensiva Mista",
-            "desc": "3 Orcs + 1 Minotauro"
+        "name": "Setor III: Ofensiva Mista",
+        "desc": "3 Orcs + 1 Minotauro"
       },
       "4": {
-            "name": "Setor IV: Cripta do Minichefe",
-            "desc": "1 Guardião da Tempestade"
+        "name": "Setor IV: Cripta do Minichefe",
+        "desc": "1 Guardião da Tempestade"
       },
       "5": {
-            "name": "Setor V: Labirinto das Sombras",
-            "desc": "3 Minotauros + 1 Orc"
+        "name": "Setor V: Labirinto das Sombras",
+        "desc": "3 Minotauros + 1 Orc"
       },
       "6": {
-            "name": "Setor VI: Cúpula do Juízo Celestial",
-            "desc": "3 Minotauros + Chefe Supremo"
+        "name": "Setor VI: Cúpula do Juízo Celestial",
+        "desc": "3 Minotauros + Chefe Supremo"
       }
     },
     "combat": {
       "dazed": "[ATORDISSO!] -",
       "counter": "[CONTRA-ATAQUE!] -"
-},
+    },
     "nodes": {
       "node-1": {
-            "name": "Orc Batedor",
-            "subtitle": "Fase 1 · Vanguarda dos Ermos",
-            "desc": "Vigia veloz enviado para sondar as defesas do seu bastião. Ágil mas frágil."
+        "name": "Orc Batedor",
+        "subtitle": "Fase 1 · Vanguarda dos Ermos",
+        "desc": "Vigia veloz enviado para sondar as defesas do seu bastião. Ágil mas frágil."
       },
       "node-2": {
-            "name": "Orc Berserker",
-            "subtitle": "Fase 1 · Guerreiro do Machado Flamejante",
-            "desc": "Bárbaro blindado com machados duplos envoltos em chamas vivas. Golpes diretos ferozes."
+        "name": "Orc Berserker",
+        "subtitle": "Fase 1 · Guerreiro do Machado Flamejante",
+        "desc": "Bárbaro blindado com machados duplos envoltos em chamas vivas. Golpes diretos ferozes."
       },
       "node-3": {
-            "name": "Orc Capitão de Ferro",
-            "subtitle": "Fase 1 · Bastião do Posto Avançado",
-            "desc": "Comandante da vanguarda orc. Empunha um pesado escudo cravejado de ferro fundido."
+        "name": "Orc Capitão de Ferro",
+        "subtitle": "Fase 1 · Bastião do Posto Avançado",
+        "desc": "Comandante da vanguarda orc. Empunha um pesado escudo cravejado de ferro fundido."
       },
       "node-4": {
-            "name": "Minotauro dos Chifres Rubros",
-            "subtitle": "Fase 2 · O Terror do Fosso",
-            "desc": "Besta colossal armada com uma clava devastadora. Seu primeiro grande desafio."
+        "name": "Minotauro dos Chifres Rubros",
+        "subtitle": "Fase 2 · O Terror do Fosso",
+        "desc": "Besta colossal armada com uma clava devastadora. Seu primeiro grande desafio."
       },
       "node-5": {
-            "name": "Orc Arremessador Sangrento",
-            "subtitle": "Fase 3 · Hostigador das Cinzas",
-            "desc": "Arremessador implacável com lanças envenenadas que dizimam as linhas de defesa."
+        "name": "Orc Arremessador Sangrento",
+        "subtitle": "Fase 3 · Hostigador das Cinzas",
+        "desc": "Arremessador implacável com lanças envenenadas que dizimam as linhas de defesa."
       },
       "node-6": {
-            "name": "Orc Devastador",
-            "subtitle": "Fase 3 · Trincheira de Assalto",
-            "desc": "Guerreiro de elite da horda, blindado em placas enferrujadas e sedento de glória."
+        "name": "Orc Devastador",
+        "subtitle": "Fase 3 · Trincheira de Assalto",
+        "desc": "Guerreiro de elite da horda, blindado em placas enferrujadas e sedento de glória."
       },
       "node-7": {
-            "name": "Senhor da Guerra Orc",
-            "subtitle": "Fase 3 · Caudilho de Sangue",
-            "desc": "General de divisão que comanda a falange orc e guarda a entrada do santuário."
+        "name": "Senhor da Guerra Orc",
+        "subtitle": "Fase 3 · Caudilho de Sangue",
+        "desc": "General de divisão que comanda a falange orc e guarda a entrada do santuário."
       },
       "node-8": {
-            "name": "Minotauro das Cavernas",
-            "subtitle": "Fase 3 · Colosso da Horda",
-            "desc": "Criatura ancestral treinada pelos orcs para esmagar qualquer esquadrão que se aproxime."
+        "name": "Minotauro das Cavernas",
+        "subtitle": "Fase 3 · Colosso da Horda",
+        "desc": "Criatura ancestral treinada pelos orcs para esmagar qualquer esquadrão que se aproxime."
       },
       "node-9": {
-            "name": "Minichefe: Guardião do Abismo",
-            "subtitle": "Fase 4 · ¡MINICHEFE DO SETOR CENTRAL!",
-            "desc": "Titã blindado com um martelo ciclópico. Seus passos estremecem as profundezas."
+        "name": "Minichefe: Guardião do Abismo",
+        "subtitle": "Fase 4 · ¡MINICHEFE DO SETOR CENTRAL!",
+        "desc": "Titã blindado com um martelo ciclópico. Seus passos estremecem as profundezas."
       },
       "node-10": {
-            "name": "Minotauro Gladiador de Ébano",
-            "subtitle": "Fase 5 · Besta de Combate I",
-            "desc": "Primeiro touro de combate da guarda interna. Chifres afiados capazes de partir escudos."
+        "name": "Minotauro Gladiador de Ébano",
+        "subtitle": "Fase 5 · Besta de Combate I",
+        "desc": "Primeiro touro de combate da guarda interna. Chifres afiados capazes de partir escudos."
       },
       "node-11": {
-            "name": "Minotauro Furioso das Criptas",
-            "subtitle": "Fase 5 · Besta de Combate II",
-            "desc": "Bárbaro taurino enfurecido pelo calor do combate. Desfere golpes com fúria incessante."
+        "name": "Minotauro Furioso das Criptas",
+        "subtitle": "Fase 5 · Besta de Combate II",
+        "desc": "Bárbaro taurino enfurecido pelo calor do combate. Desfere golpes com fúria incessante."
       },
       "node-12": {
-            "name": "Minotauro Titã Blindado",
-            "subtitle": "Fase 5 · Besta de Combate III",
-            "desc": "Colosso revestido de placas de ferro fundido. Alta resistência física e investida brutal."
+        "name": "Minotauro Titã Blindado",
+        "subtitle": "Fase 5 · Besta de Combate III",
+        "desc": "Colosso revestido de placas de ferro fundido. Alta resistência física e investida brutal."
       },
       "node-13": {
-            "name": "Arquimago Sombrio Orc",
-            "subtitle": "Fase 5 · Xamã das Sombras",
-            "desc": "Feiticeiro orc que canaliza energias arcanas sombrias para guardar o corredor final."
+        "name": "Arquimago Sombrio Orc",
+        "subtitle": "Fase 5 · Xamã das Sombras",
+        "desc": "Feiticeiro orc que canaliza energias arcanas sombrias para guardar o corredor final."
       },
       "node-14": {
-            "name": "Minotauro Sentinela de Sangue",
-            "subtitle": "Fase 6 · Guarda Pretoriana I",
-            "desc": "Guardião de sangue que jurou proteger o Boss Supremo com sua própria existência."
+        "name": "Minotauro Sentinela de Sangue",
+        "subtitle": "Fase 6 · Guarda Pretoriana I",
+        "desc": "Guardião de sangue que jurou proteger o Boss Supremo com sua própria existência."
       },
       "node-15": {
-            "name": "Minotauro Carrasco Infernal",
-            "subtitle": "Fase 6 · Guarda Pretoriana II",
-            "desc": "Carrasco de chifres colossais empunhando uma maça acorrentada em fogo infernal."
+        "name": "Minotauro Carrasco Infernal",
+        "subtitle": "Fase 6 · Guarda Pretoriana II",
+        "desc": "Carrasco de chifres colossais empunhando uma maça acorrentada em fogo infernal."
       },
       "node-16": {
-            "name": "Minotauro Rei dos Chifres",
-            "subtitle": "Fase 6 · Campeão da Guarda",
-            "desc": "O mais temido dos minotauros do reino subterrâneo. Último obstáculo antes das alturas sagradas."
+        "name": "Minotauro Rei dos Chifres",
+        "subtitle": "Fase 6 · Campeão da Guarda",
+        "desc": "O mais temido dos minotauros do reino subterrâneo. Último obstáculo antes das alturas sagradas."
       },
       "node-17": {
-            "name": "CHEFE SUPREMO: Senhor das Trevas",
-            "subtitle": "Fase 6 · ¡GRANDE CHEFE FINAL DO CAPÍTULO!",
-            "desc": "Soberano sombrio banido do céu. Pretende corromper a pureza do Reino das Nuvens com sua espada ímpia."
+        "name": "CHEFE SUPREMO: Senhor das Trevas",
+        "subtitle": "Fase 6 · ¡GRANDE CHEFE FINAL DO CAPÍTULO!",
+        "desc": "Soberano sombrio banido do céu. Pretende corromper a pureza do Reino das Nuvens com sua espada ímpia."
       }
-}
+    }
   },
   "army": {
     "title": "Guarnição Real & Quartel",
@@ -2149,7 +2157,8 @@ export const br = {
     "trainingCancelled": "Training cancelled. Resources and population refunded.",
     "instantRecruited": "Soldier trained instantly with gems!",
     "recruitTroopsDirectBtn": "Recruit Military Troops",
-    "populationLimitReached": "Population limit reached! Build or upgrade Houses."
+    "populationLimitReached": "Population limit reached! Build or upgrade Houses.",
+    "soldierUnit": "Soldado"
   },
   "ranking": {
     "tag": "Salão da Glória Imperial",
@@ -2513,6 +2522,55 @@ export const br = {
   },
   "speedup": {
     "noSpeedupsAvailable": "No hourglass speedups available.",
-    "usedNotification": "Training time accelerated!"
+    "usedNotification": "Training time accelerated!",
+    "useSpeedupTooltip": "Usar acelerador de tempo",
+    "useSpeedup": "Acelerar"
+  },
+  "chat": {
+    "title": "Chat do Reino",
+    "subtitle": "Comunicações em tempo real entre soberanos",
+    "global": "Global",
+    "alliance": "Aliança",
+    "system": "Sistema",
+    "placeholder": "Escreva uma mensagem para o reino..."
+  },
+  "rightControls": {
+    "battle": "Batalha",
+    "battleSub": "PvP / PvE",
+    "heroes": "Heróis",
+    "heroesSub": "Esquadrão",
+    "kingdom": "Reino",
+    "kingdomSub": "Menu",
+    "battleTooltip": "Combates por turnos (Single Player e Multijogador)",
+    "heroesTooltip": "Gestão, nível e habilidades de seus heróis",
+    "kingdomTooltip": "Menu do reino: Construir, Loja, Inventário e mais"
+  },
+  "combatModal": {
+    "title": "Centro de Combate",
+    "subtitle": "Escolha seu modo de batalha tático por turnos com seus heróis",
+    "pveTitle": "Campanha e Masmorras",
+    "pveBadge": "Um Jogador (PvE)",
+    "pveDesc": "Avance pelas masmorras celestiais enfrentando monstros e chefes supremos por turnos.",
+    "pveBtn": "Iniciar Campanha",
+    "pvpTitle": "Arena de Campeões",
+    "pvpBadge": "Multijogador (PvP)",
+    "pvpDesc": "Desafie esquadrões de outros soberanos em duelos de estratégia e suba no ranking.",
+    "pvpBtn": "Desafiar na Arena"
+  },
+  "kingdomHub": {
+    "title": "Câmara Governamental Imperial",
+    "subtitle": "Gestão centralizada de sua soberania e fortalezas celestes",
+    "build": "Construção",
+    "buildDesc": "Construa e aprimore edifícios em sua praça",
+    "shop": "Bazar Imperial",
+    "shopDesc": "Tesouros, gemas e roleta da fortuna",
+    "inventory": "Relíquias",
+    "inventoryDesc": "Artefatos e equipamentos sagrados",
+    "quests": "Missões",
+    "questsDesc": "Feitos imperiais e decretos reais",
+    "ranking": "Classificação",
+    "rankingDesc": "Tabela de soberanos supremos",
+    "settings": "Configurações",
+    "settingsDesc": "Áudio, idioma e conta"
   }
 };

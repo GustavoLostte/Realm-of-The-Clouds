@@ -10,8 +10,6 @@
     0 12px 36px rgba(0, 0, 0, 0.7),
     0 0 20px rgba(14, 165, 233, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   padding: 6px;
   user-select: none;
   animation: contextMenuPop 0.14s cubic-bezier(0.16, 1, 0.3, 1) forwards;

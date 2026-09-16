@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './BuildModal.css'
 import { Hammer, Clock, Coins, Trees, Mountain, Gem, AlertCircle, Lock, Sparkles, Shield } from 'lucide-react'
 import { BUILDING_TYPES, getBuildingMaxAllowed, getBuildingCurrentCount } from '../data/buildingsData'
 import { soundManager } from '../utils/audio'

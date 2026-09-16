@@ -508,15 +508,19 @@ export function DungeonCampaignWindow({
 
     startTimeRef.current = performance.now()
     const speed = combatNode.needleSpeed || 1.4
+    let lastNeedleTime = 0
 
     const loop = (now) => {
+      animRef.current = requestAnimationFrame(loop)
+      if (now - lastNeedleTime < 15.0) return
+      lastNeedleTime = now
+
       const elapsed = (now - startTimeRef.current) / 1000
       const pos = 50 + 46 * Math.sin(elapsed * Math.PI * speed)
       needlePosRef.current = pos
       if (needleRef.current) {
         needleRef.current.style.left = `${pos}%`
       }
-      animRef.current = requestAnimationFrame(loop)
     }
 
     animRef.current = requestAnimationFrame(loop)

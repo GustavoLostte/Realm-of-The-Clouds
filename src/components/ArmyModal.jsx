@@ -33,13 +33,14 @@ export function ArmyModal({
   const [nowTick, setNowTick] = useState(() => Date.now())
 
   // Smooth tick timer for active training progress bar countdown
+  const hasActiveTraining = Boolean(trainingQueue && trainingQueue.length > 0)
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen || !hasActiveTraining) return
     const interval = setInterval(() => {
       setNowTick(Date.now())
-    }, 250)
+    }, 1000)
     return () => clearInterval(interval)
-  }, [isOpen])
+  }, [isOpen, hasActiveTraining])
 
   if (!isOpen) return null
 

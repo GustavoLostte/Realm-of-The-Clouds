@@ -1,4 +1,5 @@
 import React from 'react'
+import './StarterWelcomeModal.css'
 import { Crown, Sparkles, ChevronRight } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'

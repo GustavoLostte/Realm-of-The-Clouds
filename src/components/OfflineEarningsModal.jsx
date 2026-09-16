@@ -1,4 +1,5 @@
 import React from 'react'
+import './OfflineEarningsModal.css'
 import { Sparkles, Clock } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'

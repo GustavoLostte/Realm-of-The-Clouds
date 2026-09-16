@@ -114,8 +114,13 @@ export function DungeonCombatModal({ isOpen, onClose, onVictory, troops }) {
 
     startTimeRef.current = performance.now()
     const speed = currentRoom.needleSpeed || 1.35
+    let lastNeedleTime = 0
 
     const loop = (now) => {
+      animRef.current = requestAnimationFrame(loop)
+      if (now - lastNeedleTime < 15.0) return
+      lastNeedleTime = now
+
       const elapsed = (now - startTimeRef.current) / 1000
       // Sine wave oscillation between ~4% and ~96%
       const pos = 50 + 46 * Math.sin(elapsed * Math.PI * speed)
@@ -123,7 +128,6 @@ export function DungeonCombatModal({ isOpen, onClose, onVictory, troops }) {
       if (needleRef.current) {
         needleRef.current.style.left = `${pos}%`
       }
-      animRef.current = requestAnimationFrame(loop)
     }
 
     animRef.current = requestAnimationFrame(loop)

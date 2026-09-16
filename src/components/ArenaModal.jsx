@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './ArenaModal.css'
 import { 
   Shield, 
   Clock, 
@@ -59,7 +60,7 @@ export function ArenaModal({
     }
     const interval = setInterval(() => {
       setCurrentTime(Date.now())
-    }, 1000)
+    }, 10000)
     return () => clearInterval(interval)
   }, [isOpen, initialTab])
 

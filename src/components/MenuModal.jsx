@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './MenuModal.css'
 import { 
   Volume2, 
   VolumeX, 

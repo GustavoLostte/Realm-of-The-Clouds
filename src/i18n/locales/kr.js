@@ -67,7 +67,9 @@ export const kr = {
     },
     "decree": "칙령",
     "research": "연구",
-    "construction": "건설"
+    "construction": "건설",
+    "minimize": "최소화",
+    "units": "개"
   },
   "resources": {
     "gold": "골드",
@@ -139,7 +141,9 @@ export const kr = {
     "resGems": "마력 수정: {val}개 - 클릭하여 상점 열기!",
     "resPop": "인구: {val} / {max} 주민",
     "clickToHarvest": "자원을 수확하려면 클릭하세요!",
-    "inspectProduction": "{name}의 생산물 수확 ({produced}) {status}"
+    "inspectProduction": "{name}의 생산물 수확 ({produced}) {status}",
+    "shop": "상점",
+    "inventory": "인벤토리"
   },
   "dock": {
     "build": "건설",
@@ -163,7 +167,8 @@ export const kr = {
     "shopTooltip": "황실 보물고 및 영주 특가",
     "questsTooltip": "왕실 퀘스트 및 서사",
     "expeditionTooltip": "원정대 및 외부 월드맵",
-    "settingsTooltip": "게임 설정 및 옵션"
+    "settingsTooltip": "게임 설정 및 옵션",
+    "expeditions": "원정"
   },
   "buildings": {
     "openExpeditionsBtn": "우주 균열 및 원정 열기",
@@ -267,7 +272,8 @@ export const kr = {
       }
     },
     "freePlot": "빈 부지",
-    "buildTargetHere": "여기에 {name} 건설!"
+    "buildTargetHere": "여기에 {name} 건설!",
+    "level": "{level} 레벨"
   },
   "quests": {
     "heraldName": "왕실 시종관 및 전령",
@@ -465,7 +471,9 @@ export const kr = {
         "title": "무적 군단",
         "desc": "주둔지에 12명 이상의 부대를 모집하세요."
       }
-    }
+    },
+    "allQuestsTooltip": "왕국의 모든 퀘스트 보기",
+    "viewAllQuests": "퀘스트 보기"
   },
   "tech": {
     "title": "왕립 대아카데미",
@@ -1977,124 +1985,124 @@ export const kr = {
     "biome1": {
       "name": "유일 챕터: 구름의 대원정",
       "subtitle": "영웅들의 진군 (17개의 서사시적 조우)"
-},
+    },
     "sectors": {
       "1": {
-            "name": "1구역: 오크 선봉대",
-            "desc": "오크 3마리"
+        "name": "1구역: 오크 선봉대",
+        "desc": "오크 3마리"
       },
       "2": {
-            "name": "2구역: 맹수의 구덩이",
-            "desc": "미노타우로스 1마리"
+        "name": "2구역: 맹수의 구덩이",
+        "desc": "미노타우로스 1마리"
       },
       "3": {
-            "name": "3구역: 복합 공세",
-            "desc": "오크 3마리 + 미노타우로스 1마리"
+        "name": "3구역: 복합 공세",
+        "desc": "오크 3마리 + 미노타우로스 1마리"
       },
       "4": {
-            "name": "4구역: 미니보스의 은신처",
-            "desc": "미니보스 1마리"
+        "name": "4구역: 미니보스의 은신처",
+        "desc": "미니보스 1마리"
       },
       "5": {
-            "name": "5구역: 그림자 미궁",
-            "desc": "미노타우로스 3마리 + 오크 1마리"
+        "name": "5구역: 그림자 미궁",
+        "desc": "미노타우로스 3마리 + 오크 1마리"
       },
       "6": {
-            "name": "6구역: 천상 심판의 정점",
-            "desc": "미노타우로스 3마리 + 최고 보스"
+        "name": "6구역: 천상 심판의 정점",
+        "desc": "미노타우로스 3마리 + 최고 보스"
       }
-},
+    },
     "combat": {
       "dazed": "[기절!] -",
       "counter": "[반격!] -"
-},
+    },
     "nodes": {
       "node-1": {
-            "name": "오크 정찰병",
-            "subtitle": "1단계 · 황무지 선봉대",
-            "desc": "요새의 방어를 시험하기 위해 파견된 빠른 정찰병입니다. 민첩하지만 취약합니다."
+        "name": "오크 정찰병",
+        "subtitle": "1단계 · 황무지 선봉대",
+        "desc": "요새의 방어를 시험하기 위해 파견된 빠른 정찰병입니다. 민첩하지만 취약합니다."
       },
       "node-2": {
-            "name": "오크 광전사",
-            "subtitle": "1단계 · 불타는 도끼 전사",
-            "desc": "살아있는 화염에 휩싸인 쌍도끼를 휘두르는 중장갑 야만용사. 사나운 직접 타격을 가합니다."
+        "name": "오크 광전사",
+        "subtitle": "1단계 · 불타는 도끼 전사",
+        "desc": "살아있는 화염에 휩싸인 쌍도끼를 휘두르는 중장갑 야만용사. 사나운 직접 타격을 가합니다."
       },
       "node-3": {
-            "name": "철완의 오크 대장",
-            "subtitle": "1단계 · 전초기지 요새",
-            "desc": "오크 선봉대의 지휘관. 주철 대형 방패를 들고 있습니다."
+        "name": "철완의 오크 대장",
+        "subtitle": "1단계 · 전초기지 요새",
+        "desc": "오크 선봉대의 지휘관. 주철 대형 방패를 들고 있습니다."
       },
       "node-4": {
-            "name": "붉은 뿔의 미노타우로스",
-            "subtitle": "2단계 · 구덩이의 공포",
-            "desc": "파괴적인 몽둥이를 휘두르는 거대한 전설의 괴수. 첫 번째 거대한 관문입니다."
+        "name": "붉은 뿔의 미노타우로스",
+        "subtitle": "2단계 · 구덩이의 공포",
+        "desc": "파괴적인 몽둥이를 휘두르는 거대한 전설의 괴수. 첫 번째 거대한 관문입니다."
       },
       "node-5": {
-            "name": "피빛 투창 오크",
-            "subtitle": "3단계 · 잿더미의 교란자",
-            "desc": "방어선을 무너뜨리는 독 묻은 투창을 던지는 가차 없는 척후병입니다."
+        "name": "피빛 투창 오크",
+        "subtitle": "3단계 · 잿더미의 교란자",
+        "desc": "방어선을 무너뜨리는 독 묻은 투창을 던지는 가차 없는 척후병입니다."
       },
       "node-6": {
-            "name": "오크 파괴자",
-            "subtitle": "3단계 · 돌파 참호병",
-            "desc": "녹슨 판금 갑옷으로 무장하고 영광을 갈망하는 호드의 정예 전사."
+        "name": "오크 파괴자",
+        "subtitle": "3단계 · 돌파 참호병",
+        "desc": "녹슨 판금 갑옷으로 무장하고 영광을 갈망하는 호드의 정예 전사."
       },
       "node-7": {
-            "name": "오크 전쟁군주",
-            "subtitle": "3단계 · 피의 족장",
-            "desc": "오크 군단을 지휘하며 성소 입구를 지키는 사단장."
+        "name": "오크 전쟁군주",
+        "subtitle": "3단계 · 피의 족장",
+        "desc": "오크 군단을 지휘하며 성소 입구를 지키는 사단장."
       },
       "node-8": {
-            "name": "동굴 미노타우로스",
-            "subtitle": "3단계 · 호드의 거신",
-            "desc": "접근하는 모든 분대를 분쇄하도록 오크들이 조련한 고대 괴수."
+        "name": "동굴 미노타우로스",
+        "subtitle": "3단계 · 호드의 거신",
+        "desc": "접근하는 모든 분대를 분쇄하도록 오크들이 조련한 고대 괴수."
       },
       "node-9": {
-            "name": "미니보스: 심연의 파수꾼",
-            "subtitle": "4단계 · 중앙 구역 미니보스!",
-            "desc": "거대한 워해머를 든 중갑 타이탄. 그 발걸음은 심연 전체를 뒤흔듭니다."
+        "name": "미니보스: 심연의 파수꾼",
+        "subtitle": "4단계 · 중앙 구역 미니보스!",
+        "desc": "거대한 워해머를 든 중갑 타이탄. 그 발걸음은 심연 전체를 뒤흔듭니다."
       },
       "node-10": {
-            "name": "흑단 검투사 미노타우로스",
-            "subtitle": "5단계 · 전투 괴수 I",
-            "desc": "내부 경비대의 첫 번째 전투 투우. 방패를 쪼개버릴 만큼 날카로운 뿔을 지녔습니다."
+        "name": "흑단 검투사 미노타우로스",
+        "subtitle": "5단계 · 전투 괴수 I",
+        "desc": "내부 경비대의 첫 번째 전투 투우. 방패를 쪼개버릴 만큼 날카로운 뿔을 지녔습니다."
       },
       "node-11": {
-            "name": "묘지의 광란 미노타우로스",
-            "subtitle": "5단계 · 전투 괴수 II",
-            "desc": "전장의 피비린내에 광분한 소머리 야만인. 끊임없는 광기로 맹공을 퍼붓습니다."
+        "name": "묘지의 광란 미노타우로스",
+        "subtitle": "5단계 · 전투 괴수 II",
+        "desc": "전장의 피비린내에 광분한 소머리 야만인. 끊임없는 광기로 맹공을 퍼붓습니다."
       },
       "node-12": {
-            "name": "중장갑 타이탄 미노타우로스",
-            "subtitle": "5단계 · 전투 괴수 III",
-            "desc": "주철 판금으로 뒤덮인 거인. 엄청난 물리 방어력과 파괴적인 돌진력을 지녔습니다."
+        "name": "중장갑 타이탄 미노타우로스",
+        "subtitle": "5단계 · 전투 괴수 III",
+        "desc": "주철 판금으로 뒤덮인 거인. 엄청난 물리 방어력과 파괴적인 돌진력을 지녔습니다."
       },
       "node-13": {
-            "name": "오크 암흑 대마법사",
-            "subtitle": "5단계 · 그림자의 주술사",
-            "desc": "성소로 향하는 마지막 통로를 봉쇄하기 위해 흑마법을 집중시키는 오크 주술사."
+        "name": "오크 암흑 대마법사",
+        "subtitle": "5단계 · 그림자의 주술사",
+        "desc": "성소로 향하는 마지막 통로를 봉쇄하기 위해 흑마법을 집중시키는 오크 주술사."
       },
       "node-14": {
-            "name": "피의 파수병 미노타우로스",
-            "subtitle": "6단계 · 근위대 I",
-            "desc": "목숨을 걸고 최고 보스를 수호하겠다고 맹세한 피의 근위병."
+        "name": "피의 파수병 미노타우로스",
+        "subtitle": "6단계 · 근위대 I",
+        "desc": "목숨을 걸고 최고 보스를 수호하겠다고 맹세한 피의 근위병."
       },
       "node-15": {
-            "name": "지옥의 집행관 미노타우로스",
-            "subtitle": "6단계 · 근위대 II",
-            "desc": "지옥불 사슬에 묶인 메이스를 휘두르는 거대한 뿔의 사형 집행인."
+        "name": "지옥의 집행관 미노타우로스",
+        "subtitle": "6단계 · 근위대 II",
+        "desc": "지옥불 사슬에 묶인 메이스를 휘두르는 거대한 뿔의 사형 집행인."
       },
       "node-16": {
-            "name": "뿔의 제왕 미노타우로스",
-            "subtitle": "6단계 · 근위대 챔피언",
-            "desc": "지하 세계에서 가장 공포스러운 미노타우로스. 신성한 성소에 오르기 전 마지막 장애물입니다."
+        "name": "뿔의 제왕 미노타우로스",
+        "subtitle": "6단계 · 근위대 챔피언",
+        "desc": "지하 세계에서 가장 공포스러운 미노타우로스. 신성한 성소에 오르기 전 마지막 장애물입니다."
       },
       "node-17": {
-            "name": "최고 보스: 어둠의 군주",
-            "subtitle": "6단계 · 챕터 최종 거대 보스!",
-            "desc": "하늘에서 추방된 암흑의 군주. 저주받은 검으로 구름 왕국의 순수한 힘을 집어삼키려 합니다."
+        "name": "최고 보스: 어둠의 군주",
+        "subtitle": "6단계 · 챕터 최종 거대 보스!",
+        "desc": "하늘에서 추방된 암흑의 군주. 저주받은 검으로 구름 왕국의 순수한 힘을 집어삼키려 합니다."
       }
-}
+    }
   },
   "army": {
     "title": "황실 주둔군 및 막사",
@@ -2149,7 +2157,8 @@ export const kr = {
     "trainingCancelled": "Training cancelled. Resources and population refunded.",
     "instantRecruited": "Soldier trained instantly with gems!",
     "recruitTroopsDirectBtn": "Recruit Military Troops",
-    "populationLimitReached": "Population limit reached! Build or upgrade Houses."
+    "populationLimitReached": "Population limit reached! Build or upgrade Houses.",
+    "soldierUnit": "병사"
   },
   "ranking": {
     "tag": "황실 명예의 전당",
@@ -2513,6 +2522,55 @@ export const kr = {
   },
   "speedup": {
     "noSpeedupsAvailable": "No hourglass speedups available.",
-    "usedNotification": "Training time accelerated!"
+    "usedNotification": "Training time accelerated!",
+    "useSpeedupTooltip": "시간 가속 아이템 사용",
+    "useSpeedup": "가속"
+  },
+  "chat": {
+    "title": "왕국 채팅",
+    "subtitle": "영주들 간의 실시간 대화",
+    "global": "전체",
+    "alliance": "동맹",
+    "system": "시스템",
+    "placeholder": "왕국에 메시지를 입력하세요..."
+  },
+  "rightControls": {
+    "battle": "전투",
+    "battleSub": "PvP / PvE",
+    "heroes": "영웅",
+    "heroesSub": "분대",
+    "kingdom": "왕국",
+    "kingdomSub": "메뉴",
+    "battleTooltip": "턴제 전투 (싱글 플레이 및 멀티플레이)",
+    "heroesTooltip": "영웅 관리, 레벨 및 스킬",
+    "kingdomTooltip": "왕국 메뉴: 건설, 상점, 인벤토리 등"
+  },
+  "combatModal": {
+    "title": "전투 센터",
+    "subtitle": "영웅들과 함께 턴제 전술 전투 모드를 선택하세요",
+    "pveTitle": "캠페인 및 던전",
+    "pveBadge": "싱글 플레이 (PvE)",
+    "pveDesc": "천상 던전을 탐험하며 턴제 전투로 몬스터와 최고 보스를 물리치세요.",
+    "pveBtn": "캠페인 시작",
+    "pvpTitle": "챔피언 아레나",
+    "pvpBadge": "멀티플레이 (PvP)",
+    "pvpDesc": "전략 결투에서 다른 영주들의 분대에 도전하고 순위를 올리세요.",
+    "pvpBtn": "아레나 도전"
+  },
+  "kingdomHub": {
+    "title": "제국 평의회 의사당",
+    "subtitle": "주권과 천상 요새의 중앙 집중식 관리",
+    "build": "건설",
+    "buildDesc": "광장에 건물을 건설하고 업그레이드하세요",
+    "shop": "제국 바자",
+    "shopDesc": "보물, 보석 및 행운의 룰렛",
+    "inventory": "유물",
+    "inventoryDesc": "신성한 유물 및 장비",
+    "quests": "퀘스트",
+    "questsDesc": "제국 업적과 국왕 칙령",
+    "ranking": "랭킹",
+    "rankingDesc": "최고 영주 순위표",
+    "settings": "설정",
+    "settingsDesc": "오디오, 언어 및 계정"
   }
 };

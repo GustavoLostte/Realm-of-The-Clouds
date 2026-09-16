@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import './UsernameModal.css'
 import { Crown, Sparkles, Dices, Check, Shield, AlertCircle } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'

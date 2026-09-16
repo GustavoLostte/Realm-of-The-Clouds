@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './QuestsModal.css'
 import { 
   ScrollText, 
   CheckCircle2, 

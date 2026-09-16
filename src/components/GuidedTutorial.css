@@ -22,8 +22,7 @@
 }
 
 .guided-spotlight-backdrop.full-dim {
-  background: rgba(3, 7, 18, 0.78);
-  backdrop-filter: blur(2px);
+  background: rgba(3, 7, 18, 0.82);
 }
 
 /* Active tutorial target element elevation & uncollapsing (Interaction blocked during tutorial) */
@@ -134,7 +133,6 @@
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8),
               0 0 25px rgba(14, 165, 233, 0.25),
               inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
   color: #f8fafc;
   padding: 16px 20px;
   box-sizing: border-box;
@@ -867,4 +865,548 @@
     white-space: nowrap !important;
     line-height: 1 !important;
   }
+}
+
+
+/* ==========================================================================
+   PROGRESSIVE BUILDING ONBOARDING & GUIDED TUTORIAL STYLES
+   ========================================================================== */
+
+/* 1. Recommended Plot Guide Beacon */
+.empty-slot-marker.is-recommended-plot .iso-tile-guide {
+  border-color: #0ea5e9;
+  border-style: solid;
+  border-width: 2.5px;
+  background: rgba(14, 165, 233, 0.25);
+  box-shadow: 0 0 24px rgba(14, 165, 233, 0.7);
+  animation: pulseBeaconGlow 1.5s infinite ease-in-out;
+}
+
+.empty-slot-marker.is-recommended-plot .build-here-btn {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  color: #1e1b4b;
+  border-color: #bae6fd;
+  box-shadow: 0 0 16px rgba(14, 165, 233, 0.9);
+  animation: bounceBeaconBtn 1.2s infinite ease-in-out;
+}
+
+.recommended-plot-beacon {
+  position: absolute;
+  top: -46px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 50;
+  pointer-events: none;
+  animation: floatBeaconTag 1.5s infinite ease-in-out;
+}
+
+.recommended-plot-beacon .beacon-tag {
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);
+  color: #bae6fd;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1.5px solid #bae6fd;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.75), 0 0 10px rgba(14, 165, 233, 0.5);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+@keyframes pulseBeaconGlow {
+  0%, 100% {
+    transform: rotate(45deg) scale(1);
+    box-shadow: 0 0 16px rgba(14, 165, 233, 0.5);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.08);
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.9);
+  }
+}
+
+@keyframes bounceBeaconBtn {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+}
+
+@keyframes floatBeaconTag {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* 2. Recommended Building Card Highlight in BuildModal */
+.building-catalog-card.is-recommended {
+  border: 2px solid #38bdf8 !important;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.45) !important;
+  position: relative;
+}
+
+.recommended-quest-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  color: #1e1b4b;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), 0 0 12px rgba(56, 189, 248, 0.6);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.sparkle-spin {
+  animation: spinSlow 3s infinite linear;
+}
+
+@keyframes spinSlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 3. Army Modal Missing Barracks Warning */
+.army-no-barracks-banner {
+  background: linear-gradient(135deg, rgba(3, 105, 161, 0.35) 0%, rgba(12, 74, 110, 0.5) 100%);
+  border: 1px solid rgba(14, 165, 233, 0.6);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.army-no-barracks-banner .banner-msg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.army-no-barracks-banner h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #bae6fd;
+  font-weight: 700;
+}
+
+.army-no-barracks-banner p {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.btn-build-barracks-quick {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+  color: #000;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.btn-build-barracks-quick:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(14, 165, 233, 0.5);
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+}
+
+/* 4. Legacy Save Starter Banner (Top of HUD) */
+.legacy-starter-flow-banner {
+  background: linear-gradient(90deg, rgba(20, 83, 45, 0.95) 0%, rgba(15, 23, 42, 0.95) 60%, rgba(12, 74, 110, 0.9) 100%);
+  border-bottom: 2px solid #38bdf8;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  z-index: 1000;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  animation: slideDownBanner 0.4s ease;
+}
+
+@keyframes slideDownBanner {
+  0% { transform: translateY(-100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.legacy-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.legacy-banner-text .banner-icon {
+  font-size: 1.8rem;
+}
+
+.legacy-banner-text strong {
+  display: block;
+  color: #bae6fd;
+  font-size: 0.9rem;
+}
+
+.legacy-banner-text p {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: #e2e8f0;
+}
+
+.btn-start-legacy-fresh {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  color: #1e1b4b;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.btn-start-legacy-fresh:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+}
+
+/* 5. Starter Welcome Modal (Decreto Real de Fundación) */
+.starter-welcome-backdrop {
+  background: rgba(3, 7, 18, 0.88);
+  z-index: 100010;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: max(8px, env(safe-area-inset-top, 8px)) max(8px, env(safe-area-inset-right, 8px)) max(8px, env(safe-area-inset-bottom, 8px)) max(8px, env(safe-area-inset-left, 8px)) !important;
+  box-sizing: border-box;
+}
+
+.starter-welcome-modal {
+  max-width: 680px !important;
+  width: min(680px, calc(100vw - 16px)) !important;
+  max-height: 92dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: linear-gradient(180deg, #1e1b4b 0%, #0f172a 40%, #030712 100%) !important;
+  border: 2px solid #38bdf8 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.35) !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Modal Header: Hero Banner */
+.welcome-hero-banner {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.28) 0%, rgba(30, 27, 75, 0.85) 100%);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-sizing: border-box;
+}
+
+.welcome-avatar-wrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid #38bdf8;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.55);
+  background: #0f172a;
+  flex-shrink: 0;
+}
+
+.welcome-king-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Crown Medal Badge pinned to bottom-right of avatar */
+.welcome-crown-beacon-wrap {
+  position: absolute;
+  bottom: -6px;
+  right: -5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0c4a6e 0%, #1e1b4b 80%);
+  border: 1.5px solid #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 10px rgba(56, 189, 248, 0.6);
+  z-index: 2;
+}
+
+.welcome-crown-beacon-img {
+  width: 22px;
+  height: 22px;
+  max-width: 22px;
+  max-height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+}
+
+.welcome-hero-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.welcome-subtitle-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.welcome-hero-text h2 {
+  margin: 3px 0 2px;
+  font-size: 1.35rem;
+  color: #ffffff;
+  font-weight: 800;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  line-height: 1.25;
+}
+
+.welcome-hero-text p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+/* Modal Body Content (Scrollable) */
+.welcome-body-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 18px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.4) transparent;
+  box-sizing: border-box;
+}
+
+.welcome-body-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.welcome-body-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.welcome-body-content::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.35);
+  border-radius: 6px;
+}
+
+/* Narrative Prose / Imperial Quote */
+.welcome-prose {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #cbd5e1;
+  margin: 0 0 16px;
+  background: rgba(15, 23, 42, 0.65);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-left: 4px solid #38bdf8;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.welcome-prose strong {
+  color: #bae6fd;
+  font-weight: 700;
+}
+
+/* Roadmap Section */
+.welcome-steps-roadmap {
+  display: flex;
+  flex-direction: column;
+}
+
+.roadmap-title {
+  margin: 0 0 12px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #bae6fd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.roadmap-title-icon {
+  flex-shrink: 0;
+}
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.roadmap-card {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 11px 13px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.roadmap-card:hover {
+  border-color: rgba(56, 189, 248, 0.55);
+  background: rgba(30, 27, 75, 0.5);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.roadmap-badge {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  font-size: 0.63rem;
+  font-weight: 800;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 1px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
+  pointer-events: none;
+}
+
+.roadmap-card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.roadmap-hud-icon {
+  width: 26px;
+  height: 26px;
+  max-width: 26px;
+  max-height: 26px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+}
+
+.roadmap-card-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.roadmap-card-body h5 {
+  margin: 0 0 3px;
+  font-size: 0.83rem;
+  color: #f1f5f9;
+  font-weight: 700;
+  padding-right: 48px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roadmap-card-body p {
+  margin: 0;
+  font-size: 0.73rem;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+/* Modal Footer CTA */
+.welcome-footer-cta {
+  flex-shrink: 0;
+  padding: 14px 24px max(14px, env(safe-area-inset-bottom, 14px));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(3, 7, 18, 0.75) 0%, rgba(3, 7, 18, 0.98) 100%);
+  border-top: 1px solid rgba(56, 189, 248, 0.25);
+  box-sizing: border-box;
+}
+
+.welcome-begin-btn {
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #0284c7 100%);
+  color: #0f172a;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 14px;
+  padding: 12px 20px;
+  font-weight: 900;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.45);
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.welcome-begin-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.65);
+}
+
+.welcome-begin-btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+
+.welcome-btn-icon,
+.welcome-btn-arrow {
+  flex-shrink: 0;
+}
+
+.welcome-btn-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
