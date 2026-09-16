@@ -322,26 +322,24 @@ export function GameWorld({
         {!isCinematicMode && (
           <>
             <button 
+              id="map-btn-zoom-in"
               className="map-ctrl-btn candy-map-btn" 
               onClick={() => { setZoom(z => Math.min(z + 0.2, 2.5)); soundManager.playClick() }}
               title="Acercar mapa (+)"
+              aria-label="Acercar mapa"
             >
               <img src="/assets/hud_icons/btn_zoom_in.webp" alt="Zoom In" className="hud-ctrl-candy" draggable="false" />
             </button>
             <button 
+              id="map-btn-zoom-out"
               className="map-ctrl-btn candy-map-btn" 
               onClick={() => { setZoom(z => Math.max(z - 0.2, 1.0)); soundManager.playClick() }}
               title="Alejar mapa (-)"
+              aria-label="Alejar mapa"
             >
               <img src="/assets/hud_icons/btn_zoom_out.webp" alt="Zoom Out" className="hud-ctrl-candy" draggable="false" />
             </button>
-            <button 
-              className="map-ctrl-btn candy-map-btn" 
-              onClick={resetView}
-              title="Ajustar a ventana (Modo Cover)"
-            >
-              <img src="/assets/hud_icons/btn_expedition.webp" alt="Centrar" className="hud-ctrl-candy" draggable="false" />
-            </button>
+
             <button 
               className={`map-ctrl-btn candy-map-btn sound-ctrl-btn ${soundEnabled ? 'active playing' : 'is-muted'}`}
               onClick={() => {
@@ -408,9 +406,12 @@ export function GameWorld({
                   onMouseEnter={() => setHoveredSlot(slot.id)}
                   onMouseLeave={() => setHoveredSlot(null)}
                 >
-                  {/* Empty Slot Footprint */}
-                  {/* Empty Slot Footprint - removed per user request */}
-                  {!slot.buildingId && null}
+                  {/* Empty Slot — circular + button (no rectangular guides) */}
+                  {!slot.buildingId && !slot.isConstructing && (
+                    <div className={`empty-slot-marker ${isRecommendedPlot ? 'is-recommended-plot' : ''}`}>
+                      <button className="build-here-btn" aria-label="Construir aquí">+</button>
+                    </div>
+                  )}
 
                 {/* Building Under Construction */}
                 {slot.buildingId && slot.isConstructing && buildingDef && (() => {

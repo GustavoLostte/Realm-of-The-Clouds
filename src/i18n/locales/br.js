@@ -1210,6 +1210,18 @@ export const br = {
     "errorMaxLength": "O nome não pode exceder 24 caracteres."
   },
   "citizens": {
+    "workerName": "Mestre Construtor",
+    "workerQuote1": "Fundações sólidas para o Reino Celestial!",
+    "workerQuote2": "Este martelo sagrado forjará um império eterno!",
+    "workerQuote3": "Construindo e prosperando com orgulho celestial!",
+    "vigiaName": "Soldado Sentinela",
+    "vigiaQuote1": "Tudo limpo no flanco ocidental!",
+    "vigiaQuote2": "Vigiando o horizonte celestial sem descanso!",
+    "vigiaQuote3": "Nossa guarda é inabalável!",
+    "commanderName": "Comandante dos Céus",
+    "commanderQuote1": "Pela glória do Reino Celestial!",
+    "commanderQuote2": "Vigiando os céus das alturas!",
+    "commanderQuote3": "Nenhuma sombra cruzará nossos portões sagrados!",
     "guardName": "Vigia do Rei",
     "sergeantName": "Capitão Alistair",
     "bakerName": "Marta a Padeira",

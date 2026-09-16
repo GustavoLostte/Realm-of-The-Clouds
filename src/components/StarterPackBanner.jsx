@@ -37,16 +37,31 @@ export function StarterPackBanner({
   // Minimized state when user dismisses the banner
   if (isDismissed) {
     return (
-      <div 
-        className="starter-pack-minimized-badge"
-        onClick={() => { soundManager.playClick(); setIsDismissed(false) }}
-        title={t('starterPack.minimizedTooltip')}
-        role="button"
-        tabIndex={0}
-      >
-        <span className="minimized-badge-discount">-85%</span>
-        <img src="/assets/hud_icons/btn_inventory.webp" alt="Oferta" className="minimized-chest-icon" draggable="false" />
-        <span className="minimized-label">{t('starterPack.minimizedLabel')}</span>
+      <div className="starter-pack-floating-banner minimized-mode">
+        <div className="lateral-event-bubble-wrapper">
+          <button
+            type="button"
+            className="lateral-event-bubble"
+            onClick={(e) => {
+              e.stopPropagation()
+              soundManager.playClick()
+              setIsDismissed(false)
+            }}
+            title={t('starterPack.minimizedTooltip')}
+            aria-label={t('starterPack.minimizedTooltip')}
+          >
+            <img 
+              src="/assets/hud_icons/btn_inventory.webp" 
+              alt="Oferta" 
+              className="lateral-event-bubble-img" 
+              draggable="false" 
+            />
+            <div className="lateral-event-bubble-badge" style={{ background: '#f59e0b', fontSize: '0.5rem' }}>%</div>
+          </button>
+          <div className="lateral-event-timer-pill">
+            {timeString}
+          </div>
+        </div>
       </div>
     )
   }

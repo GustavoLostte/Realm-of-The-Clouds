@@ -396,6 +396,7 @@ export const INITIAL_RESOURCES = {
   stone: 650,
   food: 400,
   gems: 50,
+  celestialShards: 75,
   populationUsed: 0,
   populationMax: 35,
 }

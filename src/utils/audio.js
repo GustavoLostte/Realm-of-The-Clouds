@@ -83,6 +83,7 @@ class SoundController {
     this.sfxPool = new SFXChannelPool(6)
     this.collectChainCount = 0
     this.lastCollectTime = 0
+    this.lastPopChimeTime = 0
     this.noiseBuffer = null
 
     if (typeof window !== 'undefined') {
@@ -204,6 +205,12 @@ class SoundController {
 
       window.addEventListener('pointerdown', unlockAudio, { passive: true })
       window.addEventListener('keydown', unlockAudio, { passive: true })
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && this.canPlayGameSound()) {
+          this.initCtx()
+        }
+      })
     }
   }
 
@@ -245,11 +252,17 @@ class SoundController {
   updateAmbientVolume() {
     if (!this.ambientAudio) return
     const base = this.ambientVolume
-    // During musical breaks, pauses, or cuts, boost map sound effects so they stand out clearly!
+    
+    // Map ambient sound effects play continuously alongside music with dynamic acoustic balance
+    // During musical breaks, pauses, or cuts, swell the nature sounds so the map breathes!
     const targetVol = (this.isMusicInBreak || !this.bgmAudio || this.bgmAudio.paused)
-      ? Math.min(1.0, base * 1.35)
+      ? Math.min(1.0, base * 1.25)
       : base * 0.85
-    this.ambientAudio.volume = targetVol
+
+    this.ambientAudio.volume = Math.max(0, Math.min(1, targetVol))
+    if (this.canPlayGameSound() && this.ambientAudio.paused && targetVol > 0) {
+      this.ambientAudio.play().catch(() => {})
+    }
   }
 
   playAmbient() {
@@ -331,6 +344,9 @@ class SoundController {
   setAmbientVolume(vol) {
     this.ambientVolume = Math.max(0, Math.min(1, vol))
     this.updateAmbientVolume()
+    if (this.canPlayGameSound() && this.ambientAudio && this.ambientVolume > 0 && this.ambientAudio.paused) {
+      this.ambientAudio.play().catch(() => {})
+    }
   }
 
   getRandomPitch(amount = 0.12) {
@@ -598,42 +614,41 @@ class SoundController {
         osc1.stop(now + 0.14)
         osc2.stop(now + 0.14)
       } else if (normType.includes('gem') || normType.includes('cristal')) {
-        // Radiant celestial glass bell chime with dual shimmer
+        // Celestial glass bell chime (smooth dual sine waves, gentle harmonics)
         const bell1 = this.audioCtx.createOscillator()
         const bell2 = this.audioCtx.createOscillator()
         const gain = this.audioCtx.createGain()
         bell1.type = 'sine'
-        bell2.type = 'triangle'
-        bell1.frequency.setValueAtTime(freq * 1.5, now)
-        bell2.frequency.setValueAtTime(freq * 2.25, now)
-        gain.gain.setValueAtTime(0.25 * this.sfxVolume, now)
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45)
+        bell2.type = 'sine'
+        bell1.frequency.setValueAtTime(freq * 1.25, now)
+        bell2.frequency.setValueAtTime(freq * 1.5, now)
+        gain.gain.setValueAtTime(0.12 * this.sfxVolume, now)
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35)
         bell1.connect(gain)
         bell2.connect(gain)
         gain.connect(this.audioCtx.destination)
         bell1.start(now)
         bell2.start(now)
-        bell1.stop(now + 0.45)
-        bell2.stop(now + 0.45)
+        bell1.stop(now + 0.35)
+        bell2.stop(now + 0.35)
       } else {
-        // Gold / Default: Double bell chime (root + octave overtone)
+        // Gold / Default: Double bell chime (root + fifth overtone, pure warm sine)
         const osc1 = this.audioCtx.createOscillator()
         const osc2 = this.audioCtx.createOscillator()
         const gain = this.audioCtx.createGain()
         osc1.type = 'sine'
-        osc2.type = 'triangle'
+        osc2.type = 'sine'
         osc1.frequency.setValueAtTime(freq, now)
-        osc1.frequency.setValueAtTime(freq * 1.5, now + 0.06)
-        osc2.frequency.setValueAtTime(freq * 2.0, now)
-        gain.gain.setValueAtTime(0.22 * this.sfxVolume, now)
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28)
+        osc2.frequency.setValueAtTime(freq * 1.5, now)
+        gain.gain.setValueAtTime(0.12 * this.sfxVolume, now)
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22)
         osc1.connect(gain)
         osc2.connect(gain)
         gain.connect(this.audioCtx.destination)
         osc1.start(now)
         osc2.start(now)
-        osc1.stop(now + 0.28)
-        osc2.stop(now + 0.28)
+        osc1.stop(now + 0.22)
+        osc2.stop(now + 0.22)
       }
     } catch {}
   }
@@ -642,15 +657,23 @@ class SoundController {
     if (!this.canPlayGameSound()) return
     this.initCtx()
     if (!this.audioCtx) return
+
+    // Throttle chimes to at most once every 110ms to prevent overlapping oscillator interference
+    const nowMs = Date.now()
+    if (this.lastPopChimeTime && nowMs - this.lastPopChimeTime < 110) {
+      return
+    }
+    this.lastPopChimeTime = nowMs
+
     try {
       const now = this.audioCtx.currentTime
       const osc = this.audioCtx.createOscillator()
       const gain = this.audioCtx.createGain()
-      osc.type = 'triangle'
-      const baseFreq = 783.99 * pitchMultiplier * this.getRandomPitch(0.06) // G5
+      osc.type = 'sine' // Warm, smooth sine wave instead of harsh triangle
+      const baseFreq = 659.25 * pitchMultiplier * this.getRandomPitch(0.03) // E5 soft chime
       osc.frequency.setValueAtTime(baseFreq, now)
-      osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.45, now + 0.08)
-      gain.gain.setValueAtTime(0.18 * this.sfxVolume, now)
+      osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.18, now + 0.08)
+      gain.gain.setValueAtTime(0.08 * this.sfxVolume, now)
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12)
       osc.connect(gain)
       gain.connect(this.audioCtx.destination)
@@ -1390,7 +1413,6 @@ class SoundController {
   toggleSound() {
     this.enabled = !this.enabled
     if (this.enabled && this.gameStarted) {
-      this.playAmbient()
       this.playBGM()
     } else {
       this.pauseBGM(true)

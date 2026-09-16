@@ -23,7 +23,7 @@ export function RouletteNotification({
   const handleDismiss = (e) => {
     e.stopPropagation()
     soundManager.playClick?.()
-    setDismissed(true)
+    setCollapsed(true)
   }
 
   const handleToggle = (e) => {
@@ -34,21 +34,27 @@ export function RouletteNotification({
 
   if (collapsed) {
     return (
-      <div 
-        className="roulette-hud-notification-mini"
-        onClick={handleClick}
-        title={t('rouletteNotify.miniTooltip')}
-        role="button"
-        tabIndex={0}
-      >
-        <div className="roulette-mini-icon-box">
-          <img 
-            src="/assets/hud_icons/icon_roulette.webp" 
-            alt={t('rouletteNotify.title')} 
-            className="roulette-mini-img" 
-            draggable="false" 
-          />
-          <span className="roulette-mini-badge">★</span>
+      <div className="roulette-hud-notification-card minimized-mode">
+        <div className="lateral-event-bubble-wrapper">
+          <button
+            type="button"
+            className="lateral-event-bubble"
+            onClick={(e) => {
+              e.stopPropagation()
+              soundManager.playClick?.()
+              setCollapsed(false)
+            }}
+            title={t('rouletteNotify.miniTooltip')}
+            aria-label={t('rouletteNotify.miniTooltip')}
+          >
+            <img 
+              src="/assets/hud_icons/icon_roulette.webp" 
+              alt="Roulette" 
+              className="lateral-event-bubble-img" 
+              draggable="false" 
+            />
+            <div className="lateral-event-bubble-badge">★</div>
+          </button>
         </div>
       </div>
     )

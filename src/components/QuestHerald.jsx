@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { 
   ScrollText, 
   Gift, 
@@ -28,11 +28,7 @@ export function QuestHerald({
   isTutorialActive = false,
 }) {
   const { t } = useTranslation()
-  const [collapsed, setCollapsed] = useState(() => {
-    if (typeof window === 'undefined') return false
-    if (forceExpanded) return false
-    return window.innerHeight < 550 || window.innerWidth < 768
-  })
+  const [collapsed, setCollapsed] = useState(() => !forceExpanded)
 
   // Expand when forceExpanded is true
   useEffect(() => {
@@ -43,9 +39,35 @@ export function QuestHerald({
 
   // Expand on global event
   useEffect(() => {
-    const handleExpand = () => setCollapsed(false)
+    const handleExpand = () => {
+      setCollapsed(false)
+      window.dispatchEvent(new CustomEvent('close-dropdowns', { detail: 'QuestHerald' }))
+    }
     window.addEventListener('toc-expand-herald', handleExpand)
     return () => window.removeEventListener('toc-expand-herald', handleExpand)
+  }, [])
+
+  // Listen for global dropdown close events
+  useEffect(() => {
+    const handleCloseDropdowns = (e) => {
+      if (e.detail !== 'QuestHerald') {
+        setCollapsed(true)
+      }
+    }
+    window.addEventListener('close-dropdowns', handleCloseDropdowns)
+    return () => window.removeEventListener('close-dropdowns', handleCloseDropdowns)
+  }, [])
+
+  // Click outside listener for the dropdown
+  const heraldRef = useRef(null)
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (heraldRef.current && !heraldRef.current.contains(e.target) && !e.target.closest('#herald-collapse-toggle-btn')) {
+        setCollapsed(true)
+      }
+    }
+    document.addEventListener('pointerdown', handleClickOutside)
+    return () => document.removeEventListener('pointerdown', handleClickOutside)
   }, [])
 
   const isActuallyCollapsed = forceExpanded ? false : collapsed
@@ -54,12 +76,11 @@ export function QuestHerald({
     return (
       <div id="hud-quest-herald" className="quest-herald-widget minimized">
         <button 
-          className="herald-toggle-btn"
+          className="herald-round-toggle-btn"
           onClick={() => { soundManager.playClick(); onOpenQuestsModal?.() }}
-          title={t('quests.allCompletedTooltip')}
+          title={t('quests.allCompletedTooltip') || 'Capítulo Cumplido'}
         >
-          <img src="/assets/hud_icons/btn_quests.webp" alt={t('quests.heraldName')} className="herald-candy-icon" />
-          <span className="herald-completed-tag">{t('quests.chapterFulfilled')}</span>
+          <img src="/assets/hud_icons/btn_quests.webp" alt={t('quests.heraldName')} className="herald-round-btn-icon" draggable="false" />
         </button>
       </div>
     )
@@ -110,40 +131,51 @@ export function QuestHerald({
   return (
     <aside 
       id="hud-quest-herald"
-      className={`quest-herald-widget ${isActuallyCollapsed ? 'is-collapsed' : ''} ${isCompleted ? 'is-ready' : ''}`}
+      ref={heraldRef}
+      className={`notification-bell-wrapper quest-herald-container ${isCompleted ? 'is-ready' : ''}`}
       aria-label="Misión Activa del Reino"
     >
-      {/* Collapse/Expand Toggle Tab */}
+      {/* Dropdown Toggle Button */}
       <button 
         id="herald-collapse-toggle-btn"
-        className={`herald-collapse-tab ${isActuallyCollapsed ? 'is-collapsed-btn' : ''} ${isCompleted ? 'has-ready-quest' : ''}`}
-        onClick={() => { soundManager.playClick(); setCollapsed(!isActuallyCollapsed) }}
+        className={`notification-bell-btn herald-round-trigger ${isCompleted ? 'has-ready-quest' : ''} ${!isActuallyCollapsed ? 'active' : ''}`}
+        onClick={() => { 
+          soundManager.playClick(); 
+          setCollapsed((prev) => {
+            if (prev) window.dispatchEvent(new CustomEvent('close-dropdowns', { detail: 'QuestHerald' }))
+            return !prev
+          })
+        }}
         title={isActuallyCollapsed ? (isCompleted ? t('quests.heraldReadyTooltip') : t('quests.heraldExpandTooltip')) : t('quests.heraldCollapseTooltip')}
         aria-expanded={!isActuallyCollapsed}
         aria-label={isActuallyCollapsed ? t('quests.heraldExpandTooltip') : t('quests.heraldCollapseTooltip')}
       >
-        {isActuallyCollapsed ? (
-          <span className="herald-tab-collapsed-content">
-            <ScrollText size={18} className="herald-tab-scroll-icon" />
-            <ChevronRight size={16} className="herald-chevron-svg" />
-          </span>
-        ) : (
-          <ChevronLeft size={20} className="herald-chevron-svg" />
-        )}
-        {isActuallyCollapsed && (
+        <span className="herald-tab-collapsed-content">
+          <img 
+            src="/assets/hud_icons/btn_quests.webp" 
+            alt="Misión" 
+            className="herald-round-btn-icon" 
+            draggable="false" 
+          />
+        </span>
+        {isCompleted && (
           <span 
-            className={`herald-tab-badge ${isCompleted ? 'ready' : ''}`}
-            aria-label={isCompleted ? t('quests.heraldReadyTooltip') : '1'}
+            className="herald-tab-badge ready"
+            aria-label={t('quests.heraldReadyTooltip')}
           >
-            {isCompleted ? '!' : '1'}
+            !
           </span>
+        )}
+        {!isCompleted && isActuallyCollapsed && (
+          <span className="herald-tab-badge">1</span>
         )}
       </button>
 
-      {/* Main Herald Card Body */}
-      <div className="herald-card-content">
+      {/* Main Herald Card Body (Dropdown) */}
+      {!isActuallyCollapsed && (
+        <div className="herald-card-content dropdown-mode">
         {/* Herald Top Bar */}
-        <div className="herald-header" onClick={isTutorialActive ? undefined : onOpenQuestsModal}>
+        <div className="herald-header dropdown-header" onClick={isTutorialActive ? undefined : onOpenQuestsModal}>
           <div className="herald-avatar-box">
             <img 
               src="/assets/avatars/avatar_king.webp" 
@@ -247,6 +279,7 @@ export function QuestHerald({
           )}
         </div>
       </div>
-    </aside>
+    )}
+  </aside>
   )
 }

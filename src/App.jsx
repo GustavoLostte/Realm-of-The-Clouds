@@ -2,8 +2,14 @@ import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { EyeOff, Maximize2, Minimize2 } from 'lucide-react'
 import { TopBar } from './components/TopBar'
 import { GameWorld } from './components/GameWorld'
-import { BottomDock } from './components/BottomDock'
+import { LeftActionControls } from './components/LeftActionControls'
+import { RightActionControls } from './components/RightActionControls'
+import { CombatModeModal } from './components/CombatModeModal'
+import { KingdomHubModal } from './components/KingdomHubModal'
+import { NotificationBell } from './components/NotificationBell'
 import { QuestHerald } from './components/QuestHerald'
+import { RankingLateralButton } from './components/RankingLateralButton'
+import { FpsOverlay } from './components/FpsOverlay'
 import { BuildModal } from './components/BuildModal'
 import { BuildingDetailsModal } from './components/BuildingDetailsModal'
 import { QuestsModal } from './components/QuestsModal'
@@ -109,6 +115,7 @@ export default function App() {
       stone: Math.max(raw.stone ?? 0, 450),
       food: Math.max(raw.food ?? 0, 250),
       gems: Math.max(raw.gems ?? 0, 50),
+      celestialShards: Math.max(raw.celestialShards ?? 75, 75),
     }
   })
 
@@ -205,6 +212,14 @@ export default function App() {
 
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [notifications, setNotifications] = useState([])
+  const [notificationHistory, setNotificationHistory] = useState(() => {
+    try {
+      const saved = localStorage.getItem('toc_notification_history')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
   const [hasStartedGame, setHasStartedGame] = useState(false)
   const [isCityLoading, setIsCityLoading] = useState(false)
   const [cityLoadProgress, setCityLoadProgress] = useState(0)
@@ -248,6 +263,8 @@ export default function App() {
   // Tech Tree, Inventory & Visual Juice states
   const [techTreeModalOpen, setTechTreeModalOpen] = useState(false)
   const [inventoryModalOpen, setInventoryModalOpen] = useState(false)
+  const [combatModeModalOpen, setCombatModeModalOpen] = useState(false)
+  const [kingdomHubModalOpen, setKingdomHubModalOpen] = useState(false)
   const [flyingParticles, setFlyingParticles] = useState([])
   const [poppingResource, setPoppingResource] = useState(null)
   const [isCinematicMode, setIsCinematicMode] = useState(false)
@@ -571,9 +588,19 @@ export default function App() {
 
     const id = now + Math.random()
     setNotifications((prev) => [...prev.slice(-4), { id, message, type }])
+    setNotificationHistory((prev) => {
+      const updated = [{ id, message, type, timestamp: now }, ...prev.slice(0, 29)]
+      try { localStorage.setItem('toc_notification_history', JSON.stringify(updated)) } catch {}
+      return updated
+    })
     setTimeout(() => {
       setNotifications((prev) => prev.filter((n) => n.id !== id))
     }, 3500)
+  }, [])
+
+  const handleClearNotifications = useCallback(() => {
+    setNotificationHistory([])
+    try { localStorage.removeItem('toc_notification_history') } catch {}
   }, [])
 
   // Consolidated harvest notification buffer to eliminate toast loops and spam
@@ -866,6 +893,7 @@ export default function App() {
           stone: Math.max(saveToApply.resources.stone ?? 0, 450),
           food: Math.max(saveToApply.resources.food ?? 0, 250),
           gems: Math.max(saveToApply.resources.gems ?? 0, 50),
+          celestialShards: Math.max(saveToApply.resources.celestialShards ?? 75, 75),
         })
       }
       if (saveToApply.slots) {
@@ -3300,6 +3328,9 @@ export default function App() {
         </div>
       )}
 
+      {/* Superimposed Top Realtime FPS Performance Counter */}
+      <FpsOverlay />
+
       {/* Top HUD */}
       <TopBar 
         resources={resources} 
@@ -3328,6 +3359,42 @@ export default function App() {
         isTutorialActive={isTutorialRunning}
         isFullscreen={isFullscreen}
         onToggleFullscreen={handleToggleFullscreen}
+        questHeraldNode={
+          hasStartedGame && !isCinematicMode ? (
+            <QuestHerald 
+              activeQuest={activeStoryQuest}
+              chapterData={activeChapterData}
+              questProgress={activeQuestProgress}
+              onClaimQuest={handleClaimQuest}
+              onOpenBuild={handleOpenBuildMenu}
+              onOpenArmy={() => setArmyModalOpen(true)}
+              onOpenCampaign={() => setCampaignWindowOpen(true)}
+              onOpenQuestsModal={() => setQuestsModalOpen(true)}
+              onOpenProfile={() => setProfileModalOpen(true)}
+              forceExpanded={isTutorialActive}
+              isTutorialActive={isTutorialRunning}
+            />
+          ) : null
+        }
+        notificationBellNode={
+          <NotificationBell 
+            notifications={notificationHistory}
+            onClearNotifications={handleClearNotifications}
+          />
+        }
+        toastDockNode={
+          hasStartedGame ? (
+            <div className="game-notifications-dock" aria-live="polite">
+              {notifications.map((n) => (
+                <SwipeableToast
+                  key={n.id}
+                  toast={n}
+                  onDismiss={handleDismissNotification}
+                />
+              ))}
+            </div>
+          ) : null
+        }
       />
 
       {/* Main Interactive Game World Canvas */}
@@ -3350,22 +3417,7 @@ export default function App() {
         />
       </main>
 
-      {/* Quest Herald - Active Narrative Mission Guide */}
-      <QuestHerald 
-        activeQuest={activeStoryQuest}
-        chapterData={activeChapterData}
-        questProgress={activeQuestProgress}
-        onClaimQuest={handleClaimQuest}
-        onOpenBuild={handleOpenBuildMenu}
-        onOpenArmy={() => setArmyModalOpen(true)}
-        onOpenCampaign={() => setCampaignWindowOpen(true)}
-        onOpenQuestsModal={() => setQuestsModalOpen(true)}
-        onOpenProfile={() => setProfileModalOpen(true)}
-        forceExpanded={isTutorialActive}
-        isTutorialActive={isTutorialRunning}
-      />
-
-      {/* Lucky Roulette HUD Notification Widget */}
+      {/* Main Interactive Game World Canvas */}
       {hasStartedGame && !isCinematicMode && (
         <RouletteNotification 
           isFreeSpinReady={isWheelFreeSpinReady}
@@ -3373,22 +3425,58 @@ export default function App() {
         />
       )}
 
-      {/* Bottom Action Dock */}
-      <BottomDock 
+      {/* Bottom-Left PvP / Batalla Button (Aligned with Reino) */}
+      {hasStartedGame && !isCinematicMode && (
+        <LeftActionControls 
+          onOpenBattle={() => setCombatModeModalOpen(true)}
+          arenaTickets={arenaData.tickets}
+          isTutorialActive={isTutorialRunning}
+        />
+      )}
+
+      {/* Bottom-Right Heroes and Kingdom Action Controls */}
+      {hasStartedGame && !isCinematicMode && (
+        <RightActionControls 
+          onOpenHeroes={() => setArmyModalOpen(true)}
+          onOpenKingdom={() => setKingdomHubModalOpen(true)}
+          onOpenSettings={() => setMenuModalOpen(true)}
+          questPendingCount={totalPendingQuests}
+          wheelFreeSpinReady={isWheelFreeSpinReady}
+          isTutorialActive={isTutorialRunning}
+        />
+      )}
+
+      {/* Right Lateral Ranking Button (Despliega el Modal de Ranking) */}
+      {hasStartedGame && !isCinematicMode && (
+        <RankingLateralButton 
+          onOpenRanking={handleOpenRanking}
+          trophies={arenaData.trophies}
+          peaceShieldUntil={arenaData.peaceShieldUntil}
+          isTutorialActive={isTutorialRunning}
+        />
+      )}
+
+      {/* Combat Mode Selector Modal (Single Player PvE vs Multiplayer PvP) */}
+      <CombatModeModal 
+        isOpen={combatModeModalOpen}
+        onClose={() => setCombatModeModalOpen(false)}
+        onOpenPvE={() => setCampaignWindowOpen(true)}
+        onOpenPvP={() => handleOpenArena('pvp')}
+        arenaTickets={arenaData.tickets}
+      />
+
+      {/* Kingdom Hub Modal (Clean Centralized Access for Kingdom, Shop, Inventory, Quests, etc.) */}
+      <KingdomHubModal 
+        isOpen={kingdomHubModalOpen}
+        onClose={() => setKingdomHubModalOpen(false)}
         onOpenBuild={() => handleOpenBuildMenu(null)}
-        onOpenArmy={() => setArmyModalOpen(true)}
-        onOpenArena={() => handleOpenArena('pvp')}
-        onOpenRanking={handleOpenRanking}
-        onOpenTechTree={() => setTechTreeModalOpen(true)}
-        onOpenInventory={() => setInventoryModalOpen(true)}
         onOpenShop={() => handleOpenShop('offers')}
+        onOpenInventory={() => setInventoryModalOpen(true)}
         onOpenQuests={() => setQuestsModalOpen(true)}
-        onOpenExpedition={() => setCampaignWindowOpen(true)}
+        onOpenRanking={handleOpenRanking}
         onOpenSettings={() => setMenuModalOpen(true)}
         questPendingCount={totalPendingQuests}
-        arenaTickets={arenaData.tickets}
         wheelFreeSpinReady={isWheelFreeSpinReady}
-        isTutorialActive={isTutorialRunning}
       />
 
       {/* Prominent Floating Mobile Fullscreen Button (Only visible when NOT in fullscreen on mobile) */}
@@ -3419,18 +3507,6 @@ export default function App() {
         </button>
       )}
 
-      {/* Toast Notifications */}
-      {hasStartedGame && (
-        <div className="game-notifications-dock" aria-live="polite">
-          {notifications.map((n) => (
-            <SwipeableToast
-              key={n.id}
-              toast={n}
-              onDismiss={handleDismissNotification}
-            />
-          ))}
-        </div>
-      )}
 
       {/* Full Campaign Window (System Architecture Map & Dungeons) */}
       <ErrorBoundary onReset={() => setCampaignWindowOpen(false)}>
@@ -3626,6 +3702,8 @@ export default function App() {
         onCollect={handleCollectOfflineEarnings}
       />
 
+
+
       {/* Random Kingdom Event Notification Badge */}
       {hasStartedGame && (
         <EventBadge 
@@ -3674,6 +3752,8 @@ export default function App() {
         onUnequipRelic={handleUnequipRelic}
         onCraftConsumable={handleCraftConsumable}
       />
+
+
 
       {/* Floating Starter Pack Offer Banner (24h countdown) */}
       {!isCinematicMode && (

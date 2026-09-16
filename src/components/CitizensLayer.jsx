@@ -3,36 +3,38 @@ import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'
 
 /**
- * THE GRAND IMPERIAL AVENUE - MATHEMATICALLY ALIGNED ISOMETRIC DIAGONAL ROUTE
+ * THE GRAND RAINBOW BRIDGE IMPERIAL ROUTE - TRUE ISOMETRIC CENTRAL AXIS
  * 
- * In isometric projection, true paths are DIAGONAL (never flat horizontal or vertical).
- * This dedicated avenue runs in front of all 12 building plots across the lower-left
- * quadrant of the paved plaza (from the West waterfall terrace down to the Southern apex).
- * 
- * NO BUILDINGS ARE EVER CONSTRUCTED ON THIS AVENUE, guaranteeing 100% clear,
- * unobstructed visibility for all citizens.
+ * Conecta los dos puentes arcoíris del mapa pasando directamente por el centro
+ * neurálgico de la Gran Plaza imperial:
+ * - Inicio: Escaleras y puente arcoíris de la isla flotante superior-izquierda
+ * - Centro: Atraviesa la Gran Plaza imperial por el centro exacto del mapa
+ * - Fin: Puente arcoíris y escaleras hacia las nubes inferior-derecha
  */
 const ISOMETRIC_AVENUE = [
-  { x: 20.0, y: 47.0 }, // p0: West plaza terrace & waterfall gateway
-  { x: 27.0, y: 55.0 }, // p1: In front of slot-12
-  { x: 34.0, y: 63.0 }, // p2: In front of slot-4
-  { x: 41.0, y: 71.0 }, // p3: In front of slot-7
-  { x: 48.0, y: 79.0 }, // p4: In front of slot-9
-  { x: 53.0, y: 85.0 }, // p5: Southern grand plaza portal / apex
+  { x: 26.0, y: 21.0 }, // p0: Escaleras de la isla flotante superior-izquierda
+  { x: 32.0, y: 27.2 }, // p1: Cruce central del puente arcoíris superior-izquierdo
+  { x: 36.0, y: 31.5 }, // p2: Portal de entrada a la plaza (entre estatuas)
+  { x: 44.5, y: 40.5 }, // p3: Avenida central superior
+  { x: 53.0, y: 49.5 }, // p4: Centro neurálgico de la Gran Plaza imperial
+  { x: 61.5, y: 58.5 }, // p5: Avenida central inferior
+  { x: 70.0, y: 67.5 }, // p6: Portal de salida hacia el puente arcoíris
+  { x: 73.5, y: 71.3 }, // p7: Cruce central del puente arcoíris inferior-derecho
+  { x: 79.0, y: 77.0 }, // p8: Escaleras y plataforma de nubes inferior-derecha
 ]
 
-// Downhill route: from p0 (West terrace) down to p5 (South portal)
-const DOWN_ROUTE = [0, 1, 2, 3, 4, 5]
+// Ruta hacia abajo: desde el puente arcoíris superior-izquierdo hacia el puente inferior-derecho
+const DOWN_ROUTE = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-// Uphill route: from p5 (South portal) up to p0 (West terrace)
-const UP_ROUTE = [5, 4, 3, 2, 1, 0]
+// Ruta hacia arriba: desde el puente arcoíris inferior-derecho hacia el puente superior-izquierdo
+const UP_ROUTE = [8, 7, 6, 5, 4, 3, 2, 1, 0]
 
-// Constant, synchronized walking speed for all citizens (~1.76% of map per second)
-const WALKING_SPEED = 1.76
+// Velocidad constante y sincronizada para todos los ciudadanos
+const WALKING_SPEED = 2.1
 
-// Two parallel lanes with ~31px lateral clearance so walkers pass each other side-by-side without colliding:
-const LANE_OFFSET_DOWN = { x: -0.60, y: 0.53 }
-const LANE_OFFSET_UP = { x: 0.60, y: -0.53 }
+// Dos carriles paralelos con holgura lateral precisa para circular por los puentes arcoíris sin colisionar
+const LANE_OFFSET_DOWN = { x: -0.70, y: 0.60 }
+const LANE_OFFSET_UP = { x: 0.70, y: -0.60 }
 
 /**
  * Precompute cumulative distance array for a route
@@ -59,12 +61,12 @@ const ROUTE_DATA_DOWN = buildRouteData(DOWN_ROUTE, LANE_OFFSET_DOWN)
 const ROUTE_DATA_UP = buildRouteData(UP_ROUTE, LANE_OFFSET_UP)
 
 /**
- * Total avenue length is ~61.0 units.
- * We calibrate CYCLE_LENGTH to 72.0 units with an organized conveyor pipeline.
+ * Longitud total de la ruta entre puentes es ~92.3 unidades.
+ * Calibramos CYCLE_LENGTH a 108.0 unidades con buffer suave de reciclaje fuera de pantalla.
  */
-const CYCLE_LENGTH = 72.0
-const FADE_IN_DIST = 1.8
-const FADE_OUT_DIST = 1.8
+const CYCLE_LENGTH = 108.0
+const FADE_IN_DIST = 2.5
+const FADE_OUT_DIST = 2.5
 
 /**
  * Compute (x, y) coordinates and fade opacity along the route for any cycle distance
@@ -122,11 +124,10 @@ function getCitizenVisualState(routeData, cyclePos) {
  * Sprite selection and horizontal flip rules:
  * 
  * 1. PARA BAJAR (SE, towards south apex):
- *    All characters face down-right with front sprite (scaleX: 1)
+ *    Todos los personajes usan el sprite frontal tal cual está en la imagen (scaleX: 1)
  * 
  * 2. PARA SUBIR (NW, towards west terrace):
- *    - Leñador y Soldado miran naturalmente hacia arriba-izquierda en su sprite back -> scaleX: 1
- *    - Aldeana mira arriba-derecha en su sprite back base -> scaleX: -1 la orienta hacia arriba-izquierda
+ *    Todos los personajes usan el sprite de espalda tal cual está en la imagen (scaleX: 1)
  */
 function getCitizenSpriteProps(type, routeType) {
   if (routeType === 'down') {
@@ -135,250 +136,374 @@ function getCitizenSpriteProps(type, routeType) {
       scaleX: 1,
     }
   } else {
-    const isNaturalUpLeft = type === 'lumberjack' || type === 'soldado' || type === 'soldier'
     return {
       useBack: true,
-      scaleX: isNaturalUpLeft ? 1 : -1,
+      scaleX: 1,
     }
   }
 }
 
 /**
- * Dynamic citizen roster based on kingdom infrastructure:
- * - Lumberjacks DO NOT appear until a House (casa / casa_molino) is built.
- * - Soldiers DO NOT appear until a Barracks (cuartel) is built.
- * - Initial state: exactly 4 Panaderas (aldeanas) walk the avenue so the town is lively.
+ * Dynamic citizen roster:
+ * - Ángel Chica, Soldado and Worker walk the central avenue between rainbow bridges.
+ * - Houses unlock additional kingdom walkers.
  */
-function getActiveCitizensConfig(hasHouse, hasBarracks) {
-  // Case 1: Initial state — No house and no barracks yet
-  // Exactly 4 panaderas (aldeanas) total: 2 going down, 2 going up
-  if (!hasHouse && !hasBarracks) {
+function getActiveCitizensConfig(hasHouse) {
+  if (!hasHouse) {
     return [
-      // DOWN lane (2 panaderas, spaced by 36 units: 0.0 and 36.0)
+      // DOWN lane (Ángel Chica, Soldado, Worker)
       {
         id: 'citizen-baker',
-        type: 'aldeana',
+        type: 'angel_chica',
         scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
+        spriteFront: '/assets/npcs/angel_chica_walk_front.webp',
+        spriteBack: '/assets/npcs/angel_chica_walk_back.webp',
         routeType: 'down',
         cycleOffset: 0.0,
       },
       {
-        id: 'citizen-baker-alt',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
+        id: 'citizen-guard',
+        type: 'soldado',
+        scale: 0.92,
+        spriteFront: '/assets/npcs/soldado_walk_front.webp',
+        spriteBack: '/assets/npcs/soldado_walk_back.webp',
         routeType: 'down',
         cycleOffset: 36.0,
       },
-      // UP lane (2 panaderas, spaced by 36 units: 18.0 and 54.0)
       {
-        id: 'citizen-barmaid',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
+        id: 'citizen-worker',
+        type: 'worker',
+        scale: 0.88,
+        spriteFront: '/assets/npcs/worker_walk_front.webp',
+        spriteBack: '/assets/npcs/worker_walk_back.webp',
+        routeType: 'down',
+        cycleOffset: 72.0,
+      },
+      // UP lane (Soldado, Ángel Chica)
+      {
+        id: 'citizen-sergeant',
+        type: 'soldado',
+        scale: 0.92,
+        spriteFront: '/assets/npcs/soldado_walk_front.webp',
+        spriteBack: '/assets/npcs/soldado_walk_back.webp',
         routeType: 'up',
         cycleOffset: 18.0,
       },
       {
-        id: 'citizen-barmaid-alt',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'up',
-        cycleOffset: 54.0,
-      },
-    ]
-  }
-
-  // Case 2: House built, but Cuartel not built yet (Lumberjacks + Panaderas)
-  if (hasHouse && !hasBarracks) {
-    return [
-      // DOWN lane (2 panaderas + 1 lumberjack)
-      {
-        id: 'citizen-baker',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'down',
-        cycleOffset: 0.0,
-      },
-      {
-        id: 'citizen-lumberjack',
-        type: 'lumberjack',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/lumberjack_walk_front.webp',
-        spriteBack: '/assets/npcs/lumberjack_walk_back.webp',
-        routeType: 'down',
-        cycleOffset: 24.0,
-      },
-      {
-        id: 'citizen-baker-alt',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'down',
-        cycleOffset: 48.0,
-      },
-      // UP lane (2 panaderas + 1 lumberjack)
-      {
         id: 'citizen-barmaid',
-        type: 'aldeana',
+        type: 'angel_chica',
         scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
+        spriteFront: '/assets/npcs/angel_chica_walk_front.webp',
+        spriteBack: '/assets/npcs/angel_chica_walk_back.webp',
         routeType: 'up',
-        cycleOffset: 12.0,
-      },
-      {
-        id: 'citizen-forester',
-        type: 'lumberjack',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/lumberjack_walk_front.webp',
-        spriteBack: '/assets/npcs/lumberjack_walk_back.webp',
-        routeType: 'up',
-        cycleOffset: 36.0,
-      },
-      {
-        id: 'citizen-barmaid-alt',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'up',
-        cycleOffset: 60.0,
+        cycleOffset: 72.0,
       },
     ]
   }
 
-  // Case 3: Cuartel built, but House not built yet (Soldados + Panaderas)
-  if (!hasHouse && hasBarracks) {
-    return [
-      // DOWN lane (1 soldado + 2 panaderas)
-      {
-        id: 'citizen-guard',
-        type: 'soldado',
-        scale: 1.0,
-        spriteFront: '/assets/npcs/soldado_walk_front.webp',
-        spriteBack: '/assets/npcs/soldado_walk_back.webp',
-        routeType: 'down',
-        cycleOffset: 0.0,
-      },
-      {
-        id: 'citizen-baker',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'down',
-        cycleOffset: 24.0,
-      },
-      {
-        id: 'citizen-baker-alt',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'down',
-        cycleOffset: 48.0,
-      },
-      // UP lane (1 soldado + 2 panaderas)
-      {
-        id: 'citizen-sergeant',
-        type: 'soldado',
-        scale: 1.0,
-        spriteFront: '/assets/npcs/soldado_walk_front.webp',
-        spriteBack: '/assets/npcs/soldado_walk_back.webp',
-        routeType: 'up',
-        cycleOffset: 12.0,
-      },
-      {
-        id: 'citizen-barmaid',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'up',
-        cycleOffset: 36.0,
-      },
-      {
-        id: 'citizen-barmaid-alt',
-        type: 'aldeana',
-        scale: 0.85,
-        spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-        spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-        routeType: 'up',
-        cycleOffset: 60.0,
-      },
-    ]
-  }
-
-  // Case 4: Both House and Cuartel built (Full varied roster)
+  // When House is built (Additional walkers join the bustling kingdom):
   return [
-    // DOWN lane (1 Soldado, 1 Panadera, 1 Lumberjack)
+    // DOWN lane (Ángel Chica, Soldado, Worker)
     {
-      id: 'citizen-guard',
-      type: 'soldado',
-      scale: 1.0,
-      spriteFront: '/assets/npcs/soldado_walk_front.webp',
-      spriteBack: '/assets/npcs/soldado_walk_back.webp',
+      id: 'citizen-baker',
+      type: 'angel_chica',
+      scale: 0.85,
+      spriteFront: '/assets/npcs/angel_chica_walk_front.webp',
+      spriteBack: '/assets/npcs/angel_chica_walk_back.webp',
       routeType: 'down',
       cycleOffset: 0.0,
     },
     {
-      id: 'citizen-baker',
-      type: 'aldeana',
-      scale: 0.85,
-      spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-      spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-      routeType: 'down',
-      cycleOffset: 24.0,
-    },
-    {
-      id: 'citizen-lumberjack',
-      type: 'lumberjack',
-      scale: 0.85,
-      spriteFront: '/assets/npcs/lumberjack_walk_front.webp',
-      spriteBack: '/assets/npcs/lumberjack_walk_back.webp',
-      routeType: 'down',
-      cycleOffset: 48.0,
-    },
-    // UP lane (1 Soldado, 1 Panadera, 1 Lumberjack)
-    {
-      id: 'citizen-sergeant',
+      id: 'citizen-guard',
       type: 'soldado',
-      scale: 1.0,
+      scale: 0.92,
       spriteFront: '/assets/npcs/soldado_walk_front.webp',
       spriteBack: '/assets/npcs/soldado_walk_back.webp',
-      routeType: 'up',
-      cycleOffset: 12.0,
-    },
-    {
-      id: 'citizen-barmaid',
-      type: 'aldeana',
-      scale: 0.85,
-      spriteFront: '/assets/npcs/aldeana_walk_front.webp',
-      spriteBack: '/assets/npcs/aldeana_walk_back.webp',
-      routeType: 'up',
+      routeType: 'down',
       cycleOffset: 36.0,
     },
     {
-      id: 'citizen-forester',
-      type: 'lumberjack',
-      scale: 0.85,
-      spriteFront: '/assets/npcs/lumberjack_walk_front.webp',
-      spriteBack: '/assets/npcs/lumberjack_walk_back.webp',
+      id: 'citizen-worker',
+      type: 'worker',
+      scale: 0.88,
+      spriteFront: '/assets/npcs/worker_walk_front.webp',
+      spriteBack: '/assets/npcs/worker_walk_back.webp',
+      routeType: 'down',
+      cycleOffset: 72.0,
+    },
+    // UP lane (Soldado, Ángel Chica, Soldado Patrulla)
+    {
+      id: 'citizen-sergeant',
+      type: 'soldado',
+      scale: 0.92,
+      spriteFront: '/assets/npcs/soldado_walk_front.webp',
+      spriteBack: '/assets/npcs/soldado_walk_back.webp',
       routeType: 'up',
-      cycleOffset: 60.0,
+      cycleOffset: 18.0,
+    },
+    {
+      id: 'citizen-barmaid',
+      type: 'angel_chica',
+      scale: 0.85,
+      spriteFront: '/assets/npcs/angel_chica_walk_front.webp',
+      spriteBack: '/assets/npcs/angel_chica_walk_back.webp',
+      routeType: 'up',
+      cycleOffset: 54.0,
+    },
+    {
+      id: 'citizen-patrol',
+      type: 'soldado',
+      scale: 0.92,
+      spriteFront: '/assets/npcs/soldado_walk_front.webp',
+      spriteBack: '/assets/npcs/soldado_walk_back.webp',
+      routeType: 'up',
+      cycleOffset: 90.0,
     },
   ]
 }
+
+/**
+ * COMANDANTE DEL CIELO - GUARDIÁN CELESTIAL
+ * Estacionado en la esquina este de la plataforma sobre la balaustrada dorada (78.5%, 51.5%),
+ * vigilando el reino en estado idle y ejecutando periódicamente (cada 12-18s) su épica animación
+ * de acción, además de responder interactivamente al clic del jugador.
+ */
+const SkyCommander = React.memo(function SkyCommander({
+  isSuspended = false,
+  onCitizenGift,
+}) {
+  const { t } = useTranslation()
+  const [isPlayingAction, setIsPlayingAction] = useState(false)
+  const [actionKey, setActionKey] = useState(0)
+  const [speech, setSpeech] = useState(null)
+  const actionTimerRef = useRef(null)
+  const speechTimerRef = useRef(null)
+
+  const triggerAction = () => {
+    if (isPlayingAction) return
+    setIsPlayingAction(true)
+    setActionKey(Date.now())
+
+    if (actionTimerRef.current) clearTimeout(actionTimerRef.current)
+    actionTimerRef.current = setTimeout(() => {
+      setIsPlayingAction(false)
+    }, 5080) // 127 fotogramas a 40ms = 5080ms
+  }
+
+  // Periodic autonomous action every 12 to 18 seconds
+  useEffect(() => {
+    if (isSuspended) return
+
+    let timer = null
+    const scheduleNextAction = () => {
+      const delay = 12000 + Math.random() * 6000
+      timer = setTimeout(() => {
+        if (!document.hidden && !isSuspended) {
+          triggerAction()
+        }
+        scheduleNextAction()
+      }, delay)
+    }
+
+    scheduleNextAction()
+
+    return () => {
+      if (timer) clearTimeout(timer)
+      if (actionTimerRef.current) clearTimeout(actionTimerRef.current)
+      if (speechTimerRef.current) clearTimeout(speechTimerRef.current)
+    }
+  }, [isSuspended, isPlayingAction])
+
+  const handleClick = (e) => {
+    e.stopPropagation()
+    soundManager.playClick()
+    triggerAction()
+
+    const quotes = [
+      t('citizens.commanderQuote1'),
+      t('citizens.commanderQuote2'),
+      t('citizens.commanderQuote3'),
+    ].filter(Boolean)
+
+    const randomQuote = (quotes.length > 0 && quotes[Math.floor(Math.random() * quotes.length)]) || '¡Por la gloria del Reino Celestial!'
+    setSpeech(randomQuote)
+
+    if (speechTimerRef.current) clearTimeout(speechTimerRef.current)
+    speechTimerRef.current = setTimeout(() => {
+      setSpeech(null)
+    }, 3500)
+
+    if (onCitizenGift && Math.random() < 0.40) {
+      const isGem = Math.random() < 0.35
+      const gift = isGem
+        ? { type: 'gems', amount: 2, text: t('citizens.giftGem') }
+        : { type: 'gold', amount: 50, text: t('citizens.giftGold') }
+      onCitizenGift({ id: 'sky-commander', name: t('citizens.commanderName') || 'Comandante del Cielo' }, gift)
+      soundManager.playCollect()
+    }
+  }
+
+  const commanderName = t('citizens.commanderName') || 'Comandante del Cielo'
+  const spriteSrc = isPlayingAction
+    ? `/assets/npcs/comandante_action.webp?k=${actionKey}`
+    : '/assets/npcs/comandante_idle.webp'
+
+  return (
+    <div
+      className="citizen-actor commander-actor"
+      style={{
+        left: '78.5%',
+        top: '51.5%',
+        opacity: 1,
+        pointerEvents: 'auto',
+        zIndex: 515,
+        transition: 'none',
+      }}
+      onClick={handleClick}
+      title={commanderName}
+    >
+      {/* Speech Bubble on Click */}
+      {speech && (
+        <div className="citizen-speech-bubble commander-speech-bubble">
+          <span>{speech}</span>
+        </div>
+      )}
+
+      {/* Sombra de suelo */}
+      <div
+        className="citizen-ground-shadow commander-ground-shadow"
+        style={{
+          width: '52px',
+          height: '18px',
+        }}
+      />
+
+      {/* Sprite animado */}
+      <img
+        key={isPlayingAction ? `action-${actionKey}` : 'idle'}
+        src={spriteSrc}
+        alt={commanderName}
+        className="citizen-sprite commander-sprite"
+        style={{
+          height: '75px',
+          width: '88px',
+          objectFit: 'contain',
+          transform: 'scaleX(1)',
+          pointerEvents: 'auto',
+          cursor: 'pointer',
+        }}
+        draggable="false"
+      />
+    </div>
+  )
+})
+
+/**
+ * SOLDADO VIGÍA (CENTINELA DE LA PLATAFORMA)
+ * Estacionado en la esquina del flanco izquierdo de la plataforma:
+ * - Esquina Oeste / Balcón de las Cascadas (x: 21.8%, y: 49.8%)
+ */
+const SENTRY_SPOTS = [
+  { id: 'sentry-west-balcony', x: 21.8, y: 49.8 },
+]
+
+const SentryGuards = React.memo(function SentryGuards({ onCitizenGift }) {
+  const { t } = useTranslation()
+  const [activeSpeech, setActiveSpeech] = useState({})
+  const timersRef = useRef({})
+
+  const handleClick = (e, sentry) => {
+    e.stopPropagation()
+    soundManager.playClick()
+
+    const quotes = [
+      t('citizens.vigiaQuote1'),
+      t('citizens.vigiaQuote2'),
+      t('citizens.vigiaQuote3'),
+    ].filter(Boolean)
+
+    const randomQuote = (quotes.length > 0 && quotes[Math.floor(Math.random() * quotes.length)]) || '¡Todo despejado en el flanco occidental!'
+    setActiveSpeech((prev) => ({ ...prev, [sentry.id]: randomQuote }))
+
+    if (timersRef.current[sentry.id]) clearTimeout(timersRef.current[sentry.id])
+    timersRef.current[sentry.id] = setTimeout(() => {
+      setActiveSpeech((prev) => {
+        const next = { ...prev }
+        delete next[sentry.id]
+        return next
+      })
+    }, 3200)
+
+    if (onCitizenGift && Math.random() < 0.35) {
+      const isGem = Math.random() < 0.25
+      const gift = isGem
+        ? { type: 'gems', amount: 1, text: t('citizens.giftGem') }
+        : { type: 'gold', amount: 25, text: t('citizens.giftGold') }
+      onCitizenGift({ id: sentry.id, name: t('citizens.vigiaName') || 'Soldado Vigía' }, gift)
+      soundManager.playCollect()
+    }
+  }
+
+  const vigiaName = t('citizens.vigiaName') || 'Soldado Vigía'
+
+  return (
+    <>
+      {SENTRY_SPOTS.map((sentry) => {
+        const speech = activeSpeech[sentry.id]
+        const zIndex = Math.round(sentry.y * 10)
+
+        return (
+          <div
+            key={sentry.id}
+            className="citizen-actor sentry-actor"
+            style={{
+              left: `${sentry.x}%`,
+              top: `${sentry.y}%`,
+              opacity: 1,
+              pointerEvents: 'auto',
+              zIndex,
+              transition: 'none',
+            }}
+            onClick={(e) => handleClick(e, sentry)}
+            title={vigiaName}
+          >
+            {/* Speech Bubble on Click */}
+            {speech && (
+              <div className="citizen-speech-bubble sentry-speech-bubble">
+                <span>{speech}</span>
+              </div>
+            )}
+
+            {/* Sombra de suelo bajo los pies (reducida 15%) */}
+            <div
+              className="citizen-ground-shadow sentry-ground-shadow"
+              style={{
+                width: '39px',
+                height: '12px',
+              }}
+            />
+
+            {/* Sprite animado de Soldado Vigía (reducido 15%: 56px x 80px) */}
+            <img
+              src="/assets/npcs/soldado_vigia_idle.webp"
+              alt={vigiaName}
+              className="citizen-sprite sentry-sprite"
+              style={{
+                height: '56px',
+                width: '80px',
+                objectFit: 'contain',
+                transform: 'scaleX(1)',
+                pointerEvents: 'auto',
+                cursor: 'pointer',
+              }}
+              draggable="false"
+            />
+          </div>
+        )
+      })}
+    </>
+  )
+})
 
 export const CitizensLayer = React.memo(function CitizensLayer({ 
   slots = [], 
@@ -401,21 +526,25 @@ export const CitizensLayer = React.memo(function CitizensLayer({
 
   const getCitizenName = (id) => {
     switch (id) {
-      case 'citizen-guard': return t('citizens.guardName')
+      case 'citizen-guard':
+      case 'citizen-patrol': return t('citizens.guardName')
       case 'citizen-sergeant': return t('citizens.sergeantName')
       case 'citizen-baker':
       case 'citizen-baker-alt': return t('citizens.bakerName')
       case 'citizen-barmaid':
       case 'citizen-barmaid-alt': return t('citizens.barmaidName')
-      case 'citizen-lumberjack': return t('citizens.lumberjackName')
+      case 'citizen-worker':
+      case 'citizen-worker-alt':
+      case 'citizen-lumberjack': return t('citizens.workerName')
       case 'citizen-forester': return t('citizens.foresterName')
-      default: return t('citizens.bakerName')
+      default: return t('citizens.workerName') || t('citizens.bakerName')
     }
   }
 
   const getCitizenQuotes = (id) => {
     switch (id) {
       case 'citizen-guard':
+      case 'citizen-patrol':
         return [t('citizens.guardQuote1'), t('citizens.guardQuote2'), t('citizens.guardQuote3')]
       case 'citizen-sergeant':
         return [t('citizens.sergeantQuote1'), t('citizens.sergeantQuote2'), t('citizens.sergeantQuote3')]
@@ -425,8 +554,10 @@ export const CitizensLayer = React.memo(function CitizensLayer({
       case 'citizen-barmaid':
       case 'citizen-barmaid-alt':
         return [t('citizens.barmaidQuote1'), t('citizens.barmaidQuote2'), t('citizens.barmaidQuote3')]
+      case 'citizen-worker':
+      case 'citizen-worker-alt':
       case 'citizen-lumberjack':
-        return [t('citizens.lumberjackQuote1'), t('citizens.lumberjackQuote2'), t('citizens.lumberjackQuote3')]
+        return [t('citizens.workerQuote1'), t('citizens.workerQuote2'), t('citizens.workerQuote3')]
       case 'citizen-forester':
         return [t('citizens.foresterQuote1'), t('citizens.foresterQuote2'), t('citizens.foresterQuote3')]
       default:
@@ -552,6 +683,18 @@ export const CitizensLayer = React.memo(function CitizensLayer({
 
   return (
     <div className="citizens-layer" style={{ pointerEvents: 'none' }}>
+      {/* Sky Commander standing in the platform corner */}
+      <SkyCommander 
+        isSuspended={isSuspended} 
+        onCitizenGift={onCitizenGift} 
+      />
+
+      {/* Sentry Soldiers stationed at the platform left corners */}
+      <SentryGuards 
+        onCitizenGift={onCitizenGift} 
+      />
+
+      {/* Walking Avenue Citizens */}
       {activeConfig.map((citizen) => {
         const spriteProps = getCitizenSpriteProps(citizen.type, citizen.routeType)
         const spriteHeight = Math.round(56 * (citizen.scale || 1.0))

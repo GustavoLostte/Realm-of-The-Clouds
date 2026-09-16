@@ -40,7 +40,10 @@ export function AnimatedMap({ className = 'island-background', isPaused = false 
       if (document.hidden) {
         safePause()
       } else if (!isSuspendedRef.current) {
-        safePlay()
+        // Defer playback resume by one animation frame for buttery-smooth tab transition
+        requestAnimationFrame(() => {
+          safePlay()
+        })
       }
     }
     document.addEventListener('visibilitychange', handleVisibilityChange)

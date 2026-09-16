@@ -138,9 +138,16 @@ export function getCityCriticalAssets(slots = []) {
     // 1. Map island ground & water background
     '/assets/map_background.webp',
 
-    // 2. Active citizens (front & back sprites for all 3 citizen types)
+    // 2. Active citizens (front & back sprites for all citizen types)
     '/assets/npcs/soldado_walk_front.webp',
     '/assets/npcs/soldado_walk_back.webp',
+    '/assets/npcs/angel_chica_walk_front.webp',
+    '/assets/npcs/angel_chica_walk_back.webp',
+    '/assets/npcs/comandante_idle.webp',
+    '/assets/npcs/comandante_action.webp',
+    '/assets/npcs/soldado_vigia_idle.webp',
+    '/assets/npcs/worker_walk_front.webp',
+    '/assets/npcs/worker_walk_back.webp',
     '/assets/npcs/aldeana_walk_front.webp',
     '/assets/npcs/aldeana_walk_back.webp',
     '/assets/npcs/lumberjack_walk_front.webp',

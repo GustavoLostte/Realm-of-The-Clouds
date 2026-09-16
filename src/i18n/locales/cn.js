@@ -1210,6 +1210,18 @@ export const cn = {
     "errorMaxLength": "名称不能超过 24 个字符。"
   },
   "citizens": {
+    "workerName": "建造大师",
+    "workerQuote1": "为天国筑起坚不可摧的基石！",
+    "workerQuote2": "这把神圣战锤将铸就永恒帝国！",
+    "workerQuote3": "带着天国的荣耀努力建设！",
+    "vigiaName": "岗哨守卫",
+    "vigiaQuote1": "西翼防线一切安全！",
+    "vigiaQuote2": "昼夜守护天国地平线！",
+    "vigiaQuote3": "我们的守望坚不可摧！",
+    "commanderName": "天空指挥官",
+    "commanderQuote1": "为了天国的荣耀！",
+    "commanderQuote2": "在最高堡垒守护苍穹！",
+    "commanderQuote3": "任何暗影都休想踏入圣门！",
     "guardName": "国王守卫",
     "sergeantName": "阿里斯泰尔队长",
     "bakerName": "面包师玛塔",

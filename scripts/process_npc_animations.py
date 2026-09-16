@@ -6,27 +6,30 @@ from PIL import Image
 import numpy as np
 from scipy import ndimage
 
-NPC_DIR = '/Users/wizzard/Desktop/TOC FOE/public/npc'
-OUTPUT_DIR = '/Users/wizzard/Desktop/TOC FOE/public/assets/npcs'
-SCRATCH_DIR = '/Users/wizzard/.gemini/antigravity-ide/brain/9bd7ea17-0d73-4db6-bad5-d59d512cbfb3/scratch_frames'
+NPC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../public/assets/characters/ANIMADOS'))
+OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../public/assets/npcs'))
+SCRATCH_DIR = '/tmp/npc_scratch_frames'
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(SCRATCH_DIR, exist_ok=True)
 
 CONFIGS = {
-    'aldeana': {
-        'crop': (715, 190, 1170, 950), # w=455, h=760
+    'angel_chica': {
+        'front_crop': (650, 110, 1160, 960), # w=510, h=850
+        'back_crop': (725, 92, 1235, 942),   # w=510, h=850
         'target_size': (120, 200),
-        'front_delay': 33, # 45 frames @ 30fps = 1.48s
-        'back_delay': 42,  # 29 frames @ 24fps = 1.22s
-        'front_name': 'aldeana_walk_front.webp',
-        'back_name': 'aldeana_walk_back.webp',
+        'front_delay': 38,
+        'back_delay': 38,
+        'front_name': 'angel_chica_walk_front.webp',
+        'back_name': 'angel_chica_walk_back.webp',
         'aliases': [
+            ('aldeana_walk_front.webp', 'aldeana_walk_back.webp'),
             ('baker_villager.webp', 'baker_villager_back.webp')
         ]
     },
     'lumberjack': {
-        'crop': (660, 150, 1180, 965), # w=520, h=815
+        'front_crop': (660, 150, 1180, 965), # w=520, h=815
+        'back_crop': (660, 150, 1180, 965),
         'target_size': (128, 200),
         'front_delay': 42, # 30 frames @ 24fps = 1.26s
         'back_delay': 42,  # 33 frames @ 24fps = 1.38s
@@ -37,7 +40,8 @@ CONFIGS = {
         ]
     },
     'soldado': {
-        'crop': (700, 100, 1165, 940), # w=465, h=840
+        'front_crop': (700, 100, 1165, 940), # w=465, h=840
+        'back_crop': (700, 100, 1165, 940),
         'target_size': (111, 200),
         'front_delay': 42, # 29 frames @ 24fps = 1.22s
         'back_delay': 42,  # 29 frames @ 24fps = 1.22s
@@ -53,11 +57,18 @@ def process_frame(img_path, crop_box, target_size):
     img = Image.open(img_path)
     arr = np.array(img)[crop_box[1]:crop_box[3], crop_box[0]:crop_box[2]].copy()
     
-    # Isolate solid character and dilate slightly to preserve soft anti-aliased edge
-    solid = arr[:, :, 3] > 120
-    dilated = ndimage.binary_dilation(solid, iterations=4)
-    clean_alpha = np.where(dilated & (arr[:, :, 3] > 25), arr[:, :, 3], 0)
-    arr[:, :, 3] = clean_alpha
+    # Eliminate cast floor shadow at bottom
+    rgb = arr[:, :, :3]
+    diff = rgb.max(axis=2) - rgb.min(axis=2)
+    shadow_mask = (arr[:, :, 3] < 160) & (
+        (arr[:, :, 3] < 80) |
+        ((diff < 15) & (rgb.max(axis=2) < 70))
+    )
+    arr[600:, :][shadow_mask[600:, :], 3] = 0
+    
+    # Extra cleanup for any faint floor pixels near bottom
+    faint_floor = (arr[800:, :, 3] < 40)
+    arr[800:, :, 3][faint_floor] = 0
     
     clean_img = Image.fromarray(arr)
     resized = clean_img.resize(target_size, Image.Resampling.LANCZOS)
@@ -65,7 +76,7 @@ def process_frame(img_path, crop_box, target_size):
 
 def build_animation(char_key, label, frame_files, delay_ms, out_filename):
     cfg = CONFIGS[char_key]
-    crop = cfg['crop']
+    crop = cfg.get(f'{label}_crop', cfg.get('front_crop'))
     target_size = cfg['target_size']
     
     temp_dir = os.path.join(SCRATCH_DIR, f'{char_key}_{label}')
@@ -98,16 +109,16 @@ def build_animation(char_key, label, frame_files, delay_ms, out_filename):
     shutil.rmtree(temp_dir, ignore_errors=True)
 
 def main():
-    for char, cfg in CONFIGS.items():
-        char_p = os.path.join(NPC_DIR, char)
-        files = sorted(os.listdir(char_p))
-        fronts = [os.path.join(char_p, f) for f in files if f.endswith('.png') and not f.startswith('espalda')]
-        backs = [os.path.join(char_p, f) for f in files if f.endswith('.png') and f.startswith('espalda')]
-        
-        build_animation(char, 'front', fronts, cfg['front_delay'], cfg['front_name'])
-        build_animation(char, 'back', backs, cfg['back_delay'], cfg['back_name'])
+    # Process Angel Chica
+    angel_dir = os.path.join(NPC_DIR, 'ANGEL CHICA')
+    if os.path.exists(angel_dir):
+        fronts = sorted(glob.glob(os.path.join(angel_dir, 'FRONT', '*.png')))
+        backs = sorted(glob.glob(os.path.join(angel_dir, 'BACK', '*.png')))
+        cfg = CONFIGS['angel_chica']
+        build_animation('angel_chica', 'front', fronts, cfg['front_delay'], cfg['front_name'])
+        build_animation('angel_chica', 'back', backs, cfg['back_delay'], cfg['back_name'])
 
-    print('\nAll animations processed successfully!')
+    print('\nAnimations processed successfully!')
 
 if __name__ == '__main__':
     main()

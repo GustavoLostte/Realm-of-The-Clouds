@@ -31,9 +31,13 @@ if (typeof window !== 'undefined') {
 
 import { LanguageProvider } from './i18n/index.jsx'
 import { registerServiceWorker } from './pwa/registerServiceWorker'
+import { analytics } from './utils/analytics'
 
 // Register Service Worker for PWA support and offline asset caching
 registerServiceWorker()
+
+// Initialize Google Analytics 4 for game metrics
+analytics.init()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

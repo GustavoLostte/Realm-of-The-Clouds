@@ -1210,6 +1210,18 @@ export const kr = {
     "errorMaxLength": "이름은 24자를 초과할 수 없습니다."
   },
   "citizens": {
+    "workerName": "건축 장인",
+    "workerQuote1": "천상 왕국을 위한 견고한 초석!",
+    "workerQuote2": "이 신성한 망치로 영원한 제국을 건설하리라!",
+    "workerQuote3": "천상의 자부심으로 건설하고 번영하자!",
+    "vigiaName": "망루 보초병",
+    "vigiaQuote1": "서쪽 측면 이상 무!",
+    "vigiaQuote2": "쉼 없이 천상의 지평선을 경계한다!",
+    "vigiaQuote3": "우리의 감시는 흔들리지 않는다!",
+    "commanderName": "천공의 사령관",
+    "commanderQuote1": "천상 왕국의 영광을 위하여!",
+    "commanderQuote2": "가장 높은 요새에서 하늘을 지킨다!",
+    "commanderQuote3": "어떤 그림자도 신성한 문을 넘지 못하리라!",
     "guardName": "국왕의 파수꾼",
     "sergeantName": "알리스테어 대위",
     "bakerName": "제빵사 마르타",
