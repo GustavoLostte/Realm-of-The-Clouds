@@ -2550,7 +2550,7 @@ export default function App() {
     showNotification(t('notifications.rivalsRefreshed'), 'info')
   }
 
-  const handleStartArenaBattle = (rival) => {
+  const handleStartArenaBattle = (rival, playerChampion = null) => {
     if (arenaData.tickets <= 0) {
       if (resources.gems < 10) {
         showNotification(t('notifications.noArenaTicketsOrGems'), 'warning')
@@ -2563,7 +2563,7 @@ export default function App() {
       setArenaData((prev) => ({ ...prev, tickets: Math.max(0, prev.tickets - 1) }))
     }
 
-    setSelectedArenaRival(rival)
+    setSelectedArenaRival(playerChampion ? { ...rival, playerChampion } : rival)
     setArenaModalOpen(false)
     setArenaBattleOpen(true)
     soundManager.playButtonClick()

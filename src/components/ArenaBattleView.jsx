@@ -407,7 +407,9 @@ export function ArenaBattleView({
             <div className="fighter-status-card">
               <div className="fighter-identity">
                 <Crown size={16} className="crown-icon-gold" />
-                <span className="fighter-name">Rey Celestial (Kael)</span>
+                <span className="fighter-name">
+                  {rival?.playerChampion ? `${rival.playerChampion.name} (${rival.playerChampion.title})` : 'Rey Celestial (Kael)'}
+                </span>
                 {playerShield > 0 && <span className="shield-active-badge">🛡️ -65%</span>}
               </div>
 
@@ -437,8 +439,8 @@ export function ArenaBattleView({
             <div className="fighter-visual-wrap">
               <div className="fighter-shadow" />
               <img 
-                src="/assets/characters/fullbody_cutout/01_rey_celestial.webp" 
-                alt="Kael Rey Celestial" 
+                src={rival?.playerChampion?.fullImage || '/assets/characters/fullbody_cutout/01_rey_celestial.webp'} 
+                alt={rival?.playerChampion?.name || 'Kael Rey Celestial'} 
                 className="fighter-sprite player-sprite" 
                 draggable="false" 
               />

@@ -20,6 +20,9 @@ import {
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
 import { getLeagueForTrophies, generateRivalsForPlayer } from '../data/arenaData'
+import { PvpVsModal } from './PvpVsModal'
+import { ChampionSelectScene } from './ChampionSelectScene'
+import { BattleDuelScene } from './BattleDuelScene'
 
 export function PvpScene({
   onBack,
@@ -38,6 +41,13 @@ export function PvpScene({
   const tickets = arenaData?.tickets ?? 3
   const currentLeague = getLeagueForTrophies(trophies)
   
+  // View mode: 'rooms' (rooms list) | 'champion-select' (Mortal Kombat style selection) | 'battle-duel' (map duel)
+  const [currentView, setCurrentView] = useState('rooms')
+  const [vsModalOpen, setVsModalOpen] = useState(false)
+  const [selectedRoom, setSelectedRoom] = useState(null)
+  const [selectedPlayerChamp, setSelectedPlayerChamp] = useState(null)
+  const [selectedRivalChamp, setSelectedRivalChamp] = useState(null)
+
   // Battle mode: '1v1' active, 3v3 coming soon
   const [battleMode, setBattleMode] = useState('1v1')
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -88,11 +98,59 @@ export function PvpScene({
 
   const handleEnterRoom = (room) => {
     soundManager?.playButtonClick?.()
-    if (onStartBattle) {
-      onStartBattle(room)
-    } else if (showNotification) {
-      showNotification(`¡Entrando a la Sala contra ${room.name}!`, 'info')
+    setSelectedRoom(room)
+    setVsModalOpen(true)
+  }
+
+  const handleStartFightFromVs = (room) => {
+    setVsModalOpen(false)
+    setSelectedRoom(room)
+    setCurrentView('champion-select')
+  }
+
+  const handleConfirmChampion = (playerChamp, rivalChamp) => {
+    setSelectedPlayerChamp(playerChamp)
+    setSelectedRivalChamp(rivalChamp)
+    setCurrentView('battle-duel')
+    if (showNotification) {
+      showNotification(`¡Entrando a la batalla: ${playerChamp.name} vs ${rivalChamp.name}!`, 'success')
     }
+  }
+
+  // If in battle-duel view, render the 2 champions facing each other on the battlefield map
+  if (currentView === 'battle-duel') {
+    return (
+      <BattleDuelScene 
+        playerChampion={selectedPlayerChamp}
+        rivalChampion={selectedRivalChamp}
+        onExitBattle={() => setCurrentView('rooms')}
+        onVictory={(rivalChamp) => {
+          if (showNotification) {
+            showNotification(`¡Victoria legendaria! ${selectedPlayerChamp?.name || 'Tu campeón'} triunfó sobre ${rivalChamp?.name || 'su rival'}.`, 'success')
+          }
+          setCurrentView('rooms')
+        }}
+        onDefeat={(rivalChamp) => {
+          if (showNotification) {
+            showNotification(`Has caído en batalla ante ${rivalChamp?.name || 'el rival'}. ¡Entrena y regresa más fuerte!`, 'warning')
+          }
+          setCurrentView('rooms')
+        }}
+      />
+    )
+  }
+
+  // If in champion-select view, render the Mortal Kombat style Champion Select Scene
+  if (currentView === 'champion-select' && selectedRoom) {
+    return (
+      <ChampionSelectScene 
+        onBack={() => setCurrentView('rooms')}
+        onConfirmChampion={handleConfirmChampion}
+        rival={selectedRoom}
+        playerName={playerName}
+        playerAvatar={playerAvatar}
+      />
+    )
   }
 
   return (
@@ -409,6 +467,24 @@ export function PvpScene({
         </section>
 
       </main>
+
+      {/* Pre-Combat Statistics Comparison Modal (Player vs Rival) */}
+      <PvpVsModal 
+        isOpen={vsModalOpen}
+        onClose={() => setVsModalOpen(false)}
+        onFight={handleStartFightFromVs}
+        playerStats={{
+          name: playerName,
+          avatar: playerAvatar,
+          level: kingdomLevel,
+          trophies: trophies,
+          wins: wins,
+          losses: losses,
+          winRate: winRate,
+          troopsTotal: Object.values(troops || {}).reduce((acc, v) => acc + (typeof v === 'number' ? v : 0), 0),
+        }}
+        rival={selectedRoom}
+      />
     </div>
   )
 }
