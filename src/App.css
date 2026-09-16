@@ -76,6 +76,19 @@ img, picture, svg, canvas, [draggable] {
   flex-shrink: 0;
 }
 
+.topbar-left-cluster .topbar-crest {
+  order: 1;
+}
+
+.topbar-left-cluster .quest-herald-container,
+.topbar-left-cluster .quest-herald-widget {
+  order: 2;
+}
+
+.topbar-left-cluster .notification-bell-wrapper:not(.quest-herald-container) {
+  order: 3;
+}
+
 .topbar-right-cluster {
   pointer-events: auto;
   display: flex;
@@ -750,12 +763,12 @@ img, picture, svg, canvas, [draggable] {
   cursor: grabbing;
 }
 
-/* Zoom controls - Stacked directly above the PvP / Batalla button (Bottom-Left) */
+/* Zoom & Eye controls - Stacked vertically on the Right, directly above Settings */
 .gameworld-zoom-controls {
   position: fixed;
-  left: auto;
   right: 16px;
-  bottom: 170px;
+  left: auto;
+  bottom: 168px;
   top: auto;
   width: 76px;
   z-index: 900;
@@ -770,9 +783,9 @@ img, picture, svg, canvas, [draggable] {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
   background: linear-gradient(180deg, rgba(28, 38, 54, 0.96) 0%, rgba(13, 18, 27, 0.98) 100%);
   border: 1.5px solid #0ea5e9;
   color: #bae6fd;
@@ -780,6 +793,11 @@ img, picture, svg, canvas, [draggable] {
   transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   touch-action: manipulation;
+}
+
+.map-ctrl-btn svg {
+  width: 22px;
+  height: 22px;
 }
 
 .map-ctrl-btn:hover {
@@ -791,6 +809,12 @@ img, picture, svg, canvas, [draggable] {
 
 .map-ctrl-btn:active {
   transform: translateY(1px) scale(0.94);
+}
+
+.map-ctrl-btn.fullscreen-map-btn.is-fullscreen {
+  border-color: #38bdf8;
+  color: #38bdf8;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 14px rgba(56, 189, 248, 0.45);
 }
 
 .gameworld-zoom-controls .sound-ctrl-btn {
@@ -824,8 +848,9 @@ img, picture, svg, canvas, [draggable] {
   contain: layout style;
 }
 
-.gameworld-container.is-dragging .gameworld-scene {
-  transition: none;
+.gameworld-container.is-dragging .gameworld-scene,
+.gameworld-container.is-interacting .gameworld-scene {
+  transition: none !important;
 }
 
 .animated-map-wrapper {
@@ -1894,9 +1919,10 @@ img, picture, svg, canvas, [draggable] {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 200;
-  background: rgba(4, 7, 13, 0.75);
-  backdrop-filter: blur(8px);
+  z-index: 25000 !important;
+  background: rgba(3, 7, 18, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2637,16 +2663,25 @@ img, picture, svg, canvas, [draggable] {
    TOAST NOTIFICATIONS DOCK
    ============================================================ */
 .game-notifications-dock {
-  position: absolute;
-  top: 0;
-  left: 10px;
-  width: max-content;
-  max-width: min(420px, calc(100vw - 320px));
+  position: fixed;
+  top: calc(max(54px, env(safe-area-inset-top, 0px) + 50px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 380px;
   z-index: 10050;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   pointer-events: none;
+  align-items: center;
+}
+
+@media (max-height: 580px) {
+  .game-notifications-dock {
+    top: calc(max(6px, env(safe-area-inset-top, 0px) + 44px));
+    max-width: 360px;
+  }
 }
 
 .game-toast {
@@ -2914,10 +2949,6 @@ img, picture, svg, canvas, [draggable] {
   }
 
   .kingdom-event-badge {
-    top: 68px;
-    right: 12px;
-    bottom: auto;
-    left: auto;
     padding: 8px 12px;
   }
 
@@ -2978,41 +3009,57 @@ img, picture, svg, canvas, [draggable] {
     font-size: 0.62rem;
   }
 
+  /* Zoom controls and Eye button on mobile - Stacked vertically on the right above Settings */
   .gameworld-zoom-controls {
-    position: fixed;
-    top: auto;
-    bottom: 116px;
-    left: 16px;
-    right: auto;
-    width: 76px;
-    gap: 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 900;
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    right: max(12px, env(safe-area-inset-right, 12px)) !important;
+    left: auto !important;
+    bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 140px) !important;
+    top: auto !important;
+    width: 68px !important;
+    align-items: center !important;
+    z-index: 900 !important;
+    gap: 7px !important;
   }
 
   .map-ctrl-btn {
-    width: 38px;
-    height: 38px;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
   }
 
-  .hud-ctrl-candy {
-    width: 22px;
-    height: 22px;
+  .map-ctrl-btn svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* Lower lateral events dock in tablet/mid-desktop */
+  .hud-lateral-events-dock {
+    top: calc(max(10px, env(safe-area-inset-top, 10px)) + 95px) !important;
+    left: max(10px, env(safe-area-inset-left, 10px)) !important;
   }
 }
 
-/* 2. SMARTPHONE PORTRAIT (WIDTH <= 768px, HEIGHT > 540px) */
-@media (max-width: 768px) and (min-height: 541px) {
+/* 2. SMARTPHONE PORTRAIT (WIDTH <= 768px) */
+@media (max-width: 768px) {
   .game-topbar {
-    top: max(6px, env(safe-area-inset-top, 6px));
-    left: 6px;
-    right: 6px;
+    position: fixed !important;
+    top: max(14px, calc(env(safe-area-inset-top, 0px) + 6px)) !important;
+    left: max(12px, env(safe-area-inset-left, 12px)) !important;
+    right: max(12px, env(safe-area-inset-right, 12px)) !important;
     gap: 6px;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
+  }
+
+  /* Lateral events dock (Royal Message, Roulette, Deal) aligned with Battle button and lowered clearly below profile card */
+  .hud-lateral-events-dock {
+    top: calc(max(14px, calc(env(safe-area-inset-top, 0px) + 6px)) + 105px) !important;
+    left: max(12px, env(safe-area-inset-left, 12px)) !important;
+    right: auto !important;
   }
 
   .topbar-left-cluster {
@@ -3033,53 +3080,100 @@ img, picture, svg, canvas, [draggable] {
   }
 
   .topbar-crest {
-    order: 1;
-    padding: 6px 14px 6px 10px;
-    gap: 10px;
-    border-radius: 14px;
-    border-width: 2px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 12px rgba(14, 165, 233, 0.3);
+    order: 1 !important;
+    padding: 3px 8px 3px 6px;
+    gap: 8px;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 12px;
+    border-width: 1.5px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8), 0 0 10px rgba(14, 165, 233, 0.3);
+  }
+
+  .topbar-left-cluster .quest-herald-container,
+  .topbar-left-cluster .quest-herald-widget {
+    order: 2 !important;
+  }
+
+  .topbar-left-cluster .notification-bell-wrapper:not(.quest-herald-container) {
+    order: 3 !important;
   }
 
   .crest-badge {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    border-width: 1.5px;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    border-width: 1px;
   }
 
   .crest-crown-icon {
-    width: 36px;
-    height: 36px;
+    width: 26px;
+    height: 26px;
   }
 
   .crest-level {
-    font-size: 0.66rem;
-    padding: 1px 5px;
-    bottom: -5px;
+    font-size: 0.58rem;
+    padding: 0 4px;
+    bottom: -4px;
   }
 
   .crest-details {
-    gap: 3px;
+    min-width: 0;
+    max-width: 95px;
+    gap: 1px;
   }
 
   .crest-title-row {
-    gap: 8px;
+    gap: 4px;
   }
 
   .kingdom-title {
-    font-size: 0.98rem;
-    max-width: 160px;
-    letter-spacing: 0.03em;
+    font-size: 0.82rem;
+    max-width: 90px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .kingdom-xp-text {
-    font-size: 0.66rem;
+    font-size: 0.56rem;
+    white-space: nowrap;
   }
 
   .crest-xp-bar-track {
-    height: 5px;
-    border-radius: 3px;
+    height: 3.5px;
+    min-width: 45px;
+    width: 100%;
+    border-radius: 2px;
+  }
+
+  /* Round notification and herald buttons in topbar */
+  .topbar-left-cluster .notification-bell-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .topbar-left-cluster .notification-bell-btn .bell-svg-icon {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .topbar-left-cluster .herald-round-btn-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .topbar-left-cluster .bell-badge,
+  .topbar-left-cluster .herald-tab-badge {
+    min-width: 14px !important;
+    height: 14px !important;
+    font-size: 0.56rem !important;
+    padding: 0 2px !important;
+    top: -3px !important;
+    right: -3px !important;
   }
 
   .hud-trophies-pill {
@@ -3104,11 +3198,41 @@ img, picture, svg, canvas, [draggable] {
   }
 
   .topbar-controls {
-    display: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    margin-left: 2px !important;
   }
 
-  .gameworld-zoom-controls .sound-ctrl-btn {
+  .gameworld-zoom-controls {
     display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    right: max(12px, env(safe-area-inset-right, 12px)) !important;
+    left: auto !important;
+    bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 144px) !important;
+    top: auto !important;
+    width: 68px !important;
+    align-items: center !important;
+    z-index: 900 !important;
+    gap: 7px !important;
+  }
+
+  .map-ctrl-btn {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 13px !important;
+  }
+
+  .hud-ctrl-candy {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .map-ctrl-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+    stroke-width: 2.2px !important;
   }
 
   .hud-bottom-fullscreen-btn {
@@ -3142,35 +3266,35 @@ img, picture, svg, canvas, [draggable] {
     width: auto;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 3px 6px;
-    border-radius: 11px;
+    gap: 3px;
+    padding: 2px 5px;
+    border-radius: 10px;
     border-width: 1.5px;
-    min-height: 36px;
-    max-height: 38px;
+    min-height: 32px;
+    max-height: 34px;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.75);
   }
 
   .resource-pill {
     flex-shrink: 0;
-    padding: 3px 7px;
-    gap: 5px;
-    min-height: 30px;
-    height: 30px;
-    border-radius: 8px;
+    padding: 2px 5px;
+    gap: 3px;
+    min-height: 26px;
+    height: 26px;
+    border-radius: 7px;
     border-width: 1px;
     background: rgba(10, 15, 26, 0.88);
   }
 
   .res-icon-wrap {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-width: 1px;
   }
 
   .hud-res-icon {
-    width: 19px;
-    height: 19px;
+    width: 15px;
+    height: 15px;
   }
 
   .res-meta {
@@ -3184,18 +3308,18 @@ img, picture, svg, canvas, [draggable] {
   }
 
   .res-val {
-    font-size: 0.82rem;
+    font-size: 0.74rem;
     font-weight: 900;
     line-height: 1;
   }
 
   .gem-plus-btn {
-    width: 18px;
-    height: 18px;
-    font-size: 0.72rem;
+    width: 15px;
+    height: 15px;
+    font-size: 0.64rem;
     padding: 0;
-    border-radius: 4px;
-    margin-left: 3px;
+    border-radius: 3px;
+    margin-left: 2px;
   }
 
   /* Candy Quick Harvest button on mobile portrait */
@@ -3330,36 +3454,38 @@ img, picture, svg, canvas, [draggable] {
   }
 
   .gameworld-zoom-controls {
-    position: fixed;
-    top: auto;
-    bottom: 106px;
-    left: 12px;
-    right: auto;
-    width: 72px;
-    gap: 5px;
-    z-index: 900;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: fixed !important;
+    top: auto !important;
+    bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 144px) !important;
+    right: max(12px, env(safe-area-inset-right, 12px)) !important;
+    left: auto !important;
+    width: 68px !important;
+    gap: 7px !important;
+    z-index: 900 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   .map-ctrl-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 13px !important;
     border-width: 1.5px;
   }
 
   .hud-ctrl-candy {
-    width: 18px;
-    height: 18px;
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .map-ctrl-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+    stroke-width: 2.2px !important;
   }
 
   .kingdom-event-badge {
-    top: calc(max(6px, env(safe-area-inset-top, 6px)) + 52px);
-    right: max(8px, env(safe-area-inset-right, 8px));
-    bottom: auto;
-    left: auto;
     padding: 6px 10px;
     font-size: 0.68rem;
     border-radius: 12px;
@@ -3389,9 +3515,10 @@ img, picture, svg, canvas, [draggable] {
 @media (max-height: 580px), (orientation: landscape) and (max-height: 640px), (max-width: 960px) and (orientation: landscape) {
   /* TOPBAR: SINGLE ROW, COMFORTABLE 38px HIGH, EASY TO TAP */
   .game-topbar {
-    top: max(4px, env(safe-area-inset-top, 4px)) !important;
-    left: max(6px, env(safe-area-inset-left, 6px)) !important;
-    right: max(6px, env(safe-area-inset-right, 6px)) !important;
+    position: fixed !important;
+    top: max(10px, calc(env(safe-area-inset-top, 0px) + 4px)) !important;
+    left: max(10px, env(safe-area-inset-left, 10px)) !important;
+    right: max(10px, env(safe-area-inset-right, 10px)) !important;
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
@@ -3413,6 +3540,32 @@ img, picture, svg, canvas, [draggable] {
     flex-shrink: 0 !important;
     position: relative !important;
     z-index: 105 !important;
+  }
+
+  .topbar-left-cluster .quest-herald-container,
+  .topbar-left-cluster .quest-herald-widget {
+    order: 2 !important;
+  }
+
+  .topbar-left-cluster .notification-bell-wrapper:not(.quest-herald-container) {
+    order: 3 !important;
+  }
+
+  .topbar-left-cluster .notification-bell-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .topbar-left-cluster .notification-bell-btn .bell-svg-icon {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .topbar-left-cluster .herald-round-btn-icon {
+    width: 22px !important;
+    height: 22px !important;
   }
 
   .crest-badge {
@@ -3602,7 +3755,10 @@ img, picture, svg, canvas, [draggable] {
   }
 
   .topbar-controls {
-    display: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    margin-left: 4px !important;
   }
 
   .control-btn {
@@ -3868,75 +4024,68 @@ img, picture, svg, canvas, [draggable] {
     border-radius: 6px !important;
   }
 
-  /* ZOOM CONTROLS (LOWER-LEFT ABOVE PVP) */
+  /* ZOOM CONTROLS & CINEMATIC EYE BUTTON (Stacked vertically on the right directly above Settings) */
   .gameworld-zoom-controls {
-    position: fixed !important;
-    top: auto !important;
-    bottom: calc(max(14px, env(safe-area-inset-bottom, 14px)) + 84px) !important;
-    left: max(12px, env(safe-area-inset-left, 12px)) !important;
-    right: auto !important;
-    width: 72px !important;
-    gap: 5px !important;
-    z-index: 900 !important;
     display: flex !important;
     flex-direction: column !important;
+    position: fixed !important;
+    right: max(10px, env(safe-area-inset-right, 10px)) !important;
+    left: auto !important;
+    bottom: calc(max(10px, env(safe-area-inset-bottom, 10px)) + 128px) !important;
+    top: auto !important;
+    width: 66px !important;
     align-items: center !important;
+    z-index: 900 !important;
+    gap: 5px !important;
+    pointer-events: auto !important;
   }
 
   .map-ctrl-btn {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 10px !important;
-    border: 1.5px solid #0ea5e9 !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.75), 0 0 12px rgba(14, 165, 233, 0.45) !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 11px !important;
   }
 
   .hud-ctrl-candy {
-    width: 21px !important;
-    height: 21px !important;
+    width: 24px !important;
+    height: 24px !important;
   }
 
   .map-ctrl-btn svg {
-    width: 19px !important;
-    height: 19px !important;
+    width: 20px !important;
+    height: 20px !important;
+    stroke-width: 2.2px !important;
   }
 
-  .gameworld-zoom-controls .sound-ctrl-btn {
-    display: flex !important;
-  }
-
-  /* FLOATING OFFER BANNER & MINIMIZED BADGE: DEDICATED SPOT AT TOP-RIGHT UNDER TOPBAR */
-  .starter-pack-floating-banner {
-    top: 54px !important;
+  /* LATERAL EVENTS & DEALS DOCK IN LANDSCAPE (Lowered for breathing room below profile and aligned with Battle) */
+  .hud-lateral-events-dock {
+    top: calc(max(10px, calc(env(safe-area-inset-top, 0px) + 4px)) + 70px) !important;
+    left: max(10px, env(safe-area-inset-left, 10px)) !important;
+    right: auto !important;
     bottom: auto !important;
-    right: max(8px, env(safe-area-inset-right, 8px)) !important;
-    transform: none !important;
-    animation: none !important;
-    padding: 5px 10px 5px 8px !important;
-    border-radius: 14px !important;
+    gap: 4px !important;
+    max-height: calc(100vh - 140px) !important;
+  }
+
+  .hud-lateral-events-dock .starter-pack-floating-banner:not(.lateral-event-bubble):not(.minimized-mode),
+  .hud-lateral-events-dock .roulette-hud-notification-card:not(.lateral-event-bubble):not(.minimized-mode),
+  .hud-lateral-events-dock .kingdom-event-badge:not(.lateral-event-bubble):not(.minimized-mode) {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    padding: 4px 8px !important;
     gap: 6px !important;
+    border-radius: 12px !important;
     max-width: 220px !important;
-    z-index: 92 !important;
-  }
-
-  .starter-pack-floating-banner:hover {
-    transform: scale(1.03) !important;
-  }
-
-  .starter-pack-minimized-badge {
-    top: 54px !important;
-    bottom: auto !important;
-    right: max(8px, env(safe-area-inset-right, 8px)) !important;
-    transform: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
     animation: none !important;
-    width: 40px !important;
-    height: 48px !important;
-    border-radius: 10px !important;
-    z-index: 92 !important;
   }
 
-  .starter-pack-minimized-badge:hover {
-    transform: scale(1.08) !important;
+  .hud-lateral-events-dock .banner-glow-halo,
+  .hud-lateral-events-dock .event-badge-glow {
+    display: none !important;
   }
 
   .minimized-chest-icon {
@@ -3991,18 +4140,12 @@ img, picture, svg, canvas, [draggable] {
     padding: 2px 6px !important;
   }
 
-  /* KINGDOM RANDOM EVENT BADGE: ALIGNED CLEANLY BELOW RESOURCE HUD */
+  /* KINGDOM RANDOM EVENT BADGE IN LANDSCAPE */
   .kingdom-event-badge {
-    top: calc(max(4px, env(safe-area-inset-top, 4px)) + 48px) !important;
-    right: max(8px, env(safe-area-inset-right, 8px)) !important;
-    left: auto !important;
-    bottom: auto !important;
-    padding: 5px 10px !important;
+    padding: 4px 8px !important;
     font-size: 0.70rem !important;
     border-radius: 10px !important;
-    max-width: 240px !important;
-    z-index: 95 !important;
-    animation: eventBadgeEnterTop 0.35s ease-out, eventBadgePulse 2.8s infinite ease-in-out !important;
+    max-width: 220px !important;
   }
 
   .legacy-starter-flow-banner {
@@ -4031,7 +4174,8 @@ img, picture, svg, canvas, [draggable] {
   .army-modal,
   .profile-modal,
   .menu-modal,
-  .guest-modal-card {
+  .guest-modal-card,
+  .notification-modal-card {
     max-height: 94dvh !important;
     max-width: 640px !important;
     border-radius: 12px !important;
@@ -6091,7 +6235,9 @@ img, picture, svg, canvas, [draggable] {
   .offline-backdrop,
   .levelup-backdrop,
   .starter-welcome-backdrop,
-  .retreat-confirm-modal-backdrop {
+  .retreat-confirm-modal-backdrop,
+  .notification-modal-backdrop {
+    z-index: 25000 !important;
     padding: max(6px, env(safe-area-inset-top, 6px)) max(6px, env(safe-area-inset-right, 6px)) max(6px, env(safe-area-inset-bottom, 6px)) max(6px, env(safe-area-inset-left, 6px)) !important;
     overflow: hidden !important;
     overscroll-behavior: contain !important;
@@ -6103,6 +6249,7 @@ img, picture, svg, canvas, [draggable] {
   /* Form/Input Backdrops: must support keyboard height shrink and touch scrolling without jerking */
   .username-modal-backdrop,
   .guest-modal-backdrop {
+    z-index: 25000 !important;
     padding: max(8px, env(safe-area-inset-top, 8px)) max(8px, env(safe-area-inset-right, 8px)) max(16px, env(safe-area-inset-bottom, 16px)) max(8px, env(safe-area-inset-left, 8px)) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -6128,7 +6275,11 @@ img, picture, svg, canvas, [draggable] {
   .army-modal,
   .profile-modal,
   .menu-modal,
-  .guest-modal-card {
+  .guest-modal-card,
+  .kingdom-hub-container,
+  .combat-mode-container,
+  .chat-modal-container,
+  .notification-modal-card {
     width: 100% !important;
     max-width: calc(100vw - 12px) !important;
     max-height: 92dvh !important;
@@ -7395,10 +7546,12 @@ img, picture, svg, canvas, [draggable] {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: calc(100vh - 160px);
-  max-height: calc(100dvh - 160px);
-  overflow-y: auto;
-  scrollbar-width: none;
+  max-height: calc(100vh - 120px);
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto !important;
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
   border-radius: 18px;
 }
 
@@ -7406,14 +7559,78 @@ img, picture, svg, canvas, [draggable] {
   position: absolute;
   top: 56px;
   left: 0;
-  width: 310px;
+  width: 320px;
   max-width: calc(100vw - 32px);
-  background: linear-gradient(135deg, rgba(14, 20, 32, 0.94) 0%, rgba(20, 28, 44, 0.9) 100%);
+  background: linear-gradient(135deg, rgba(14, 20, 32, 0.96) 0%, rgba(20, 28, 44, 0.94) 100%);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1.5px solid var(--border-gold);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 20px rgba(14, 165, 233, 0.15);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 20px rgba(14, 165, 233, 0.2);
   animation: heraldDropdownIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 1000;
+}
+
+@media (max-width: 768px), (max-height: 580px) {
+  .herald-card-content.dropdown-mode {
+    position: fixed !important;
+    top: calc(max(50px, env(safe-area-inset-top, 0px) + 46px)) !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    max-height: calc(100vh - 70px) !important;
+    max-height: calc(100dvh - 70px) !important;
+    z-index: 1000 !important;
+  }
+}
+
+.herald-card-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.herald-card-close-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.herald-card-close-btn:active {
+  transform: scale(0.92);
+}
+
+.herald-open-all-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #38bdf8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  cursor: pointer;
+  margin-top: 4px;
+  align-self: center;
+  transition: all 0.15s ease;
+}
+
+.herald-open-all-link:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
 }
 
 @keyframes heraldDropdownIn {
@@ -8651,9 +8868,13 @@ img, picture, svg, canvas, [draggable] {
   .event-badge-arrow {
     display: none !important;
   }
-  .event-badge-close-btn {
+  .event-badge-close-btn,
+  .roulette-notify-close-btn,
+  .banner-close-btn {
     width: 20px !important;
     height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
   }
 }
 
@@ -10554,26 +10775,32 @@ img, picture, svg, canvas, [draggable] {
   border-left: 3px solid #0ea5e9;
 }
 
-.relic-action-row {
-  margin-top: auto;
-}
-
 .btn-equip-relic {
   width: 100%;
-  padding: 8px 12px;
-  border-radius: 10px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border-radius: 12px;
   background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  color: #000;
-  font-weight: 800;
-  font-size: 0.82rem;
-  border: none;
+  color: #ffffff !important;
+  font-weight: 850;
+  font-size: 0.86rem;
+  border: 1px solid #bae6fd;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
   cursor: pointer;
-  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
 }
 
-.btn-equip-relic:hover {
+.btn-equip-relic:hover,
+.btn-equip-relic:active {
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.6);
 }
 
 .relic-equipped-badge {
@@ -10722,6 +10949,8 @@ img, picture, svg, canvas, [draggable] {
   top: 300px;
   left: 16px;
   right: auto;
+  width: fit-content;
+  max-width: 250px;
   z-index: 92;
   display: flex;
   align-items: center;
@@ -10767,30 +10996,42 @@ img, picture, svg, canvas, [draggable] {
   100% { filter: hue-rotate(360deg) blur(4px); }
 }
 
+.banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 .banner-close-btn {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 18px;
-  height: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: #94a3b8;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
   border-radius: 50%;
-  background: #1e1b2e;
-  border: 1px solid #0ea5e9;
-  color: #38bdf8;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-  transition: all 0.15s ease;
-  z-index: 10;
+  padding: 0;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  box-shadow: none;
 }
 
 .banner-close-btn:hover {
-  background: #ef4444;
-  color: #fff;
-  border-color: #f87171;
+  background: rgba(239, 68, 68, 0.45);
+  border-color: #ef4444;
+  color: #ffffff;
   transform: scale(1.15);
+}
+
+.banner-close-btn:active {
+  transform: scale(0.92);
 }
 
 .banner-icon-side {
@@ -16399,9 +16640,10 @@ img, picture, svg, canvas, [draggable] {
 
 .ranking-cat-btn.active {
   background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-  color: #1a0800;
+  color: #ffffff !important;
   border-color: #bae6fd;
-  box-shadow: 0 2px 12px rgba(14, 165, 233, 0.5);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  box-shadow: 0 2px 14px rgba(14, 165, 233, 0.55);
   font-weight: 850;
   transform: translateY(-1px);
 }
@@ -16940,46 +17182,142 @@ img, picture, svg, canvas, [draggable] {
   filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.7));
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for Ranking Modal */
 @media (max-width: 640px) {
   .ranking-modal-window {
-    width: 96%;
-    max-height: 94dvh;
+    width: 100% !important;
+    max-width: calc(100vw - 12px) !important;
+    max-height: 94dvh !important;
+    border-radius: 18px !important;
   }
-  .ranking-podium-stage {
-    gap: 8px;
-    padding: 10px 8px 6px;
+
+  .ranking-modal-header {
+    padding: 10px 14px !important;
   }
-  .podium-pillar {
-    max-width: 105px;
-    padding: 6px 4px;
+
+  .ranking-season-bar {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    padding: 6px 10px !important;
+    justify-content: center !important;
+    text-align: center !important;
   }
-  .podium-pillar.step-1 {
-    min-height: 160px;
+
+  .season-info-left {
+    font-size: 0.72rem !important;
   }
-  .podium-pillar.step-2 {
-    min-height: 140px;
+
+  .season-rank-tag {
+    font-size: 0.7rem !important;
+    padding: 2px 7px !important;
   }
-  .podium-pillar.step-3 {
-    min-height: 130px;
+
+  .season-tier-preview {
+    font-size: 0.72rem !important;
+    padding: 2px 8px !important;
   }
-  .pillar-avatar-box {
-    width: 44px;
-    height: 44px;
+
+  .ranking-tabs-nav {
+    padding: 6px 8px !important;
+    gap: 6px !important;
   }
-  .pillar-avatar-box.champ {
-    width: 52px;
-    height: 52px;
-  }
-  .details-col, th:nth-child(3) {
-    display: none;
-  }
+
   .ranking-cat-btn {
-    padding: 6px 12px;
-    font-size: 0.72rem;
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
+    min-height: 38px !important;
   }
+
+  .ranking-podium-stage {
+    gap: 4px !important;
+    padding: 8px 4px 6px !important;
+  }
+
+  .podium-pillar {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: 32% !important;
+    padding: 6px 2px !important;
+  }
+
+  .podium-pillar.step-1 {
+    min-height: 150px !important;
+  }
+
+  .podium-pillar.step-2 {
+    min-height: 132px !important;
+  }
+
+  .podium-pillar.step-3 {
+    min-height: 122px !important;
+  }
+
+  .pillar-avatar-box {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .pillar-avatar-box.champ {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .pillar-name {
+    font-size: 0.75rem !important;
+  }
+
+  .pillar-score {
+    font-size: 0.68rem !important;
+    padding: 2px 6px !important;
+  }
+
+  .ranking-player-callout {
+    padding: 8px 12px !important;
+    gap: 8px !important;
+  }
+
+  .callout-name {
+    font-size: 0.82rem !important;
+  }
+
+  .callout-score-box .score-val {
+    font-size: 0.95rem !important;
+  }
+
+  .details-col, th:nth-child(3) {
+    display: none !important;
+  }
+
+  .ranking-table th, .ranking-table td {
+    padding: 6px 8px !important;
+    font-size: 0.78rem !important;
+  }
+
+  .ranking-modal-footer {
+    padding: 10px 14px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
   .footer-quick-links {
-    display: none;
+    display: none !important;
+  }
+
+  .btn-ranking-close {
+    width: 100% !important;
+    min-height: 44px !important;
+    padding: 10px 16px !important;
+    font-size: 0.88rem !important;
+    font-weight: 850 !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%) !important;
+    border: 1px solid #bae6fd !important;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.45) !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
 
@@ -19424,29 +19762,42 @@ img, picture, svg, canvas, [draggable] {
   }
 }
 
+.roulette-notify-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 .roulette-notify-close-btn {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   color: #94a3b8;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.15s ease;
-  z-index: 5;
+  padding: 0;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  box-shadow: none;
 }
 
 .roulette-notify-close-btn:hover {
-  background: #ef4444;
+  background: rgba(239, 68, 68, 0.45);
+  border-color: #ef4444;
   color: #ffffff;
-  border-color: #fca5a5;
   transform: scale(1.15);
+}
+
+.roulette-notify-close-btn:active {
+  transform: scale(0.92);
 }
 
 .roulette-notify-icon-frame {
@@ -19620,15 +19971,104 @@ img, picture, svg, canvas, [draggable] {
   animation: pulse 1.8s infinite ease-in-out !important;
 }
 
-/* Hide roulette notification when any modal (e.g. ProfileModal, ShopModal) is open */
+/* Hide all HUD controls, bottom action buttons, lateral docks and widgets when any modal is open */
+.has-active-modal .left-action-controls,
+.has-active-modal .right-action-controls,
+.has-active-modal .ranking-lateral-container,
+.has-active-modal .store-lateral-container,
+.has-active-modal .inventory-lateral-container,
+.has-active-modal .hud-lateral-events-dock,
+.has-active-modal .quest-herald-widget,
+.has-active-modal .game-top-bar,
+.has-active-modal .game-bottom-dock,
+.has-active-modal .construction-indicator,
+.has-active-modal .roulette-hud-notification-card,
+.has-active-modal .roulette-hud-notification-mini,
+body:has(.modal-backdrop) .left-action-controls,
+body:has(.modal-backdrop) .right-action-controls,
+body:has(.modal-backdrop) .ranking-lateral-container,
+body:has(.modal-backdrop) .store-lateral-container,
+body:has(.modal-backdrop) .inventory-lateral-container,
+body:has(.modal-backdrop) .hud-lateral-events-dock,
+body:has(.modal-backdrop) .quest-herald-widget,
+body:has(.modal-backdrop) .game-top-bar,
+body:has(.modal-backdrop) .game-bottom-dock,
+body:has(.modal-backdrop) .construction-indicator,
 body:has(.modal-backdrop) .roulette-hud-notification-card,
 body:has(.modal-backdrop) .roulette-hud-notification-mini,
+body:has(.kingdom-hub-overlay) .left-action-controls,
+body:has(.kingdom-hub-overlay) .right-action-controls,
+body:has(.kingdom-hub-overlay) .ranking-lateral-container,
+body:has(.kingdom-hub-overlay) .store-lateral-container,
+body:has(.kingdom-hub-overlay) .inventory-lateral-container,
+body:has(.kingdom-hub-overlay) .hud-lateral-events-dock,
+body:has(.kingdom-hub-overlay) .quest-herald-widget,
+body:has(.kingdom-hub-overlay) .game-top-bar,
+body:has(.kingdom-hub-overlay) .game-bottom-dock,
+body:has(.kingdom-hub-overlay) .construction-indicator,
+body:has(.kingdom-hub-overlay) .roulette-hud-notification-card,
+body:has(.kingdom-hub-overlay) .roulette-hud-notification-mini,
+body:has(.combat-mode-overlay) .left-action-controls,
+body:has(.combat-mode-overlay) .right-action-controls,
+body:has(.combat-mode-overlay) .ranking-lateral-container,
+body:has(.combat-mode-overlay) .store-lateral-container,
+body:has(.combat-mode-overlay) .inventory-lateral-container,
+body:has(.combat-mode-overlay) .hud-lateral-events-dock,
+body:has(.combat-mode-overlay) .quest-herald-widget,
+body:has(.combat-mode-overlay) .game-top-bar,
+body:has(.combat-mode-overlay) .game-bottom-dock,
+body:has(.combat-mode-overlay) .construction-indicator,
+body:has(.combat-mode-overlay) .roulette-hud-notification-card,
+body:has(.combat-mode-overlay) .roulette-hud-notification-mini,
+body:has(.chat-modal-overlay) .left-action-controls,
+body:has(.chat-modal-overlay) .right-action-controls,
+body:has(.chat-modal-overlay) .ranking-lateral-container,
+body:has(.chat-modal-overlay) .store-lateral-container,
+body:has(.chat-modal-overlay) .inventory-lateral-container,
+body:has(.chat-modal-overlay) .hud-lateral-events-dock,
+body:has(.chat-modal-overlay) .quest-herald-widget,
+body:has(.chat-modal-overlay) .game-top-bar,
+body:has(.chat-modal-overlay) .game-bottom-dock,
+body:has(.chat-modal-overlay) .construction-indicator,
+body:has(.notification-modal-backdrop) .left-action-controls,
+body:has(.notification-modal-backdrop) .right-action-controls,
+body:has(.notification-modal-backdrop) .ranking-lateral-container,
+body:has(.notification-modal-backdrop) .store-lateral-container,
+body:has(.notification-modal-backdrop) .inventory-lateral-container,
+body:has(.notification-modal-backdrop) .hud-lateral-events-dock,
+body:has(.notification-modal-backdrop) .quest-herald-widget,
+body:has(.notification-modal-backdrop) .game-top-bar,
+body:has(.notification-modal-backdrop) .game-bottom-dock,
+body:has(.notification-modal-backdrop) .construction-indicator,
+body:has(.notification-modal-backdrop) .roulette-hud-notification-card,
+body:has(.notification-modal-backdrop) .roulette-hud-notification-mini,
+body:has(.campaign-window-backdrop) .left-action-controls,
+body:has(.campaign-window-backdrop) .right-action-controls,
+body:has(.campaign-window-backdrop) .ranking-lateral-container,
+body:has(.campaign-window-backdrop) .store-lateral-container,
+body:has(.campaign-window-backdrop) .inventory-lateral-container,
+body:has(.campaign-window-backdrop) .hud-lateral-events-dock,
+body:has(.campaign-window-backdrop) .quest-herald-widget,
+body:has(.campaign-window-backdrop) .game-top-bar,
+body:has(.campaign-window-backdrop) .game-bottom-dock,
+body:has(.campaign-window-backdrop) .construction-indicator,
 body:has(.campaign-window-backdrop) .roulette-hud-notification-card,
-body:has(.campaign-window-backdrop) .roulette-hud-notification-mini {
+body:has(.campaign-window-backdrop) .roulette-hud-notification-mini,
+body:has(.dungeon-modal-backdrop) .left-action-controls,
+body:has(.dungeon-modal-backdrop) .right-action-controls,
+body:has(.dungeon-modal-backdrop) .ranking-lateral-container,
+body:has(.dungeon-modal-backdrop) .store-lateral-container,
+body:has(.dungeon-modal-backdrop) .inventory-lateral-container,
+body:has(.dungeon-modal-backdrop) .hud-lateral-events-dock,
+body:has(.dungeon-modal-backdrop) .quest-herald-widget,
+body:has(.dungeon-modal-backdrop) .game-top-bar,
+body:has(.dungeon-modal-backdrop) .game-bottom-dock,
+body:has(.dungeon-modal-backdrop) .construction-indicator {
   opacity: 0 !important;
   pointer-events: none !important;
   visibility: hidden !important;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transform: scale(0.94) !important;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s !important;
 }
 
 /* Cinematic mode hide */
@@ -19641,9 +20081,6 @@ body:has(.campaign-window-backdrop) .roulette-hud-notification-mini {
 /* Mobile responsive adjustments */
 @media (max-height: 580px), (orientation: landscape) and (max-height: 580px) {
   .roulette-hud-notification-card {
-    top: 75px !important;
-    left: max(12px, env(safe-area-inset-left, 12px)) !important;
-    right: auto !important;
     padding: 4px 8px !important;
     gap: 7px !important;
     border-radius: 12px !important;
@@ -19697,9 +20134,6 @@ body:has(.campaign-window-backdrop) .roulette-hud-notification-mini {
 
 @media (max-width: 640px) and (min-height: 581px) {
   .roulette-hud-notification-card {
-    top: 155px !important;
-    left: 10px !important;
-    right: auto !important;
     max-width: 230px !important;
     padding: 6px 10px 6px 8px !important;
     gap: 8px !important;
@@ -20927,16 +21361,85 @@ body:has(.campaign-window-backdrop) .roulette-hud-notification-mini {
 /* Unified minimized event bubble / globito overrides */
 .kingdom-event-badge.minimized-mode,
 .roulette-hud-notification-card.minimized-mode,
-.starter-pack-floating-banner.minimized-mode {
+.starter-pack-floating-banner.minimized-mode,
+.lateral-event-bubble-wrapper {
   background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
+  margin: 0 !important;
   pointer-events: none !important;
   animation: none !important;
   transform: none !important;
+  width: auto !important;
   max-width: none !important;
   display: block !important;
+}
+
+/* ============================================================
+   HUD LATERAL EVENTS DOCK (Royal Messenger, Roulette, Deal)
+   Zero background container - clean floating action globos like right-side controls
+   ============================================================ */
+.hud-lateral-events-dock {
+  position: fixed;
+  top: calc(max(12px, env(safe-area-inset-top, 12px)) + 105px);
+  left: max(16px, env(safe-area-inset-left, 16px));
+  right: auto !important;
+  bottom: auto !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 92;
+  pointer-events: none;
+  width: fit-content !important;
+  max-width: none !important;
+  max-height: calc(100vh - 160px);
+  overflow: visible !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.hud-lateral-events-dock::before,
+.hud-lateral-events-dock::after {
+  display: none !important;
+}
+
+.hud-lateral-events-dock > * {
+  pointer-events: auto;
+}
+
+.hud-lateral-events-dock .kingdom-event-badge:not(.lateral-event-bubble):not(.minimized-mode),
+.hud-lateral-events-dock .roulette-hud-notification-card:not(.lateral-event-bubble):not(.minimized-mode),
+.hud-lateral-events-dock .starter-pack-floating-banner:not(.lateral-event-bubble):not(.minimized-mode) {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  width: auto !important;
+  max-width: min(280px, calc(100vw - 32px)) !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.75) !important;
+  animation: none !important;
+}
+
+/* Eliminate harsh electric-blue background glow/card behind the items */
+.hud-lateral-events-dock .banner-glow-halo,
+.hud-lateral-events-dock .event-badge-glow {
+  display: none !important;
 }
 
 .lateral-event-bubble-wrapper {
@@ -20948,35 +21451,38 @@ body:has(.campaign-window-backdrop) .roulette-hud-notification-mini {
 }
 
 .lateral-event-timer-pill {
-  background: rgba(10, 14, 22, 0.85);
-  border: 1px solid rgba(245, 158, 11, 0.5);
-  color: #fef08a;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  display: none !important;
 }
 
+.hud-lateral-events-dock .lateral-event-bubble,
 .lateral-event-bubble {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(20, 28, 44, 0.95) 0%, rgba(10, 14, 22, 0.96) 100%);
-  border: 1.5px solid var(--border-gold, #f59e0b);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  position: relative !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  max-width: 46px !important;
+  max-height: 46px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, rgba(20, 28, 44, 0.95) 0%, rgba(10, 14, 22, 0.96) 100%) !important;
+  border: 1.5px solid var(--border-gold, #f59e0b) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
   box-shadow: 
     0 4px 14px rgba(0, 0, 0, 0.7),
     0 0 12px rgba(245, 158, 11, 0.25),
-    inset 0 1px 2px rgba(255, 255, 255, 0.3);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  touch-action: manipulation;
+    inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  touch-action: manipulation !important;
+  pointer-events: auto !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  outline: none !important;
 }
 
 .lateral-event-bubble:hover {

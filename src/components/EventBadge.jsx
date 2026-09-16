@@ -17,33 +17,24 @@ export function EventBadge({ activeEvent, timeLeft, onClick, onDismiss }) {
 
   if (isMinimized) {
     return (
-      <div className="kingdom-event-badge minimized-mode">
-        <div className="lateral-event-bubble-wrapper">
-          <button
-            type="button"
-            className="lateral-event-bubble"
-            onClick={handleExpand}
-            title={t('events.audienceRequested')}
-            aria-label={t('events.audienceRequested')}
-          >
-            <img 
-              src={activeEvent.avatar} 
-              alt="Emissary" 
-              className="lateral-event-bubble-img" 
-              style={{ borderRadius: '50%' }}
-              draggable="false" 
-            />
-            <div className="lateral-event-bubble-badge">
-              <Bell size={10} color="#fff" />
-            </div>
-          </button>
-          <div className="lateral-event-timer-pill">
-            {timeLeft > 60 
-              ? `${Math.floor(timeLeft / 60)}m` 
-              : `${timeLeft}s`}
-          </div>
+      <button
+        type="button"
+        className="lateral-event-bubble"
+        onClick={handleExpand}
+        title={t('events.audienceRequested')}
+        aria-label={t('events.audienceRequested')}
+      >
+        <img 
+          src={activeEvent.avatar} 
+          alt="Emissary" 
+          className="lateral-event-bubble-img" 
+          style={{ borderRadius: '50%' }}
+          draggable="false" 
+        />
+        <div className="lateral-event-bubble-badge">
+          <Bell size={10} color="#fff" />
         </div>
-      </div>
+      </button>
     )
   }
 

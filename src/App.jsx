@@ -9,6 +9,9 @@ import { KingdomHubModal } from './components/KingdomHubModal'
 import { NotificationBell } from './components/NotificationBell'
 import { QuestHerald } from './components/QuestHerald'
 import { RankingLateralButton } from './components/RankingLateralButton'
+import { StoreLateralButton } from './components/StoreLateralButton'
+import { InventoryLateralButton } from './components/InventoryLateralButton'
+import { ChatModal } from './components/ChatModal'
 import { FpsOverlay } from './components/FpsOverlay'
 import { BuildModal } from './components/BuildModal'
 import { BuildingDetailsModal } from './components/BuildingDetailsModal'
@@ -265,19 +268,16 @@ export default function App() {
   const [inventoryModalOpen, setInventoryModalOpen] = useState(false)
   const [combatModeModalOpen, setCombatModeModalOpen] = useState(false)
   const [kingdomHubModalOpen, setKingdomHubModalOpen] = useState(false)
+  const [chatModalOpen, setChatModalOpen] = useState(false)
   const [flyingParticles, setFlyingParticles] = useState([])
   const [poppingResource, setPoppingResource] = useState(null)
   const [isCinematicMode, setIsCinematicMode] = useState(false)
 
-  // FPS Performance & Eco Mode (Persisted in localStorage with smart hardware detection)
+  // FPS Performance & Eco Mode (Default 60fps for silky-smooth experience everywhere)
   const [fpsMode, setFpsModeState] = useState(() => {
     try {
       const saved = localStorage.getItem('toc_fps_mode')
-      if (saved) return saved
-      // Smart detection for lower-memory phones (e.g. <= 4GB reported)
-      if (typeof navigator !== 'undefined' && navigator.deviceMemory && navigator.deviceMemory <= 4) {
-        return 'eco'
-      }
+      if (saved === '60fps' || saved === 'eco') return saved
       return '60fps'
     } catch {
       return '60fps'
@@ -436,6 +436,64 @@ export default function App() {
 
   // Imperial Instant Harvest All Decree Modal State
   const [harvestModalOpen, setHarvestModalOpen] = useState(false)
+  const [notificationsModalOpen, setNotificationsModalOpen] = useState(false)
+  const [isMobileScreen, setIsMobileScreen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return (
+        window.innerWidth <= 768 ||
+        window.innerHeight <= 520 ||
+        (window.innerWidth <= 960 && (window.matchMedia?.('(pointer: coarse)')?.matches || 'ontouchstart' in window))
+      )
+    }
+    return false
+  })
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileScreen(
+        window.innerWidth <= 768 ||
+        window.innerHeight <= 520 ||
+        (window.innerWidth <= 960 && (window.matchMedia?.('(pointer: coarse)')?.matches || 'ontouchstart' in window))
+      )
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('orientationchange', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleResize)
+    }
+  }, [])
+
+  // Universal condition tracking if ANY modal or sub-window is currently active
+  const isAnyModalOpen = Boolean(
+    buildModalOpen ||
+    detailsModalOpen ||
+    questsModalOpen ||
+    armyModalOpen ||
+    expeditionModalOpen ||
+    dungeonCombatOpen ||
+    campaignWindowOpen ||
+    menuModalOpen ||
+    profileModalOpen ||
+    levelUpModalOpen ||
+    offlineModalOpen ||
+    eventModalOpen ||
+    techTreeModalOpen ||
+    inventoryModalOpen ||
+    combatModeModalOpen ||
+    kingdomHubModalOpen ||
+    chatModalOpen ||
+    shopModalOpen ||
+    arenaModalOpen ||
+    seasonEndModalOpen ||
+    rankingModalOpen ||
+    harvestModalOpen ||
+    (notificationsModalOpen && isMobileScreen) ||
+    arenaBattleOpen ||
+    usernameModalOpen ||
+    welcomeModalOpen
+  )
 
 
   // Keyboard shortcut: Press 'H' to toggle Cinematic View, 'Escape' to exit
@@ -587,7 +645,7 @@ export default function App() {
     }
 
     const id = now + Math.random()
-    setNotifications((prev) => [...prev.slice(-4), { id, message, type }])
+    setNotifications((prev) => [...prev.slice(-1), { id, message, type }])
     setNotificationHistory((prev) => {
       const updated = [{ id, message, type, timestamp: now }, ...prev.slice(0, 29)]
       try { localStorage.setItem('toc_notification_history', JSON.stringify(updated)) } catch {}
@@ -654,7 +712,7 @@ export default function App() {
         next[idx] = toastItem
         return next
       }
-      return [...prev.slice(-3), toastItem]
+      return [...prev.slice(-1), toastItem]
     })
 
     if (buf.timer) {
@@ -3310,7 +3368,7 @@ export default function App() {
   const isWheelFreeSpinReady = ((Date.now() - (lastWheelFreeSpinTime || 0)) / (1000 * 3600)) >= 20
 
   return (
-    <div className={`toc-game-app ${isCinematicMode ? 'is-cinematic-mode' : ''}`}>
+    <div className={`toc-game-app ${isCinematicMode ? 'is-cinematic-mode' : ''} ${isAnyModalOpen ? 'has-active-modal' : ''}`}>
       {/* Floating Restore HUD Banner in Cinematic Mode */}
       {isCinematicMode && (
         <div className="cinematic-mode-banner">
@@ -3380,6 +3438,8 @@ export default function App() {
           <NotificationBell 
             notifications={notificationHistory}
             onClearNotifications={handleClearNotifications}
+            isOpen={notificationsModalOpen}
+            onOpenChange={setNotificationsModalOpen}
           />
         }
         toastDockNode={
@@ -3413,45 +3473,77 @@ export default function App() {
           soundEnabled={soundEnabled}
           onToggleSound={handleToggleSound}
           fpsMode={fpsMode}
-          isSuspended={campaignWindowOpen || dungeonCombatOpen || arenaBattleOpen}
+          isSuspended={isAnyModalOpen || campaignWindowOpen || dungeonCombatOpen || arenaBattleOpen}
+          isFullscreen={isFullscreen}
+          onToggleFullscreen={handleToggleFullscreen}
         />
       </main>
 
-      {/* Main Interactive Game World Canvas */}
-      {hasStartedGame && !isCinematicMode && (
-        <RouletteNotification 
-          isFreeSpinReady={isWheelFreeSpinReady}
-          onOpenWheel={() => handleOpenShop('wheel')}
-        />
+      {/* Lateral Events & Deals Dock (Royal Messenger, Daily Roulette, Starter Pack) */}
+      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+        <aside className="hud-lateral-events-dock" aria-label="Avisos y Ofertas">
+          <EventBadge 
+            activeEvent={activeEvent}
+            timeLeft={eventTimeLeft}
+            onClick={() => setEventModalOpen(true)}
+            onDismiss={() => setActiveEvent(null)}
+          />
+          <RouletteNotification 
+            isFreeSpinReady={isWheelFreeSpinReady}
+            onOpenWheel={() => handleOpenShop('wheel')}
+          />
+          <StarterPackBanner 
+            claimed={vipStatus.starterPackClaimed}
+            onOpenOffer={() => handleOpenShop('offers')}
+          />
+        </aside>
       )}
 
-      {/* Bottom-Left PvP / Batalla Button (Aligned with Reino) */}
-      {hasStartedGame && !isCinematicMode && (
+      {/* Bottom-Left Kingdom Button & Chat Button */}
+      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
         <LeftActionControls 
-          onOpenBattle={() => setCombatModeModalOpen(true)}
-          arenaTickets={arenaData.tickets}
-          isTutorialActive={isTutorialRunning}
-        />
-      )}
-
-      {/* Bottom-Right Heroes and Kingdom Action Controls */}
-      {hasStartedGame && !isCinematicMode && (
-        <RightActionControls 
-          onOpenHeroes={() => setArmyModalOpen(true)}
           onOpenKingdom={() => setKingdomHubModalOpen(true)}
-          onOpenSettings={() => setMenuModalOpen(true)}
+          onOpenChat={() => setChatModalOpen(true)}
           questPendingCount={totalPendingQuests}
           wheelFreeSpinReady={isWheelFreeSpinReady}
           isTutorialActive={isTutorialRunning}
         />
       )}
 
-      {/* Right Lateral Ranking Button (Despliega el Modal de Ranking) */}
-      {hasStartedGame && !isCinematicMode && (
+      {/* Bottom-Right Battle & Settings Action Controls (Swapped with Kingdom) */}
+      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+        <RightActionControls 
+          onOpenBattle={() => setCombatModeModalOpen(true)}
+          onOpenSettings={() => setMenuModalOpen(true)}
+          arenaTickets={arenaData.tickets}
+          isTutorialActive={isTutorialRunning}
+        />
+      )}
+
+      {/* Lateral Ranking Button (Kept in Place) */}
+      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
         <RankingLateralButton 
           onOpenRanking={handleOpenRanking}
           trophies={arenaData.trophies}
           peaceShieldUntil={arenaData.peaceShieldUntil}
+          isTutorialActive={isTutorialRunning}
+        />
+      )}
+
+      {/* Lateral Store Button (Placed Next to Ranking) */}
+      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+        <StoreLateralButton 
+          onOpenShop={() => handleOpenShop('offers')}
+          wheelFreeSpinReady={isWheelFreeSpinReady}
+          isTutorialActive={isTutorialRunning}
+        />
+      )}
+
+      {/* Lateral Inventory Button (Placed Next to Store) */}
+      {hasStartedGame && !isCinematicMode && !isAnyModalOpen && (
+        <InventoryLateralButton 
+          onOpenInventory={() => setInventoryModalOpen(true)}
+          itemCount={(ownedRelicIds?.length || 0) + Object.values(consumables || {}).reduce((acc, v) => acc + (typeof v === 'number' ? v : 0), 0)}
           isTutorialActive={isTutorialRunning}
         />
       )}
@@ -3479,33 +3571,12 @@ export default function App() {
         wheelFreeSpinReady={isWheelFreeSpinReady}
       />
 
-      {/* Prominent Floating Mobile Fullscreen Button (Only visible when NOT in fullscreen on mobile) */}
-      {hasStartedGame && isMobileOrTouch() && !isFullscreen && (
-        <button 
-          className="floating-mobile-fullscreen-banner"
-          onClick={() => {
-            soundManager.playClick?.()
-            requestGameFullscreen()
-          }}
-          title={t('hud.fullscreen')}
-        >
-          <Maximize2 size={16} />
-          <span>{t('hud.fullscreen')}</span>
-        </button>
-      )}
-
-      {/* Bottom-Left Quick Fullscreen Button (Strictly on mobile devices only) */}
-      {isMobileOrTouch() && (
-        <button 
-          id="hud-bottom-fullscreen-btn"
-          className={`hud-bottom-fullscreen-btn ${isFullscreen ? 'is-fullscreen' : ''}`}
-          onClick={handleToggleFullscreen}
-          title={isFullscreen ? `${t('hud.fullscreen')} (Esc)` : t('hud.fullscreen')}
-          aria-label={t('hud.fullscreen')}
-        >
-          {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
-        </button>
-      )}
+      {/* Royal Kingdom & Global Chat Modal */}
+      <ChatModal 
+        isOpen={chatModalOpen}
+        onClose={() => setChatModalOpen(false)}
+        playerName={playerName || 'Lord King'}
+      />
 
 
       {/* Full Campaign Window (System Architecture Map & Dungeons) */}
@@ -3704,15 +3775,6 @@ export default function App() {
 
 
 
-      {/* Random Kingdom Event Notification Badge */}
-      {hasStartedGame && (
-        <EventBadge 
-          activeEvent={activeEvent}
-          timeLeft={eventTimeLeft}
-          onClick={() => setEventModalOpen(true)}
-          onDismiss={() => setActiveEvent(null)}
-        />
-      )}
 
       {/* Kingdom Event & Dilemmas Modal */}
       <KingdomEventModal 
@@ -3755,13 +3817,6 @@ export default function App() {
 
 
 
-      {/* Floating Starter Pack Offer Banner (24h countdown) */}
-      {!isCinematicMode && (
-        <StarterPackBanner 
-          claimed={vipStatus.starterPackClaimed}
-          onOpenOffer={() => handleOpenShop('offers')}
-        />
-      )}
 
       {/* Royal Bazaar & Monetization Shop Modal */}
       <ShopModal

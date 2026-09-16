@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Plus, Hammer, Eye, EyeOff } from 'lucide-react'
+import { Plus, Hammer, Eye, EyeOff, Maximize2, Minimize2 } from 'lucide-react'
 import { BUILDING_TYPES, getMaxProductionBatches, getBuildingDef, getBuildingAnimationDuration } from '../data/buildingsData'
 import { soundManager } from '../utils/audio'
+import { toggleGameFullscreen, isFullscreenActive } from '../utils/fullscreen'
 import { AnimatedMap } from './AnimatedMap'
 import { CitizensLayer } from './CitizensLayer'
 import { useTranslation } from '../i18n/index.jsx'
@@ -70,8 +71,25 @@ export function GameWorld({
   onToggleSound,
   fpsMode = '60fps',
   isSuspended = false,
+  isFullscreen: externalIsFullscreen,
+  onToggleFullscreen,
 }) {
   const { t } = useTranslation()
+  const [internalIsFullscreen, setInternalIsFullscreen] = useState(isFullscreenActive)
+  const isFullscreen = externalIsFullscreen !== undefined ? externalIsFullscreen : internalIsFullscreen
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      setInternalIsFullscreen(isFullscreenActive())
+    }
+    document.addEventListener('fullscreenchange', handleFsChange)
+    document.addEventListener('webkitfullscreenchange', handleFsChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFsChange)
+      document.removeEventListener('webkitfullscreenchange', handleFsChange)
+    }
+  }, [])
+
   // Local tick to ensure countdowns, ghost transitions and harvest states re-render smoothly (1s interval, suspended in combat)
   const [, setWorldTick] = useState(0)
   useEffect(() => {
@@ -141,12 +159,22 @@ export function GameWorld({
   const pendingPanRef = useRef(null)
   const lastPanTimeRef = useRef(0)
 
+  // Multi-touch pinch-to-zoom & smooth gesture tracking
+  const activePointersRef = useRef(new Map())
+  const initialPinchDistRef = useRef(null)
+  const initialZoomRef = useRef(1)
+  const isInteractingRef = useRef(false)
+  const [isInteracting, setIsInteracting] = useState(false)
+  const interactionTimerRef = useRef(null)
+  const wheelRafRef = useRef(null)
+  const pendingWheelRef = useRef({ zoomDelta: 0, panX: 0, panY: 0 })
+
   // Cancel any pending RAF on unmount
   useEffect(() => {
     return () => {
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current)
-      }
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current)
+      if (wheelRafRef.current) cancelAnimationFrame(wheelRafRef.current)
+      if (interactionTimerRef.current) clearTimeout(interactionTimerRef.current)
     }
   }, [])
 
@@ -155,16 +183,50 @@ export function GameWorld({
     if (e.target.closest('button, .structure-resource-float, .build-here-btn')) {
       return
     }
-    if (e.button === 0 || e.button === 1) {
-      isPointerDownRef.current = true
-      pointerStartPosRef.current = { x: e.clientX, y: e.clientY }
-      dragStartRef.current = { x: e.clientX - pan.x, y: e.clientY - pan.y }
+
+    activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+    if (activePointersRef.current.size === 1) {
+      if (e.button === 0 || e.button === 1 || e.pointerType === 'touch') {
+        isPointerDownRef.current = true
+        pointerStartPosRef.current = { x: e.clientX, y: e.clientY }
+        dragStartRef.current = { x: e.clientX - pan.x, y: e.clientY - pan.y }
+      }
+    } else if (activePointersRef.current.size === 2) {
+      // Two-finger pinch detected on mobile screen
+      const pts = Array.from(activePointersRef.current.values())
+      initialPinchDistRef.current = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y)
+      initialZoomRef.current = zoom
+      setIsInteracting(true)
+      isInteractingRef.current = true
+      isPointerDownRef.current = false
     }
   }
 
-  // Dynamic pointer move: 60 FPS (16ms) for fluid dragging on 60Hz/90Hz/120Hz screens,
-  // or 30 FPS (33ms) in Eco mode to preserve mobile battery & GPU.
+  // Butter-smooth 60 FPS gesture and dragging pipeline
   const handlePointerMove = (e) => {
+    if (!activePointersRef.current.has(e.pointerId)) return
+    activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+    // 1. Multi-touch Pinch to Zoom on Mobile
+    if (activePointersRef.current.size >= 2 && initialPinchDistRef.current) {
+      const pts = Array.from(activePointersRef.current.values())
+      const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y)
+      if (currentDist > 8 && initialPinchDistRef.current > 8) {
+        const factor = currentDist / initialPinchDistRef.current
+        const targetZoom = Math.min(2.5, Math.max(1.0, Number((initialZoomRef.current * factor).toFixed(3))))
+
+        if (!rafIdRef.current) {
+          rafIdRef.current = requestAnimationFrame(() => {
+            rafIdRef.current = null
+            setZoom(targetZoom)
+          })
+        }
+      }
+      return
+    }
+
+    // 2. Single-finger Pan / Mouse Drag
     if (!isPointerDownRef.current || !pointerStartPosRef.current) return
     const dist = Math.hypot(e.clientX - pointerStartPosRef.current.x, e.clientY - pointerStartPosRef.current.y)
     
@@ -172,6 +234,8 @@ export function GameWorld({
     if (dist > 6) {
       if (!isDragging) {
         setIsDragging(true)
+        setIsInteracting(true)
+        isInteractingRef.current = true
         try {
           e.currentTarget.setPointerCapture(e.pointerId)
         } catch {}
@@ -186,23 +250,13 @@ export function GameWorld({
       if (!rafIdRef.current) {
         rafIdRef.current = requestAnimationFrame((timestamp) => {
           rafIdRef.current = null
-          const elapsed = timestamp - lastPanTimeRef.current
-          const targetInterval = fpsMode === 'eco' ? 33 : 16
-          // Dynamic interval according to FPS mode
-          if (elapsed >= targetInterval) {
-            lastPanTimeRef.current = timestamp
-            if (pendingPanRef.current) {
-              setPan(pendingPanRef.current)
-            }
-          } else {
-            // Re-schedule for remaining time window so drag never skips final touches
-            rafIdRef.current = requestAnimationFrame((laterTimestamp) => {
-              rafIdRef.current = null
-              lastPanTimeRef.current = laterTimestamp
-              if (pendingPanRef.current) {
-                setPan(pendingPanRef.current)
-              }
-            })
+          // Eco throttle only if explicitly requested
+          if (fpsMode === 'eco') {
+            if (timestamp - lastPanTimeRef.current < 30) return
+          }
+          lastPanTimeRef.current = timestamp
+          if (pendingPanRef.current) {
+            setPan(pendingPanRef.current)
           }
         })
       }
@@ -210,53 +264,94 @@ export function GameWorld({
   }
 
   const handlePointerUp = (e) => {
-    isPointerDownRef.current = false
-    pointerStartPosRef.current = null
-    if (rafIdRef.current) {
-      cancelAnimationFrame(rafIdRef.current)
-      rafIdRef.current = null
+    activePointersRef.current.delete(e.pointerId)
+    if (activePointersRef.current.size < 2) {
+      initialPinchDistRef.current = null
     }
-    if (pendingPanRef.current) {
-      setPan(pendingPanRef.current)
-      pendingPanRef.current = null
-    }
-    if (isDragging) {
-      setIsDragging(false)
-      try {
-        e.currentTarget.releasePointerCapture(e.pointerId)
-      } catch {}
+    if (activePointersRef.current.size === 0) {
+      isPointerDownRef.current = false
+      pointerStartPosRef.current = null
+      setIsInteracting(false)
+      isInteractingRef.current = false
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current)
+        rafIdRef.current = null
+      }
+      if (pendingPanRef.current) {
+        setPan(pendingPanRef.current)
+        pendingPanRef.current = null
+      }
+      if (isDragging) {
+        setIsDragging(false)
+        try {
+          e.currentTarget.releasePointerCapture(e.pointerId)
+        } catch {}
+      }
     }
   }
 
-  // Listener no pasivo para zoom con rueda del ratón y desplazamiento con trackpad
+  // Listener pasivo/acelerado para zoom con rueda del ratón y desplazamiento con trackpad
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
 
     const handleWheel = (e) => {
       e.preventDefault()
+
+      let zd = 0
+      let px = 0
+      let py = 0
+
       if (e.ctrlKey) {
         // Gesto Pinch-to-zoom en Mac trackpad o Ctrl+Wheel
-        const zoomDelta = e.deltaY * -0.01
-        setZoom((prev) => Math.min(Math.max(1.0, prev + zoomDelta), 2.5))
-      } else if (Math.abs(e.deltaX) > 0 || Math.abs(e.deltaY) > 0) {
-        // Si es rueda física normal (deltaX nulo y deltaY considerable) -> zoom suave
-        if (Math.abs(e.deltaX) === 0 && Math.abs(e.deltaY) >= 40) {
-          const zoomDelta = e.deltaY * -0.0012
-          setZoom((prev) => Math.min(Math.max(1.0, prev + zoomDelta), 2.5))
-        } else {
-          // Desplazamiento fluido con 2 dedos en trackpad
-          setPan((prev) => ({
-            x: Math.max(-maxPanX, Math.min(maxPanX, prev.x - e.deltaX)),
-            y: Math.max(-maxPanY, Math.min(maxPanY, prev.y - e.deltaY))
-          }))
-        }
+        zd = e.deltaY * -0.012
+      } else if (Math.abs(e.deltaX) === 0 && Math.abs(e.deltaY) >= 40) {
+        // Rueda física normal
+        zd = e.deltaY * -0.0014
+      } else {
+        // Desplazamiento con 2 dedos en trackpad
+        px = -e.deltaX
+        py = -e.deltaY
+      }
+
+      pendingWheelRef.current.zoomDelta += zd
+      pendingWheelRef.current.panX += px
+      pendingWheelRef.current.panY += py
+
+      if (!isInteractingRef.current) {
+        setIsInteracting(true)
+        isInteractingRef.current = true
+      }
+
+      if (!wheelRafRef.current) {
+        wheelRafRef.current = requestAnimationFrame(() => {
+          wheelRafRef.current = null
+          const { zoomDelta: curZd, panX: curPx, panY: curPy } = pendingWheelRef.current
+          pendingWheelRef.current = { zoomDelta: 0, panX: 0, panY: 0 }
+
+          if (curZd !== 0) {
+            setZoom((prev) => Math.min(2.5, Math.max(1.0, Number((prev + curZd).toFixed(3)))))
+          }
+          if (curPx !== 0 || curPy !== 0) {
+            setPan((prev) => ({
+              x: Math.max(-maxPanX, Math.min(maxPanX, prev.x + curPx)),
+              y: Math.max(-maxPanY, Math.min(maxPanY, prev.y + curPy)),
+            }))
+          }
+
+          clearTimeout(interactionTimerRef.current)
+          interactionTimerRef.current = setTimeout(() => {
+            setIsInteracting(false)
+            isInteractingRef.current = false
+          }, 120)
+        })
       }
     }
 
     el.addEventListener('wheel', handleWheel, { passive: false })
     return () => {
       el.removeEventListener('wheel', handleWheel)
+      if (wheelRafRef.current) cancelAnimationFrame(wheelRafRef.current)
     }
   }, [maxPanX, maxPanY])
 
@@ -309,7 +404,7 @@ export function GameWorld({
 
   return (
     <div 
-      className={`gameworld-container ${isDragging ? 'is-dragging' : ''}`}
+      className={`gameworld-container ${isDragging ? 'is-dragging' : ''} ${isInteracting ? 'is-interacting' : ''}`}
       ref={containerRef}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -321,6 +416,23 @@ export function GameWorld({
       <div className={`gameworld-zoom-controls ${isCinematicMode ? 'cinematic-view' : ''}`}>
         {!isCinematicMode && (
           <>
+            <button 
+              id="map-btn-fullscreen"
+              className={`map-ctrl-btn candy-map-btn fullscreen-map-btn ${isFullscreen ? 'active is-fullscreen' : ''}`}
+              onClick={() => {
+                soundManager.playClick?.()
+                if (onToggleFullscreen) {
+                  onToggleFullscreen()
+                } else {
+                  toggleGameFullscreen()
+                }
+              }}
+              title={isFullscreen ? `${t('hud.fullscreen')} (Esc)` : t('hud.fullscreen')}
+              aria-label={t('hud.fullscreen')}
+            >
+              {isFullscreen ? <Minimize2 size={22} /> : <Maximize2 size={22} />}
+            </button>
+
             <button 
               id="map-btn-zoom-in"
               className="map-ctrl-btn candy-map-btn" 
@@ -366,7 +478,7 @@ export function GameWorld({
           }}
           title={isCinematicMode ? "Mostrar Interfaz (H / Esc)" : "Modo Panorámico / Ocultar Todo (H)"}
         >
-          {isCinematicMode ? <EyeOff size={18} /> : <Eye size={18} />}
+          {isCinematicMode ? <EyeOff size={22} /> : <Eye size={22} />}
         </button>
       </div>
 

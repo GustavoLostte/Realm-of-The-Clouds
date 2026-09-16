@@ -210,20 +210,6 @@ export function TopBar({
             </div>
           </div>
         </div>
-
-        {/* Quick Controls */}
-        <div className="topbar-controls">
-          {isMobileOrTouch() && (
-            <button 
-              className={`control-btn fullscreen-btn ${isFullscreen ? 'active is-fullscreen' : ''}`}
-              onClick={toggleFullscreen}
-              title={isFullscreen ? `${t('hud.fullscreen')} (Esc)` : t('hud.fullscreen')}
-              aria-label={t('hud.fullscreen')}
-            >
-              {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-            </button>
-          )}
-        </div>
       </div>
     </header>
   )

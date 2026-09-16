@@ -9,7 +9,8 @@ import {
   Compass,
   ArrowRight,
   Lightbulb,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
@@ -173,10 +174,19 @@ export function QuestHerald({
 
       {/* Main Herald Card Body (Dropdown) */}
       {!isActuallyCollapsed && (
-        <div className="herald-card-content dropdown-mode">
+        <div 
+          className="herald-card-content dropdown-mode"
+          onPointerDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+        >
         {/* Herald Top Bar */}
-        <div className="herald-header dropdown-header" onClick={isTutorialActive ? undefined : onOpenQuestsModal}>
-          <div className="herald-avatar-box">
+        <div className="herald-header dropdown-header">
+          <div 
+            className="herald-avatar-box"
+            onClick={isTutorialActive ? undefined : onOpenQuestsModal}
+            title={t('quests.allQuestsTooltip') || 'Ver todas las misiones'}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src="/assets/avatars/avatar_king.webp" 
               alt={t('quests.heraldName')} 
@@ -186,16 +196,35 @@ export function QuestHerald({
             {isCompleted && <span className="herald-ready-beacon" />}
           </div>
 
-          <div className="herald-title-col">
+          <div 
+            className="herald-title-col"
+            onClick={isTutorialActive ? undefined : onOpenQuestsModal}
+            title={t('quests.allQuestsTooltip') || 'Ver todas las misiones'}
+            style={{ cursor: 'pointer', flex: 1 }}
+          >
             <span className="herald-chapter-pill">
               {chapterBadge}
             </span>
             <h4 className="herald-quest-title">{questTitle}</h4>
           </div>
+
+          <button
+            type="button"
+            className="herald-card-close-btn"
+            onClick={(e) => {
+              e.stopPropagation()
+              soundManager?.playClick?.()
+              setCollapsed(true)
+            }}
+            title={t('common.close') || 'Cerrar'}
+            aria-label={t('common.close') || 'Cerrar'}
+          >
+            <X size={15} />
+          </button>
         </div>
 
         {/* Quest Objective & Hint */}
-        <div className="herald-body" onClick={isTutorialActive ? undefined : onOpenQuestsModal}>
+        <div className="herald-body">
           <p className="herald-quest-desc">{questDesc}</p>
           {questHint && (
             <p className="herald-quest-hint" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -250,6 +279,19 @@ export function QuestHerald({
               </span>
             )}
           </div>
+
+          <button
+            type="button"
+            className="herald-open-all-link"
+            onClick={(e) => {
+              e.stopPropagation()
+              soundManager?.playClick?.()
+              onOpenQuestsModal?.()
+            }}
+          >
+            <ScrollText size={13} />
+            <span>{t('quests.viewAllQuests') || 'Ver todas las misiones'}</span>
+          </button>
         </div>
 
         {/* Action Button */}

@@ -34,29 +34,25 @@ export function RouletteNotification({
 
   if (collapsed) {
     return (
-      <div className="roulette-hud-notification-card minimized-mode">
-        <div className="lateral-event-bubble-wrapper">
-          <button
-            type="button"
-            className="lateral-event-bubble"
-            onClick={(e) => {
-              e.stopPropagation()
-              soundManager.playClick?.()
-              setCollapsed(false)
-            }}
-            title={t('rouletteNotify.miniTooltip')}
-            aria-label={t('rouletteNotify.miniTooltip')}
-          >
-            <img 
-              src="/assets/hud_icons/icon_roulette.webp" 
-              alt="Roulette" 
-              className="lateral-event-bubble-img" 
-              draggable="false" 
-            />
-            <div className="lateral-event-bubble-badge">★</div>
-          </button>
-        </div>
-      </div>
+      <button
+        type="button"
+        className="lateral-event-bubble"
+        onClick={(e) => {
+          e.stopPropagation()
+          soundManager.playClick?.()
+          setCollapsed(false)
+        }}
+        title={t('rouletteNotify.miniTooltip')}
+        aria-label={t('rouletteNotify.miniTooltip')}
+      >
+        <img 
+          src="/assets/hud_icons/icon_roulette.webp" 
+          alt="Roulette" 
+          className="lateral-event-bubble-img" 
+          draggable="false" 
+        />
+        <div className="lateral-event-bubble-badge">★</div>
+      </button>
     )
   }
 
@@ -68,17 +64,6 @@ export function RouletteNotification({
       tabIndex={0}
       title={t('rouletteNotify.cardTooltip')}
     >
-      {/* Dismiss / Minimize button */}
-      <button 
-        type="button" 
-        className="roulette-notify-close-btn"
-        onClick={handleDismiss}
-        title={t('rouletteNotify.minimizeTooltip')}
-        aria-label={t('common.close')}
-      >
-        <X size={13} />
-      </button>
-
       {/* 3D Roulette Icon with ambient glow */}
       <div className="roulette-notify-icon-frame">
         <img 
@@ -105,14 +90,26 @@ export function RouletteNotification({
         </p>
       </div>
 
-      {/* Action Prompt Pill */}
-      <button 
-        type="button" 
-        className="roulette-notify-action-pill"
-        onClick={handleClick}
-      >
-        <span>{t('rouletteNotify.spinBtn')}</span>
-      </button>
+      {/* Action Prompt Pill & Close Button (Aligned like Royal Message) */}
+      <div className="roulette-notify-actions">
+        <button 
+          type="button" 
+          className="roulette-notify-action-pill"
+          onClick={handleClick}
+        >
+          <span>{t('rouletteNotify.spinBtn')}</span>
+        </button>
+
+        <button 
+          type="button" 
+          className="roulette-notify-close-btn"
+          onClick={handleDismiss}
+          title={t('rouletteNotify.minimizeTooltip')}
+          aria-label={t('common.close')}
+        >
+          <X size={14} />
+        </button>
+      </div>
     </div>
   )
 }

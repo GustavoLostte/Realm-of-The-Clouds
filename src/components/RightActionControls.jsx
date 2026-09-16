@@ -4,11 +4,9 @@ import { useTranslation } from '../i18n'
 import './RightActionControls.css'
 
 export function RightActionControls({
-  onOpenHeroes,
-  onOpenKingdom,
+  onOpenBattle,
   onOpenSettings,
-  questPendingCount = 0,
-  wheelFreeSpinReady = false,
+  arenaTickets = 0,
   isTutorialActive = false,
 }) {
   const { t } = useTranslation()
@@ -19,11 +17,9 @@ export function RightActionControls({
     fn?.()
   }
 
-  const hasKingdomAlert = questPendingCount > 0 || wheelFreeSpinReady
-
   return (
-    <aside className="right-action-controls" aria-label="Acciones del Reino">
-      {/* Botón Candy de Configuración / Ajustes (Arriba de Reino) */}
+    <aside className="right-action-controls" aria-label="Acciones de Batalla y Configuración">
+      {/* Botón Candy de Configuración / Ajustes (Arriba de Batalla) */}
       <button
         id="right-btn-settings"
         className="right-settings-candy-btn"
@@ -39,33 +35,31 @@ export function RightActionControls({
         />
       </button>
 
-      {/* NOTA: Botón de Héroes retirado momentáneamente; se accederá mediante una edificación clickeable en el feudo */}
-
-      {/* Botón Grande: REINO / MENÚ (Alineado en la esquina inferior derecha con Batalla) */}
+      {/* Botón Grande: BATALLA (PvP & PvE) - En la esquina inferior derecha */}
       <button
-        id="right-btn-kingdom"
-        className={`right-action-btn kingdom-btn ${hasKingdomAlert ? 'has-alert' : ''}`}
-        onClick={() => handleTap(onOpenKingdom)}
-        title={t('rightControls.kingdomTooltip') || 'Menú del reino'}
-        aria-label={t('rightControls.kingdom') || 'Reino'}
+        id="right-btn-battle"
+        className={`right-action-btn battle-btn ${arenaTickets > 0 ? 'pulse-ready' : ''}`}
+        onClick={() => handleTap(onOpenBattle)}
+        title={t('rightControls.battleTooltip') || 'Combates por turnos (PvP y PvE)'}
+        aria-label={t('rightControls.battle') || 'Batalla'}
       >
         <div className="btn-glow-aura"></div>
         <div className="btn-icon-wrapper">
           <img
-            src="/assets/hud_icons/btn_build.webp"
-            alt={t('rightControls.kingdom') || 'Reino'}
-            className="right-btn-candy-icon kingdom-icon"
+            src="/assets/hud_icons/btn_arena.webp"
+            alt={t('rightControls.battle') || 'Batalla'}
+            className="right-btn-candy-icon battle-icon"
             draggable="false"
           />
-          {hasKingdomAlert && (
-            <span className="right-btn-badge alert">
-              {questPendingCount > 0 ? questPendingCount : '★'}
+          {arenaTickets > 0 && (
+            <span className="right-btn-badge tickets" title={`${arenaTickets} Asaltos`}>
+              {arenaTickets}
             </span>
           )}
         </div>
         <div className="btn-label-box">
-          <span className="btn-main-label">{t('rightControls.kingdom') || 'Reino'}</span>
-          <span className="btn-sub-label">{t('rightControls.kingdomSub') || 'Menú'}</span>
+          <span className="btn-main-label">{t('rightControls.battle') || 'Batalla'}</span>
+          <span className="btn-sub-label">{t('rightControls.battleSub') || 'PvP / PvE'}</span>
         </div>
       </button>
     </aside>

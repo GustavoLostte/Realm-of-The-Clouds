@@ -607,10 +607,12 @@ export const CitizensLayer = React.memo(function CitizensLayer({
       // Advance base progress along the conveyor cycle
       baseProgressRef.current = (baseProgressRef.current + WALKING_SPEED * dt) % CYCLE_LENGTH
 
-      // Throttle direct DOM update according to FPS mode (33ms for eco 30fps, 16ms for 60fps)
-      const renderThrottleInterval = fpsMode === 'eco' ? 33 : 16
-      if (now - lastRenderTimeRef.current < renderThrottleInterval) {
-        return
+      // Throttle direct DOM update ONLY in eco mode (to ~30fps).
+      // In 60fps mode, match browser vsync perfectly without 16ms jitter skips!
+      if (fpsMode === 'eco') {
+        if (now - lastRenderTimeRef.current < 30) {
+          return
+        }
       }
       lastRenderTimeRef.current = now
 
@@ -628,8 +630,18 @@ export const CitizensLayer = React.memo(function CitizensLayer({
         domEl.style.left = `${visual.x}%`
         domEl.style.top = `${visual.y}%`
         domEl.style.opacity = visual.opacity
-        domEl.style.zIndex = Math.round(visual.y * 10) + 1
-        domEl.style.pointerEvents = visual.isVisible && visual.opacity > 0.3 ? 'auto' : 'none'
+
+        const newZ = Math.round(visual.y * 10) + 1
+        if (domEl._cachedZ !== newZ) {
+          domEl._cachedZ = newZ
+          domEl.style.zIndex = newZ
+        }
+
+        const canPointer = visual.isVisible && visual.opacity > 0.3
+        if (domEl._cachedPointer !== canPointer) {
+          domEl._cachedPointer = canPointer
+          domEl.style.pointerEvents = canPointer ? 'auto' : 'none'
+        }
       }
     }
 

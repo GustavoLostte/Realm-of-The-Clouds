@@ -3,14 +3,13 @@ import React, { useRef, useEffect, useState } from 'react'
 export function AnimatedMap({ className = 'island-background', isPaused = false }) {
   const videoRef = useRef(null)
   const [useVideo, setUseVideo] = useState(true)
-  const isSuspendedRef = useRef(false)
 
-  // Autoplay management and smart modal suspension
+  // Autoplay management and tab visibility handling
   useEffect(() => {
     let cleanupInteraction = null
 
     const safePlay = () => {
-      if (videoRef.current && videoRef.current.paused && !isSuspendedRef.current && !document.hidden) {
+      if (videoRef.current && videoRef.current.paused && !isPaused && !document.hidden) {
         videoRef.current.play().catch(() => {})
       }
     }
@@ -23,23 +22,27 @@ export function AnimatedMap({ className = 'island-background', isPaused = false 
 
     if (videoRef.current) {
       videoRef.current.playbackRate = 1.0
-      videoRef.current.play().catch(() => {
-        // Start on first user interaction if browser policy requires it
-        const handleInteraction = () => {
-          safePlay()
-          window.removeEventListener('pointerdown', handleInteraction)
-          cleanupInteraction = null
-        }
-        cleanupInteraction = handleInteraction
-        window.addEventListener('pointerdown', handleInteraction, { once: true })
-      })
+      if (!isPaused && !document.hidden) {
+        videoRef.current.play().catch(() => {
+          // Start on first user interaction if browser policy requires it
+          const handleInteraction = () => {
+            safePlay()
+            window.removeEventListener('pointerdown', handleInteraction)
+            cleanupInteraction = null
+          }
+          cleanupInteraction = handleInteraction
+          window.addEventListener('pointerdown', handleInteraction, { once: true })
+        })
+      } else if (isPaused) {
+        safePause()
+      }
     }
 
-    // 1. Pause video when browser tab is minimized or in background to save battery
+    // Pause video when browser tab is minimized or in background to save battery
     const handleVisibilityChange = () => {
       if (document.hidden) {
         safePause()
-      } else if (!isSuspendedRef.current) {
+      } else if (!isPaused) {
         // Defer playback resume by one animation frame for buttery-smooth tab transition
         requestAnimationFrame(() => {
           safePlay()
@@ -48,45 +51,11 @@ export function AnimatedMap({ className = 'island-background', isPaused = false 
     }
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
-    // 2. Observe DOM to pause video whenever any modal backdrop is active, freeing GPU for smooth 60 FPS UI
-    const checkModalActive = () => {
-      const hasOpenModal = !!document.querySelector('.modal-backdrop, .campaign-window-backdrop, .dialog-backdrop')
-      if (hasOpenModal !== isSuspendedRef.current) {
-        isSuspendedRef.current = hasOpenModal
-        if (hasOpenModal) {
-          safePause()
-        } else {
-          safePlay()
-        }
-      }
-    }
-
-    // Initial check
-    checkModalActive()
-
-    const observer = new MutationObserver(checkModalActive)
-    observer.observe(document.body, { childList: true, subtree: true })
-
     return () => {
       if (cleanupInteraction) {
         window.removeEventListener('pointerdown', cleanupInteraction)
       }
       document.removeEventListener('visibilitychange', handleVisibilityChange)
-      observer.disconnect()
-    }
-  }, [])
-
-  // React to explicit isPaused prop
-  useEffect(() => {
-    if (!videoRef.current) return
-    if (isPaused) {
-      isSuspendedRef.current = true
-      videoRef.current.pause()
-    } else {
-      isSuspendedRef.current = false
-      if (!document.hidden && !document.querySelector('.modal-backdrop, .campaign-window-backdrop')) {
-        videoRef.current.play().catch(() => {})
-      }
     }
   }, [isPaused])
 

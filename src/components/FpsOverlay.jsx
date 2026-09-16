@@ -3,6 +3,7 @@ import './FpsOverlay.css'
 
 export function FpsOverlay() {
   const [fps, setFps] = useState(60)
+  const [ms, setMs] = useState('16.6')
   const frameCountRef = useRef(0)
   const lastTimeRef = useRef(performance.now())
 
@@ -68,7 +69,7 @@ export function FpsOverlay() {
         return
       }
 
-      // 4. Count frame and calculate stable FPS over a 300ms window
+      // 4. Count frame and calculate stable FPS & frame duration (ms) over a 300ms window
       frameCountRef.current++
       const elapsed = now - lastTimeRef.current
 
@@ -76,7 +77,11 @@ export function FpsOverlay() {
         // Enforce valid time window and reject stale intervals
         if (elapsed <= 600) {
           const calculatedFps = Math.min(120, Math.round((frameCountRef.current * 1000) / elapsed))
+          const calculatedMs = frameCountRef.current > 0
+            ? (elapsed / frameCountRef.current).toFixed(1)
+            : '0.0'
           setFps(calculatedFps)
+          setMs(calculatedMs)
         }
         frameCountRef.current = 0
         lastTimeRef.current = now
@@ -110,11 +115,14 @@ export function FpsOverlay() {
     <aside 
       className={`hud-fps-overlay ${getTierClass()}`} 
       id="hud-fps-counter"
-      aria-label={`${fps} fotogramas por segundo`}
+      aria-label={`${fps} FPS, ${ms} ms`}
     >
       <span className="fps-indicator-dot" />
       <span className="fps-number">{fps}</span>
       <span className="fps-label">FPS</span>
+      <span className="fps-separator">•</span>
+      <span className="fps-number fps-ms-number">{ms}</span>
+      <span className="fps-label">ms</span>
     </aside>
   )
 }

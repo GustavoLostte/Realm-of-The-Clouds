@@ -1,13 +1,13 @@
 /* Right Action Controls: Large Ergonomic Action Buttons */
 .right-action-controls {
   position: fixed;
-  left: 16px;
-  right: auto;
+  right: 16px;
+  left: auto;
   bottom: 24px;
   z-index: 900;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   width: 76px;
   pointer-events: auto;
@@ -17,14 +17,13 @@
 
 /* Settings Candy Button - Stacked Directly Above Kingdom Button */
 .right-settings-candy-btn {
-  position: fixed;
-  right: 32px;
-  bottom: 114px;
+  position: relative;
+  margin-bottom: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(14, 165, 233, 0.32) 0%, rgba(15, 23, 42, 0.94) 100%);
   border: 1.8px solid #0ea5e9;
@@ -56,8 +55,8 @@
 }
 
 .right-settings-candy-icon {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -225,28 +224,29 @@
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .right-action-controls {
-    right: 12px;
-    bottom: 20px;
-    gap: 8px;
-    width: 72px;
+    right: max(12px, env(safe-area-inset-right, 12px));
+    left: auto;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    width: 70px;
   }
 
   .right-settings-candy-btn {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
   }
 
   .right-settings-candy-icon {
-    width: 23px;
-    height: 23px;
+    width: 24px;
+    height: 24px;
   }
 
   .right-action-btn {
-    width: 72px;
+    width: 70px;
     height: 78px;
     border-radius: 18px;
+    padding: 5px 3px 4px 3px;
   }
 
   .btn-icon-wrapper {
@@ -265,5 +265,136 @@
 
   .btn-sub-label {
     font-size: 0.58rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .right-action-controls {
+    right: max(8px, env(safe-area-inset-right, 8px));
+    bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    width: 62px;
+  }
+
+  .right-settings-candy-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .right-settings-candy-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .right-action-btn {
+    width: 62px;
+    height: 72px;
+    border-radius: 16px;
+    padding: 4px 2px 3px 2px;
+  }
+
+  .btn-icon-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+
+  .right-btn-candy-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .btn-main-label {
+    font-size: 0.64rem;
+  }
+
+  .btn-sub-label {
+    font-size: 0.54rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .right-action-controls {
+    right: max(5px, env(safe-area-inset-right, 5px));
+    bottom: max(10px, env(safe-area-inset-bottom, 10px));
+    width: 56px;
+  }
+
+  .right-settings-candy-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .right-settings-candy-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .right-action-btn {
+    width: 56px;
+    height: 66px;
+    border-radius: 14px;
+    padding: 3px 1px 2px 1px;
+  }
+
+  .btn-icon-wrapper {
+    width: 32px;
+    height: 32px;
+  }
+
+  .right-btn-candy-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .btn-main-label {
+    font-size: 0.58rem;
+  }
+
+  .btn-sub-label {
+    font-size: 0.50rem;
+  }
+}
+
+/* Landscape / Low-Height Screens */
+@media (max-height: 580px) {
+  .right-action-controls {
+    right: max(10px, env(safe-area-inset-right, 10px));
+    left: auto;
+    bottom: max(8px, env(safe-area-inset-bottom, 8px));
+    width: 64px;
+  }
+
+  .right-settings-candy-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .right-settings-candy-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .right-action-btn {
+    width: 64px;
+    height: 70px;
+    border-radius: 15px;
+    padding: 3px 2px;
+  }
+
+  .btn-icon-wrapper {
+    width: 34px;
+    height: 34px;
+  }
+
+  .right-btn-candy-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .btn-main-label {
+    font-size: 0.62rem;
+  }
+
+  .btn-sub-label {
+    font-size: 0.52rem;
   }
 }

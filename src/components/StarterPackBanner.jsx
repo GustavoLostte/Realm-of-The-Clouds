@@ -37,32 +37,25 @@ export function StarterPackBanner({
   // Minimized state when user dismisses the banner
   if (isDismissed) {
     return (
-      <div className="starter-pack-floating-banner minimized-mode">
-        <div className="lateral-event-bubble-wrapper">
-          <button
-            type="button"
-            className="lateral-event-bubble"
-            onClick={(e) => {
-              e.stopPropagation()
-              soundManager.playClick()
-              setIsDismissed(false)
-            }}
-            title={t('starterPack.minimizedTooltip')}
-            aria-label={t('starterPack.minimizedTooltip')}
-          >
-            <img 
-              src="/assets/hud_icons/btn_inventory.webp" 
-              alt="Oferta" 
-              className="lateral-event-bubble-img" 
-              draggable="false" 
-            />
-            <div className="lateral-event-bubble-badge" style={{ background: '#f59e0b', fontSize: '0.5rem' }}>%</div>
-          </button>
-          <div className="lateral-event-timer-pill">
-            {timeString}
-          </div>
-        </div>
-      </div>
+      <button
+        type="button"
+        className="lateral-event-bubble"
+        onClick={(e) => {
+          e.stopPropagation()
+          soundManager.playClick()
+          setIsDismissed(false)
+        }}
+        title={t('starterPack.minimizedTooltip')}
+        aria-label={t('starterPack.minimizedTooltip')}
+      >
+        <img 
+          src="/assets/hud_icons/btn_inventory.webp" 
+          alt="Oferta" 
+          className="lateral-event-bubble-img" 
+          draggable="false" 
+        />
+        <div className="lateral-event-bubble-badge" style={{ background: '#f59e0b', fontSize: '0.5rem' }}>%</div>
+      </button>
     )
   }
 
@@ -75,21 +68,6 @@ export function StarterPackBanner({
       title={t('starterPack.bannerTitleTooltip')}
     >
       <div className="banner-glow-halo" />
-
-      {/* Dismiss button */}
-      <button 
-        type="button"
-        className="banner-close-btn"
-        onClick={(e) => {
-          e.stopPropagation()
-          soundManager.playClick()
-          setIsDismissed(true)
-        }}
-        title={t('starterPack.hideBanner')}
-        aria-label={t('starterPack.hideBanner')}
-      >
-        <X size={12} />
-      </button>
 
       <div className="banner-icon-side">
         <div className="banner-chest-disc">
@@ -122,6 +100,23 @@ export function StarterPackBanner({
             <ChevronRight size={11} />
           </div>
         </div>
+      </div>
+
+      {/* Actions: Close Button (Aligned like Royal Message) */}
+      <div className="banner-actions">
+        <button 
+          type="button"
+          className="banner-close-btn"
+          onClick={(e) => {
+            e.stopPropagation()
+            soundManager.playClick?.()
+            setIsDismissed(true)
+          }}
+          title={t('starterPack.hideBanner')}
+          aria-label={t('starterPack.hideBanner')}
+        >
+          <X size={14} />
+        </button>
       </div>
     </div>
   )
