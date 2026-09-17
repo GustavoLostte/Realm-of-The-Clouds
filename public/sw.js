@@ -3,7 +3,7 @@
  * High-performance PWA caching engine for fast loads and offline gameplay.
  */
 
-const CACHE_VERSION = 'v1.1.0'
+const CACHE_VERSION = 'v1.2.0'
 const CACHE_STATIC = `cloud-realm-static-${CACHE_VERSION}`
 const CACHE_ASSETS = `cloud-realm-assets-${CACHE_VERSION}`
 const CACHE_FONTS = `cloud-realm-fonts-${CACHE_VERSION}`

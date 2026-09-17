@@ -614,11 +614,8 @@ export const CitizensLayer = React.memo(function CitizensLayer({
       // Advance base progress along the conveyor cycle
       baseProgressRef.current = (baseProgressRef.current + WALKING_SPEED * dt) % CYCLE_LENGTH
 
-      // Throttle direct DOM update:
-      // In eco mode: capped to ~30 FPS (min interval 30.0ms)
-      // In 60fps mode: capped to ~60 FPS (min interval 15.0ms) so 120Hz mobile displays never waste cycles running 120 DOM transforms/sec
-      const minRenderInterval = fpsMode === 'eco' ? 30.0 : 15.0
-      if (now - lastRenderTimeRef.current < minRenderInterval) {
+      // Throttle direct DOM update: only in eco mode (30 FPS)
+      if (fpsMode === 'eco' && now - lastRenderTimeRef.current < 30.0) {
         return
       }
       lastRenderTimeRef.current = now

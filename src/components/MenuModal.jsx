@@ -20,6 +20,7 @@ import {
   LogOut,
   Download,
   RefreshCw,
+  ExternalLink,
 } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
@@ -42,6 +43,13 @@ export function MenuModal({
   onSetFpsMode,
   particlesEnabled = true,
   onToggleParticles,
+  graphicsPreset = 'quality',
+  recommendedPreset = 'quality',
+  onSetGraphicsPreset,
+  characterShadows = true,
+  onToggleCharacterShadows,
+  hudEffects = true,
+  onToggleHudEffects,
 }) {
   const { t, currentLang, changeLanguage, languages } = useTranslation()
   const [activeTab, setActiveTab] = useState('settings') // 'settings' | 'web3' | 'info'
@@ -287,53 +295,143 @@ export function MenuModal({
                 {t('menu.displaySectionTitle')}
               </h4>
 
-              <div className="menu-setting-row">
+              {/* Graphics Profile Selector */}
+              <div className="menu-setting-row" style={{ alignItems: 'flex-start' }}>
                 <div className="setting-label">
-                  <span className="setting-name">{t('menu.fpsTitle')}</span>
-                  <span className="setting-desc">{t('menu.fpsDesc')}</span>
+                  <span className="setting-name">{t('menu.graphicsPresetTitle')}</span>
+                  <span className="setting-desc">{t('menu.graphicsPresetDesc')}</span>
                 </div>
-                <div className="segmented-control">
+                <div className="segmented-control" style={{ flexWrap: 'wrap' }}>
                   <button 
-                    className={`seg-btn ${fpsMode === '60fps' ? 'active' : ''}`}
+                    className={`seg-btn ${graphicsPreset === 'performance' ? 'active' : ''}`}
                     onClick={() => { 
                       soundManager.playClick()
-                      onSetFpsMode?.('60fps')
-                      showNotification?.(t('menu.fps60Toast'), 'info')
+                      onSetGraphicsPreset?.('performance')
+                      showNotification?.(t('menu.presetPerformanceToast'), 'info')
                     }}
                   >
-                    60 FPS
+                    {t('menu.presetPerformance')}
+                    {recommendedPreset === 'performance' && (
+                      <span className="preset-badge-recommended">{t('menu.recommendedBadge')}</span>
+                    )}
                   </button>
                   <button 
-                    className={`seg-btn ${fpsMode === 'eco' ? 'active' : ''}`}
+                    className={`seg-btn ${graphicsPreset === 'quality' ? 'active' : ''}`}
                     onClick={() => { 
                       soundManager.playClick()
-                      onSetFpsMode?.('eco')
-                      showNotification?.(t('menu.fpsEcoToast'), 'info')
+                      onSetGraphicsPreset?.('quality')
+                      showNotification?.(t('menu.presetQualityToast'), 'info')
                     }}
                   >
-                    {t('menu.fpsEco')}
+                    {t('menu.presetQuality')}
+                    {recommendedPreset === 'quality' && (
+                      <span className="preset-badge-recommended">{t('menu.recommendedBadge')}</span>
+                    )}
+                  </button>
+                  <button 
+                    className={`seg-btn ${graphicsPreset === 'custom' ? 'active' : ''}`}
+                    onClick={() => { 
+                      soundManager.playClick()
+                      onSetGraphicsPreset?.('custom')
+                      showNotification?.(t('menu.presetCustomToast'), 'info')
+                    }}
+                  >
+                    {t('menu.presetCustom')}
                   </button>
                 </div>
               </div>
 
-              <div className="menu-setting-row">
-                <div className="setting-label">
-                  <span className="setting-name">{t('menu.particlesTitle')}</span>
-                  <span className="setting-desc">{t('menu.particlesDesc')}</span>
+              {/* Custom Granular Settings Panel */}
+              {graphicsPreset === 'custom' && (
+                <div className="menu-custom-panel">
+                  {/* Character Shadows Toggle */}
+                  <div className="menu-setting-row">
+                    <div className="setting-label">
+                      <span className="setting-name">{t('menu.characterShadowsTitle')}</span>
+                      <span className="setting-desc">{t('menu.characterShadowsDesc')}</span>
+                    </div>
+                    <button 
+                      className={`candy-switch-btn ${characterShadows ? 'active' : ''}`}
+                      onClick={() => {
+                        soundManager.playClick()
+                        onToggleCharacterShadows?.(!characterShadows)
+                      }}
+                    >
+                      <span className="switch-knob" />
+                      <span className="switch-text">{characterShadows ? 'ON' : 'OFF'}</span>
+                    </button>
+                  </div>
+
+                  {/* HUD Visual Effects Toggle */}
+                  <div className="menu-setting-row">
+                    <div className="setting-label">
+                      <span className="setting-name">{t('menu.hudEffectsTitle')}</span>
+                      <span className="setting-desc">{t('menu.hudEffectsDesc')}</span>
+                    </div>
+                    <button 
+                      className={`candy-switch-btn ${hudEffects ? 'active' : ''}`}
+                      onClick={() => {
+                        soundManager.playClick()
+                        onToggleHudEffects?.(!hudEffects)
+                      }}
+                    >
+                      <span className="switch-knob" />
+                      <span className="switch-text">{hudEffects ? 'ON' : 'OFF'}</span>
+                    </button>
+                  </div>
+
+                  {/* Particles Toggle */}
+                  <div className="menu-setting-row">
+                    <div className="setting-label">
+                      <span className="setting-name">{t('menu.particlesTitle')}</span>
+                      <span className="setting-desc">{t('menu.particlesDesc')}</span>
+                    </div>
+                    <button 
+                      className={`candy-switch-btn ${particlesEnabled ? 'active' : ''}`}
+                      onClick={() => {
+                        soundManager.playClick()
+                        const nextVal = !particlesEnabled
+                        onToggleParticles?.(nextVal)
+                        showNotification?.(nextVal ? t('menu.particlesOnToast') : t('menu.particlesOffToast'), 'info')
+                      }}
+                    >
+                      <span className="switch-knob" />
+                      <span className="switch-text">{particlesEnabled ? 'ON' : 'OFF'}</span>
+                    </button>
+                  </div>
+
+                  {/* FPS Mode Selector */}
+                  <div className="menu-setting-row">
+                    <div className="setting-label">
+                      <span className="setting-name">{t('menu.fpsTitle')}</span>
+                      <span className="setting-desc">{t('menu.fpsDesc')}</span>
+                    </div>
+                    <div className="segmented-control">
+                      <button 
+                        className={`seg-btn ${fpsMode === '60fps' ? 'active' : ''}`}
+                        onClick={() => { 
+                          soundManager.playClick()
+                          onSetFpsMode?.('60fps')
+                          showNotification?.(t('menu.fps60Toast'), 'info')
+                        }}
+                      >
+                        60 FPS
+                      </button>
+                      <button 
+                        className={`seg-btn ${fpsMode === 'eco' ? 'active' : ''}`}
+                        onClick={() => { 
+                          soundManager.playClick()
+                          onSetFpsMode?.('eco')
+                          showNotification?.(t('menu.fpsEcoToast'), 'info')
+                        }}
+                      >
+                        {t('menu.fpsEco')}
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <button 
-                  className={`candy-switch-btn ${particlesEnabled ? 'active' : ''}`}
-                  onClick={() => {
-                    soundManager.playClick()
-                    const nextVal = !particlesEnabled
-                    onToggleParticles?.(nextVal)
-                    showNotification?.(nextVal ? t('menu.particlesOnToast') : t('menu.particlesOffToast'), 'info')
-                  }}
-                >
-                  <span className="switch-knob" />
-                  <span className="switch-text">{particlesEnabled ? 'ON' : 'OFF'}</span>
-                </button>
-              </div>
+              )}
+
 
               {isMobileOrTouch() && (
                 <div className="menu-setting-row">
@@ -587,13 +685,25 @@ export function MenuModal({
               <p className="game-info-version">{t('menu.gameVersion')}</p>
               
               <div className="game-credits-box">
-                <p>{t('menu.gameTagline')}</p>
-                <div className="tech-pills">
-                  <span className="tech-pill">React 19</span>
-                  <span className="tech-pill">Vite</span>
-                  <span className="tech-pill">Web Audio API</span>
-                  <span className="tech-pill">WebP Atlases</span>
-                  <span className="tech-pill">Gasless Web3</span>
+                <p className="game-tagline-text">{t('menu.gameTagline')}</p>
+                
+                <div className="owner-credits-card">
+                  <span className="owner-label">Creador y Propietario</span>
+                  <a 
+                    href="https://wizzardev.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="owner-link-btn"
+                    title="Visitar WizzarDev Studios"
+                    onClick={() => soundManager?.playClick?.()}
+                  >
+                    <Globe size={18} className="owner-globe-icon" />
+                    <div className="owner-info">
+                      <span className="owner-name">WizzarDev Studios</span>
+                      <span className="owner-url">wizzardev.com</span>
+                    </div>
+                    <ExternalLink size={16} className="owner-external-icon" />
+                  </a>
                 </div>
               </div>
             </div>

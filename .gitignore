@@ -33,3 +33,5 @@ dist-ssr
 map TOC/
 duel_clean_knight_orc.jpg
 timing_duel_concept.jpg
+public/assets/map/raw_frames/
+public/assets/map_change_mask.png

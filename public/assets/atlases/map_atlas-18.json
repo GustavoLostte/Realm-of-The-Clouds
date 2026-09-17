@@ -1,0 +1,139 @@
+{
+  "frames": {
+    "Timeline 2_00057708.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057709.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057710.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057711.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057712.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057713.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    }
+  },
+  "meta": {
+    "image": "map_atlas-18.webp",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1928,
+      "h": 1632
+    },
+    "scale": "1"
+  }
+}

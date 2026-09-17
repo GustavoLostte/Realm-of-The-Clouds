@@ -1,0 +1,1592 @@
+{
+  "frames": {
+    "soldado_vigia_idle_000": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_001": {
+      "frame": {
+        "x": 206,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_002": {
+      "frame": {
+        "x": 410,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_003": {
+      "frame": {
+        "x": 614,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_004": {
+      "frame": {
+        "x": 818,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_005": {
+      "frame": {
+        "x": 1022,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_006": {
+      "frame": {
+        "x": 1226,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_007": {
+      "frame": {
+        "x": 1430,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_008": {
+      "frame": {
+        "x": 1634,
+        "y": 2,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_009": {
+      "frame": {
+        "x": 2,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_010": {
+      "frame": {
+        "x": 206,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_011": {
+      "frame": {
+        "x": 410,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_012": {
+      "frame": {
+        "x": 614,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_013": {
+      "frame": {
+        "x": 818,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_014": {
+      "frame": {
+        "x": 1022,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_015": {
+      "frame": {
+        "x": 1226,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_016": {
+      "frame": {
+        "x": 1430,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_017": {
+      "frame": {
+        "x": 1634,
+        "y": 146,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_018": {
+      "frame": {
+        "x": 2,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_019": {
+      "frame": {
+        "x": 206,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_020": {
+      "frame": {
+        "x": 410,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_021": {
+      "frame": {
+        "x": 614,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_022": {
+      "frame": {
+        "x": 818,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_023": {
+      "frame": {
+        "x": 1022,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_024": {
+      "frame": {
+        "x": 1226,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_025": {
+      "frame": {
+        "x": 1430,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_026": {
+      "frame": {
+        "x": 1634,
+        "y": 290,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_027": {
+      "frame": {
+        "x": 2,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_028": {
+      "frame": {
+        "x": 206,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_029": {
+      "frame": {
+        "x": 410,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_030": {
+      "frame": {
+        "x": 614,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_031": {
+      "frame": {
+        "x": 818,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_032": {
+      "frame": {
+        "x": 1022,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_033": {
+      "frame": {
+        "x": 1226,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_034": {
+      "frame": {
+        "x": 1430,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_035": {
+      "frame": {
+        "x": 1634,
+        "y": 434,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_036": {
+      "frame": {
+        "x": 2,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_037": {
+      "frame": {
+        "x": 206,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_038": {
+      "frame": {
+        "x": 410,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_039": {
+      "frame": {
+        "x": 614,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_040": {
+      "frame": {
+        "x": 818,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_041": {
+      "frame": {
+        "x": 1022,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_042": {
+      "frame": {
+        "x": 1226,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_043": {
+      "frame": {
+        "x": 1430,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_044": {
+      "frame": {
+        "x": 1634,
+        "y": 578,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_045": {
+      "frame": {
+        "x": 2,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_046": {
+      "frame": {
+        "x": 206,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_047": {
+      "frame": {
+        "x": 410,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_048": {
+      "frame": {
+        "x": 614,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_049": {
+      "frame": {
+        "x": 818,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_050": {
+      "frame": {
+        "x": 1022,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_051": {
+      "frame": {
+        "x": 1226,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_052": {
+      "frame": {
+        "x": 1430,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_053": {
+      "frame": {
+        "x": 1634,
+        "y": 722,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_054": {
+      "frame": {
+        "x": 2,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_055": {
+      "frame": {
+        "x": 206,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_056": {
+      "frame": {
+        "x": 410,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_057": {
+      "frame": {
+        "x": 614,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_058": {
+      "frame": {
+        "x": 818,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_059": {
+      "frame": {
+        "x": 1022,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_060": {
+      "frame": {
+        "x": 1226,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_061": {
+      "frame": {
+        "x": 1430,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_062": {
+      "frame": {
+        "x": 1634,
+        "y": 866,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_063": {
+      "frame": {
+        "x": 2,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_064": {
+      "frame": {
+        "x": 206,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_065": {
+      "frame": {
+        "x": 410,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_066": {
+      "frame": {
+        "x": 614,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_067": {
+      "frame": {
+        "x": 818,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_068": {
+      "frame": {
+        "x": 1022,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_069": {
+      "frame": {
+        "x": 1226,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_070": {
+      "frame": {
+        "x": 1430,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_071": {
+      "frame": {
+        "x": 1634,
+        "y": 1010,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_072": {
+      "frame": {
+        "x": 2,
+        "y": 1154,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_073": {
+      "frame": {
+        "x": 206,
+        "y": 1154,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    },
+    "soldado_vigia_idle_074": {
+      "frame": {
+        "x": 410,
+        "y": 1154,
+        "w": 200,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 140
+      }
+    }
+  },
+  "animations": {
+    "play": [
+      "soldado_vigia_idle_000",
+      "soldado_vigia_idle_001",
+      "soldado_vigia_idle_002",
+      "soldado_vigia_idle_003",
+      "soldado_vigia_idle_004",
+      "soldado_vigia_idle_005",
+      "soldado_vigia_idle_006",
+      "soldado_vigia_idle_007",
+      "soldado_vigia_idle_008",
+      "soldado_vigia_idle_009",
+      "soldado_vigia_idle_010",
+      "soldado_vigia_idle_011",
+      "soldado_vigia_idle_012",
+      "soldado_vigia_idle_013",
+      "soldado_vigia_idle_014",
+      "soldado_vigia_idle_015",
+      "soldado_vigia_idle_016",
+      "soldado_vigia_idle_017",
+      "soldado_vigia_idle_018",
+      "soldado_vigia_idle_019",
+      "soldado_vigia_idle_020",
+      "soldado_vigia_idle_021",
+      "soldado_vigia_idle_022",
+      "soldado_vigia_idle_023",
+      "soldado_vigia_idle_024",
+      "soldado_vigia_idle_025",
+      "soldado_vigia_idle_026",
+      "soldado_vigia_idle_027",
+      "soldado_vigia_idle_028",
+      "soldado_vigia_idle_029",
+      "soldado_vigia_idle_030",
+      "soldado_vigia_idle_031",
+      "soldado_vigia_idle_032",
+      "soldado_vigia_idle_033",
+      "soldado_vigia_idle_034",
+      "soldado_vigia_idle_035",
+      "soldado_vigia_idle_036",
+      "soldado_vigia_idle_037",
+      "soldado_vigia_idle_038",
+      "soldado_vigia_idle_039",
+      "soldado_vigia_idle_040",
+      "soldado_vigia_idle_041",
+      "soldado_vigia_idle_042",
+      "soldado_vigia_idle_043",
+      "soldado_vigia_idle_044",
+      "soldado_vigia_idle_045",
+      "soldado_vigia_idle_046",
+      "soldado_vigia_idle_047",
+      "soldado_vigia_idle_048",
+      "soldado_vigia_idle_049",
+      "soldado_vigia_idle_050",
+      "soldado_vigia_idle_051",
+      "soldado_vigia_idle_052",
+      "soldado_vigia_idle_053",
+      "soldado_vigia_idle_054",
+      "soldado_vigia_idle_055",
+      "soldado_vigia_idle_056",
+      "soldado_vigia_idle_057",
+      "soldado_vigia_idle_058",
+      "soldado_vigia_idle_059",
+      "soldado_vigia_idle_060",
+      "soldado_vigia_idle_061",
+      "soldado_vigia_idle_062",
+      "soldado_vigia_idle_063",
+      "soldado_vigia_idle_064",
+      "soldado_vigia_idle_065",
+      "soldado_vigia_idle_066",
+      "soldado_vigia_idle_067",
+      "soldado_vigia_idle_068",
+      "soldado_vigia_idle_069",
+      "soldado_vigia_idle_070",
+      "soldado_vigia_idle_071",
+      "soldado_vigia_idle_072",
+      "soldado_vigia_idle_073",
+      "soldado_vigia_idle_074"
+    ]
+  },
+  "meta": {
+    "image": "soldado_vigia_idle_atlas.webp",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1836,
+      "h": 1296
+    },
+    "scale": "1"
+  }
+}

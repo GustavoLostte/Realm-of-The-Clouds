@@ -859,17 +859,31 @@ img, picture, svg, canvas, [draggable] {
   contain: strict;
 }
 
+.gameworld-container canvas,
+.gameworld-container,
+.gameworld-scene,
+.animated-map-wrapper,
+.island-background,
+.map-video-anim,
+.map-static-poster,
+.map-canvas-anim {
+  filter: brightness(1.06) contrast(1.04) saturate(1.08) !important;
+  forced-color-adjust: none !important;
+  -webkit-forced-color-adjust: none !important;
+  color-scheme: only dark !important;
+}
+
 .island-background {
   position: absolute;
-  width: 1920px;
-  height: 1080px;
   top: 0;
   left: 0;
+  width: 1920px;
+  height: 1080px;
+  object-fit: cover;
   pointer-events: none;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Color grading removed — bake into video/image source */
   forced-color-adjust: none !important;
   -webkit-forced-color-adjust: none !important;
 }
@@ -885,8 +899,6 @@ img, picture, svg, canvas, [draggable] {
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Removed filter: brightness/contrast/saturate — 3 GPU filter passes per video frame.
-     Color grading should be baked into the video source file instead. */
   forced-color-adjust: none !important;
   -webkit-forced-color-adjust: none !important;
 }
@@ -902,7 +914,6 @@ img, picture, svg, canvas, [draggable] {
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Color grading removed — bake into image source */
 }
 
 .map-canvas-anim {

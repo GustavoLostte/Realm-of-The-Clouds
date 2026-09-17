@@ -3,8 +3,8 @@ import { Plus, Hammer, Eye, EyeOff, Maximize2, Minimize2 } from 'lucide-react'
 import { BUILDING_TYPES, getMaxProductionBatches, getBuildingDef, getBuildingAnimationDuration } from '../data/buildingsData'
 import { soundManager } from '../utils/audio'
 import { toggleGameFullscreen, isFullscreenActive } from '../utils/fullscreen'
-import { AnimatedMap } from './AnimatedMap'
 import { CitizensLayer } from './CitizensLayer'
+import { PixiGameWorld } from './pixi/PixiGameWorld'
 import { useTranslation } from '../i18n/index.jsx'
 
 const RESOURCE_ICONS = {
@@ -43,17 +43,17 @@ function getBuildingGeneratedResources(buildingDef, t) {
 
 // Isometric ground footprint offsets (percentage of map height below slot.y)
 const BUILDING_BASE_OFFSETS = {
-  ayuntamiento: 4.5,
-  castillo: 4.5,
-  cuartel: 4.0,
-  casa_molino: 3.8,
-  archer_tower: 4.0,
-  gold_mine: 3.0,
-  mina_piedra: 3.0,
-  portal: 3.0,
-  casa: 2.9,
-  molino: 3.2,
-  almacen: 3.1,
+  ayuntamiento: 0.5,
+  castillo: 0.5,
+  cuartel: 2.0,
+  casa_molino: 2.0,
+  archer_tower: 2.0,
+  gold_mine: 1.5,
+  mina_piedra: 1.5,
+  portal: 1.5,
+  casa: 1.5,
+  molino: 1.5,
+  almacen: 1.5,
 }
 
 export function GameWorld({ 
@@ -70,11 +70,18 @@ export function GameWorld({
   soundEnabled = true,
   onToggleSound,
   fpsMode = '60fps',
+  characterShadows = true,
   isSuspended = false,
   isFullscreen: externalIsFullscreen,
   onToggleFullscreen,
+  engine = 'pixi',
 }) {
   const { t } = useTranslation()
+  const [activeEngine, setActiveEngine] = useState(engine)
+  useEffect(() => {
+    setActiveEngine(engine)
+  }, [engine])
+
   const [internalIsFullscreen, setInternalIsFullscreen] = useState(isFullscreenActive)
   const isFullscreen = externalIsFullscreen !== undefined ? externalIsFullscreen : internalIsFullscreen
 
@@ -223,8 +230,7 @@ export function GameWorld({
         if (!rafIdRef.current) {
           rafIdRef.current = requestAnimationFrame((timestamp) => {
             rafIdRef.current = null
-            const minInterval = fpsMode === 'eco' ? 30.0 : 15.0
-            if (timestamp - lastPanTimeRef.current < minInterval) return
+            if (fpsMode === 'eco' && timestamp - lastPanTimeRef.current < 30.0) return
             lastPanTimeRef.current = timestamp
             setZoom(targetZoom)
           })
@@ -257,9 +263,7 @@ export function GameWorld({
       if (!rafIdRef.current) {
         rafIdRef.current = requestAnimationFrame((timestamp) => {
           rafIdRef.current = null
-          const minPanInterval = fpsMode === 'eco' ? 30.0 : 15.0
-          if (timestamp - lastPanTimeRef.current < minPanInterval) {
-            // Re-schedule for next frame so the last position is never lost on high-refresh mobile screens
+          if (fpsMode === 'eco' && timestamp - lastPanTimeRef.current < 30.0) {
             rafIdRef.current = requestAnimationFrame((nextTimestamp) => {
               rafIdRef.current = null
               lastPanTimeRef.current = nextTimestamp
@@ -417,6 +421,31 @@ export function GameWorld({
     }
   }
 
+  const handlePixiCollect = (slot, coords, resType) => {
+    const buildingDef = slot.buildingId ? (getBuildingDef(slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]) : null
+    if (buildingDef) {
+      const produced = getBuildingGeneratedResources(buildingDef, t)
+      const primaryRes = produced[0]
+      const lvl = slot.level || 1
+      const cycleSec = (buildingDef.productionCycleSec || 120) * (vipStatus?.hasEngineering ? 0.75 : 1)
+      const now = Date.now()
+      const lastHarvest = slot.lastHarvestAt || (now - 60000)
+      const elapsed = Math.max(0, (now - lastHarvest) / 1000)
+      const maxBatches = getMaxProductionBatches(vipStatus?.hasOneClickHarvest || vipStatus?.hasEngineering)
+      const batchRatio = Math.min(maxBatches, elapsed / cycleSec)
+
+      const items = produced.map(p => ({
+        type: p.type,
+        icon: p.icon,
+        name: t('resources.' + p.type) || p.name,
+        amount: Math.max(1, Math.floor(p.rate * lvl * batchRatio))
+      }))
+      const floatText = items.map(it => `+${it.amount} ${it.name}`).join(' ')
+      triggerFloatingEffect(slot, floatText, items)
+    }
+    onCollectFromSlot?.(slot, coords, resType)
+  }
+
   return (
     <div 
       className={`gameworld-container ${isDragging ? 'is-dragging' : ''} ${isInteracting ? 'is-interacting' : ''}`}
@@ -497,21 +526,45 @@ export function GameWorld({
         </button>
       </div>
 
-      {/* Interactive World Map Canvas Container */}
-      <div 
-        className="gameworld-scene"
-        style={{
-          transform: `translate3d(${pan.x}px, ${pan.y}px, 0px) scale(${currentScale})`,
-        }}
-      >
-        {/* Animated Island Map */}
-        <AnimatedMap 
-          className="island-background" 
-          isPaused={isSuspended || isDragging} 
-          fpsMode={fpsMode} 
+      {/* 1. Pixi.js v8 GPU Accelerated Render Engine */}
+      {activeEngine === 'pixi' && (
+        <PixiGameWorld
+          slots={slots}
+          vipStatus={vipStatus}
+          onSelectSlot={onSelectSlot}
+          onOpenBuildMenu={onOpenBuildMenu}
+          onCollectFromSlot={handlePixiCollect}
+          onCitizenGift={(citizen, gift) => {
+            triggerFloatingEffect(citizen, gift.text)
+            onCitizenGift?.(citizen, gift)
+          }}
+          isSuspended={isSuspended}
+          soundEnabled={soundEnabled}
+          zoom={zoom}
+          pan={pan}
+          setPan={setPan}
+          fpsMode={fpsMode}
+          characterShadows={characterShadows}
+          onError={(err) => {
+            console.warn('[GameWorld] Pixi engine init error, falling back to DOM:', err)
+            setActiveEngine('dom')
+            if (typeof document !== 'undefined') {
+              document.documentElement.setAttribute('data-active-engine', 'dom')
+            }
+          }}
         />
+      )}
 
-        {/* Plaza Building Slots */}
+      {/* 2. Legacy DOM Scene (Fallback only if activeEngine === 'dom') */}
+      {activeEngine === 'dom' && (
+        <div 
+          className="gameworld-scene"
+          style={{
+            transform: `translate3d(${pan.x}px, ${pan.y}px, 0px) scale(${currentScale})`,
+            zIndex: 1,
+          }}
+        >
+          {/* Plaza Building Slots */}
         <div className="plaza-slots-layer">
           {(() => {
             const isBuildQuest = activeStoryQuest?.actionType === 'build'
@@ -574,16 +627,6 @@ export function GameWorld({
                         />
                         <div className="ghost-blueprint-aura" />
                       </div>
-                      {/* Animated construction overlay — loops for the whole duration */}
-                      {buildingDef.animConstruct && (
-                        <img 
-                          key={`${slot.id}-construct-anim`}
-                          src={buildingDef.animConstruct}
-                          alt="Construcción en progreso" 
-                          className={`building-sprite animated-construct construct-overlay sprite-${slot.buildingId}`}
-                          draggable="false"
-                        />
-                      )}
                       <div className="construction-indicator">
                         <Hammer className="hammer-anim" size={16} />
                         <div className="construction-indicator-center">
@@ -691,12 +734,12 @@ export function GameWorld({
                         </div>
                       )}
 
-                      {/* Building Sprite Image */}
+                      {/* Building Sprite Image (Static, zero structure animations) */}
                       <img 
                         key={`${slot.id}-active`}
-                        src={buildingDef.animIdle || buildingDef.image} 
+                        src={buildingDef.poster || buildingDef.image} 
                         alt={localizedBldName} 
-                        className={`building-sprite active-building ${buildingDef.animIdle ? 'animated-idle' : ''} sprite-${slot.buildingId}`}
+                        className={`building-sprite active-building sprite-${slot.buildingId}`}
                         draggable="false"
                       />
 
@@ -787,8 +830,17 @@ export function GameWorld({
             onCitizenGift?.(citizen, gift)
           }} 
         />
+        </div>
+      )}
 
-        {/* Floating Text Effects Layer (Always on top of all buildings, citizens and scenery) */}
+      {/* Floating Text Effects Layer (Always on top of all buildings, citizens and scenery) */}
+      <div 
+        className="gameworld-scene floating-overlay-scene"
+        style={{
+          transform: `translate3d(${pan.x}px, ${pan.y}px, 0px) scale(${currentScale})`,
+          pointerEvents: 'none',
+        }}
+      >
         <div className="floating-effects-layer">
           {floatingEffects.map((eff) => (
             <div 

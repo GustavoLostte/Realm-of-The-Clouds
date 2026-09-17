@@ -24,6 +24,7 @@ import { preloadImages, getCityCriticalAssets } from './utils/smartAssetLoader'
 import OrientationNotice from './components/OrientationNotice'
 import { CustomContextMenu } from './components/CustomContextMenu'
 import { requestGameFullscreen, isFullscreenActive, isMobileOrTouch, toggleGameFullscreen } from './utils/fullscreen'
+import { loadInitialGraphicsSettings } from './utils/graphicsProfiles'
 import { RELICS } from './data/inventoryData'
 import { KINGDOM_EVENTS } from './data/randomEventsData'
 import { 
@@ -249,46 +250,91 @@ export default function App() {
   const [isCinematicMode, setIsCinematicMode] = useState(false)
   const [currentScene, setCurrentScene] = useState('kingdom') // 'kingdom' | 'pvp'
 
-  // FPS Performance & Eco Mode (Default 60fps for silky-smooth experience everywhere)
-  const [fpsMode, setFpsModeState] = useState(() => {
-    try {
-      const saved = localStorage.getItem('toc_fps_mode')
-      if (saved === '60fps' || saved === 'eco') return saved
-      return '60fps'
-    } catch {
-      return '60fps'
-    }
-  })
+  // Smart Graphics Profiles: 'performance' | 'quality' | 'custom'
+  const initialGraphics = useMemo(() => loadInitialGraphicsSettings(), [])
+  
+  const [graphicsPreset, setGraphicsPresetState] = useState(initialGraphics.preset)
+  const [characterShadows, setCharacterShadowsState] = useState(initialGraphics.characterShadows)
+  const [hudEffects, setHudEffectsState] = useState(initialGraphics.hudEffects)
+  const [particlesEnabled, setParticlesEnabledState] = useState(initialGraphics.particlesEnabled)
+  const [fpsMode, setFpsModeState] = useState(initialGraphics.fpsMode)
+  const recommendedPreset = initialGraphics.recommendedPreset
 
-  const handleSetFpsMode = (mode) => {
-    setFpsModeState(mode)
+  const handleSetGraphicsPreset = (preset) => {
+    setGraphicsPresetState(preset)
     try {
-      localStorage.setItem('toc_fps_mode', mode)
-      document.documentElement.setAttribute('data-fps-mode', mode)
+      localStorage.setItem('toc_graphics_preset', preset)
+      localStorage.setItem('toc_graphics_preset_user_chosen', 'true')
+    } catch {}
+
+    if (preset === 'performance') {
+      setCharacterShadowsState(false)
+      setHudEffectsState(false)
+      setParticlesEnabledState(false)
+      try {
+        localStorage.setItem('toc_character_shadows', 'false')
+        localStorage.setItem('toc_hud_effects', 'false')
+        localStorage.setItem('toc_particles_enabled', 'false')
+      } catch {}
+    } else if (preset === 'quality') {
+      setCharacterShadowsState(true)
+      setHudEffectsState(true)
+      setParticlesEnabledState(true)
+      try {
+        localStorage.setItem('toc_character_shadows', 'true')
+        localStorage.setItem('toc_hud_effects', 'true')
+        localStorage.setItem('toc_particles_enabled', 'true')
+      } catch {}
+    }
+  }
+
+  const handleToggleCharacterShadows = (enabled) => {
+    setCharacterShadowsState(enabled)
+    setGraphicsPresetState('custom')
+    try {
+      localStorage.setItem('toc_graphics_preset', 'custom')
+      localStorage.setItem('toc_graphics_preset_user_chosen', 'true')
+      localStorage.setItem('toc_character_shadows', String(enabled))
     } catch {}
   }
 
-  // Visual Particles toggle (Persisted in localStorage)
-  const [particlesEnabled, setParticlesEnabledState] = useState(() => {
+  const handleToggleHudEffects = (enabled) => {
+    setHudEffectsState(enabled)
+    setGraphicsPresetState('custom')
     try {
-      return localStorage.getItem('toc_particles_enabled') !== 'false'
-    } catch {
-      return true
-    }
-  })
+      localStorage.setItem('toc_graphics_preset', 'custom')
+      localStorage.setItem('toc_graphics_preset_user_chosen', 'true')
+      localStorage.setItem('toc_hud_effects', String(enabled))
+    } catch {}
+  }
 
   const handleToggleParticles = (enabled) => {
     setParticlesEnabledState(enabled)
+    setGraphicsPresetState('custom')
     try {
+      localStorage.setItem('toc_graphics_preset', 'custom')
+      localStorage.setItem('toc_graphics_preset_user_chosen', 'true')
       localStorage.setItem('toc_particles_enabled', String(enabled))
-      document.documentElement.setAttribute('data-particles', enabled ? 'on' : 'off')
     } catch {}
   }
+
+  const handleSetFpsMode = (mode) => {
+    setFpsModeState(mode)
+    setGraphicsPresetState('custom')
+    try {
+      localStorage.setItem('toc_graphics_preset', 'custom')
+      localStorage.setItem('toc_graphics_preset_user_chosen', 'true')
+      localStorage.setItem('toc_fps_mode', mode)
+    } catch {}
+  }
+
 
   useEffect(() => {
     document.documentElement.setAttribute('data-fps-mode', fpsMode)
     document.documentElement.setAttribute('data-particles', particlesEnabled ? 'on' : 'off')
-  }, [fpsMode, particlesEnabled])
+    document.documentElement.setAttribute('data-graphics-preset', graphicsPreset)
+    document.documentElement.setAttribute('data-hud-effects', hudEffects ? 'high' : 'low')
+  }, [fpsMode, particlesEnabled, graphicsPreset, hudEffects])
 
   // Anti-Softlock Emergency Guardian: if basic building materials fall below critical threshold, provide immediate relief floor
   useEffect(() => {
@@ -479,6 +525,13 @@ export default function App() {
     arenaBattleOpen, usernameModalOpen, welcomeModalOpen
   ])
 
+  const isWorldSuspended = useMemo(() => Boolean(
+    isAnyModalOpen || 
+    campaignWindowOpen || 
+    dungeonCombatOpen || 
+    arenaBattleOpen || 
+    currentScene === 'pvp'
+  ), [isAnyModalOpen, campaignWindowOpen, dungeonCombatOpen, arenaBattleOpen, currentScene])
 
   // Keyboard shortcut: Press 'H' to toggle Cinematic View, 'Escape' to exit
   useEffect(() => {
@@ -3444,6 +3497,7 @@ export default function App() {
       {/* Main Interactive Game World Canvas */}
       <main className="game-main-viewport">
         <GameWorld 
+          engine="pixi"
           slots={slots}
           vipStatus={vipStatus}
           activeStoryQuest={activeStoryQuest}
@@ -3457,14 +3511,15 @@ export default function App() {
           soundEnabled={soundEnabled}
           onToggleSound={handleToggleSound}
           fpsMode={fpsMode}
-          isSuspended={isAnyModalOpen || campaignWindowOpen || dungeonCombatOpen || arenaBattleOpen || currentScene === 'pvp'}
+          characterShadows={characterShadows}
+          isSuspended={isWorldSuspended}
           isFullscreen={isFullscreen}
           onToggleFullscreen={handleToggleFullscreen}
         />
       </main>
 
       {/* Lateral Events & Deals Dock (Royal Messenger, Daily Roulette, Starter Pack) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
         <aside className="hud-lateral-events-dock" aria-label="Avisos y Ofertas">
           <EventBadge 
             activeEvent={activeEvent}
@@ -3487,7 +3542,7 @@ export default function App() {
       )}
 
       {/* Bottom-Left Kingdom Button & Chat Button */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
         <LeftActionControls 
           onOpenKingdom={() => setKingdomHubModalOpen(true)}
           onOpenChat={() => setChatModalOpen(true)}
@@ -3498,7 +3553,7 @@ export default function App() {
       )}
 
       {/* Bottom-Right Battle & Settings Action Controls (Swapped with Kingdom) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
         <RightActionControls 
           onOpenBattle={() => setCombatModeModalOpen(true)}
           onOpenSettings={() => setMenuModalOpen(true)}
@@ -3508,7 +3563,7 @@ export default function App() {
       )}
 
       {/* Lateral Ranking Button (Kept in Place) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
         <RankingLateralButton 
           onOpenRanking={handleOpenRanking}
           trophies={arenaData.trophies}
@@ -3518,7 +3573,7 @@ export default function App() {
       )}
 
       {/* Lateral Store Button (Placed Next to Ranking) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
         <StoreLateralButton 
           onOpenShop={() => handleOpenShop('offers')}
           wheelFreeSpinReady={isWheelFreeSpinReady}
@@ -3527,7 +3582,7 @@ export default function App() {
       )}
 
       {/* Lateral Inventory Button (Placed Next to Store) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !isAnyModalOpen && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
         <InventoryLateralButton 
           onOpenInventory={() => setInventoryModalOpen(true)}
           itemCount={(ownedRelicIds?.length || 0) + Object.values(consumables || {}).reduce((acc, v) => acc + (typeof v === 'number' ? v : 0), 0)}
@@ -3642,6 +3697,10 @@ export default function App() {
         soundEnabled={soundEnabled}
         fpsMode={fpsMode}
         particlesEnabled={particlesEnabled}
+        graphicsPreset={graphicsPreset}
+        recommendedPreset={recommendedPreset}
+        characterShadows={characterShadows}
+        hudEffects={hudEffects}
         selectedSlot={selectedSlot}
         recommendedBuildId={recommendedBuildId}
         setRecommendedBuildId={setRecommendedBuildId}
@@ -3698,6 +3757,9 @@ export default function App() {
         showNotification={showNotification}
         handleSetFpsMode={handleSetFpsMode}
         handleToggleParticles={handleToggleParticles}
+        handleSetGraphicsPreset={handleSetGraphicsPreset}
+        handleToggleCharacterShadows={handleToggleCharacterShadows}
+        handleToggleHudEffects={handleToggleHudEffects}
         handleSavePlayerName={handleSavePlayerName}
         handleClaimLevelUpRewards={handleClaimLevelUpRewards}
         handleCollectOfflineEarnings={handleCollectOfflineEarnings}

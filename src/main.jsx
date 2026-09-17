@@ -40,12 +40,10 @@ registerServiceWorker()
 analytics.init()
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ErrorBoundary>
-      <LanguageProvider>
-        <App />
-      </LanguageProvider>
-    </ErrorBoundary>
-  </StrictMode>,
+  <ErrorBoundary>
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
+  </ErrorBoundary>,
 )
 

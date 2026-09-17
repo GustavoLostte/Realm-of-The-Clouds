@@ -1,0 +1,731 @@
+{
+  "frames": {
+    "angel_chica_walk_back_000": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_001": {
+      "frame": {
+        "x": 84,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_002": {
+      "frame": {
+        "x": 166,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_003": {
+      "frame": {
+        "x": 248,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_004": {
+      "frame": {
+        "x": 330,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_005": {
+      "frame": {
+        "x": 412,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_006": {
+      "frame": {
+        "x": 494,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_007": {
+      "frame": {
+        "x": 576,
+        "y": 2,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_008": {
+      "frame": {
+        "x": 2,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_009": {
+      "frame": {
+        "x": 84,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_010": {
+      "frame": {
+        "x": 166,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_011": {
+      "frame": {
+        "x": 248,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_012": {
+      "frame": {
+        "x": 330,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_013": {
+      "frame": {
+        "x": 412,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_014": {
+      "frame": {
+        "x": 494,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_015": {
+      "frame": {
+        "x": 576,
+        "y": 136,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_016": {
+      "frame": {
+        "x": 2,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_017": {
+      "frame": {
+        "x": 84,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_018": {
+      "frame": {
+        "x": 166,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_019": {
+      "frame": {
+        "x": 248,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_020": {
+      "frame": {
+        "x": 330,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_021": {
+      "frame": {
+        "x": 412,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_022": {
+      "frame": {
+        "x": 494,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_023": {
+      "frame": {
+        "x": 576,
+        "y": 270,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_024": {
+      "frame": {
+        "x": 2,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_025": {
+      "frame": {
+        "x": 84,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_026": {
+      "frame": {
+        "x": 166,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_027": {
+      "frame": {
+        "x": 248,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_028": {
+      "frame": {
+        "x": 330,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_029": {
+      "frame": {
+        "x": 412,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_030": {
+      "frame": {
+        "x": 494,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_031": {
+      "frame": {
+        "x": 576,
+        "y": 404,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_032": {
+      "frame": {
+        "x": 2,
+        "y": 538,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    },
+    "angel_chica_walk_back_033": {
+      "frame": {
+        "x": 84,
+        "y": 538,
+        "w": 78,
+        "h": 130
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 130
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 130
+      }
+    }
+  },
+  "animations": {
+    "play": [
+      "angel_chica_walk_back_000",
+      "angel_chica_walk_back_001",
+      "angel_chica_walk_back_002",
+      "angel_chica_walk_back_003",
+      "angel_chica_walk_back_004",
+      "angel_chica_walk_back_005",
+      "angel_chica_walk_back_006",
+      "angel_chica_walk_back_007",
+      "angel_chica_walk_back_008",
+      "angel_chica_walk_back_009",
+      "angel_chica_walk_back_010",
+      "angel_chica_walk_back_011",
+      "angel_chica_walk_back_012",
+      "angel_chica_walk_back_013",
+      "angel_chica_walk_back_014",
+      "angel_chica_walk_back_015",
+      "angel_chica_walk_back_016",
+      "angel_chica_walk_back_017",
+      "angel_chica_walk_back_018",
+      "angel_chica_walk_back_019",
+      "angel_chica_walk_back_020",
+      "angel_chica_walk_back_021",
+      "angel_chica_walk_back_022",
+      "angel_chica_walk_back_023",
+      "angel_chica_walk_back_024",
+      "angel_chica_walk_back_025",
+      "angel_chica_walk_back_026",
+      "angel_chica_walk_back_027",
+      "angel_chica_walk_back_028",
+      "angel_chica_walk_back_029",
+      "angel_chica_walk_back_030",
+      "angel_chica_walk_back_031",
+      "angel_chica_walk_back_032",
+      "angel_chica_walk_back_033"
+    ]
+  },
+  "meta": {
+    "image": "angel_chica_walk_back_atlas.webp",
+    "format": "RGBA8888",
+    "size": {
+      "w": 656,
+      "h": 670
+    },
+    "scale": "1"
+  }
+}

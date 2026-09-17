@@ -1,0 +1,3475 @@
+{
+  "frames": {
+    "Timeline 2_00057600.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-0.webp"
+    },
+    "Timeline 2_00057601.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-0.webp"
+    },
+    "Timeline 2_00057602.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-0.webp"
+    },
+    "Timeline 2_00057603.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-0.webp"
+    },
+    "Timeline 2_00057604.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-0.webp"
+    },
+    "Timeline 2_00057605.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-0.webp"
+    },
+    "Timeline 2_00057606.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-1.webp"
+    },
+    "Timeline 2_00057607.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-1.webp"
+    },
+    "Timeline 2_00057608.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-1.webp"
+    },
+    "Timeline 2_00057609.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-1.webp"
+    },
+    "Timeline 2_00057610.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-1.webp"
+    },
+    "Timeline 2_00057611.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-1.webp"
+    },
+    "Timeline 2_00057612.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-2.webp"
+    },
+    "Timeline 2_00057613.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-2.webp"
+    },
+    "Timeline 2_00057614.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-2.webp"
+    },
+    "Timeline 2_00057615.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-2.webp"
+    },
+    "Timeline 2_00057616.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-2.webp"
+    },
+    "Timeline 2_00057617.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-2.webp"
+    },
+    "Timeline 2_00057618.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-3.webp"
+    },
+    "Timeline 2_00057619.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-3.webp"
+    },
+    "Timeline 2_00057620.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-3.webp"
+    },
+    "Timeline 2_00057621.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-3.webp"
+    },
+    "Timeline 2_00057622.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-3.webp"
+    },
+    "Timeline 2_00057623.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-3.webp"
+    },
+    "Timeline 2_00057624.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-4.webp"
+    },
+    "Timeline 2_00057625.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-4.webp"
+    },
+    "Timeline 2_00057626.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-4.webp"
+    },
+    "Timeline 2_00057627.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-4.webp"
+    },
+    "Timeline 2_00057628.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-4.webp"
+    },
+    "Timeline 2_00057629.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-4.webp"
+    },
+    "Timeline 2_00057630.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-5.webp"
+    },
+    "Timeline 2_00057631.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-5.webp"
+    },
+    "Timeline 2_00057632.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-5.webp"
+    },
+    "Timeline 2_00057633.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-5.webp"
+    },
+    "Timeline 2_00057634.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-5.webp"
+    },
+    "Timeline 2_00057635.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-5.webp"
+    },
+    "Timeline 2_00057636.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-6.webp"
+    },
+    "Timeline 2_00057637.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-6.webp"
+    },
+    "Timeline 2_00057638.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-6.webp"
+    },
+    "Timeline 2_00057639.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-6.webp"
+    },
+    "Timeline 2_00057640.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-6.webp"
+    },
+    "Timeline 2_00057641.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-6.webp"
+    },
+    "Timeline 2_00057642.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-7.webp"
+    },
+    "Timeline 2_00057643.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-7.webp"
+    },
+    "Timeline 2_00057644.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-7.webp"
+    },
+    "Timeline 2_00057645.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-7.webp"
+    },
+    "Timeline 2_00057646.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-7.webp"
+    },
+    "Timeline 2_00057647.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-7.webp"
+    },
+    "Timeline 2_00057648.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-8.webp"
+    },
+    "Timeline 2_00057649.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-8.webp"
+    },
+    "Timeline 2_00057650.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-8.webp"
+    },
+    "Timeline 2_00057651.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-8.webp"
+    },
+    "Timeline 2_00057652.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-8.webp"
+    },
+    "Timeline 2_00057653.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-8.webp"
+    },
+    "Timeline 2_00057654.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-9.webp"
+    },
+    "Timeline 2_00057655.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-9.webp"
+    },
+    "Timeline 2_00057656.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-9.webp"
+    },
+    "Timeline 2_00057657.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-9.webp"
+    },
+    "Timeline 2_00057658.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-9.webp"
+    },
+    "Timeline 2_00057659.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-9.webp"
+    },
+    "Timeline 2_00057660.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-10.webp"
+    },
+    "Timeline 2_00057661.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-10.webp"
+    },
+    "Timeline 2_00057662.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-10.webp"
+    },
+    "Timeline 2_00057663.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-10.webp"
+    },
+    "Timeline 2_00057664.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-10.webp"
+    },
+    "Timeline 2_00057665.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-10.webp"
+    },
+    "Timeline 2_00057666.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-11.webp"
+    },
+    "Timeline 2_00057667.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-11.webp"
+    },
+    "Timeline 2_00057668.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-11.webp"
+    },
+    "Timeline 2_00057669.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-11.webp"
+    },
+    "Timeline 2_00057670.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-11.webp"
+    },
+    "Timeline 2_00057671.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-11.webp"
+    },
+    "Timeline 2_00057672.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-12.webp"
+    },
+    "Timeline 2_00057673.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-12.webp"
+    },
+    "Timeline 2_00057674.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-12.webp"
+    },
+    "Timeline 2_00057675.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-12.webp"
+    },
+    "Timeline 2_00057676.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-12.webp"
+    },
+    "Timeline 2_00057677.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-12.webp"
+    },
+    "Timeline 2_00057678.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-13.webp"
+    },
+    "Timeline 2_00057679.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-13.webp"
+    },
+    "Timeline 2_00057680.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-13.webp"
+    },
+    "Timeline 2_00057681.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-13.webp"
+    },
+    "Timeline 2_00057682.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-13.webp"
+    },
+    "Timeline 2_00057683.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-13.webp"
+    },
+    "Timeline 2_00057684.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-14.webp"
+    },
+    "Timeline 2_00057685.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-14.webp"
+    },
+    "Timeline 2_00057686.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-14.webp"
+    },
+    "Timeline 2_00057687.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-14.webp"
+    },
+    "Timeline 2_00057688.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-14.webp"
+    },
+    "Timeline 2_00057689.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-14.webp"
+    },
+    "Timeline 2_00057690.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-15.webp"
+    },
+    "Timeline 2_00057691.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-15.webp"
+    },
+    "Timeline 2_00057692.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-15.webp"
+    },
+    "Timeline 2_00057693.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-15.webp"
+    },
+    "Timeline 2_00057694.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-15.webp"
+    },
+    "Timeline 2_00057695.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-15.webp"
+    },
+    "Timeline 2_00057696.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-16.webp"
+    },
+    "Timeline 2_00057697.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-16.webp"
+    },
+    "Timeline 2_00057698.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-16.webp"
+    },
+    "Timeline 2_00057699.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-16.webp"
+    },
+    "Timeline 2_00057700.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-16.webp"
+    },
+    "Timeline 2_00057701.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-16.webp"
+    },
+    "Timeline 2_00057702.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-17.webp"
+    },
+    "Timeline 2_00057703.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-17.webp"
+    },
+    "Timeline 2_00057704.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-17.webp"
+    },
+    "Timeline 2_00057705.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-17.webp"
+    },
+    "Timeline 2_00057706.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-17.webp"
+    },
+    "Timeline 2_00057707.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-17.webp"
+    },
+    "Timeline 2_00057708.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057709.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057710.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057711.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057712.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057713.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-18.webp"
+    },
+    "Timeline 2_00057714.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-19.webp"
+    },
+    "Timeline 2_00057715.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-19.webp"
+    },
+    "Timeline 2_00057716.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-19.webp"
+    },
+    "Timeline 2_00057717.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-19.webp"
+    },
+    "Timeline 2_00057718.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-19.webp"
+    },
+    "Timeline 2_00057719.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-19.webp"
+    },
+    "Timeline 2_00057720.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-20.webp"
+    },
+    "Timeline 2_00057721.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-20.webp"
+    },
+    "Timeline 2_00057722.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-20.webp"
+    },
+    "Timeline 2_00057723.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-20.webp"
+    },
+    "Timeline 2_00057724.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-20.webp"
+    },
+    "Timeline 2_00057725.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-20.webp"
+    },
+    "Timeline 2_00057726.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-21.webp"
+    },
+    "Timeline 2_00057727.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-21.webp"
+    },
+    "Timeline 2_00057728.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-21.webp"
+    },
+    "Timeline 2_00057729.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-21.webp"
+    },
+    "Timeline 2_00057730.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-21.webp"
+    },
+    "Timeline 2_00057731.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-21.webp"
+    },
+    "Timeline 2_00057732.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-22.webp"
+    },
+    "Timeline 2_00057733.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-22.webp"
+    },
+    "Timeline 2_00057734.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-22.webp"
+    },
+    "Timeline 2_00057735.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-22.webp"
+    },
+    "Timeline 2_00057736.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-22.webp"
+    },
+    "Timeline 2_00057737.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-22.webp"
+    },
+    "Timeline 2_00057738.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-23.webp"
+    },
+    "Timeline 2_00057739.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-23.webp"
+    },
+    "Timeline 2_00057740.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-23.webp"
+    },
+    "Timeline 2_00057741.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-23.webp"
+    },
+    "Timeline 2_00057742.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-23.webp"
+    },
+    "Timeline 2_00057743.webp": {
+      "frame": {
+        "x": 966,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-23.webp"
+    },
+    "Timeline 2_00057744.webp": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-24.webp"
+    },
+    "Timeline 2_00057745.webp": {
+      "frame": {
+        "x": 966,
+        "y": 2,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-24.webp"
+    },
+    "Timeline 2_00057746.webp": {
+      "frame": {
+        "x": 2,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-24.webp"
+    },
+    "Timeline 2_00057747.webp": {
+      "frame": {
+        "x": 966,
+        "y": 546,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-24.webp"
+    },
+    "Timeline 2_00057748.webp": {
+      "frame": {
+        "x": 2,
+        "y": 1090,
+        "w": 960,
+        "h": 540
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 540
+      },
+      "sourceSize": {
+        "w": 960,
+        "h": 540
+      },
+      "atlasImage": "map_atlas-24.webp"
+    }
+  },
+  "animations": {
+    "play": [
+      "Timeline 2_00057600.webp",
+      "Timeline 2_00057601.webp",
+      "Timeline 2_00057602.webp",
+      "Timeline 2_00057603.webp",
+      "Timeline 2_00057604.webp",
+      "Timeline 2_00057605.webp",
+      "Timeline 2_00057606.webp",
+      "Timeline 2_00057607.webp",
+      "Timeline 2_00057608.webp",
+      "Timeline 2_00057609.webp",
+      "Timeline 2_00057610.webp",
+      "Timeline 2_00057611.webp",
+      "Timeline 2_00057612.webp",
+      "Timeline 2_00057613.webp",
+      "Timeline 2_00057614.webp",
+      "Timeline 2_00057615.webp",
+      "Timeline 2_00057616.webp",
+      "Timeline 2_00057617.webp",
+      "Timeline 2_00057618.webp",
+      "Timeline 2_00057619.webp",
+      "Timeline 2_00057620.webp",
+      "Timeline 2_00057621.webp",
+      "Timeline 2_00057622.webp",
+      "Timeline 2_00057623.webp",
+      "Timeline 2_00057624.webp",
+      "Timeline 2_00057625.webp",
+      "Timeline 2_00057626.webp",
+      "Timeline 2_00057627.webp",
+      "Timeline 2_00057628.webp",
+      "Timeline 2_00057629.webp",
+      "Timeline 2_00057630.webp",
+      "Timeline 2_00057631.webp",
+      "Timeline 2_00057632.webp",
+      "Timeline 2_00057633.webp",
+      "Timeline 2_00057634.webp",
+      "Timeline 2_00057635.webp",
+      "Timeline 2_00057636.webp",
+      "Timeline 2_00057637.webp",
+      "Timeline 2_00057638.webp",
+      "Timeline 2_00057639.webp",
+      "Timeline 2_00057640.webp",
+      "Timeline 2_00057641.webp",
+      "Timeline 2_00057642.webp",
+      "Timeline 2_00057643.webp",
+      "Timeline 2_00057644.webp",
+      "Timeline 2_00057645.webp",
+      "Timeline 2_00057646.webp",
+      "Timeline 2_00057647.webp",
+      "Timeline 2_00057648.webp",
+      "Timeline 2_00057649.webp",
+      "Timeline 2_00057650.webp",
+      "Timeline 2_00057651.webp",
+      "Timeline 2_00057652.webp",
+      "Timeline 2_00057653.webp",
+      "Timeline 2_00057654.webp",
+      "Timeline 2_00057655.webp",
+      "Timeline 2_00057656.webp",
+      "Timeline 2_00057657.webp",
+      "Timeline 2_00057658.webp",
+      "Timeline 2_00057659.webp",
+      "Timeline 2_00057660.webp",
+      "Timeline 2_00057661.webp",
+      "Timeline 2_00057662.webp",
+      "Timeline 2_00057663.webp",
+      "Timeline 2_00057664.webp",
+      "Timeline 2_00057665.webp",
+      "Timeline 2_00057666.webp",
+      "Timeline 2_00057667.webp",
+      "Timeline 2_00057668.webp",
+      "Timeline 2_00057669.webp",
+      "Timeline 2_00057670.webp",
+      "Timeline 2_00057671.webp",
+      "Timeline 2_00057672.webp",
+      "Timeline 2_00057673.webp",
+      "Timeline 2_00057674.webp",
+      "Timeline 2_00057675.webp",
+      "Timeline 2_00057676.webp",
+      "Timeline 2_00057677.webp",
+      "Timeline 2_00057678.webp",
+      "Timeline 2_00057679.webp",
+      "Timeline 2_00057680.webp",
+      "Timeline 2_00057681.webp",
+      "Timeline 2_00057682.webp",
+      "Timeline 2_00057683.webp",
+      "Timeline 2_00057684.webp",
+      "Timeline 2_00057685.webp",
+      "Timeline 2_00057686.webp",
+      "Timeline 2_00057687.webp",
+      "Timeline 2_00057688.webp",
+      "Timeline 2_00057689.webp",
+      "Timeline 2_00057690.webp",
+      "Timeline 2_00057691.webp",
+      "Timeline 2_00057692.webp",
+      "Timeline 2_00057693.webp",
+      "Timeline 2_00057694.webp",
+      "Timeline 2_00057695.webp",
+      "Timeline 2_00057696.webp",
+      "Timeline 2_00057697.webp",
+      "Timeline 2_00057698.webp",
+      "Timeline 2_00057699.webp",
+      "Timeline 2_00057700.webp",
+      "Timeline 2_00057701.webp",
+      "Timeline 2_00057702.webp",
+      "Timeline 2_00057703.webp",
+      "Timeline 2_00057704.webp",
+      "Timeline 2_00057705.webp",
+      "Timeline 2_00057706.webp",
+      "Timeline 2_00057707.webp",
+      "Timeline 2_00057708.webp",
+      "Timeline 2_00057709.webp",
+      "Timeline 2_00057710.webp",
+      "Timeline 2_00057711.webp",
+      "Timeline 2_00057712.webp",
+      "Timeline 2_00057713.webp",
+      "Timeline 2_00057714.webp",
+      "Timeline 2_00057715.webp",
+      "Timeline 2_00057716.webp",
+      "Timeline 2_00057717.webp",
+      "Timeline 2_00057718.webp",
+      "Timeline 2_00057719.webp",
+      "Timeline 2_00057720.webp",
+      "Timeline 2_00057721.webp",
+      "Timeline 2_00057722.webp",
+      "Timeline 2_00057723.webp",
+      "Timeline 2_00057724.webp",
+      "Timeline 2_00057725.webp",
+      "Timeline 2_00057726.webp",
+      "Timeline 2_00057727.webp",
+      "Timeline 2_00057728.webp",
+      "Timeline 2_00057729.webp",
+      "Timeline 2_00057730.webp",
+      "Timeline 2_00057731.webp",
+      "Timeline 2_00057732.webp",
+      "Timeline 2_00057733.webp",
+      "Timeline 2_00057734.webp",
+      "Timeline 2_00057735.webp",
+      "Timeline 2_00057736.webp",
+      "Timeline 2_00057737.webp",
+      "Timeline 2_00057738.webp",
+      "Timeline 2_00057739.webp",
+      "Timeline 2_00057740.webp",
+      "Timeline 2_00057741.webp",
+      "Timeline 2_00057742.webp",
+      "Timeline 2_00057743.webp",
+      "Timeline 2_00057744.webp",
+      "Timeline 2_00057745.webp",
+      "Timeline 2_00057746.webp",
+      "Timeline 2_00057747.webp",
+      "Timeline 2_00057748.webp"
+    ],
+    "loop": [
+      "Timeline 2_00057600.webp",
+      "Timeline 2_00057601.webp",
+      "Timeline 2_00057602.webp",
+      "Timeline 2_00057603.webp",
+      "Timeline 2_00057604.webp",
+      "Timeline 2_00057605.webp",
+      "Timeline 2_00057606.webp",
+      "Timeline 2_00057607.webp",
+      "Timeline 2_00057608.webp",
+      "Timeline 2_00057609.webp",
+      "Timeline 2_00057610.webp",
+      "Timeline 2_00057611.webp",
+      "Timeline 2_00057612.webp",
+      "Timeline 2_00057613.webp",
+      "Timeline 2_00057614.webp",
+      "Timeline 2_00057615.webp",
+      "Timeline 2_00057616.webp",
+      "Timeline 2_00057617.webp",
+      "Timeline 2_00057618.webp",
+      "Timeline 2_00057619.webp",
+      "Timeline 2_00057620.webp",
+      "Timeline 2_00057621.webp",
+      "Timeline 2_00057622.webp",
+      "Timeline 2_00057623.webp",
+      "Timeline 2_00057624.webp",
+      "Timeline 2_00057625.webp",
+      "Timeline 2_00057626.webp",
+      "Timeline 2_00057627.webp",
+      "Timeline 2_00057628.webp",
+      "Timeline 2_00057629.webp",
+      "Timeline 2_00057630.webp",
+      "Timeline 2_00057631.webp",
+      "Timeline 2_00057632.webp",
+      "Timeline 2_00057633.webp",
+      "Timeline 2_00057634.webp",
+      "Timeline 2_00057635.webp",
+      "Timeline 2_00057636.webp",
+      "Timeline 2_00057637.webp",
+      "Timeline 2_00057638.webp",
+      "Timeline 2_00057639.webp",
+      "Timeline 2_00057640.webp",
+      "Timeline 2_00057641.webp",
+      "Timeline 2_00057642.webp",
+      "Timeline 2_00057643.webp",
+      "Timeline 2_00057644.webp",
+      "Timeline 2_00057645.webp",
+      "Timeline 2_00057646.webp",
+      "Timeline 2_00057647.webp",
+      "Timeline 2_00057648.webp",
+      "Timeline 2_00057649.webp",
+      "Timeline 2_00057650.webp",
+      "Timeline 2_00057651.webp",
+      "Timeline 2_00057652.webp",
+      "Timeline 2_00057653.webp",
+      "Timeline 2_00057654.webp",
+      "Timeline 2_00057655.webp",
+      "Timeline 2_00057656.webp",
+      "Timeline 2_00057657.webp",
+      "Timeline 2_00057658.webp",
+      "Timeline 2_00057659.webp",
+      "Timeline 2_00057660.webp",
+      "Timeline 2_00057661.webp",
+      "Timeline 2_00057662.webp",
+      "Timeline 2_00057663.webp",
+      "Timeline 2_00057664.webp",
+      "Timeline 2_00057665.webp",
+      "Timeline 2_00057666.webp",
+      "Timeline 2_00057667.webp",
+      "Timeline 2_00057668.webp",
+      "Timeline 2_00057669.webp",
+      "Timeline 2_00057670.webp",
+      "Timeline 2_00057671.webp",
+      "Timeline 2_00057672.webp",
+      "Timeline 2_00057673.webp",
+      "Timeline 2_00057674.webp",
+      "Timeline 2_00057675.webp",
+      "Timeline 2_00057676.webp",
+      "Timeline 2_00057677.webp",
+      "Timeline 2_00057678.webp",
+      "Timeline 2_00057679.webp",
+      "Timeline 2_00057680.webp",
+      "Timeline 2_00057681.webp",
+      "Timeline 2_00057682.webp",
+      "Timeline 2_00057683.webp",
+      "Timeline 2_00057684.webp",
+      "Timeline 2_00057685.webp",
+      "Timeline 2_00057686.webp",
+      "Timeline 2_00057687.webp",
+      "Timeline 2_00057688.webp",
+      "Timeline 2_00057689.webp",
+      "Timeline 2_00057690.webp",
+      "Timeline 2_00057691.webp",
+      "Timeline 2_00057692.webp",
+      "Timeline 2_00057693.webp",
+      "Timeline 2_00057694.webp",
+      "Timeline 2_00057695.webp",
+      "Timeline 2_00057696.webp",
+      "Timeline 2_00057697.webp",
+      "Timeline 2_00057698.webp",
+      "Timeline 2_00057699.webp",
+      "Timeline 2_00057700.webp",
+      "Timeline 2_00057701.webp",
+      "Timeline 2_00057702.webp",
+      "Timeline 2_00057703.webp",
+      "Timeline 2_00057704.webp",
+      "Timeline 2_00057705.webp",
+      "Timeline 2_00057706.webp",
+      "Timeline 2_00057707.webp",
+      "Timeline 2_00057708.webp",
+      "Timeline 2_00057709.webp",
+      "Timeline 2_00057710.webp",
+      "Timeline 2_00057711.webp",
+      "Timeline 2_00057712.webp",
+      "Timeline 2_00057713.webp",
+      "Timeline 2_00057714.webp",
+      "Timeline 2_00057715.webp",
+      "Timeline 2_00057716.webp",
+      "Timeline 2_00057717.webp",
+      "Timeline 2_00057718.webp",
+      "Timeline 2_00057719.webp",
+      "Timeline 2_00057720.webp",
+      "Timeline 2_00057721.webp",
+      "Timeline 2_00057722.webp",
+      "Timeline 2_00057723.webp",
+      "Timeline 2_00057724.webp",
+      "Timeline 2_00057725.webp",
+      "Timeline 2_00057726.webp",
+      "Timeline 2_00057727.webp",
+      "Timeline 2_00057728.webp",
+      "Timeline 2_00057729.webp",
+      "Timeline 2_00057730.webp",
+      "Timeline 2_00057731.webp",
+      "Timeline 2_00057732.webp",
+      "Timeline 2_00057733.webp",
+      "Timeline 2_00057734.webp",
+      "Timeline 2_00057735.webp",
+      "Timeline 2_00057736.webp",
+      "Timeline 2_00057737.webp",
+      "Timeline 2_00057738.webp",
+      "Timeline 2_00057739.webp",
+      "Timeline 2_00057740.webp",
+      "Timeline 2_00057741.webp",
+      "Timeline 2_00057742.webp",
+      "Timeline 2_00057743.webp",
+      "Timeline 2_00057744.webp",
+      "Timeline 2_00057745.webp",
+      "Timeline 2_00057746.webp",
+      "Timeline 2_00057747.webp",
+      "Timeline 2_00057748.webp"
+    ]
+  },
+  "meta": {
+    "app": "RealmOfKingdomsDenoisedMapAtlas",
+    "version": "3.0.0",
+    "image": "map_atlas-0.webp",
+    "baseImage": "map_base_1080p.webp",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1928,
+      "h": 1632
+    },
+    "scale": "1",
+    "related_multi_packs": [
+      "map_atlas-1.json",
+      "map_atlas-2.json",
+      "map_atlas-3.json",
+      "map_atlas-4.json",
+      "map_atlas-5.json",
+      "map_atlas-6.json",
+      "map_atlas-7.json",
+      "map_atlas-8.json",
+      "map_atlas-9.json",
+      "map_atlas-10.json",
+      "map_atlas-11.json",
+      "map_atlas-12.json",
+      "map_atlas-13.json",
+      "map_atlas-14.json",
+      "map_atlas-15.json",
+      "map_atlas-16.json",
+      "map_atlas-17.json",
+      "map_atlas-18.json",
+      "map_atlas-19.json",
+      "map_atlas-20.json",
+      "map_atlas-21.json",
+      "map_atlas-22.json",
+      "map_atlas-23.json",
+      "map_atlas-24.json"
+    ]
+  }
+}

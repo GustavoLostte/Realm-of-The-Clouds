@@ -98,7 +98,7 @@ export function registerServiceWorker() {
     if ('caches' in window) {
       caches.keys().then((names) => {
         for (const name of names) {
-          if (name.startsWith('toc-foe-')) {
+          if (name.startsWith('toc-foe-') || name.startsWith('cloud-realm-')) {
             caches.delete(name)
             console.log('[PWA] Cleared stale cache in dev:', name)
           }

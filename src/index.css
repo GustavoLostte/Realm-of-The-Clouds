@@ -32,7 +32,7 @@
 }
 
 /* Anti-dark-mode inversion & contrast enforcement for gaming graphics */
-:root, html, body, #root, *, *::before, *::after, svg, path, circle, rect {
+:root, html, body, #root, *, *::before, *::after, svg, path, circle, rect, canvas {
   color-scheme: only dark !important;
   forced-color-adjust: none !important;
   -webkit-forced-color-adjust: none !important;

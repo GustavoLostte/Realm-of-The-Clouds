@@ -472,7 +472,7 @@
   margin: 0 auto;
 }
 
-.battle-btn {
+.battle-action-buttons .battle-btn {
   flex: 1;
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -487,12 +487,12 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.battle-btn:hover {
+.battle-action-buttons .battle-btn:hover {
   transform: translateY(-2px);
   filter: brightness(1.1);
 }
 
-.battle-btn:active {
+.battle-action-buttons .battle-btn:active {
   transform: translateY(1px);
 }
 
@@ -727,7 +727,7 @@
     gap: 6px;
   }
 
-  .battle-btn {
+  .battle-action-buttons .battle-btn {
     flex-direction: column;
     padding: 8px 4px;
     text-align: center;

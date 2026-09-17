@@ -439,7 +439,7 @@ export function ArenaBattleView({
             <div className="fighter-visual-wrap">
               <div className="fighter-shadow" />
               <img 
-                src={rival?.playerChampion?.fullImage || '/assets/characters/fullbody_cutout/01_rey_celestial.webp'} 
+                src={rival?.playerChampion?.fullImage || '/assets/champions/kael_idle.webp'} 
                 alt={rival?.playerChampion?.name || 'Kael Rey Celestial'} 
                 className="fighter-sprite player-sprite" 
                 draggable="false" 
@@ -500,13 +500,13 @@ export function ArenaBattleView({
             <div className="fighter-visual-wrap">
               <div className="fighter-shadow" />
               <img 
-                src={rival?.avatar || '/assets/champions/malakor.jpg'} 
+                src={rival?.avatar || '/assets/champions/malakor_idle.webp'} 
                 alt="Soberano Rival" 
                 className="fighter-sprite rival-sprite" 
                 draggable="false"
                 onError={(e) => {
                   e.target.onerror = null
-                  e.target.src = '/assets/characters/fullbody_cutout/03_paladin_sagrado.webp'
+                  e.target.src = '/assets/champions/malakor_poster.webp'
                 }}
               />
               {rivalShield > 0 && <div className="dark-shield-aura" />}

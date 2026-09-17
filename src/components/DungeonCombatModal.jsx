@@ -118,7 +118,6 @@ export function DungeonCombatModal({ isOpen, onClose, onVictory, troops }) {
 
     const loop = (now) => {
       animRef.current = requestAnimationFrame(loop)
-      if (now - lastNeedleTime < 15.0) return
       lastNeedleTime = now
 
       const elapsed = (now - startTimeRef.current) / 1000

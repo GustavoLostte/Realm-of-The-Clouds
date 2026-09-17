@@ -28,7 +28,6 @@ export function FpsOverlay({ fpsMode = '60fps' }) {
     let lastCountedFrameTime = performance.now()
     let warmupFrames = 0
     let isHidden = typeof document !== 'undefined' ? document.hidden : false
-    let currentTier = 'fps-optimal'
 
     const resetCounters = () => {
       const now = performance.now()
@@ -88,18 +87,19 @@ export function FpsOverlay({ fpsMode = '60fps' }) {
         return
       }
 
-      // 4. Mobile 120Hz ProMotion / VRR frame limiter:
-      // When user touches the screen on high-refresh mobile displays (90Hz / 120Hz),
-      // the OS raises VSync to 120Hz. We pace the counted frames to the active target
-      // frame rate (60 FPS max in normal mode, 30 FPS max in eco mode).
+      // 4. Frame Counting & High-Refresh (90Hz/120Hz) normalization:
+      // In Eco mode, pace counting to 30 FPS (~30ms interval).
+      // In 60 FPS normal mode, do NOT drop 11.11ms frames with a 15ms gate!
+      // (That 15ms threshold was discarding every 2nd frame on 90Hz Samsung screens, cutting 90 to 45 FPS).
       const currentMode = fpsModeRef.current || (typeof document !== 'undefined' ? document.documentElement.getAttribute('data-fps-mode') : '60fps')
       const isEco = currentMode === 'eco'
-      const minInterval = isEco ? 30.0 : 15.0
 
-      if (now - lastCountedFrameTime < minInterval) {
-        return
+      if (isEco) {
+        if (now - lastCountedFrameTime < 30.0) {
+          return
+        }
+        lastCountedFrameTime = now
       }
-      lastCountedFrameTime = now
 
       // 5. Count frame and update DOM directly every 500ms (no React setState!)
       frameCount++
@@ -108,21 +108,20 @@ export function FpsOverlay({ fpsMode = '60fps' }) {
       if (elapsed >= 500) {
         if (elapsed <= 1000) {
           const maxTargetFps = isEco ? 30 : 60
-          const fps = Math.min(maxTargetFps, Math.round((frameCount * 1000) / elapsed))
-          const ms = frameCount > 0 ? (elapsed / frameCount).toFixed(1) : (1000 / maxTargetFps).toFixed(1)
+          const rawFps = Math.round((frameCount * 1000) / elapsed)
+          const fps = Math.min(maxTargetFps, rawFps)
+          const ms = fps > 0 ? (1000 / fps).toFixed(1) : (1000 / maxTargetFps).toFixed(1)
 
           // Direct DOM updates — ZERO React re-renders
           if (fpsNumRef.current) fpsNumRef.current.textContent = fps
           if (msNumRef.current) msNumRef.current.textContent = ms
 
-          // Update tier class based on active target mode
-          const optimalCutoff = isEco ? 27 : 55
-          const warningCutoff = isEco ? 20 : 30
+          // Update tier class based on active target mode (direct assignment guarantees no stuck warning state)
+          const optimalCutoff = isEco ? 26 : 48
+          const warningCutoff = isEco ? 18 : 25
           const newTier = fps >= optimalCutoff ? 'fps-optimal' : fps >= warningCutoff ? 'fps-warning' : 'fps-critical'
-          if (newTier !== currentTier && containerRef.current) {
-            containerRef.current.classList.remove(currentTier)
-            containerRef.current.classList.add(newTier)
-            currentTier = newTier
+          if (containerRef.current) {
+            containerRef.current.className = `hud-fps-overlay ${newTier}`
           }
         }
         frameCount = 0

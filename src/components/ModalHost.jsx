@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense, lazy, useEffect } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { soundManager } from '../utils/audio'
 import { gameStorage } from '../utils/gameStorage'
@@ -111,6 +111,10 @@ export function ModalHost({
   soundEnabled,
   fpsMode,
   particlesEnabled,
+  graphicsPreset,
+  recommendedPreset,
+  characterShadows,
+  hudEffects,
   selectedSlot,
   recommendedBuildId,
   setRecommendedBuildId,
@@ -169,6 +173,9 @@ export function ModalHost({
   showNotification,
   handleSetFpsMode,
   handleToggleParticles,
+  handleSetGraphicsPreset,
+  handleToggleCharacterShadows,
+  handleToggleHudEffects,
   handleSavePlayerName,
   handleClaimLevelUpRewards,
   handleCollectOfflineEarnings,
@@ -192,6 +199,56 @@ export function ModalHost({
   handleOneClickHarvestAll,
 }) {
   const { t } = useTranslation()
+
+  // Preload common modals during browser idle periods so opening any modal is instantaneous (0ms freeze)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const preloadLoaders = [
+      () => import('./MenuModal'),
+      () => import('./BuildModal'),
+      () => import('./BuildingDetailsModal'),
+      () => import('./QuestsModal'),
+      () => import('./InventoryModal'),
+      () => import('./ShopModal'),
+      () => import('./RankingModal'),
+      () => import('./ArmyModal'),
+      () => import('./KingdomHubModal'),
+      () => import('./CombatModeModal'),
+    ]
+
+    let idx = 0
+    let cancelled = false
+
+    const loadNext = () => {
+      if (cancelled || idx >= preloadLoaders.length) return
+      preloadLoaders[idx]()
+        .then(() => {
+          idx++
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(loadNext, { timeout: 1500 })
+          } else {
+            setTimeout(loadNext, 100)
+          }
+        })
+        .catch(() => {
+          idx++
+          setTimeout(loadNext, 100)
+        })
+    }
+
+    const timer = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadNext, { timeout: 2000 })
+      } else {
+        loadNext()
+      }
+    }, 1200)
+
+    return () => {
+      cancelled = true
+      clearTimeout(timer)
+    }
+  }, [])
 
   return (
     <Suspense fallback={null}>
@@ -405,6 +462,13 @@ export function ModalHost({
           onSetFpsMode={handleSetFpsMode}
           particlesEnabled={particlesEnabled}
           onToggleParticles={handleToggleParticles}
+          graphicsPreset={graphicsPreset}
+          recommendedPreset={recommendedPreset}
+          onSetGraphicsPreset={handleSetGraphicsPreset}
+          characterShadows={characterShadows}
+          onToggleCharacterShadows={handleToggleCharacterShadows}
+          hudEffects={hudEffects}
+          onToggleHudEffects={handleToggleHudEffects}
         />
       )}
 

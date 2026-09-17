@@ -1,31 +1,11 @@
 // Sound & Background Music Controller
 
 const BUILDING_SOUND_MAP = {
-  archer_tower: '/assets/sounds/archer_tower.ogg',
-  casa_molino: '/assets/sounds/sawmill.ogg',
-  mina_piedra: '/assets/sounds/stone_mine.ogg',
-  portal: '/assets/sounds/portal.ogg',
-  casa: '/assets/sounds/house_build.ogg',
-  castillo: '/assets/sounds/castle_build.ogg',
   ayuntamiento: '/assets/sounds/castle_build.ogg',
-  cuartel: '/assets/sounds/barracks_build.ogg',
-  molino: '/assets/sounds/windmill_build.ogg',
-  gold_mine: '/assets/sounds/gold_mine_build.ogg',
-  almacen: '/assets/sounds/warehouse_build.ogg',
 }
 
 const BUILDING_IDLE_MAP = {
-  gold_mine: '/assets/sounds/gold_mine_loop.ogg',
-  molino: '/assets/sounds/windmill_loop.ogg',
-  portal: '/assets/sounds/portal.ogg',
-  casa_molino: '/assets/sounds/sawmill.ogg',
-  mina_piedra: '/assets/sounds/stone_mine.ogg',
-  archer_tower: '/assets/sounds/archer_tower.ogg',
-  cuartel: '/assets/sounds/barracks_build.ogg',
-  castillo: '/assets/sounds/castle_build.ogg',
   ayuntamiento: '/assets/sounds/castle_build.ogg',
-  casa: '/assets/sounds/house_build.ogg',
-  almacen: '/assets/sounds/warehouse_build.ogg',
 }
 
 class SFXChannelPool {
@@ -196,9 +176,9 @@ class SoundController {
         // ignore
       }
 
-      // 3. Battle BGM: batlle_escene.ogg (optimized OGG Vorbis)
+      // 3. Battle BGM: battle_scene.ogg (optimized OGG Vorbis)
       try {
-        this.battleAudio = new Audio('/assets/audio/batlle_escene.ogg')
+        this.battleAudio = new Audio('/assets/audio/battle_scene.ogg')
         this.battleAudio.loop = true
         this.battleAudio.volume = this.bgmVolume
         this.battleAudio.preload = 'auto'

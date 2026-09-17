@@ -135,9 +135,6 @@ export function preloadVideo(url, timeoutMs = 2000) {
  */
 export function getCityCriticalAssets(slots = []) {
   const assets = [
-    // 1. Map island ground & water background
-    '/assets/map_background.webp',
-
     // 2. Active citizens (front & back sprites for all citizen types)
     '/assets/npcs/soldado_walk_front.webp',
     '/assets/npcs/soldado_walk_back.webp',
