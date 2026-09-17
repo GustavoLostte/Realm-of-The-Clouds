@@ -867,7 +867,6 @@ img, picture, svg, canvas, [draggable] {
 .map-video-anim,
 .map-static-poster,
 .map-canvas-anim {
-  filter: brightness(1.06) contrast(1.04) saturate(1.08) !important;
   forced-color-adjust: none !important;
   -webkit-forced-color-adjust: none !important;
   color-scheme: only dark !important;

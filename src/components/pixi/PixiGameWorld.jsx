@@ -189,7 +189,6 @@ export function PixiGameWorld({
         canvas.style.top = '0'
         canvas.style.left = '0'
         canvas.style.pointerEvents = 'auto'
-        canvas.style.filter = 'brightness(1.06) contrast(1.04) saturate(1.08)'
         canvas.style.forcedColorAdjust = 'none'
         canvas.style.webkitForcedColorAdjust = 'none'
         canvas.style.colorScheme = 'only dark'
