@@ -3,7 +3,7 @@
  * High-performance PWA caching engine for fast loads and offline gameplay.
  */
 
-const CACHE_VERSION = 'v1.2.0'
+const CACHE_VERSION = 'v1.3.0'
 const CACHE_STATIC = `cloud-realm-static-${CACHE_VERSION}`
 const CACHE_ASSETS = `cloud-realm-assets-${CACHE_VERSION}`
 const CACHE_FONTS = `cloud-realm-fonts-${CACHE_VERSION}`
@@ -73,10 +73,7 @@ self.addEventListener('fetch', (event) => {
   if (
     url.hostname.includes('supabase.co') ||
     url.pathname.includes('/rest/v1/') ||
-    url.pathname.includes('/auth/v1/') ||
-    url.search.includes('v=') ||
-    url.pathname.includes('/castillo/') ||
-    url.pathname.includes('/ayuntamiento/')
+    url.pathname.includes('/auth/v1/')
   ) {
     return
   }
@@ -155,9 +152,12 @@ self.addEventListener('fetch', (event) => {
       url.pathname.startsWith('/icons/') ||
       url.pathname.endsWith('.webp') ||
       url.pathname.endsWith('.png') ||
+      url.pathname.endsWith('.jpg') ||
+      url.pathname.endsWith('.jpeg') ||
       url.pathname.endsWith('.svg') ||
       url.pathname.endsWith('.ogg') ||
       url.pathname.endsWith('.mp3') ||
+      url.pathname.endsWith('.json') ||
       (url.pathname.startsWith('/assets/') && (url.pathname.endsWith('.css') || url.pathname.endsWith('.js')))
     )
 
