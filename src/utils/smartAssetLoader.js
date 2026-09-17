@@ -178,8 +178,8 @@ export function getCityCriticalAssets(slots = []) {
     })
   }
 
-  // Always ensure Ayuntamiento / Castillo is included as baseline
-  assets.push('/assets/buildings/castillo/palacio_soberano.webp?v=1789386000')
+  // Always ensure Ayuntamiento is included as baseline
+  assets.push('/assets/buildings/ayuntamiento/palacio_soberano.webp?v=1789386000')
 
   return Array.from(new Set(assets))
 }
@@ -204,9 +204,7 @@ export function getCombatCriticalAssets(enemyConfig) {
 export function getArenaCriticalAssets(rival) {
   const assets = [
     '/assets/arena_battle_bg.webp',
-    '/assets/buildings/castillo/palacio_soberano.webp?v=1789386000',
-    '/assets/buildings/cuartel/cuartel_idle.webp',
-    '/assets/buildings/archer_tower/archer_tower_idle.webp',
+    '/assets/buildings/ayuntamiento/palacio_soberano.webp?v=1789386000',
     '/assets/hud_icons/icon_crown.webp',
     rival?.avatar,
     rival?.profile?.avatar,

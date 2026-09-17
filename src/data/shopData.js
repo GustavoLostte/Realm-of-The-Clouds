@@ -85,7 +85,7 @@ export const STARTER_PACKS = [
     items: [
       { name: '1,500 Cristales Arcanos', image: '/assets/hud_icons/icon_gem.webp', type: 'gems', amount: 1500 },
       { name: '50 Infantería de Línea', image: '/assets/npcs/soldado_walk_front.webp', type: 'infantry', amount: 50 },
-      { name: '30 Arqueras del Bosque', image: '/assets/buildings/archer_tower/archer_tower.webp', type: 'archers', amount: 30 },
+      { name: '30 Arqueras del Bosque', image: '/assets/hud_icons/btn_army.webp', type: 'archers', amount: 30 },
       { name: '20 Magos de Asalto', image: '/assets/avatars/avatar_mage.webp', type: 'mages', amount: 20 },
       { name: '15 Pociones de Vida Mayor', image: '/assets/hud_icons/btn_upgrade.webp', type: 'potion_heal', amount: 15 },
     ],
