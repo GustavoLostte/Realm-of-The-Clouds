@@ -24,6 +24,7 @@ import { preloadImages, getCityCriticalAssets } from './utils/smartAssetLoader'
 import OrientationNotice from './components/OrientationNotice'
 import { CustomContextMenu } from './components/CustomContextMenu'
 import { requestGameFullscreen, isFullscreenActive, isMobileOrTouch, toggleGameFullscreen } from './utils/fullscreen'
+import { generateRandomNobleName } from './utils/nobleNameGenerator'
 import { loadInitialGraphicsSettings } from './utils/graphicsProfiles'
 import { RELICS } from './data/inventoryData'
 import { KINGDOM_EVENTS } from './data/randomEventsData'
@@ -60,7 +61,7 @@ import {
   getLevelDefinition,
 } from './data/questsData'
 import { gameStorage, hasMeaningfulProgress } from './utils/gameStorage'
-import { claimWheelSpinOnServer, claimArenaSeasonRewardOnServer } from './utils/supabaseClient'
+import { claimWheelSpinOnServer, claimArenaSeasonRewardOnServer, syncPlayerQuestToCloud } from './utils/supabaseClient'
 import { soundManager } from './utils/audio'
 import { useTranslation } from './i18n'
 import './App.css'
@@ -122,6 +123,10 @@ export default function App() {
   })
 
   const [welcomeModalOpen, setWelcomeModalOpen] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('scene') === 'pvp') return false
+    } catch {}
     const isDone = Boolean(initialSave?.tutorialSeen || (initialSave?.completedNodes && initialSave.completedNodes.length > 0))
     return !isDone
   })
@@ -200,19 +205,36 @@ export default function App() {
       return []
     }
   })
-  const [hasStartedGame, setHasStartedGame] = useState(false)
+  const [hasStartedGame, setHasStartedGame] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('scene') === 'pvp') return true
+    } catch {}
+    return false
+  })
+  const [currentScene, setCurrentScene] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('scene') === 'pvp') return 'pvp'
+    } catch {}
+    return 'kingdom'
+  }) // 'kingdom' | 'pvp'
   const [isCityLoading, setIsCityLoading] = useState(false)
   const [cityLoadProgress, setCityLoadProgress] = useState(0)
   const [playerName, setPlayerName] = useState(() => {
     const stored = localStorage.getItem('toc_player_name')
-    if (!stored || stored === 'Lord Soberano' || stored === 'LORD SOBERANO' || stored === 'Sovereign Lord' || stored === 'Lorde Soberano') {
-      try { localStorage.setItem('toc_player_name', 'Lord King') } catch {}
-      return 'Lord King'
+    if (!stored || stored === 'Lord King' || stored === 'Lord Soberano' || stored === 'LORD SOBERANO' || stored === 'Sovereign Lord' || stored === 'Lorde Soberano') {
+      const generated = generateRandomNobleName(localStorage.getItem('toc_language') || 'es')
+      try { localStorage.setItem('toc_player_name', generated) } catch {}
+      return generated
     }
     return stored
   })
   const [playerAvatar, setPlayerAvatar] = useState(() => {
     return localStorage.getItem('toc_player_avatar') || '/assets/avatars/avatar_king.webp'
+  })
+  const [playerEmail, setPlayerEmail] = useState(() => {
+    return gameStorage.getEmail() || ''
   })
 
   // Modal states
@@ -220,8 +242,8 @@ export default function App() {
   const [buildModalOpen, setBuildModalOpen] = useState(false)
   const [tutorialKey, setTutorialKey] = useState(0)
 
-  // Guided interactive tutorial active running condition
-  const isTutorialRunning = isTutorialActive && !welcomeModalOpen && !usernameModalOpen && hasStartedGame && !isCityLoading
+  // Guided interactive tutorial active running condition (only on kingdom island)
+  const isTutorialRunning = isTutorialActive && !welcomeModalOpen && !usernameModalOpen && hasStartedGame && !isCityLoading && currentScene !== 'pvp'
   const [detailsModalOpen, setDetailsModalOpen] = useState(false)
   const [questsModalOpen, setQuestsModalOpen] = useState(false)
   const [armyModalOpen, setArmyModalOpen] = useState(false)
@@ -248,7 +270,6 @@ export default function App() {
   const [flyingParticles, setFlyingParticles] = useState([])
   const [poppingResource, setPoppingResource] = useState(null)
   const [isCinematicMode, setIsCinematicMode] = useState(false)
-  const [currentScene, setCurrentScene] = useState('kingdom') // 'kingdom' | 'pvp'
 
   // Smart Graphics Profiles: 'performance' | 'quality' | 'custom'
   const initialGraphics = useMemo(() => loadInitialGraphicsSettings(), [])
@@ -556,6 +577,15 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isCinematicMode, currentScene])
 
+  // Strict audio & scene isolation: turn off Kingdom audio/ambient when in PvP and resume when returning
+  useEffect(() => {
+    if (currentScene === 'pvp') {
+      soundManager.stopKingdomMusic()
+    } else if (currentScene === 'kingdom' && hasStartedGame && !arenaBattleOpen && !dungeonCombatOpen) {
+      soundManager.resumeKingdomAudio()
+    }
+  }, [currentScene, hasStartedGame, arenaBattleOpen, dungeonCombatOpen])
+
   // Ensure rivals exist for the arena
   useEffect(() => {
     if (!arenaData.rivals || arenaData.rivals.length === 0) {
@@ -636,7 +666,7 @@ export default function App() {
     arenaData, totalHarvests, tutorialSeen,
     claimedDailyIds, lastDailyReset,
     profile: {
-      name: playerName || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 'Lord King',
+      name: playerName || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 'Comandante Supremo',
       avatar: playerAvatar || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_avatar')) || '/assets/avatars/avatar_king.webp'
     },
   }
@@ -890,11 +920,12 @@ export default function App() {
   }, [showNotification, t, buildSaveState])
 
   // Handle entering game from start screen with email quest/guest persistence
-  const handleEnterGame = useCallback((email, cloudResult) => {
+  const handleEnterGame = useCallback((email, cloudResult, customProfile = null) => {
     const cleanEmail = email ? email.trim().toLowerCase() : null
 
     // 1. Establish isolated active player context in storage & Supabase
     gameStorage.setActive(cleanEmail, cloudResult?.id || null)
+    setPlayerEmail(cleanEmail || '')
 
     // Name comes from saved data for this specific email, not shared globally
     let activeName = (cleanEmail && localStorage.getItem(`toc_player_name_${cleanEmail}`)) || ''
@@ -1030,8 +1061,13 @@ export default function App() {
       if (saveToApply.arenaData) setArenaData(saveToApply.arenaData)
       if (saveToApply.lastWheelFreeSpinTime !== undefined) setLastWheelFreeSpinTime(saveToApply.lastWheelFreeSpinTime)
 
-      // Restore player name
-      if (cloudResult?.playerName) {
+      // Restore or set player name
+      if (customProfile?.name) {
+        activeName = customProfile.name
+        setPlayerName(customProfile.name)
+        localStorage.setItem('toc_player_name', customProfile.name)
+        if (cleanEmail) localStorage.setItem(`toc_player_name_${cleanEmail}`, customProfile.name)
+      } else if (cloudResult?.playerName) {
         activeName = cloudResult.playerName
         setPlayerName(cloudResult.playerName)
         if (cleanEmail) localStorage.setItem(`toc_player_name_${cleanEmail}`, cloudResult.playerName)
@@ -1040,12 +1076,17 @@ export default function App() {
         setPlayerName(saveToApply.profile.name)
         if (cleanEmail) localStorage.setItem(`toc_player_name_${cleanEmail}`, saveToApply.profile.name)
       } else if (!activeName) {
-        activeName = 'Lord King'
-        setPlayerName('Lord King')
-        if (cleanEmail) localStorage.setItem(`toc_player_name_${cleanEmail}`, 'Lord King')
+        const generated = generateRandomNobleName(localStorage.getItem('toc_language') || 'es')
+        activeName = generated
+        setPlayerName(generated)
+        if (cleanEmail) localStorage.setItem(`toc_player_name_${cleanEmail}`, generated)
       }
-      // Restore avatar
-      if (saveToApply.profile?.avatar) {
+      // Restore or set avatar
+      if (customProfile?.avatar) {
+        setPlayerAvatar(customProfile.avatar)
+        localStorage.setItem('toc_player_avatar', customProfile.avatar)
+        if (cleanEmail) localStorage.setItem(`toc_player_avatar_${cleanEmail}`, customProfile.avatar)
+      } else if (saveToApply.profile?.avatar) {
         setPlayerAvatar(saveToApply.profile.avatar)
         if (cleanEmail) localStorage.setItem(`toc_player_avatar_${cleanEmail}`, saveToApply.profile.avatar)
       }
@@ -1054,7 +1095,7 @@ export default function App() {
       if (cleanEmail) {
         gameStorage.recordAccount({
           email: cleanEmail,
-          name: activeName || 'Lord King',
+          name: activeName || generateRandomNobleName(localStorage.getItem('toc_language') || 'es'),
           level: saveToApply.kingdomLevel || 1,
           avatar: saveToApply.profile?.avatar || '/assets/avatars/avatar_king.webp',
         })
@@ -1071,13 +1112,21 @@ export default function App() {
       }
     } else {
       // Fresh start for truly new accounts (clean email with zero progress, or new guest)
-      activeName = cleanEmail ? '' : 'Lord King'
+      activeName = customProfile?.name || (cleanEmail ? '' : generateRandomNobleName(localStorage.getItem('toc_language') || 'es'))
       setPlayerName(activeName)
+      if (customProfile?.avatar) {
+        setPlayerAvatar(customProfile.avatar)
+        localStorage.setItem('toc_player_avatar', customProfile.avatar)
+      }
       if (cleanEmail) {
-        localStorage.removeItem(`toc_player_name_${cleanEmail}`)
-        localStorage.removeItem(`toc_player_avatar_${cleanEmail}`)
+        if (customProfile?.name) {
+          localStorage.setItem(`toc_player_name_${cleanEmail}`, customProfile.name)
+        } else {
+          localStorage.removeItem(`toc_player_name_${cleanEmail}`)
+          localStorage.removeItem(`toc_player_avatar_${cleanEmail}`)
+        }
       } else {
-        localStorage.setItem('toc_player_name', 'Lord King')
+        localStorage.setItem('toc_player_name', activeName)
       }
       setResources(INITIAL_RESOURCES)
       setSlots(INITIAL_PLAZA_SLOTS)
@@ -1141,7 +1190,7 @@ export default function App() {
       if (cleanEmail) {
         gameStorage.recordAccount({
           email: cleanEmail,
-          name: 'Lord King',
+          name: activeName || generateRandomNobleName(localStorage.getItem('toc_language') || 'es'),
           level: 1,
           avatar: '/assets/avatars/avatar_king.webp',
         })
@@ -1152,7 +1201,7 @@ export default function App() {
     }
 
     // Only prompt name selection for brand new accounts with no name set
-    const finalName = activeName || localStorage.getItem('toc_player_name')
+    const finalName = customProfile?.name || activeName || localStorage.getItem('toc_player_name')
     if (!finalName && !isExistingAccount) {
       setTimeout(() => {
         setUsernameModalOpen(true)
@@ -1215,6 +1264,62 @@ export default function App() {
       profile: { name: newName, avatar: newAvatar || playerAvatar }
     }), true)
   }, [buildSaveState, playerAvatar, showNotification])
+
+  // Handle linking email to guest account (or updating email) to safeguard progress to cloud
+  const handleLinkEmail = useCallback(async (emailToLink) => {
+    const cleanEmail = emailToLink ? emailToLink.trim().toLowerCase() : ''
+    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
+      return { success: false, error: 'Correo electrónico inválido' }
+    }
+
+    try {
+      // 1. Establish isolated account context in Supabase client and storage
+      gameStorage.setEmail(cleanEmail)
+      gameStorage.setActive(cleanEmail)
+
+      // 2. Build complete fresh state with email in profile
+      const resolvedName = playerName || localStorage.getItem('toc_player_name') || 'Comandante'
+      const resolvedAvatar = playerAvatar || localStorage.getItem('toc_player_avatar') || '/assets/avatars/avatar_king.webp'
+      
+      const payload = buildSaveState({
+        profile: {
+          name: resolvedName,
+          avatar: resolvedAvatar,
+          email: cleanEmail,
+        },
+      })
+
+      // 3. Save to isolated email local storage and Supabase cloud immediately
+      localStorage.setItem(`toc_player_name_${cleanEmail}`, resolvedName)
+      localStorage.setItem(`toc_player_avatar_${cleanEmail}`, resolvedAvatar)
+      localStorage.setItem(`toc_foe_save_email_${cleanEmail}`, JSON.stringify(payload))
+      
+      await gameStorage.save(payload, true)
+      await gameStorage.flushCloud?.()
+
+      // 4. Record in known accounts for easy switching
+      gameStorage.recordAccount({
+        email: cleanEmail,
+        name: resolvedName,
+        level: payload.kingdomLevel || kingdomLevel || 1,
+        avatar: resolvedAvatar,
+        lastPlayed: Date.now(),
+      })
+
+      // 5. Update local React state
+      setPlayerEmail(cleanEmail)
+
+      showNotification(
+        `¡Reino vinculado exitosamente a ${cleanEmail}! Tu progreso está resguardado en la nube.`,
+        'success'
+      )
+
+      return { success: true }
+    } catch (err) {
+      console.error('Error linking email:', err)
+      return { success: false, error: err.message || 'Error al vincular el correo con el servidor' }
+    }
+  }, [buildSaveState, playerName, playerAvatar, kingdomLevel, showNotification])
 
   // Sound toggle handler
   const handleToggleSound = () => {
@@ -2959,6 +3064,7 @@ export default function App() {
         claimedQuestIds: nextClaimed,
         resources: nextRes,
       }), true)
+      syncPlayerQuestToCloud(questId, storyQ.chapter || 1, storyQ.reward, 'story', storyQ.title)
 
       showNotification(t('notifications.storyQuestClaimed', { title: t(`questData.story.${questId}.title`) || storyQ.title }), 'success')
       return
@@ -2985,6 +3091,7 @@ export default function App() {
         claimedDailyIds: nextDaily,
         resources: nextRes,
       }), true)
+      syncPlayerQuestToCloud(questId, 1, dailyQ.reward, 'daily', dailyQ.title)
 
       showNotification(t('notifications.dailyQuestClaimed', { title: t(`questData.daily.${questId}.title`) || dailyQ.title }), 'success')
       return
@@ -3008,6 +3115,7 @@ export default function App() {
         claimedEpicIds: nextEpic,
         resources: nextRes,
       }), true)
+      syncPlayerQuestToCloud(questId, 1, epicQ.reward, 'epic', epicQ.title)
 
       showNotification(t('notifications.epicFeatClaimed', { title: t(`questData.epic.${questId}.title`) || epicQ.title }), 'success')
     }
@@ -3183,7 +3291,7 @@ export default function App() {
   const handleResetGame = () => {
     gameStorage.clear()
     const activeEmail = gameStorage.getEmail()
-    const defaultName = activeEmail ? '' : 'Lord King'
+    const defaultName = activeEmail ? '' : generateRandomNobleName(localStorage.getItem('toc_language') || 'es')
     
     setPlayerName(defaultName)
     setPlayerAvatar('/assets/avatars/avatar_king.webp')
@@ -3191,7 +3299,7 @@ export default function App() {
       localStorage.removeItem(`toc_player_name_${activeEmail}`)
       localStorage.removeItem(`toc_player_avatar_${activeEmail}`)
     } else {
-      localStorage.setItem('toc_player_name', 'Lord King')
+      localStorage.setItem('toc_player_name', defaultName)
     }
 
     setResources(INITIAL_RESOURCES)
@@ -3290,7 +3398,7 @@ export default function App() {
       totalHarvests: 0,
       tutorialSeen: false,
       profile: {
-        name: defaultName || 'Lord King',
+        name: defaultName || 'Comandante Supremo',
         avatar: '/assets/avatars/avatar_king.webp',
         email: activeEmail || null,
       },
@@ -3354,6 +3462,7 @@ export default function App() {
     setTotalHarvests(0)
     setPlayerName('')
     setPlayerAvatar('/assets/avatars/avatar_king.webp')
+    setPlayerEmail('')
     setWelcomeModalOpen(false)
     setIsTutorialActive(false)
     setTutorialSeen(false)
@@ -3494,8 +3603,16 @@ export default function App() {
         />
       )}
 
-      {/* Main Interactive Game World Canvas */}
-      <main className="game-main-viewport">
+      {/* Main Interactive Game World Canvas - completely hidden when in PvP/battle */}
+      <main 
+        className="game-main-viewport"
+        style={{
+          display: currentScene === 'kingdom' ? 'block' : 'none',
+          visibility: currentScene === 'kingdom' ? 'visible' : 'hidden',
+          pointerEvents: currentScene === 'kingdom' ? 'auto' : 'none'
+        }}
+        aria-hidden={currentScene !== 'kingdom'}
+      >
         <GameWorld 
           engine="pixi"
           slots={slots}
@@ -3694,6 +3811,7 @@ export default function App() {
         levelUpInfo={levelUpInfo}
         playerName={playerName}
         playerAvatar={playerAvatar}
+        playerEmail={playerEmail}
         soundEnabled={soundEnabled}
         fpsMode={fpsMode}
         particlesEnabled={particlesEnabled}
@@ -3761,6 +3879,7 @@ export default function App() {
         handleToggleCharacterShadows={handleToggleCharacterShadows}
         handleToggleHudEffects={handleToggleHudEffects}
         handleSavePlayerName={handleSavePlayerName}
+        handleLinkEmail={handleLinkEmail}
         handleClaimLevelUpRewards={handleClaimLevelUpRewards}
         handleCollectOfflineEarnings={handleCollectOfflineEarnings}
         handleResolveEventChoice={handleResolveEventChoice}
@@ -3808,12 +3927,12 @@ export default function App() {
       )}
 
       {/* Startup Screen Scene with Email Quest / Guest Persistence */}
-      {!hasStartedGame && (
+      {!hasStartedGame && currentScene !== 'pvp' && (
         <StartScreen onEnterGame={handleEnterGame} />
       )}
 
       {/* Mobile & Vertical Portrait Orientation Warning Overlay (only during active city gameplay) */}
-      {hasStartedGame && <OrientationNotice />}
+      {hasStartedGame && currentScene !== 'pvp' && <OrientationNotice />}
 
       {/* Global Custom Context Menu for WizzarDev Studios on Right-Click */}
       <CustomContextMenu />

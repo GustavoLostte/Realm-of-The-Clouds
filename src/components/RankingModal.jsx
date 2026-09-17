@@ -24,7 +24,7 @@ export function RankingModal({
   dungeonProgress = {},
   completedNodes = [],
   unlockedTechIds = [],
-  playerName = 'Lord King',
+  playerName = 'Comandante',
   onOpenArena,
   onOpenCampaign,
 }) {
@@ -68,7 +68,7 @@ export function RankingModal({
     const computedFloor = dungeonProgress?.maxFloorUnlocked || dungeonProgress?.currentFloor || floorFromNodes
     const computedStars = dungeonProgress?.totalStars || (nodesCount * 3)
 
-    const savedName = localStorage.getItem('toc_player_name') || playerName || 'Lord King'
+    const savedName = localStorage.getItem('toc_player_name') || playerName || 'Comandante'
     const savedAvatar = localStorage.getItem('toc_player_avatar') || '/assets/avatars/avatar_king.webp'
 
     return {

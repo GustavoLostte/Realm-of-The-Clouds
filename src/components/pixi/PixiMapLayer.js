@@ -154,8 +154,13 @@ export class PixiMapLayer {
     }
     if (this.audioElement) {
       if (isSuspended) {
-        this.audioElement.pause()
+        this.audioElement.volume = 0
+        try {
+          this.audioElement.pause()
+          this.audioElement.currentTime = 0
+        } catch {}
       } else {
+        this.audioElement.volume = 0.45
         this.audioElement.play().catch(() => {})
       }
     }
@@ -165,10 +170,14 @@ export class PixiMapLayer {
     if (!this.audioElement) return
     if (enabled) {
       if (!this.isSuspended) {
+        this.audioElement.volume = 0.45
         this.audioElement.play().catch(() => {})
       }
     } else {
-      this.audioElement.pause()
+      this.audioElement.volume = 0
+      try {
+        this.audioElement.pause()
+      } catch {}
     }
   }
 

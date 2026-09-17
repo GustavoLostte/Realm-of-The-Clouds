@@ -27,7 +27,7 @@ export function RankingLateralButton({
         className="ranking-lateral-btn"
         onClick={handleTap}
         title={t('ranking.rankingTooltip') || `Ranking Global • ${formatFullNumber(trophies)} Coronas de Arena`}
-        aria-label="Abrir Ranking de Soberanos"
+        aria-label="Abrir Ranking de Comandantes"
       >
         <div className="ranking-glow-aura" />
         

@@ -90,7 +90,7 @@ export function GuidedTutorial({
     }
   }, [isActive])
 
-  // Update target rect dynamically
+  // Update target rect dynamically with high performance (0 layout thrashing)
   useEffect(() => {
     if (!isActive || isGraduated) return
 
@@ -128,21 +128,23 @@ export function GuidedTutorial({
     }
 
     updateRect()
-    const handleResizeOrScroll = () => {
+    // Staggered checks right after step transition to settle coordinates without intervals
+    const t1 = setTimeout(updateRect, 60)
+    const t2 = setTimeout(updateRect, 250)
+
+    const handleResize = () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
       animFrameRef.current = requestAnimationFrame(updateRect)
     }
 
-    window.addEventListener('resize', handleResizeOrScroll)
-    window.addEventListener('scroll', handleResizeOrScroll, true)
-
-    // Repeat check in case DOM element transitions into view
-    const interval = setInterval(updateRect, 1000)
+    window.addEventListener('resize', handleResize, { passive: true })
+    window.addEventListener('orientationchange', handleResize, { passive: true })
 
     return () => {
-      window.removeEventListener('resize', handleResizeOrScroll)
-      window.removeEventListener('scroll', handleResizeOrScroll, true)
-      clearInterval(interval)
+      clearTimeout(t1)
+      clearTimeout(t2)
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleResize)
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
     }
   }, [isActive, currentStepIndex, isGraduated, currentStep])
@@ -346,55 +348,55 @@ export function GuidedTutorial({
     }
   }
 
+  const cutout = targetRect ? {
+    top: Math.max(0, Math.round(targetRect.top - 6)),
+    left: Math.max(0, Math.round(targetRect.left - 6)),
+    width: Math.round(targetRect.width + 12),
+    height: Math.round(targetRect.height + 12),
+  } : null
+  const cutoutBottom = cutout ? cutout.top + cutout.height : 0
+  const cutoutRight = cutout ? cutout.left + cutout.width : 0
+
   return (
     <div className="guided-tutorial-root" aria-live="polite">
-      {/* Spotlight cutout mask using GPU-accelerated SVG mask (0% flicker, no 9999px box-shadow) */}
-      <div className={`guided-spotlight-backdrop ${(!targetRect || isGraduated) ? 'full-dim' : ''}`}>
-        {targetRect && !isGraduated ? (
-          <>
-            <svg 
-              className="guided-spotlight-svg" 
-              width="100%" 
-              height="100%" 
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <defs>
-                <mask id="guided-spotlight-mask">
-                  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff" />
-                  <rect 
-                    x={Math.max(0, targetRect.left - 6)}
-                    y={Math.max(0, targetRect.top - 6)}
-                    width={targetRect.width + 12}
-                    height={targetRect.height + 12}
-                    rx="14"
-                    fill="#000000"
-                  />
-                </mask>
-              </defs>
-              <rect 
-                x="0" 
-                y="0" 
-                width="100%" 
-                height="100%" 
-                fill="rgba(3, 7, 18, 0.78)" 
-                mask="url(#guided-spotlight-mask)"
-              />
-            </svg>
+      {/* Hardware-Accelerated 60 FPS Cutout (0% SVG re-rasterization, 100% GPU composited) */}
+      <div className={`guided-spotlight-backdrop ${(!cutout || isGraduated) ? 'full-dim' : ''}`}>
+        {cutout && !isGraduated ? (
+          <div className="guided-spotlight-cutout-wrap">
+            {/* Top dark curtain */}
+            <div 
+              className="guided-dim-panel" 
+              style={{ top: 0, left: 0, width: '100%', height: `${cutout.top}px` }} 
+            />
+            {/* Bottom dark curtain */}
+            <div 
+              className="guided-dim-panel" 
+              style={{ top: `${cutoutBottom}px`, left: 0, width: '100%', bottom: 0 }} 
+            />
+            {/* Left dark curtain */}
+            <div 
+              className="guided-dim-panel" 
+              style={{ top: `${cutout.top}px`, left: 0, width: `${cutout.left}px`, height: `${cutout.height}px` }} 
+            />
+            {/* Right dark curtain */}
+            <div 
+              className="guided-dim-panel" 
+              style={{ top: `${cutout.top}px`, left: `${cutoutRight}px`, right: 0, height: `${cutout.height}px` }} 
+            />
 
-            {/* Glowing spotlight frame around active element (no massive box shadow) */}
+            {/* Glowing spotlight frame around active element (Hardware Accelerated) */}
             <div 
               className="guided-spotlight-frame"
               style={{
-                top: `${Math.max(0, targetRect.top - 6)}px`,
-                left: `${Math.max(0, targetRect.left - 6)}px`,
-                width: `${targetRect.width + 12}px`,
-                height: `${targetRect.height + 12}px`
+                top: `${cutout.top}px`,
+                left: `${cutout.left}px`,
+                width: `${cutout.width}px`,
+                height: `${cutout.height}px`
               }}
             >
               <div className="guided-spotlight-beacon" />
             </div>
-          </>
+          </div>
         ) : null}
       </div>
 

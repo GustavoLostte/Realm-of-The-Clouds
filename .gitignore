@@ -36,3 +36,6 @@ timing_duel_concept.jpg
 public/assets/map/raw_frames/
 public/assets/map_change_mask.png
 public/assets/characters/ANIMADOS/
+*.mp4
+*.mov
+

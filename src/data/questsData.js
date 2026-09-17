@@ -317,7 +317,7 @@ export const STORY_QUESTS = [
     id: 'q-c4-1',
     chapter: 4,
     title: 'Corona Imperial',
-    desc: 'Alcanza el Nivel 3 de Reino con tu Soberano.',
+    desc: 'Alcanza el Nivel 3 de Reino con tu Comandante.',
     hint: 'Gana experiencia construyendo, reclutando y conquistando mazmorras.',
     actionType: 'level',
     actionLabel: 'Ver Perfil',
@@ -493,9 +493,9 @@ export const PRESTIGE_LEVEL_TITLES = [
   'Supremacía Feudal',
   'Reino Mítico',
   'Cúspide del Olimpo',
-  'Soberanía Divina',
+  'Supremacía Celestial',
   'Bastión del Infinito',
-  'Soberano Cósmico',
+  'Gran Conquistador Cósmico',
   'Santuario del Firmamento',
   'Dominio del Fénix',
   'Imperio Primordial',
@@ -536,7 +536,7 @@ export function getLevelDefinition(level) {
   const mult = lvl - 5
   const titleIdx = (lvl - 6) % PRESTIGE_LEVEL_TITLES.length
   const cycle = Math.floor((lvl - 6) / PRESTIGE_LEVEL_TITLES.length)
-  const baseTitle = PRESTIGE_LEVEL_TITLES[titleIdx] || 'Soberanía Imperial'
+  const baseTitle = PRESTIGE_LEVEL_TITLES[titleIdx] || 'Mando Imperial'
   const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
   const title = cycle > 0 ? `${baseTitle} ${romanNumerals[cycle % 10] || cycle + 1}` : baseTitle
 

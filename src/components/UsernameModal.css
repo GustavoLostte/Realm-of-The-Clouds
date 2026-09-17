@@ -70,10 +70,107 @@
   line-height: 1.35;
 }
 
+.modal-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  border-radius: 9999px;
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.45);
+  color: #7dd3fc;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
+}
+
+.modal-selected-commander-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 14px;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.16) 0%, rgba(2, 132, 199, 0.08) 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-selected-commander-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.modal-selected-commander-label {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.modal-selected-commander-name {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 850;
+  color: #38bdf8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-edit-name-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #bae6fd;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.modal-edit-name-btn:hover {
+  background: rgba(14, 165, 233, 0.28);
+  border-color: #0ea5e9;
+  color: #fff;
+  transform: scale(1.03);
+}
+
+.modal-edit-name-btn:active {
+  transform: scale(0.97);
+}
+
 .username-modal-close {
   position: absolute;
   top: 14px;
   right: 14px;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  z-index: 30;
+}
+
+.username-modal-close img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
 }
 
 .username-modal-body {
@@ -298,12 +395,13 @@
 }
 
 /* Mobile & Virtual Keyboard Adaptations for Username and Guest Modals */
-@media (max-width: 768px), (max-height: 560px) {
+@media (max-width: 768px), (max-height: 640px) {
   .username-modal-backdrop,
   .guest-modal-backdrop {
     align-items: flex-start !important;
+    justify-content: center !important;
     padding-top: max(8px, env(safe-area-inset-top, 8px)) !important;
-    padding-bottom: max(24px, env(safe-area-inset-bottom, 24px)) !important;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
   }
@@ -312,7 +410,16 @@
   .guest-modal-card {
     margin-top: 4px !important;
     margin-bottom: auto !important;
-    max-height: none !important;
+    max-height: calc(100dvh - 16px) !important;
+    width: 100% !important;
+    max-width: min(440px, calc(100vw - 16px)) !important;
+    border-radius: 14px !important;
+  }
+
+  /* Step 1: Ultra-compact, keyboard-safe layout */
+  .username-modal.step-1,
+  .guest-modal-card.step-1 {
+    margin-top: 2px !important;
   }
 
   .username-modal-header {
@@ -320,29 +427,44 @@
   }
 
   .username-crown-badge {
-    width: 34px !important;
-    height: 34px !important;
-    margin-bottom: 4px !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin-bottom: 2px !important;
   }
 
   .username-crown-badge svg {
-    width: 18px !important;
-    height: 18px !important;
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .modal-step-pill {
+    font-size: 0.62rem !important;
+    padding: 2px 8px !important;
+    margin-bottom: 3px !important;
   }
 
   .username-modal-title {
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
   }
 
   .username-modal-subtitle {
-    font-size: 0.68rem !important;
+    font-size: 0.65rem !important;
     margin-top: 2px !important;
     line-height: 1.2 !important;
   }
 
   .username-modal-body {
-    padding: 10px 12px 14px !important;
+    padding: 10px 12px 12px !important;
     gap: 8px !important;
+  }
+
+  .modal-selected-commander-banner {
+    padding: 6px 10px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .modal-selected-commander-name {
+    font-size: 0.85rem !important;
   }
 
   .username-input-section {
@@ -350,8 +472,8 @@
   }
 
   .username-text-input {
-    padding: 8px 46px 8px 12px !important;
-    font-size: 0.95rem !important;
+    padding: 8px 44px 8px 10px !important;
+    font-size: 0.92rem !important;
     border-radius: 8px !important;
   }
 
@@ -365,22 +487,24 @@
   }
 
   .username-avatar-card {
-    padding: 4px 2px !important;
-    gap: 2px !important;
+    padding: 6px 2px !important;
+    gap: 3px !important;
     border-radius: 8px !important;
+    min-height: 52px !important;
   }
 
   .username-avatar-img {
-    width: 32px !important;
-    height: 32px !important;
+    width: 34px !important;
+    height: 34px !important;
   }
 
   .username-avatar-name {
-    font-size: 0.58rem !important;
+    font-size: 0.6rem !important;
   }
 
   .username-modal-actions {
     margin-top: 4px !important;
+    gap: 8px !important;
   }
 
   .username-btn-primary,

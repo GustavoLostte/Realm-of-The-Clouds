@@ -13,7 +13,7 @@ export function PvpVsModal({
 }) {
   if (!isOpen || !rival) return null
 
-  const pName = playerStats.name || 'Lord King'
+  const pName = playerStats.name || 'Comandante'
   const pAvatar = playerStats.avatar || '/assets/avatars/avatar_king.webp'
   const pLevel = playerStats.level || 1
   const pTrophies = playerStats.trophies ?? 250

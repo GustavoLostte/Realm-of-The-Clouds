@@ -22,7 +22,7 @@ export const GEM_PACKS = [
     image: '/assets/hud_icons/icon_gem.webp',
     badge: 'POPULAR',
     accentColor: '#38bdf8',
-    description: 'La elección favorita de los soberanos. Ideal para acelerar el feudo y desbloquear tecnologías.',
+    description: 'La elección favorita de los comandantes. Ideal para acelerar el feudo y desbloquear tecnologías.',
   },
   {
     id: 'pack_chest',
@@ -34,7 +34,7 @@ export const GEM_PACKS = [
     image: '/assets/hud_icons/btn_inventory.webp',
     badge: 'MEJOR VALOR',
     accentColor: '#f59e0b',
-    description: 'Un arcón repleto de cristales puros. Permite activar ventajas del soberano y revivir en mazmorras.',
+    description: 'Un arcón repleto de cristales puros. Permite activar ventajas de mando y revivir en mazmorras.',
   },
   {
     id: 'pack_vault',
@@ -54,7 +54,7 @@ export const STARTER_PACKS = [
   {
     id: 'starter_conqueror',
     title: 'Cofre del Conquistador',
-    subtitle: 'Oferta de Bienvenida para el Soberano',
+    subtitle: 'Oferta de Bienvenida para el Comandante',
     discountBadge: '¡800% VALOR EXCLUSIVO!',
     originalPrice: '$6.99',
     priceLabel: '$0.99',

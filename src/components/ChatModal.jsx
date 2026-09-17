@@ -50,7 +50,7 @@ export function ChatModal({
         sender: 'Gran_Mariscal',
         avatar: '🛡️',
         vip: 'LÍDER',
-        text: '¡El coliseo de arena ha renovado los asaltos diarios! Preparen sus escuadras.',
+        text: '¡El Vórtice Astral ha renovado los duelos diarios! Preparen sus escuadras.',
         time: 'Hace 12m',
         isMe: false,
       },
@@ -70,7 +70,7 @@ export function ChatModal({
         sender: 'SISTEMA',
         avatar: '📜',
         vip: 'OFICIAL',
-        text: '¡El soberano Gustavo alcanzó el Rango Diamante en el Ranking de Arena!',
+        text: '¡El comandante Gustavo alcanzó el Rango Diamante en el Vórtice Astral!',
         time: 'Hace 10m',
         isSystem: true,
       },
@@ -132,7 +132,7 @@ export function ChatModal({
             <div>
               <h2 className="chat-modal-title">{t('chat.title') || 'Chat del Reino'}</h2>
               <p className="chat-modal-subtitle">
-                {t('chat.subtitle') || 'Comunicaciones en tiempo real entre soberanos'}
+                {t('chat.subtitle') || 'Comunicaciones en tiempo real entre comandantes'}
               </p>
             </div>
           </div>
@@ -144,7 +144,7 @@ export function ChatModal({
             }}
             aria-label={t('common.close') || 'Cerrar'}
           >
-            <X size={20} />
+            <X size={22} />
           </button>
         </div>
 

@@ -556,26 +556,174 @@
 }
 
 @media (max-width: 820px) {
+  .mk-select-container {
+    padding-bottom: 90px;
+  }
+
+  .mk-select-header {
+    height: 52px;
+    padding: 0 12px;
+  }
+
+  .mk-back-button {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    gap: 5px;
+  }
+
+  .mk-header-title {
+    font-size: 0.92rem;
+    letter-spacing: 1px;
+  }
+
+  .mk-header-badge {
+    display: none;
+  }
+
+  .mk-status-pill {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+
   .mk-select-stage {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 12px 24px;
+    max-width: 100%;
   }
 
-  .mk-fighter-pane {
-    max-width: 500px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
+  /* Roster Selection on Top */
   .mk-roster-center {
-    order: -1;
-    max-width: 380px;
-    margin: 0 auto;
+    order: 1;
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .mk-roster-frame {
+    padding: 10px;
+    border-radius: 14px;
     width: 100%;
   }
 
   .mk-roster-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 8px;
+  }
+
+  .mk-slot {
+    height: 84px;
+  }
+
+  .mk-slot-name {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+  }
+
+  .mk-center-quote {
+    display: none;
+  }
+
+  /* Compact Fighter Panes */
+  .mk-fighter-pane {
+    order: 2;
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    gap: 10px;
+  }
+
+  .mk-fighter-header {
+    gap: 2px;
+  }
+
+  .mk-fighter-name {
+    font-size: 1.15rem;
+  }
+
+  .mk-fighter-subtitle {
+    font-size: 0.70rem;
+  }
+
+  .mk-fighter-role-pill {
+    font-size: 0.60rem;
+    padding: 2px 8px;
+  }
+
+  .mk-render-stage {
+    height: 120px;
+  }
+
+  .mk-render-glow {
+    width: 100px;
+    height: 100px;
+  }
+
+  .mk-fighter-attributes {
+    gap: 6px;
+  }
+
+  .mk-stat-label {
+    font-size: 0.66rem;
+  }
+
+  .mk-stat-track {
+    height: 6px;
+  }
+
+  .mk-skill-box {
+    padding: 8px 10px;
+    margin-top: 2px;
+  }
+
+  .mk-skill-header {
+    font-size: 0.70rem;
+  }
+
+  .mk-skill-desc {
+    font-size: 0.66rem;
+    line-height: 1.25;
+  }
+
+  /* STICKY / FIXED CONFIRM DOCK ON MOBILE */
+  .mk-confirm-dock {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 12px));
+    background: linear-gradient(180deg, rgba(6, 9, 17, 0.6) 0%, rgba(4, 6, 12, 0.98) 40%, #020306 100%);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(234, 179, 8, 0.35);
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.85);
+    margin: 0;
+  }
+
+  .mk-btn-confirm {
+    width: 100%;
+    max-width: 500px;
+    padding: 13px 20px;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    border-radius: 12px;
+  }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 520px) {
+  .mk-slot {
+    height: 74px;
+  }
+
+  .mk-render-stage {
+    height: 105px;
+  }
+
+  .mk-btn-confirm {
+    font-size: 0.88rem;
+    padding: 11px 16px;
   }
 }

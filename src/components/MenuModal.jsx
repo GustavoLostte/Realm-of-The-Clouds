@@ -36,7 +36,7 @@ export function MenuModal({
   onManualSave,
   onLogout,
   showNotification,
-  playerName = 'Lord King',
+  playerName = 'Comandante',
   onOpenChangeName,
   onRestartTutorial,
   fpsMode = '60fps',
@@ -512,7 +512,7 @@ export function MenuModal({
               </h4>
               <div className="menu-setting-row">
                 <div className="setting-label">
-                  <span className="setting-name">{(!playerName || playerName === 'Lord Soberano' || playerName === 'LORD SOBERANO' || playerName === 'Sovereign Lord' || playerName === 'Lorde Soberano') ? 'Lord King' : playerName}</span>
+                  <span className="setting-name">{(!playerName || playerName === 'Lord King' || playerName === 'Lord Soberano' || playerName === 'LORD SOBERANO' || playerName === 'Sovereign Lord' || playerName === 'Lorde Soberano') ? 'Comandante' : playerName}</span>
                   <span className="setting-desc">{t('menu.identityDesc')}</span>
                 </div>
                 <button 

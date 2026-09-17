@@ -13,6 +13,11 @@ import {
   Sparkles,
   User,
   Award,
+  Mail,
+  Shield,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
@@ -30,8 +35,10 @@ export function ProfileModal({
   showNotification,
   playerName: propPlayerName,
   playerAvatar: propPlayerAvatar,
+  playerEmail: propPlayerEmail,
   onOpenChangeName,
   onSaveName,
+  onLinkEmail,
   onLogout,
 }) {
   const { t } = useTranslation()
@@ -39,8 +46,8 @@ export function ProfileModal({
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [playerName, setPlayerName] = useState(() => {
     const stored = propPlayerName || localStorage.getItem('toc_player_name') || ''
-    if (!stored || stored === 'Lord Soberano' || stored === 'LORD SOBERANO' || stored === 'Sovereign Lord' || stored === 'Lorde Soberano') {
-      return 'Lord King'
+    if (!stored || stored === 'Lord King' || stored === 'Lord Soberano' || stored === 'LORD SOBERANO' || stored === 'Sovereign Lord' || stored === 'Lorde Soberano') {
+      return 'Comandante'
     }
     return stored
   })
@@ -50,6 +57,19 @@ export function ProfileModal({
   const [selectedAvatar, setSelectedAvatar] = useState(() => {
     return propPlayerAvatar || localStorage.getItem('toc_player_avatar') || '/assets/avatars/avatar_king.webp'
   })
+
+  // Email linking states
+  const [currentEmail, setCurrentEmail] = useState(() => propPlayerEmail || '')
+  const [linkEmail, setLinkEmail] = useState('')
+  const [linkError, setLinkError] = useState('')
+  const [linkSuccess, setLinkSuccess] = useState('')
+  const [isLinking, setIsLinking] = useState(false)
+
+  useEffect(() => {
+    if (propPlayerEmail !== undefined) {
+      setCurrentEmail(propPlayerEmail || '')
+    }
+  }, [propPlayerEmail])
 
   useEffect(() => {
     if (propPlayerName) {
@@ -88,7 +108,38 @@ export function ProfileModal({
     localStorage.setItem('toc_player_name', tempName.trim())
     onSaveName?.(tempName.trim(), selectedAvatar)
     setIsEditingName(false)
-    showNotification(`Nombre de soberano guardado: ${tempName.trim()}`, 'success')
+    showNotification(`Nombre de comandante guardado: ${tempName.trim()}`, 'success')
+  }
+
+  const handleLinkEmailSubmit = async (e) => {
+    if (e) e.preventDefault()
+    setLinkError('')
+    setLinkSuccess('')
+    const clean = (linkEmail || '').trim().toLowerCase()
+    if (!clean || !clean.includes('@') || !clean.includes('.')) {
+      setLinkError('Por favor ingresa un correo electrónico válido.')
+      return
+    }
+
+    setIsLinking(true)
+    soundManager.playClick?.()
+    try {
+      if (onLinkEmail) {
+        const result = await onLinkEmail(clean)
+        if (result && result.success) {
+          setCurrentEmail(clean)
+          setLinkEmail('')
+          setLinkSuccess(`¡Reino vinculado exitosamente a ${clean}! Tu progreso está resguardado en la nube.`)
+          soundManager.playQuestSuccess?.()
+        } else {
+          setLinkError(result?.error || 'No se pudo vincular la cuenta. Intenta nuevamente.')
+        }
+      }
+    } catch (err) {
+      setLinkError(err.message || 'Error al vincular el correo.')
+    } finally {
+      setIsLinking(false)
+    }
   }
 
   // Calculate realm statistics
@@ -152,8 +203,8 @@ export function ProfileModal({
               draggable="false" 
             />
             <div>
-              <h3>{t('profile.title') || 'Perfil del Soberano'}</h3>
-              <p className="modal-subtitle">{t('profile.subtitle') || 'Identidad imperial, estadísticas bélicas y títulos nobiliarios'}</p>
+              <h3>{t('profile.title') || 'Perfil del Comandante'}</h3>
+              <p className="modal-subtitle">{t('profile.subtitle') || 'Identidad militar, estadísticas bélicas y títulos de conquista'}</p>
             </div>
           </div>
           <button 
@@ -225,14 +276,14 @@ export function ProfileModal({
                       }
                     }}>
                       <h3 className="player-display-name">{playerName}</h3>
-                      <button className="btn-edit-pencil" title={t('profile.changeNameTitle') || 'Cambiar Nombre de Soberano'}>
+                      <button className="btn-edit-pencil" title={t('profile.changeNameTitle') || 'Cambiar Nombre del Comandante'}>
                         <Edit3 size={15} />
                       </button>
                     </div>
                   )}
                 </div>
 
-                <p className="player-realm-title">{t('profile.realmTitle') || 'Gobernante del Reino de las Nubes'}</p>
+                <p className="player-realm-title">{t('profile.realmTitle') || 'Gran Comandante del Reino de las Nubes'}</p>
 
                 {/* Level XP Bar */}
                 <div className="profile-xp-box">
@@ -321,10 +372,98 @@ export function ProfileModal({
                   <span className="nft-rank-tag">{t('profile.nftBadge') || 'NFT DE PRESTIGIO'}</span>
                   <span className="nft-mint-num">#042 / 1000</span>
                 </div>
-                <h4 className="nft-name">{t('profile.nftName') || 'Pase de Soberano Fundador OG'}</h4>
+                <h4 className="nft-name">{t('profile.nftName') || 'Pase de Comandante Fundador OG'}</h4>
                 <p className="nft-perk">{t('profile.nftPerk') || '+10% Velocidad de Producción de Oro & Acceso a Torneos Web3'}</p>
               </div>
             </div>
+
+            {/* Cloud Account & Guest Safeguard Section */}
+            {!currentEmail ? (
+              <div className="profile-cloud-link-banner">
+                <div className="cloud-link-header-row">
+                  <div className="cloud-link-shield-icon">
+                    <Shield className="w-6 h-6 text-amber-400" />
+                  </div>
+                  <div className="cloud-link-title-col">
+                    <div className="cloud-link-pill">
+                      <Sparkles size={11} className="text-amber-300" />
+                      <span>MODO QUEST • PROGRESO LOCAL</span>
+                    </div>
+                    <h4 className="cloud-link-title">Resguardar Reino en la Nube</h4>
+                  </div>
+                </div>
+
+                <p className="cloud-link-description">
+                  Actualmente juegas como <strong>Invitado</strong>. Tu progreso ({builtBuildingsCount} estructuras, {totalTroopsCount} tropas, Nivel {kingdomLevel}) solo existe en este dispositivo. Vincula tu correo electrónico para protegerlo contra pérdidas y sincronizarlo con Supabase.
+                </p>
+
+                <form onSubmit={handleLinkEmailSubmit} className="cloud-link-form">
+                  <div className="cloud-link-input-group">
+                    <div className="cloud-link-input-wrap">
+                      <Mail size={16} className="cloud-link-mail-icon" />
+                      <input
+                        type="email"
+                        value={linkEmail}
+                        onChange={(e) => {
+                          setLinkEmail(e.target.value)
+                          setLinkError('')
+                          setLinkSuccess('')
+                        }}
+                        placeholder="tu-correo@ejemplo.com"
+                        className="cloud-link-email-input"
+                        disabled={isLinking}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="cloud-link-btn"
+                      disabled={isLinking}
+                    >
+                      {isLinking ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin text-white" />
+                          <span>Vinculando...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Shield size={16} className="text-amber-300" />
+                          <span>Vincular y Guardar</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {linkError && (
+                    <div className="cloud-link-status-msg is-error">
+                      <AlertCircle size={14} className="flex-shrink-0" />
+                      <span>{linkError}</span>
+                    </div>
+                  )}
+
+                  {linkSuccess && (
+                    <div className="cloud-link-status-msg is-success">
+                      <CheckCircle2 size={14} className="flex-shrink-0" />
+                      <span>{linkSuccess}</span>
+                    </div>
+                  )}
+                </form>
+              </div>
+            ) : (
+              <div className="profile-cloud-verified-banner">
+                <div className="cloud-verified-icon">
+                  <CheckCircle2 size={24} className="text-emerald-400" />
+                </div>
+                <div className="cloud-verified-info">
+                  <div className="cloud-verified-pill">
+                    <span>REINO RESGUARDADO EN LA NUBE</span>
+                  </div>
+                  <span className="cloud-verified-email">{currentEmail}</span>
+                  <p className="cloud-verified-sub">
+                    Tu reino, héroes y estadísticas se respaldan automáticamente en la nube de Supabase.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Account Management Section */}
             <div className="profile-account-section" style={{ marginTop: '24px', textAlign: 'center' }}>

@@ -59,7 +59,7 @@ export const ARENA_LEAGUES = [
   },
   {
     id: 'league_master',
-    name: 'Soberano Supremo',
+    name: 'Gran Conquistador',
     minTrophies: 2200,
     maxTrophies: 99999,
     icon: '/assets/hud_icons/icon_crown.webp',
@@ -183,7 +183,7 @@ export function generateRivalsForPlayer(playerTrophies = 250, playerLevel = 1) {
 
 // Global leaderboard simulated ranking
 export const BASE_LEADERBOARD = [
-  { rank: 1, name: 'Soberano Malakor', kingdom: 'Imperio Celestial', trophies: 2840, leagueId: 'league_master', avatar: '/assets/avatars/avatar_king.webp', wins: 412 },
+  { rank: 1, name: 'Comandante Malakor', kingdom: 'Imperio Celestial', trophies: 2840, leagueId: 'league_master', avatar: '/assets/avatars/avatar_king.webp', wins: 412 },
   { rank: 2, name: 'Reina Valquiria Astrid', kingdom: 'Bastión del Trueno', trophies: 2715, leagueId: 'league_master', avatar: '/assets/avatars/avatar_valkyrie.webp', wins: 388 },
   { rank: 3, name: 'Archiduque Morvath', kingdom: 'Tierras Marchitas', trophies: 2590, leagueId: 'league_master', avatar: '/assets/avatars/avatar_mage.webp', wins: 345 },
   { rank: 4, name: 'Lord Siegfried IV', kingdom: 'Corona Dorada', trophies: 2430, leagueId: 'league_master', avatar: '/assets/avatars/avatar_paladin.webp', wins: 310 },

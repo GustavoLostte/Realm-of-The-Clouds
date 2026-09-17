@@ -1,8 +1,8 @@
-// rankingData.js - Sistema de Clasificación Global y Datos de Soberanos Rivales
+// rankingData.js - Sistema de Clasificación Global y Datos de Comandantes Rivales
 
 export const RANKING_CATEGORIES = [
-  { id: 'power', label: 'Poder del Reino', icon: '/assets/hud_icons/btn_build.webp', desc: 'Puntuación total según nivel de edificios, nivel soberano y tropas.' },
-  { id: 'arena', label: 'Arena de Campeones', icon: '/assets/hud_icons/btn_arena.webp', desc: 'Coronas ganadas en asedios PvP y rango de liga competitiva.' },
+  { id: 'power', label: 'Poder del Reino', icon: '/assets/hud_icons/btn_build.webp', desc: 'Puntuación total según nivel de edificios, nivel de mando militar y tropas.' },
+  { id: 'arena', label: 'Vórtice Astral', icon: '/assets/hud_icons/btn_arena.webp', desc: 'Coronas ganadas en duelos del Vórtice Astral y rango de liga competitiva.' },
   { id: 'dungeon', label: 'Conquista de Mazmorras', icon: '/assets/hud_icons/btn_expedition.webp', desc: 'Pisos superados en las Mazmorras Celestiales y Abisales.' },
 ]
 
@@ -49,19 +49,32 @@ export function getCategoryRanking(category, playerData, cloudPlayers = []) {
   const playerRow = {
     id: playerData.id || 'player_sovereign',
     isPlayer: true,
-    name: playerData.playerName || 'Lord King',
+    name: playerData.playerName || 'Comandante Supremo',
     kingdom: 'Reino de las Nubes (Tú)',
     avatar: playerData.avatar || '/assets/avatars/avatar_king.webp',
-    title: 'Soberano Supremo',
+    title: 'Gran Conquistador',
     score: playerValue,
     subtext: playerSubtext,
     leagueName: playerData.leagueName || 'Bronce Novicio',
     leagueIcon: '/assets/hud_icons/btn_ranking.webp',
   }
 
-  // Real players loaded from Supabase Cloud (exclude current player, legacy bots, and test placeholders)
+  // Real players loaded from Supabase Cloud (strictly genuine players, no bots, no ghosts)
   const cloudRows = (cloudPlayers || [])
-    .filter(cp => cp && cp.id !== playerData.id && cp.id !== playerRow.id && !cp.id?.startsWith('lb_') && cp.player_name !== 'Señor Feudal' && cp.id !== 'test_real_check')
+    .filter(cp => 
+      cp && 
+      cp.id !== playerData.id && 
+      cp.id !== playerRow.id && 
+      !cp.id?.startsWith('lb_') && 
+      !cp.id?.startsWith('bot_') && 
+      cp.is_bot !== true && 
+      cp.player_name &&
+      cp.player_name !== 'Señor Feudal' && 
+      cp.player_name !== 'Lord Soberano' &&
+      cp.player_name !== 'Soberano Real' &&
+      cp.player_name !== 'Bot Novicio' &&
+      cp.id !== 'test_real_check'
+    )
     .map(cp => {
       let score = 0
       let subtext = ''
@@ -85,7 +98,7 @@ export function getCategoryRanking(category, playerData, cloudPlayers = []) {
 
       return {
         id: cp.id,
-        name: cp.player_name || 'Soberano Real',
+        name: cp.player_name || 'Comandante Real',
         kingdom: kingdom,
         avatar: cp.avatar || '/assets/avatars/avatar_king.webp',
         isPlayer: false,

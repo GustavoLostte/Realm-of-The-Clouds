@@ -91,7 +91,7 @@ export function LanguageProvider({ children }) {
     if (typeof window !== 'undefined') {
       const currentInUrl = getLanguageFromPathname()
       if (!currentInUrl || currentInUrl !== initial) {
-        window.history.replaceState(null, '', `/${initial}`)
+        window.history.replaceState(null, '', `/${initial}${window.location.search}${window.location.hash}`)
       }
       document.documentElement.lang = initial === 'us' ? 'en' : initial
     }

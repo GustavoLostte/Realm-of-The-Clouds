@@ -445,14 +445,21 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 680px) {
+  .pvp-vs-modal-backdrop {
+    padding: 8px;
+    align-items: center;
+  }
+
   .pvp-vs-modal-card {
-    padding: 16px;
-    gap: 14px;
+    padding: 14px;
+    gap: 12px;
+    max-height: 92vh;
+    overflow-y: auto;
   }
 
   .pvp-vs-board {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .pvp-vs-center-col {
@@ -463,8 +470,8 @@
   }
 
   .pvp-vs-insignia {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
   }
 
   .pvp-vs-bounty-card {
@@ -478,5 +485,6 @@
   .pvp-vs-btn-cancel,
   .pvp-vs-btn-fight {
     width: 100%;
+    padding: 11px 16px;
   }
 }

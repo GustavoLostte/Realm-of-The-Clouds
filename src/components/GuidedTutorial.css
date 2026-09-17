@@ -9,6 +9,8 @@
   pointer-events: auto;
   user-select: none;
   overflow: hidden;
+  contain: layout style;
+  transform: translateZ(0);
 }
 
 /* Dim backdrop with dynamic spotlight cutout */
@@ -19,10 +21,29 @@
   pointer-events: none;
   background: transparent;
   transition: background 0.3s ease;
+  contain: strict;
+  transform: translateZ(0);
 }
 
 .guided-spotlight-backdrop.full-dim {
   background: rgba(3, 7, 18, 0.82);
+}
+
+/* Hardware-Accelerated 60 FPS Cutout Panels (0% SVG re-rasterization) */
+.guided-spotlight-cutout-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  contain: strict;
+  transform: translateZ(0);
+}
+
+.guided-dim-panel {
+  position: absolute;
+  background: rgba(3, 7, 18, 0.78);
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Active tutorial target element elevation & uncollapsing (Interaction blocked during tutorial) */
@@ -45,7 +66,7 @@
   transform: translateY(-50%) !important;
   background: linear-gradient(135deg, rgba(14, 20, 32, 0.96) 0%, rgba(20, 28, 44, 0.94) 100%) !important;
   border-color: var(--border-gold) !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 24px rgba(14, 165, 233, 0.3) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.75), 0 0 16px rgba(14, 165, 233, 0.25) !important;
   pointer-events: none !important;
   cursor: default !important;
 }
@@ -70,41 +91,35 @@
   cursor: default !important;
 }
 
-
-.guided-spotlight-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* Glowing spotlight frame around active element (no 9999px box-shadow) */
+/* Glowing spotlight frame around active element (Hardware-accelerated 60 FPS) */
 .guided-spotlight-frame {
   position: absolute;
   border-radius: 14px;
-  border: 2px solid rgba(2, 132, 199, 0.95);
-  box-shadow: 0 0 22px rgba(2, 132, 199, 0.7),
-              inset 0 0 14px rgba(2, 132, 199, 0.45);
-  transition: top 0.25s ease, left 0.25s ease, width 0.25s ease, height 0.25s ease;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.75),
+              inset 0 0 12px rgba(14, 165, 233, 0.4);
+  transition: top 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              left 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
-  animation: beaconPulse 2.2s infinite ease-in-out;
+  transform: translateZ(0);
+  will-change: opacity, transform;
+  animation: beaconPulseGpu 2.2s infinite ease-in-out;
 }
 
-@keyframes beaconPulse {
+@keyframes beaconPulseGpu {
   0%, 100% {
-    box-shadow: 0 0 18px rgba(2, 132, 199, 0.55),
-                inset 0 0 10px rgba(2, 132, 199, 0.35);
-    border-color: rgba(2, 132, 199, 0.9);
+    opacity: 0.85;
+    transform: translateZ(0) scale(1);
   }
   50% {
-    box-shadow: 0 0 32px rgba(56, 189, 248, 0.85),
-                inset 0 0 18px rgba(56, 189, 248, 0.6);
-    border-color: rgba(56, 189, 248, 1);
+    opacity: 1;
+    transform: translateZ(0) scale(1.015);
   }
 }
 
-/* Beacon Pointer Indicator */
+/* Beacon Pointer Indicator (GPU Accelerated) */
 .guided-spotlight-beacon {
   position: absolute;
   top: -12px;
@@ -114,30 +129,38 @@
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
   border: 2px solid #ffffff;
   border-radius: 50%;
-  box-shadow: 0 0 16px #0ea5e9;
-  animation: pingBeacon 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  box-shadow: 0 0 14px #0ea5e9;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  animation: pingBeaconGpu 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-@keyframes pingBeacon {
+@keyframes pingBeaconGpu {
+  0% {
+    transform: translateZ(0) scale(1);
+    opacity: 1;
+  }
   75%, 100% {
-    transform: scale(1.4);
-    opacity: 0.2;
+    transform: translateZ(0) scale(1.35);
+    opacity: 0.25;
   }
 }
 
 /* Advisor Dialogue Card */
 .guided-advisor-card {
-  background: linear-gradient(165deg, rgba(17, 24, 39, 0.96) 0%, rgba(10, 15, 29, 0.98) 100%);
+  background: linear-gradient(165deg, rgba(17, 24, 39, 0.98) 0%, rgba(10, 15, 29, 0.99) 100%);
   border: 2px solid rgba(2, 132, 199, 0.55);
   border-radius: 18px;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8),
-              0 0 25px rgba(14, 165, 233, 0.25),
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85),
+              0 0 20px rgba(14, 165, 233, 0.25),
               inset 0 1px 0 rgba(255, 255, 255, 0.12);
   color: #f8fafc;
   padding: 16px 20px;
   box-sizing: border-box;
   animation: cardFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: auto;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
 @keyframes cardFadeIn {
@@ -872,35 +895,40 @@
    PROGRESSIVE BUILDING ONBOARDING & GUIDED TUTORIAL STYLES
    ========================================================================== */
 
-/* 1. Recommended Plot Guide Beacon */
+/* 1. Recommended Plot Guide Beacon (GPU-Accelerated) */
 .empty-slot-marker.is-recommended-plot .iso-tile-guide {
   border-color: #0ea5e9;
   border-style: solid;
   border-width: 2.5px;
   background: rgba(14, 165, 233, 0.25);
-  box-shadow: 0 0 24px rgba(14, 165, 233, 0.7);
-  animation: pulseBeaconGlow 1.5s infinite ease-in-out;
+  box-shadow: 0 0 22px rgba(14, 165, 233, 0.7);
+  animation: pulseBeaconGlowGpu 1.6s infinite ease-in-out;
+  transform: rotate(45deg);
+  will-change: opacity;
 }
 
 .empty-slot-marker.is-recommended-plot .build-here-btn {
   background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
   color: #1e1b4b;
   border-color: #bae6fd;
-  box-shadow: 0 0 16px rgba(14, 165, 233, 0.9);
-  animation: bounceBeaconBtn 1.2s infinite ease-in-out;
+  box-shadow: 0 0 14px rgba(14, 165, 233, 0.8);
+  animation: bounceBeaconBtnGpu 1.3s infinite ease-in-out;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .recommended-plot-beacon {
   position: absolute;
   top: -46px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateZ(0);
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 50;
   pointer-events: none;
-  animation: floatBeaconTag 1.5s infinite ease-in-out;
+  animation: floatBeaconTagGpu 1.6s infinite ease-in-out;
+  will-change: transform;
 }
 
 .recommended-plot-beacon .beacon-tag {
@@ -911,31 +939,29 @@
   padding: 4px 10px;
   border-radius: 9999px;
   border: 1.5px solid #bae6fd;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.75), 0 0 10px rgba(14, 165, 233, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 8px rgba(14, 165, 233, 0.4);
   white-space: nowrap;
   letter-spacing: 0.3px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
 }
 
-@keyframes pulseBeaconGlow {
+@keyframes pulseBeaconGlowGpu {
   0%, 100% {
-    transform: rotate(45deg) scale(1);
-    box-shadow: 0 0 16px rgba(14, 165, 233, 0.5);
+    opacity: 0.75;
   }
   50% {
-    transform: rotate(45deg) scale(1.08);
-    box-shadow: 0 0 30px rgba(14, 165, 233, 0.9);
+    opacity: 1;
   }
 }
 
-@keyframes bounceBeaconBtn {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.22); }
+@keyframes bounceBeaconBtnGpu {
+  0%, 100% { transform: translateZ(0) scale(1); }
+  50% { transform: translateZ(0) scale(1.15); }
 }
 
-@keyframes floatBeaconTag {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-6px); }
+@keyframes floatBeaconTagGpu {
+  0%, 100% { transform: translateX(-50%) translateY(0) translateZ(0); }
+  50% { transform: translateX(-50%) translateY(-5px) translateZ(0); }
 }
 
 /* 2. Recommended Building Card Highlight in BuildModal */

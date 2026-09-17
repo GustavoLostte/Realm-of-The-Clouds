@@ -78,7 +78,7 @@ export const gameStorage = {
         state.profile?.name || 
         (activeEmail && localStorage.getItem(`toc_player_name_${activeEmail}`)) ||
         localStorage.getItem('toc_player_name') || 
-        'Lord King'
+        'Comandante'
 
       const resolvedAvatar = 
         state.profile?.avatar || 
@@ -277,7 +277,7 @@ export const gameStorage = {
 
       const entry = {
         email: cleanEmail,
-        name: accountInfo.name || 'Lord King',
+        name: accountInfo.name || 'Comandante',
         level: accountInfo.level || 1,
         avatar: accountInfo.avatar || '/assets/avatars/avatar_king.webp',
         lastPlayed: accountInfo.lastPlayed || Date.now(),

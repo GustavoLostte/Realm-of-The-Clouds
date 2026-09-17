@@ -57,7 +57,7 @@ export function ArenaBattleView({
   const [turn, setTurn] = useState('player') // 'player' | 'rival' | 'resolving'
   const [turnCount, setTurnCount] = useState(1)
   const [combatLog, setCombatLog] = useState([
-    { id: 1, text: `¡El combate ha comenzado! Kael entra a la arena de ${rival?.name || 'Soberano Rival'}.`, type: 'info' }
+    { id: 1, text: `¡El combate ha comenzado! Kael entra a la arena de ${rival?.name || 'Comandante Rival'}.`, type: 'info' }
   ])
   const [floatingTexts, setFloatingTexts] = useState([])
   const [battleResult, setBattleResult] = useState(null) // 'victory' | 'defeat' | null
@@ -107,7 +107,7 @@ export function ArenaBattleView({
     setTurnCount(1)
     setBattleResult(null)
     setCombatLog([
-      { id: Date.now(), text: `¡Duelo de Soberanos iniciado! Kael se enfrenta a ${rival?.name || 'Soberano Rival'}.`, type: 'info' }
+      { id: Date.now(), text: `¡Duelo de Comandantes iniciado! Kael se enfrenta a ${rival?.name || 'Comandante Rival'}.`, type: 'info' }
     ])
     setFloatingTexts([])
     soundManager?.playButtonClick?.()
@@ -501,7 +501,7 @@ export function ArenaBattleView({
               <div className="fighter-shadow" />
               <img 
                 src={rival?.avatar || '/assets/champions/malakor_idle.webp'} 
-                alt="Soberano Rival" 
+                alt="Comandante Rival" 
                 className="fighter-sprite rival-sprite" 
                 draggable="false"
                 onError={(e) => {
@@ -626,7 +626,7 @@ export function ArenaBattleView({
 
               <h2 className="outcome-title victory-txt">¡VICTORIA GLORIOSA!</h2>
               <p className="outcome-subtitle">
-                Has derrotado al campeón de <strong className="rival-highlight">{rival?.name || 'Soberano Rival'}</strong> en el Coliseo.
+                Has derrotado al campeón de <strong className="rival-highlight">{rival?.name || 'Comandante Rival'}</strong> en el Vórtice Astral.
               </p>
 
               {/* Loot Grid */}
@@ -671,9 +671,9 @@ export function ArenaBattleView({
                 <Shield size={48} className="defeat-shield" />
               </div>
 
-              <h2 className="outcome-title defeat-txt">DERROTA EN EL COLISEO</h2>
+              <h2 className="outcome-title defeat-txt">DERROTA EN EL VÓRTICE ASTRAL</h2>
               <p className="outcome-subtitle">
-                Tu escuadrón cayó ante la táctica de <strong>{rival?.name || 'Soberano Rival'}</strong>.
+                Tu escuadrón cayó ante la táctica de <strong>{rival?.name || 'Comandante Rival'}</strong>.
               </p>
 
               <div className="outcome-penalty-box">

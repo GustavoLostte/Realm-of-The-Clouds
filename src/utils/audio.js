@@ -1,11 +1,29 @@
 // Sound & Background Music Controller
 
 const BUILDING_SOUND_MAP = {
-  ayuntamiento: '/assets/sounds/castle_build.ogg',
+  ayuntamiento: '/assets/sounds/construction.ogg',
+  cuartel: '/assets/sounds/construction.ogg',
+  gold_mine: '/assets/sounds/construction.ogg',
+  casa_molino: '/assets/sounds/construction.ogg',
+  archer_tower: '/assets/sounds/construction.ogg',
+  portal: '/assets/sounds/construction.ogg',
+  casa: '/assets/sounds/construction.ogg',
+  almacen: '/assets/sounds/construction.ogg',
+  aserradero: '/assets/sounds/construction.ogg',
+  mina_piedra: '/assets/sounds/construction.ogg',
 }
 
 const BUILDING_IDLE_MAP = {
   ayuntamiento: '/assets/sounds/castle_build.ogg',
+  cuartel: '/assets/sounds/barracks_build.ogg',
+  gold_mine: '/assets/sounds/gold_mine_loop.ogg',
+  casa_molino: '/assets/sounds/windmill_loop.ogg',
+  archer_tower: '/assets/sounds/archer_tower.ogg',
+  portal: '/assets/sounds/portal.ogg',
+  casa: '/assets/sounds/house_build.ogg',
+  almacen: '/assets/sounds/warehouse_build.ogg',
+  aserradero: '/assets/sounds/sawmill.ogg',
+  mina_piedra: '/assets/sounds/stone_mine.ogg',
 }
 
 class SFXChannelPool {
@@ -56,8 +74,12 @@ class SoundController {
     this.sfxVolume = 0.85
     this.ambientVolume = 0.55
     this.ambientAudio = null
+    this.preBattleAudio = null
+    this.combatAudio = null
     this.battleAudio = null
     this.isBattleMusicPlaying = false
+    this.isPreBattleMusicPlaying = false
+    this.isCombatMusicPlaying = false
     this.isMusicInBreak = false
     this.activeConstructions = new Map() // slotId -> HTMLAudioElement
     this.currentBuildingAudio = null
@@ -119,19 +141,22 @@ class SoundController {
         })
 
         this.bgmAudio.addEventListener('pause', () => {
-          if (this.isBattleMusicPlaying) return
+          if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying) return
           this.isMusicInBreak = true
           this.updateAmbientVolume()
         })
 
         this.bgmAudio.addEventListener('play', () => {
-          if (this.isBattleMusicPlaying) {
-            try { this.bgmAudio.pause() } catch {}
+          if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying) {
+            try { 
+              this.bgmAudio.volume = 0
+              this.bgmAudio.pause() 
+            } catch {}
             return
           }
           this.isMusicInBreak = false
           this.updateAmbientVolume()
-          if (this.canPlayGameSound() && this.ambientAudio && this.ambientAudio.paused) {
+          if (this.canPlayGameSound() && this.ambientAudio && this.ambientAudio.paused && !this.isBattleMusicPlaying && !this.isCombatMusicPlaying && !this.isPreBattleMusicPlaying) {
             this.ambientAudio.play().catch(() => {})
           }
         })
@@ -140,7 +165,7 @@ class SoundController {
         this.bgmAudio.addEventListener('error', () => {
           if (this.bgmAudio && this.bgmAudio.src.includes('The_Keep_at_First_Light.ogg')) {
             this.bgmAudio.src = '/assets/audio/The_Keep_at_First_Light.ogg'
-            if (this.enabled && this.hasUserInteracted && this.gameStarted && !this.isBattleMusicPlaying) {
+            if (this.enabled && this.hasUserInteracted && this.gameStarted && !this.isBattleMusicPlaying && !this.isCombatMusicPlaying && !this.isPreBattleMusicPlaying) {
               this.bgmAudio.play().catch(() => {})
             }
           }
@@ -158,7 +183,7 @@ class SoundController {
 
         // Resilient loop recovery for mobile / safari tab backgrounding
         this.ambientAudio.addEventListener('ended', () => {
-          if (this.canPlayGameSound() && !this.isBattleMusicPlaying) {
+          if (this.canPlayGameSound() && !this.isBattleMusicPlaying && !this.isCombatMusicPlaying && !this.isPreBattleMusicPlaying) {
             this.ambientAudio.currentTime = 0
             this.ambientAudio.play().catch(() => {})
           }
@@ -167,7 +192,7 @@ class SoundController {
         this.ambientAudio.addEventListener('error', () => {
           if (this.ambientAudio && this.ambientAudio.src.includes('background_ambient.ogg')) {
             this.ambientAudio.src = '/assets/audio/background_ambient_vorbis.ogg'
-            if (this.enabled && this.hasUserInteracted && this.gameStarted && !this.isBattleMusicPlaying) {
+            if (this.enabled && this.hasUserInteracted && this.gameStarted && !this.isBattleMusicPlaying && !this.isCombatMusicPlaying && !this.isPreBattleMusicPlaying) {
               this.ambientAudio.play().catch(() => {})
             }
           }
@@ -176,23 +201,22 @@ class SoundController {
         // ignore
       }
 
-      // 3. Battle BGM: battle_scene.ogg (optimized OGG Vorbis)
+      // 3. Pre-Battle Scene BGM (Lobby, Coliseo Rooms & Hero Selection)
       try {
-        this.battleAudio = new Audio('/assets/audio/battle_scene.ogg')
-        this.battleAudio.loop = true
-        this.battleAudio.volume = this.bgmVolume
-        this.battleAudio.preload = 'auto'
-        this.battleAudio.addEventListener('error', () => {
-          if (this.battleAudio && !this.battleAudio.src.includes('battle_scene.ogg')) {
-            this.battleAudio.src = '/assets/audio/battle_scene.ogg'
-            if (this.enabled && this.hasUserInteracted && this.isBattleMusicPlaying) {
-              this.battleAudio.play().catch(() => {})
-            }
-          }
-        })
-      } catch {
-        // ignore
-      }
+        this.preBattleAudio = new Audio('/assets/audio/battle_scene.ogg')
+        this.preBattleAudio.loop = true
+        this.preBattleAudio.volume = this.bgmVolume
+        this.preBattleAudio.preload = 'auto'
+      } catch {}
+
+      // 4. Combat Duel BGM (Real-Time Arcade Fighting Arena - Iron & Bone)
+      try {
+        this.combatAudio = new Audio('/assets/audio/combat_scene.mp3')
+        this.combatAudio.loop = true
+        this.combatAudio.volume = this.bgmVolume
+        this.combatAudio.preload = 'auto'
+        this.battleAudio = this.combatAudio
+      } catch {}
 
       // Auto-unlock audio playback on first user gesture
       const unlockAudio = () => {
@@ -200,8 +224,10 @@ class SoundController {
           this.hasUserInteracted = true
           this.initCtx()
           if (this.enabled && this.gameStarted) {
-            if (this.isBattleMusicPlaying) {
-              this.playBattleMusic()
+            if (this.isCombatMusicPlaying) {
+              this.playCombatMusic()
+            } else if (this.isPreBattleMusicPlaying) {
+              this.playPreBattleMusic()
             } else {
               this.playAmbient()
               this.playBGM()
@@ -218,6 +244,11 @@ class SoundController {
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden && this.canPlayGameSound()) {
           this.initCtx()
+          if (this.isCombatMusicPlaying && this.combatAudio?.paused) {
+            this.combatAudio.play().catch(() => {})
+          } else if (this.isPreBattleMusicPlaying && this.preBattleAudio?.paused) {
+            this.preBattleAudio.play().catch(() => {})
+          }
         }
       })
     }
@@ -264,7 +295,7 @@ class SoundController {
 
   updateAmbientVolume() {
     if (!this.ambientAudio) return
-    if (this.isBattleMusicPlaying) {
+    if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying || !this.enabled || !this.gameStarted) {
       this.ambientAudio.volume = 0
       try {
         this.ambientAudio.pause()
@@ -281,13 +312,13 @@ class SoundController {
       : base * 0.85
 
     this.ambientAudio.volume = Math.max(0, Math.min(1, targetVol))
-    if (this.canPlayGameSound() && this.ambientAudio.paused && targetVol > 0) {
+    if (this.canPlayGameSound() && this.ambientAudio.paused && targetVol > 0 && !this.isBattleMusicPlaying && !this.isCombatMusicPlaying && !this.isPreBattleMusicPlaying) {
       this.ambientAudio.play().catch(() => {})
     }
   }
 
   playAmbient() {
-    if (this.isBattleMusicPlaying) return
+    if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying) return
     if (!this.canPlayGameSound() || !this.ambientAudio) return
     this.updateAmbientVolume()
     const ambientPromise = this.ambientAudio.play()
@@ -297,7 +328,7 @@ class SoundController {
   }
 
   playBGM() {
-    if (this.isBattleMusicPlaying) return
+    if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying) return
     if (!this.canPlayGameSound()) return
     if (this.bgmAudio) {
       this.bgmAudio.volume = this.activeConstructions.size > 0 
@@ -318,7 +349,7 @@ class SoundController {
     if (pauseAmbient && this.ambientAudio) {
       this.ambientAudio.pause()
     } else {
-      if (this.isBattleMusicPlaying) return
+      if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying) return
       // If only music is paused/cut, keep playing map sound effects!
       this.isMusicInBreak = true
       this.updateAmbientVolume()
@@ -330,14 +361,16 @@ class SoundController {
 
   stopBGM(stopAmbient = false) {
     if (this.bgmAudio) {
+      this.bgmAudio.volume = 0
       this.bgmAudio.pause()
       this.bgmAudio.currentTime = 0
     }
     if (stopAmbient && this.ambientAudio) {
+      this.ambientAudio.volume = 0
       this.ambientAudio.pause()
       this.ambientAudio.currentTime = 0
     } else {
-      if (this.isBattleMusicPlaying) return
+      if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying) return
       this.isMusicInBreak = true
       this.updateAmbientVolume()
       if (this.canPlayGameSound() && this.ambientAudio && this.ambientAudio.paused) {
@@ -346,18 +379,14 @@ class SoundController {
     }
   }
 
-  playBattleMusic() {
-    this.isBattleMusicPlaying = true
-
-    // 1. Immediately pause and mute Kingdom BGM
+  stopKingdomMusic() {
     if (this.bgmAudio) {
       try {
+        this.bgmAudio.volume = 0
         this.bgmAudio.pause()
         this.bgmAudio.currentTime = 0
       } catch {}
     }
-
-    // 2. Immediately pause, mute and reset Kingdom Ambient (birds, waterfall, chimes)
     if (this.ambientAudio) {
       try {
         this.ambientAudio.volume = 0
@@ -365,48 +394,133 @@ class SoundController {
         this.ambientAudio.currentTime = 0
       } catch {}
     }
-
-    // 3. Immediately pause and mute all kingdom construction audio loops
     this.activeConstructions.forEach((audio) => {
       try {
+        audio.volume = 0
         audio.pause()
         audio.currentTime = 0
       } catch {}
     })
-
-    // 4. Immediately stop any current building audio
     this.stopBuildingSound()
+  }
 
-    // 5. Play Battle BGM
+  resumeKingdomAudio() {
+    if (this.isBattleMusicPlaying || this.isCombatMusicPlaying || this.isPreBattleMusicPlaying) return
+    if (!this.canPlayGameSound()) return
+    this.activeConstructions.forEach((audio) => {
+      try {
+        audio.play().catch(() => {})
+      } catch {}
+    })
+    this.playAmbient()
+    this.playBGM()
+  }
+
+  // Pre-Battle Scene BGM (PvP lobby, rooms list & champion select)
+  playPreBattleMusic() {
+    this.isPreBattleMusicPlaying = true
+    this.isCombatMusicPlaying = false
+    this.isBattleMusicPlaying = true
+    this.stopKingdomMusic()
+
+    if (this.combatAudio) {
+      try {
+        this.combatAudio.pause()
+        this.combatAudio.currentTime = 0
+      } catch {}
+    }
+
     if (!this.canPlayGameSound()) return
     this.initCtx()
 
-    if (this.battleAudio) {
-      this.battleAudio.volume = this.bgmVolume
-      const p = this.battleAudio.play()
+    if (this.preBattleAudio) {
+      this.preBattleAudio.volume = this.bgmVolume
+      const p = this.preBattleAudio.play()
       if (p !== undefined) {
         p.catch(() => {})
       }
     }
   }
 
+  stopPreBattleMusic(resumeKingdom = false) {
+    this.isPreBattleMusicPlaying = false
+    if (this.preBattleAudio) {
+      try {
+        this.preBattleAudio.pause()
+        this.preBattleAudio.currentTime = 0
+      } catch {}
+    }
+    if (resumeKingdom && !this.isCombatMusicPlaying) {
+      this.isBattleMusicPlaying = false
+      this.resumeKingdomAudio()
+    }
+  }
+
+  // Active Combat BGM (Real-Time 1v1 Fighting Duel Arena - Iron & Bone)
+  playCombatMusic() {
+    this.isCombatMusicPlaying = true
+    this.isBattleMusicPlaying = true
+    this.isPreBattleMusicPlaying = false
+    this.stopKingdomMusic()
+
+    if (this.preBattleAudio) {
+      try {
+        this.preBattleAudio.pause()
+        this.preBattleAudio.currentTime = 0
+      } catch {}
+    }
+
+    if (!this.canPlayGameSound()) return
+    this.initCtx()
+
+    if (this.combatAudio) {
+      this.combatAudio.volume = this.bgmVolume
+      const p = this.combatAudio.play()
+      if (p !== undefined) {
+        p.catch(() => {})
+      }
+    }
+  }
+
+  stopCombatMusic(resumePreBattle = true) {
+    this.isCombatMusicPlaying = false
+    if (this.combatAudio) {
+      try {
+        this.combatAudio.pause()
+        this.combatAudio.currentTime = 0
+      } catch {}
+    }
+    if (resumePreBattle && this.isBattleMusicPlaying) {
+      this.playPreBattleMusic()
+    } else if (!this.isBattleMusicPlaying) {
+      this.resumeKingdomAudio()
+    }
+  }
+
+  // Aliases for unified battle compatibility
+  playBattleMusic() {
+    this.playCombatMusic()
+  }
+
   stopBattleMusic(resumeKingdom = true) {
     this.isBattleMusicPlaying = false
-    if (this.battleAudio) {
+    this.isPreBattleMusicPlaying = false
+    this.isCombatMusicPlaying = false
+
+    if (this.preBattleAudio) {
       try {
-        this.battleAudio.pause()
-        this.battleAudio.currentTime = 0
+        this.preBattleAudio.pause()
+        this.preBattleAudio.currentTime = 0
+      } catch {}
+    }
+    if (this.combatAudio) {
+      try {
+        this.combatAudio.pause()
+        this.combatAudio.currentTime = 0
       } catch {}
     }
     if (resumeKingdom && this.canPlayGameSound()) {
-      // Restore active kingdom construction audio loops if any are still in progress
-      this.activeConstructions.forEach((audio) => {
-        try {
-          audio.play().catch(() => {})
-        } catch {}
-      })
-      this.playAmbient()
-      this.playBGM()
+      this.resumeKingdomAudio()
     }
   }
 
@@ -416,6 +530,12 @@ class SoundController {
       this.bgmAudio.volume = this.activeConstructions.size > 0 
         ? Math.max(0.05, this.bgmVolume * 0.35) 
         : this.bgmVolume
+    }
+    if (this.preBattleAudio) {
+      this.preBattleAudio.volume = this.bgmVolume
+    }
+    if (this.combatAudio) {
+      this.combatAudio.volume = this.bgmVolume
     }
     if (this.battleAudio) {
       this.battleAudio.volume = this.bgmVolume
@@ -510,7 +630,7 @@ class SoundController {
     this.stopConstructionAudio(slotId)
 
     const normalizedId = (buildingId || '').toLowerCase()
-    const src = BUILDING_SOUND_MAP[normalizedId] || '/assets/sounds/castle_build.ogg'
+    const src = BUILDING_SOUND_MAP[normalizedId] || '/assets/sounds/construction.ogg'
 
     try {
       const audio = new Audio(src)
@@ -619,7 +739,7 @@ class SoundController {
     const normalizedId = (buildingId || '').toLowerCase()
     let src
     if (isConstructing) {
-      src = BUILDING_SOUND_MAP[normalizedId] || '/assets/sounds/castle_build.ogg'
+      src = '/assets/sounds/construction.ogg'
     } else {
       src = BUILDING_IDLE_MAP[normalizedId] || BUILDING_SOUND_MAP[normalizedId] || '/assets/sounds/castle_build.ogg'
     }
@@ -1237,32 +1357,33 @@ class SoundController {
 
     try {
       const now = this.audioCtx.currentTime
-      const pitchMod = this.getRandomPitch(0.12)
+      const pitchMod = this.getRandomPitch(0.08)
 
-      // Ringing high steel parry
-      const bell = this.audioCtx.createOscillator()
-      const bellGain = this.audioCtx.createGain()
-      bell.type = 'sine'
-      bell.frequency.setValueAtTime(2150 * pitchMod, now)
-      bellGain.gain.setValueAtTime(0.35 * this.sfxVolume, now)
-      bellGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35)
-      bell.connect(bellGain)
-      bellGain.connect(this.audioCtx.destination)
-      bell.start(now)
-      bell.stop(now + 0.35)
-
-      // Iron deflection thud
+      // Solid, deep shield impact thud (heavy low-end absorption, NO high-pitched ping/bell)
       const thud = this.audioCtx.createOscillator()
       const thudGain = this.audioCtx.createGain()
       thud.type = 'triangle'
-      thud.frequency.setValueAtTime(180 * pitchMod, now)
-      thud.frequency.exponentialRampToValueAtTime(60 * pitchMod, now + 0.12)
-      thudGain.gain.setValueAtTime(0.30 * this.sfxVolume, now)
-      thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12)
+      thud.frequency.setValueAtTime(130 * pitchMod, now)
+      thud.frequency.exponentialRampToValueAtTime(40 * pitchMod, now + 0.14)
+      thudGain.gain.setValueAtTime(0.28 * this.sfxVolume, now)
+      thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14)
       thud.connect(thudGain)
       thudGain.connect(this.audioCtx.destination)
       thud.start(now)
-      thud.stop(now + 0.12)
+      thud.stop(now + 0.14)
+
+      // Low muffled physical body impact
+      const sub = this.audioCtx.createOscillator()
+      const subGain = this.audioCtx.createGain()
+      sub.type = 'sine'
+      sub.frequency.setValueAtTime(80 * pitchMod, now)
+      sub.frequency.exponentialRampToValueAtTime(30 * pitchMod, now + 0.18)
+      subGain.gain.setValueAtTime(0.32 * this.sfxVolume, now)
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.18)
+      sub.connect(subGain)
+      subGain.connect(this.audioCtx.destination)
+      sub.start(now)
+      sub.stop(now + 0.18)
     } catch {}
   }
 
@@ -1505,15 +1626,23 @@ class SoundController {
   toggleSound() {
     this.enabled = !this.enabled
     if (this.enabled && this.gameStarted) {
-      if (this.isBattleMusicPlaying) {
-        this.playBattleMusic()
+      if (this.isCombatMusicPlaying) {
+        this.playCombatMusic()
+      } else if (this.isPreBattleMusicPlaying || this.isBattleMusicPlaying) {
+        this.playPreBattleMusic()
       } else {
         this.playBGM()
       }
     } else {
       this.pauseBGM(true)
+      if (this.preBattleAudio) {
+        try { this.preBattleAudio.pause() } catch {}
+      }
+      if (this.combatAudio) {
+        try { this.combatAudio.pause() } catch {}
+      }
       if (this.battleAudio) {
-        this.battleAudio.pause()
+        try { this.battleAudio.pause() } catch {}
       }
       this.stopBuildingSound()
       this.activeConstructions.forEach((audio) => {

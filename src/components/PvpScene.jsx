@@ -20,6 +20,7 @@ import {
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
 import { getLeagueForTrophies, generateRivalsForPlayer } from '../data/arenaData'
+import { getChampionById } from '../data/championsData'
 import { PvpVsModal } from './PvpVsModal'
 import { ChampionSelectScene } from './ChampionSelectScene'
 import { BattleDuelScene } from './BattleDuelScene'
@@ -28,7 +29,7 @@ export function PvpScene({
   onBack,
   resources = {},
   arenaData = {},
-  playerName = 'Lord King',
+  playerName = 'Comandante',
   playerAvatar = '/assets/avatars/avatar_king.webp',
   kingdomLevel = 1,
   troops = {},
@@ -42,11 +43,50 @@ export function PvpScene({
   const currentLeague = getLeagueForTrophies(trophies)
   
   // View mode: 'rooms' (rooms list) | 'champion-select' (Mortal Kombat style selection) | 'battle-duel' (map duel)
-  const [currentView, setCurrentView] = useState('rooms')
+  const [currentView, setCurrentView] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('view') === 'battle') return 'battle-duel'
+      if (params.get('view') === 'select') return 'champion-select'
+    } catch {}
+    return 'rooms'
+  })
   const [vsModalOpen, setVsModalOpen] = useState(false)
-  const [selectedRoom, setSelectedRoom] = useState(null)
-  const [selectedPlayerChamp, setSelectedPlayerChamp] = useState(null)
-  const [selectedRivalChamp, setSelectedRivalChamp] = useState(null)
+  const [selectedRoom, setSelectedRoom] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('view') === 'battle' || params.get('view') === 'select') {
+        return {
+          id: 'room_101',
+          name: 'Comandante Valerius',
+          championId: 'malakor',
+          avatar: '/assets/avatars/avatar_king.webp',
+          kingdom: 'Bastión del Fénix',
+          trophies: 280,
+          level: 3,
+        }
+      }
+    } catch {}
+    return null
+  })
+  const [selectedPlayerChamp, setSelectedPlayerChamp] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('view') === 'battle') {
+        return getChampionById('luke')
+      }
+    } catch {}
+    return null
+  })
+  const [selectedRivalChamp, setSelectedRivalChamp] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('view') === 'battle') {
+        return getChampionById('malakor')
+      }
+    } catch {}
+    return null
+  })
 
   // Battle mode: '1v1' active, 3v3 coming soon
   const [battleMode, setBattleMode] = useState('1v1')
@@ -58,9 +98,9 @@ export function PvpScene({
   const totalMatches = wins + losses
   const winRate = totalMatches > 0 ? Math.round((wins / totalMatches) * 100) : 100
 
-  // Trigger Battle Music on mount and resume kingdom ambient on unmount
+  // Trigger Pre-Battle Music on mount and resume kingdom ambient on unmount
   useEffect(() => {
-    soundManager?.playBattleMusic?.()
+    soundManager?.playPreBattleMusic?.()
     return () => {
       soundManager?.stopBattleMusic?.(true)
     }
@@ -108,6 +148,20 @@ export function PvpScene({
     setCurrentView('champion-select')
   }
 
+  const handleQuickPracticeLuke = () => {
+    soundManager?.playButtonClick?.()
+    setSelectedPlayerChamp(getChampionById('luke'))
+    setSelectedRivalChamp(getChampionById('malakor'))
+    setCurrentView('battle-duel')
+  }
+
+  const handleQuickPracticeMalakor = () => {
+    soundManager?.playButtonClick?.()
+    setSelectedPlayerChamp(getChampionById('malakor'))
+    setSelectedRivalChamp(getChampionById('luke'))
+    setCurrentView('battle-duel')
+  }
+
   const handleConfirmChampion = (playerChamp, rivalChamp) => {
     setSelectedPlayerChamp(playerChamp)
     setSelectedRivalChamp(rivalChamp)
@@ -121,8 +175,8 @@ export function PvpScene({
   if (currentView === 'battle-duel') {
     return (
       <BattleDuelScene 
-        playerChampion={selectedPlayerChamp}
-        rivalChampion={selectedRivalChamp}
+        playerChampion={selectedPlayerChamp || getChampionById('luke')}
+        rivalChampion={selectedRivalChamp || getChampionById('malakor')}
         onExitBattle={() => setCurrentView('rooms')}
         onVictory={(rivalChamp) => {
           if (showNotification) {
@@ -186,7 +240,7 @@ export function PvpScene({
               <Swords size={20} className="pvp-title-swords-icon" />
             </div>
             <div className="pvp-title-text-wrap">
-              <h1 className="pvp-scene-title">COLISEO DE LOS SOBERANOS</h1>
+              <h1 className="pvp-scene-title">VÓRTICE ASTRAL DEL ÉTER</h1>
               <div className="pvp-league-subtitle">
                 <span className="pvp-league-dot" />
                 <span className="pvp-league-name-highlight">{currentLeague?.name || 'Liga de Batalla'}</span>
@@ -255,6 +309,42 @@ export function PvpScene({
               </div>
             </button>
 
+            {/* BUTTON ARCADE LUKE - REAL TIME WASD + KLIO */}
+            <button 
+              className="mode-toggle-card arcade-luke-card"
+              onClick={handleQuickPracticeLuke}
+              title="Entrar directo al combate arcade de Luke (Ángel Celestial) con controles WASD, Espacio y KLIO"
+            >
+              <div className="mode-toggle-icon angel-mode-icon">
+                <Sparkles size={20} />
+              </div>
+              <div className="mode-toggle-text">
+                <div className="mode-title-row">
+                  <span className="mode-name arcade-luke-title">ARCADE LUKE</span>
+                  <span className="mode-active-pill arcade-badge-luke">WASD + KLIO</span>
+                </div>
+                <span className="mode-desc">Combate de acción celestial con Luke</span>
+              </div>
+            </button>
+
+            {/* BUTTON ARCADE MALAKOR - REAL TIME WASD + KLIO */}
+            <button 
+              className="mode-toggle-card arcade-malakor-card"
+              onClick={handleQuickPracticeMalakor}
+              title="Entrar directo al combate arcade de Lord Malakor con controles WASD, Espacio y KLIO"
+            >
+              <div className="mode-toggle-icon flame-mode-icon">
+                <Flame size={20} />
+              </div>
+              <div className="mode-toggle-text">
+                <div className="mode-title-row">
+                  <span className="mode-name arcade-malakor-title">ARCADE MALAKOR</span>
+                  <span className="mode-active-pill arcade-badge">WASD + KLIO</span>
+                </div>
+                <span className="mode-desc">Combate en tiempo real con Lord Malakor</span>
+              </div>
+            </button>
+
             {/* BUTTON MODE 3 VS 3 - COMING SOON */}
             <button 
               className="mode-toggle-card locked-card"
@@ -299,7 +389,7 @@ export function PvpScene({
                 <h3 className="profile-player-name">{playerName}</h3>
                 <div className="profile-badge-tag">
                   <Award size={13} className="award-icon" />
-                  <span>Soberano de Aetheria</span>
+                  <span>Comandante de Aetheria</span>
                 </div>
               </div>
             </div>

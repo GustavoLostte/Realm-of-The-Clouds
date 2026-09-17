@@ -45,7 +45,7 @@ export const es = {
     "unlocked": "Desbloqueado",
     "victory": "¡Victoria!",
     "defeat": "Derrota",
-    "sovereign": "Lord King",
+    "sovereign": "Comandante",
     "or": "o",
     "success": "Éxito",
     "warning": "Atención",
@@ -93,12 +93,17 @@ export const es = {
     "enterEmailPrompt": "Ingresa tu correo para guardar tu reino en la nube:",
     "emailPlaceholder": "tu_correo@ejemplo.com",
     "enterKingdom": "Entrar al Reino",
+    "loginWithGoogle": "Continuar con Google",
+    "loginWithDiscord": "Continuar con Discord",
+    "loginWithEmail": "Continuar con Correo",
+    "questMode": "Modo Quest (Invitado)",
+    "authSubtitle": "Elige tu método de acceso para continuar tu reinado:",
     "startEmpire": "Comenzar Mi Imperio",
-    "playAsGuest": "Jugar como Invitado (Solo en este dispositivo)",
-    "guestWarning": "El progreso de invitado se guarda solo en este navegador. Ingresa tu correo para jugar en otros dispositivos.",
+    "playAsGuest": "Modo Quest (Invitado)",
+    "guestWarning": "En Modo Quest tu progreso se guarda en este dispositivo. Con Google o Discord se respalda en la nube.",
     "rememberedAccounts": "Selecciona tu Cuenta Imperial",
     "rememberedSubtitle": "Cuentas registradas en este dispositivo:",
-    "useOtherAccount": "Usar otro correo o nueva cuenta",
+    "useOtherAccount": "Usar otro método de acceso",
     "removeAccountTitle": "Desvincular Cuenta",
     "removeAccountConfirm": "¿Deseas desvincular la cuenta {email} de este dispositivo? Tu reino en la nube seguirá intacto.",
     "connecting": "Convocando los Archivos Reales...",
@@ -117,12 +122,12 @@ export const es = {
     "freeMode": "Modo Libre",
     "freeModeExit": "Modo Libre • Clic o pulsa ESC para volver",
     "heraldTitle": "Heraldo Real",
-    "colosseumTitle": "Coliseo de los Soberanos",
+    "colosseumTitle": "Vórtice Astral del Éter",
     "academyTitle": "Gran Academia",
     "rouletteTitle": "Ruleta Imperial de la Fortuna",
     "shopTitle": "Tesorería Imperial",
-    "rankingTitle": "Ranking de Soberanos",
-    "profileTitle": "Perfil Soberano",
+    "rankingTitle": "Ranking de Comandantes",
+    "profileTitle": "Perfil del Comandante",
     "settingsTitle": "Ajustes y Archivos",
     "dailyFreeSpin": "¡Giro Diario Gratis Listo!",
     "quickHarvest": "Cobrar",
@@ -131,8 +136,8 @@ export const es = {
     "fullscreen": "Pantalla Completa",
     "soundMute": "Silenciar música y efectos",
     "soundUnmute": "Activar música ambiental",
-    "profileTooltip": "Soberano: {name} - Nv. {level} ({current}/{max} XP) - Clic para ver Perfil",
-    "arenaCrownsTooltip": "Coronas de Arena: {trophies} Coronas - Clic para ver el Ranking Global",
+    "profileTooltip": "Comandante: {name} - Nv. {level} ({current}/{max} XP) - Clic para ver Perfil",
+    "arenaCrownsTooltip": "Coronas del Vórtice Astral: {trophies} Coronas - Clic para ver el Ranking Global",
     "peaceShieldActive": "Escudo de Paz Activo contra asaltos",
     "getGems": "Obtener Cristales",
     "resGold": "Oro: {val} monedas",
@@ -149,7 +154,7 @@ export const es = {
   },
   "combatModal": {
     "title": "Centro de Combate",
-    "subtitle": "Elige tu modo de enfrentamiento: ¡Duelos tácticos de campeones y coliseo!",
+    "subtitle": "Elige tu modo de enfrentamiento: ¡Duelos tácticos de campeones y el Vórtice Astral!",
     "pveTitle": "Campaña y Mazmorras",
     "pveBadge": "Single Player (PvE)",
     "pveDesc": "La senda celestial de Aetheria se abrirá con nuevas mazmorras épicas, jefes supremos y reliquias arcanas.",
@@ -159,10 +164,10 @@ export const es = {
     "comingSoonBtn": "En Desarrollo",
     "comingSoonTooltip": "En desarrollo activo para la próxima expansión",
     "campaignNotice": "¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Aetheria.",
-    "pvpTitle": "Coliseo de los Soberanos",
-    "pvpBadge": "⭐ Duelo de Soberanos (PvP Activo)",
-    "pvpDesc": "Despliega a tu campeón en duelos tácticos por turnos contra otros reyes celestiales para ganar Coronas y Fragmentos.",
-    "pvpBtn": "¡Entrar al Coliseo!"
+    "pvpTitle": "Vórtice Astral del Éter",
+    "pvpBadge": "⭐ Duelo de Comandantes (PvP Activo)",
+    "pvpDesc": "Despliega a tu campeón en duelos tácticos por turnos contra otros comandantes celestiales para ganar Coronas y Fragmentos.",
+    "pvpBtn": "¡Entrar al Vórtice Astral!"
   },
   "rightControls": {
     "battle": "Batalla",
@@ -177,7 +182,7 @@ export const es = {
   },
   "kingdomHub": {
     "title": "Cámara de Gobierno Imperial",
-    "subtitle": "Gestión centralizada de tu soberanía y fortalezas celestiales",
+    "subtitle": "Gestión centralizada del mando militar y fortalezas celestiales",
     "build": "Construcción",
     "buildDesc": "Erige y mejora edificios en tu plaza",
     "shop": "Bazar Imperial",
@@ -187,14 +192,14 @@ export const es = {
     "quests": "Misiones",
     "questsDesc": "Hazañas y decretos imperiales",
     "ranking": "Ranking",
-    "rankingDesc": "Tabla de soberanos supremos",
+    "rankingDesc": "Tabla de comandantes supremos",
     "settings": "Ajustes",
     "settingsDesc": "Audio, idioma y cuenta"
   },
   "dock": {
     "build": "Construir",
     "army": "Ejército",
-    "arena": "PvP / Arena",
+    "arena": "Vórtice Astral",
     "ranking": "Ranking",
     "research": "Investigar",
     "inventory": "Inventario",
@@ -204,13 +209,13 @@ export const es = {
     "settings": "Ajustes",
     "buildTooltip": "Catálogo de Construcción",
     "armyTooltip": "Guarnición y Reclutamiento Militar",
-    "arenaTooltipReady": "⚔️ Coliseo PvP • ¡Tienes {count} asaltos disponibles para atacar!",
-    "arenaTooltip": "El Coliseo de los Soberanos (PvP)",
-    "rankingTooltip": "Tabla de Clasificación & Ranking de Soberanos",
+    "arenaTooltipReady": "⚔️ Vórtice Astral PvP • ¡Tienes {count} asaltos disponibles para atacar!",
+    "arenaTooltip": "El Vórtice Astral del Éter (PvP)",
+    "rankingTooltip": "Tabla de Clasificación & Ranking de Comandantes",
     "researchTooltip": "Árbol de Investigaciones Reales",
     "inventoryTooltip": "Baúl de Reliquias & Mochila de Batalla",
     "shopTooltipReady": "Bazar Imperial • ¡Tirada Gratis en la Ruleta!",
-    "shopTooltip": "Bazar Imperial & Ofertas del Soberano",
+    "shopTooltip": "Bazar Imperial & Ofertas del Comandante",
     "questsTooltip": "Misiones del Reino",
     "expeditionTooltip": "Expediciones & Mapa Exterior",
     "settingsTooltip": "Configuración y Ajustes del Juego",
@@ -257,7 +262,7 @@ export const es = {
     "slots": {
       "castle": {
         "name": "Castillo Imperial",
-        "desc": "El corazón soberano de tu reino. Aumenta la capacidad civil, otorga prestigio real y desbloquea nuevas edificaciones."
+        "desc": "El corazón supremo de tu reino. Aumenta la capacidad civil, otorga prestigio militar y desbloquea nuevas edificaciones."
       },
       "barracks": {
         "name": "Cuartel Militar",
@@ -298,11 +303,11 @@ export const es = {
       },
       "ayuntamiento": {
         "name": "Castillo Imperial",
-        "desc": "El corazón soberano de tu reino. Aumenta la capacidad civil, otorga prestigio real y desbloquea nuevas edificaciones."
+        "desc": "El corazón supremo de tu reino. Aumenta la capacidad civil, otorga prestigio militar y desbloquea nuevas edificaciones."
       },
       "castillo": {
         "name": "Castillo Imperial",
-        "desc": "El corazón soberano de tu reino. Aumenta la capacidad civil, otorga prestigio real y desbloquea nuevas edificaciones."
+        "desc": "El corazón supremo de tu reino. Aumenta la capacidad civil, otorga prestigio militar y desbloquea nuevas edificaciones."
       },
       "gold_mine": {
         "name": "Mina y Cámara de Oro",
@@ -332,7 +337,7 @@ export const es = {
     "claimedBadge": "Completado",
     "progress": "Progreso: {current} / {target}",
     "noQuests": "¡Todos los decretos de este capítulo han sido gloriosamente cumplidos!",
-    "heraldSpeech": "¡Salve, Soberano! La corona exige vuestra sabia mano para engrandecer este reino.",
+    "heraldSpeech": "¡Salve, Mi Comandante! El reino exige vuestro liderazgo bélico para expandir nuestras fronteras.",
     "chapters": {
       "c1Badge": "Capítulo I",
       "c1Title": "Capítulo I: El Despertar en las Alturas",
@@ -458,7 +463,7 @@ export const es = {
       },
       "q-c4-1": {
         "title": "Corona Imperial",
-        "desc": "Alcanza Nivel de Reino 3 con tu Soberano.",
+        "desc": "Alcanza Nivel de Reino 3 con tu Comandante.",
         "hint": "Gana experiencia construyendo, reclutando y conquistando mazmorras.",
         "action": "Ver Perfil"
       },
@@ -536,7 +541,7 @@ export const es = {
     "effectLabel": "Beneficio Imperial:"
   },
   "arena": {
-    "title": "El Coliseo de los Soberanos",
+    "title": "El Vórtice Astral del Éter",
     "assaults": "Asaltos",
     "chooseRival": "🎯 Elige tu Rival",
     "chooseRivalDesc": "Selecciona una ciudadela de fuerza similar. Cada asedio cuesta 1 entrada.",
@@ -565,17 +570,17 @@ export const es = {
     "seasonEndClaimBtn": "Reclamar Botín & Entrar a la Nueva Temporada",
     "seasonClaimSuccess": "¡Recompensas de temporada reclamadas con éxito!",
     "rank": "Puesto",
-    "sovereignKingdom": "Soberano & Reino",
+    "sovereignKingdom": "Comandante & Reino",
     "league": "Liga",
     "victories": "Victorias",
     "crowns": "Coronas",
     "defenseTitle": "Defensa de tu Reino & Registro de Asedios",
-    "bazaarTitle": "Bazar del Gladiador Imperial",
+    "bazaarTitle": "Bóveda del Vórtice Astral",
     "owned": "En Propiedad",
     "redeemPrize": "Canjear Premio",
-    "yourSovereignty": "Tu Soberanía (Tú)",
+    "yourSovereignty": "Tu Mando (Tú)",
     "chaosKingdom": "Reino de las Nubes",
-    "tabPvp": "Coliseo",
+    "tabPvp": "Vórtice Astral",
     "tabRanking": "Ranking",
     "tabDefense": "Defensa",
     "tabShop": "Tienda",
@@ -603,7 +608,7 @@ export const es = {
     "leaguePlatinum": "Principado de Platino",
     "leagueDiamond": "Reino de Diamante",
     "leagueMaster": "Ascendente Imperial",
-    "leagueGrandmaster": "Soberano Celestial",
+    "leagueGrandmaster": "Gran Conquistador Celestial",
     "headerSub": "Conquista ciudadelas rivales, acumula Coronas y asciende en la gloria imperial.",
     "lootMultiplier": "Multiplicador de botín de saqueo:",
     "nextLeague": "Próxima Liga:",
@@ -619,7 +624,7 @@ export const es = {
     "step2Desc": "Cada asalto gasta 1 de tus 3 Asaltos diarios (se recargan gratis).",
     "step3Desc": "En la batalla, toca 3 edificios para quebrar sus arcas y ganar botín.",
     "troopsSafe": "¡Tus tropas no mueren!",
-    "troopsSafeDesc": "En los asaltos de coliseo tu ejército permanece intacto. Entrenar más tropas en el Cuartel aumenta tu poder de brecha y victoria.",
+    "troopsSafeDesc": "En los asaltos del Vórtice Astral tu ejército permanece intacto. Entrenar más tropas en el Cuartel aumenta tu poder de brecha y victoria.",
     "powerUnit": "Poder",
     "infantry": "Infantería",
     "archers": "Arqueros",
@@ -663,12 +668,12 @@ export const es = {
     "diff_hard": "Asalto de Alto Riesgo",
     "assaultTutorial": {
       "modalTitle": "TUTORIAL DE ASALTO A CIUDADELAS",
-      "modalSubtitle": "Domina el saqueo de reinos rivales y el Coliseo PvP",
+      "modalSubtitle": "Domina el saqueo de reinos rivales y el Vórtice Astral PvP",
       "btnLabel": "Tutorial",
       "btnTooltip": "¿Cómo funciona el asalto? (Tutorial interactivo)",
       "step1Title": "1. Tus 3 Intentos de Incursión",
       "step1Desc": "En cada asalto dispones de 3 intentos para saquear hasta 3 edificios de la ciudadela rival. Cada intento consume 1 orbe para asaltar el edificio que tú elijas.",
-      "step1Tip": "🛡️ ¡Tus tropas del Cuartel nunca mueren en los asaltos de coliseo!",
+      "step1Tip": "🛡️ ¡Tus tropas del Cuartel nunca mueren en los asaltos del Vórtice Astral!",
       "step2Title": "2. Toca un Edificio para Asaltarlo",
       "step2Desc": "Pulsa directamente sobre cualquier edificio o su botón '⚔️ ¡ATACAR ESTE EDIFICIO!'. Cada estructura muestra su porcentaje de probabilidad de éxito (🎯 %). ¡Más tropas entrenadas en tu Cuartel aumentan tu porcentaje de victoria!",
       "step2Tip": "🏰 El Castillo Imperial otorga el botín más valioso y Coronas.",
@@ -690,7 +695,7 @@ export const es = {
       "league_master": "La cúspide del reino: los emperadores más legendarios del servidor."
     },
     "leagueChests": {
-      "league_bronze": "Cofre de Bronce del Gladiador",
+      "league_bronze": "Cofre de Bronce del Conquistador",
       "league_silver": "Cofre de Plata de la Guardia",
       "league_gold": "Cofre Dorado de Asedio",
       "league_platinum": "Arca de Platino de los Héroes",
@@ -753,12 +758,12 @@ export const es = {
     "buildingLootTooltip": "Botín estimado de esta edificación",
     "statusLooted": "¡Saqueado!",
     "statusDefended": "¡Defendido!",
-    "sovereignRuler": "Soberano {name}",
+    "sovereignRuler": "Comandante {name}",
     "honorShopDetails": {
       "item_relic_manto_vencedor": {
         "name": "Manto del Vencedor",
         "desc": "Capa con ribetes de púrpura imperial que infunde terror en las fortalezas rivales.",
-        "effect": "+20% de daño base en la Arena y +12 HP permanente."
+        "effect": "+20% de daño base en el Vórtice Astral y +12 HP permanente."
       },
       "item_shield_8h": {
         "name": "Escudo de Paz (8 Horas)",
@@ -861,7 +866,7 @@ export const es = {
     "acquired": "¡Adquirido!",
     "bundles": {
       "starter_pack": {
-        "title": "Paquete Inicial del Soberano",
+        "title": "Paquete Inicial del Comandante",
         "desc": "Comienza tu reinado con recursos esenciales, cristales y título de fundador."
       },
       "war_pack": {
@@ -873,7 +878,7 @@ export const es = {
         "desc": "Madera maciza, granito y planos para expandir rápidamente tu ciudadela."
       },
       "mythic_pack": {
-        "title": "Lote Soberano Celestial",
+        "title": "Lote Conquistador Celestial",
         "desc": "Cofre supremo con el Héroe Paladín, reliquias épicas e insignia VIP Corona."
       }
     },
@@ -891,7 +896,7 @@ export const es = {
         "perk": "+10% Ataque del Ejército, +10% Velocidad de Construcción, +10% Producción"
       },
       "3": {
-        "title": "Soberano Imperial",
+        "title": "Gran Conquistador",
         "perk": "+20% Producción Global, Construcción Instantánea <5m, Marco de Avatar Exclusivo"
       }
     },
@@ -914,12 +919,12 @@ export const es = {
       },
       "pack_pouch": {
         "name": "Bolsa de Gemas",
-        "desc": "La elección favorita de los soberanos. Ideal para acelerar el feudo y desbloquear tecnologías.",
+        "desc": "La elección favorita de los comandantes. Ideal para acelerar el feudo y desbloquear tecnologías.",
         "badge": "POPULAR"
       },
       "pack_chest": {
         "name": "Cofre Imperial de Gemas",
-        "desc": "Un arcón repleto de cristales puros. Permite activar ventajas del soberano y revivir en mazmorras.",
+        "desc": "Un arcón repleto de cristales puros. Permite activar ventajas de mando y revivir en mazmorras.",
         "badge": "MEJOR VALOR"
       },
       "pack_vault": {
@@ -942,27 +947,27 @@ export const es = {
     }
   },
   "profile": {
-    "title": "Crónica Soberana y Heráldica",
+    "title": "Crónica de Mando y Heráldica",
     "overviewTab": "Resumen",
     "achievementsTab": "Hazañas y Medallas",
     "renameBtn": "Renombrar Reino",
-    "enterNamePrompt": "Ingresa tu nuevo título soberano:",
+    "enterNamePrompt": "Ingresa tu nuevo título de Comandante:",
     "saveNameBtn": "Proclamar Nombre",
     "logoutBtn": "Cerrar Sesión / Cambiar Cuenta",
     "logoutConfirm": "¿Estás seguro de que deseas salir? Tu progreso se guardará en la nube antes de desconectar.",
     "empireStats": "Estadísticas del Imperio",
     "statBuildings": "Edificios Erigidos",
     "statTroops": "Fuerza Militar: {count}",
-    "statLevel": "Rango Soberano: Nivel {level}",
+    "statLevel": "Rango Militar: Nivel {level}",
     "statHonor": "Honor Conquistado: {honor}",
     "statHarvests": "Recolecciones Totales: {count}",
-    "modalTitle": "Perfil del Soberano",
+    "modalTitle": "Perfil del Comandante",
     "modalSubtitle": "Estadísticas del Imperio, Legado y Logros",
     "tabOverview": "General",
     "tabAchievements": "Hazañas",
     "tabAvatars": "Retratos",
     "heroLevel": "Nivel {level}",
-    "realmTitle": "Soberano del Reino de las Nubes",
+    "realmTitle": "Gran Comandante del Reino de las Nubes",
     "levelProgress": "Progreso de Nivel",
     "xpRemaining": "{xp} XP para Nivel {nextLevel}",
     "statPower": "Poder Imperial",
@@ -971,11 +976,11 @@ export const es = {
     "statTech": "Investigaciones",
     "statArena": "Puntos de Arena",
     "passTitle": "Pase Imperial NFT",
-    "passSubtitle": "Soberano del Reino de las Nubes",
+    "passSubtitle": "Comandante del Reino de las Nubes",
     "passMinted": "Acuñado en Web3",
     "passConnected": "Billetera Conectada",
-    "avatarSelectorTitle": "Seleccionar Retrato del Monarca",
-    "avatarSelectorDesc": "Escoge la apariencia visible de tu soberano en los rankings imperiales",
+    "avatarSelectorTitle": "Seleccionar Retrato del Comandante",
+    "avatarSelectorDesc": "Escoge la apariencia visible de tu comandante en los rankings de conquista",
     "achievementsTitle": "Hazañas y Logros Imperiales",
     "achievementsProgress": "{completed} de {total} Desbloqueados",
     "achievements": {
@@ -1021,7 +1026,7 @@ export const es = {
       }
     },
     "subtitle": "Identidad imperial, estadísticas bélicas y títulos nobiliarios",
-    "changeNameTitle": "Cambiar Nombre de Soberano",
+    "changeNameTitle": "Cambiar Nombre de Comandante",
     "progressToLevel": "Progreso al Nivel {level} ({title})",
     "chooseHeroEmblem": "Elige tu Emblema de Héroe:",
     "statMilitaryPower": "Poder Militar",
@@ -1029,7 +1034,7 @@ export const es = {
     "statActivePop": "Población Activa",
     "statRoyalTreasury": "Tesoro Real",
     "nftBadge": "NFT DE PRESTIGIO",
-    "nftName": "Pase de Soberano Fundador OG",
+    "nftName": "Pase de Comandante Fundador OG",
     "nftPerk": "+10% Velocidad de Producción de Oro & Acceso a Torneos Web3",
     "completedBadge": "¡Completado!",
     "inProgressBadge": "En camino..."
@@ -1090,11 +1095,11 @@ export const es = {
     "pwaOfflineReady": "Caché Offline Activo",
     "pwaOfflineReadyDesc": "Texturas WebP, audio y datos del reino resguardados en tu dispositivo.",
     "pwaUpdateBtn": "Recargar Caché",
-    "identitySectionTitle": "Identidad del Soberano",
-    "identityDesc": "Tu nombre de Soberano en el Reino y el Ranking",
-    "changeNameTitle": "Cambiar Nombre de Soberano",
+    "identitySectionTitle": "Identidad del Comandante",
+    "identityDesc": "Tu nombre de Comandante en el Reino y el Ranking",
+    "changeNameTitle": "Cambiar Nombre de Comandante",
     "changeName": "Cambiar Nombre",
-    "defaultPlayerName": "Lord King",
+    "defaultPlayerName": "Comandante",
     "tutorialSectionTitle": "Guía & Tutorial del Feudo",
     "tutorialTitle": "Tutorial del Gran Senescal",
     "tutorialDesc": "Repetir la guía interactiva paso a paso para dominar el reino",
@@ -1125,7 +1130,7 @@ export const es = {
   },
   "levelup": {
     "title": "¡ASCENSO IMPERIAL!",
-    "subtitle": "¡Vuestro poder soberano se ha extendido sobre los horizontes conocidos!",
+    "subtitle": "¡Vuestro poder militar se ha extendido sobre los horizontes conocidos!",
     "newRank": "Nuevo Rango de la Corona: Nivel {level}",
     "tributeReward": "Tributo Real de Ascenso:",
     "claimBtn": "Aceptar Tributo Imperial",
@@ -1172,8 +1177,8 @@ export const es = {
     "step4Desc": "¡El tiempo de un monarca es valioso! Cuando vuestros edificios generen recursos, este botón dorado brillará para recolectar todo de golpe.",
     "step4Tip": "También podéis tocar las burbujas flotantes individuales sobre cada edificio.",
     "step5Title": "Fuerzas Armadas & Conquista",
-    "step5Subtitle": "Ejército, Páramos y Coliseo",
-    "step5Desc": "Reclutad tropas en el Cuartel para defender vuestra fortaleza, combatir bestias en las Mazmorras Celestiales y retar a otros soberanos en el Coliseo.",
+    "step5Subtitle": "Ejército, Páramos y Vórtice Astral",
+    "step5Desc": "Reclutad tropas en el Cuartel para defender vuestra fortaleza, combatir bestias en las Mazmorras Celestiales y retar a otros comandantes en el Vórtice Astral.",
     "step5Tip": "Tropas entrenadas protegen vuestro feudo de invasiones enemigas.",
     "graduationTitle": "¡Entrenamiento Completado!",
     "graduationSubtitle": "El Gran Senescal de las Nubes os otorga el Tributo de Graduación",
@@ -1182,7 +1187,7 @@ export const es = {
   },
   "starterWelcome": {
     "tag": "DECRETO REAL DE FUNDACIÓN",
-    "title": "¡Bienvenido, Mi Soberano!",
+    "title": "¡Bienvenido, Mi Comandante!",
     "subtitle": "Las cumbres celestiales del Reino de las Nubes aguardan la grandeza de vuestro feudo.",
     "prose": "Habéis llegado a la meseta central tras un largo éxodo. En el corazón de la plaza mayor se alza el Castillo Imperial. A su alrededor se extienden 11 parcelas libres listas para ser transformadas en una floreciente metrópolis militar y económica.",
     "roadmapTitle": "Vuestro Camino Paso a Paso (Capítulo I):",
@@ -1206,7 +1211,7 @@ export const es = {
     "minimizedLabel": "Oferta",
     "minimizedTooltip": "Mostrar Oferta de Bienvenida (-85%)",
     "hideBanner": "Ocultar banner",
-    "conquerorSubtitle": "Oferta de Bienvenida para el Soberano",
+    "conquerorSubtitle": "Oferta de Bienvenida para el Comandante",
     "conquerorDesc": "El paquete de inicio imprescindible. Desbloquea de inmediato al Comandante Paladín, un alijo masivo de gemas, consumibles de élite y la reliquia mítica del Sol Imperial.",
     "allianceTitle": "Lote de la Gran Alianza",
     "allianceSubtitle": "Legión Imperial Preparada para el Asedio",
@@ -1225,7 +1230,7 @@ export const es = {
   },
   "events": {
     "royalMessenger": "¡Mensajero Real!",
-    "audienceRequested": "¡Un emisario solicita audiencia con el Soberano!",
+    "audienceRequested": "¡Un emisario solicita audiencia con el Comandante!",
     "secondsToAnswer": "{time}s para atender",
     "availableDecrees": "Decretos Disponibles",
     "costLabel": "Coste:",
@@ -1264,17 +1269,29 @@ export const es = {
     "capacityPop": "+{val} Cap. Población"
   },
   "usernameModal": {
-    "title": "NOMBRE DE SOBERANO",
-    "subtitle": "Elige la identidad con la que gobernarás tu imperio y figurarás en el Ranking Global.",
-    "chooseFace": "Elige tu Rostro de la Corona:",
-    "sovereignNameLabel": "Nombre del Soberano / Jugador:",
+    "title": "NOMBRE DEL COMANDANTE",
+    "subtitle": "Elige la identidad militar con la que liderarás tu imperio y figurarás en el Ranking Global de Conquistadores.",
+    "step1Badge": "PASO 1 / 2 • IDENTIDAD",
+    "step2Badge": "PASO 2 / 2 • ROSTRO DE MANDO",
+    "step1Title": "NOMBRE DEL COMANDANTE",
+    "step2Title": "ELIGE TU ROSTRO",
+    "step1Subtitle": "Escribe o genera el nombre con el que liderarás tu imperio.",
+    "step2Subtitle": "Selecciona el avatar sagrado que te representará en batalla y rankings.",
+    "selectedCommander": "Comandante:",
+    "editName": "Modificar",
+    "nextBtn": "Siguiente",
+    "backBtn": "Atrás",
+    "chooseFace": "Elige tu Rostro de Mando:",
+    "sovereignNameLabel": "Nombre del Comandante / Jugador:",
     "randomBtn": "Aleatorio",
-    "placeholder": "ej: Lord Arturo",
+    "placeholder": "ej: Comandante Arturo",
     "cancelBtn": "Cancelar",
-    "confirmBtn": "Confirmar y Reinar",
-    "errorEmpty": "Por favor ingresa un nombre para tu Soberano.",
+    "confirmBtn": "Confirmar y Guardar",
+    "startGameBtn": "¡Entrar a la Batalla!",
+    "errorEmpty": "Por favor ingresa un nombre para tu Comandante.",
     "errorMinLength": "El nombre debe tener al menos 2 caracteres.",
-    "errorMaxLength": "El nombre no puede exceder los 24 caracteres."
+    "errorMaxLength": "El nombre no puede exceder los 24 caracteres.",
+    "errorTaken": "Este nombre de comandante ya pertenece a otro reino. Elige uno diferente."
   },
   "citizens": {
     "workerName": "Maestro Constructor",
@@ -1329,7 +1346,7 @@ export const es = {
     "guestWelcome": "¡Bienvenido al Reino de las Nubes! Modo Invitado activo.",
     "offlineMode": "📡 Sin conexión a internet. Modo offline activo (tu reino se resguarda localmente).",
     "onlineRestored": "⚡ ¡Conexión restaurada! Reino sincronizado con la nube.",
-    "sovereignNameSaved": "¡Nombre de Soberano guardado: {name}!",
+    "sovereignNameSaved": "¡Nombre de Comandante guardado: {name}!",
     "soundOn": "Música ambiental y efectos activados",
     "soundOff": "Sonido silenciado",
     "constructionFinished": "¡Construcción finalizada: {name} Nivel {level}!",
@@ -1372,7 +1389,7 @@ export const es = {
     "unlockHeraldHorn": "Desbloquea \"El Cuerno del Heraldo\" en la Tienda para cosechar todo sin límites.",
     "harvestHeraldHorn": "¡El Cuerno del Heraldo resonó! Cosecha imperial (+25% VIP)",
     "harvestMassive": "¡Cosecha masiva ejecutada (-5 Cristales)!",
-    "rivalsRefreshed": "Nuevos contrincantes encontrados en el Coliseo.",
+    "rivalsRefreshed": "Nuevos contrincantes encontrados en el Vórtice Astral.",
     "noArenaTicketsOrGems": "No tienes Entradas de Arena ni gemas suficientes.",
     "arenaTicketBought": "Entrada de combate adquirida por 10 Cristales.",
     "leaguePromotion": "¡ASCENSO DE LIGA! ¡Has alcanzado la {league}!",
@@ -1408,7 +1425,7 @@ export const es = {
     "web3WalletDisconnected": "Billetera Web3 desconectada",
     "syncingBlockchain": "Sincronizando el estado del reino con Aetheria Cloud L2...",
     "avatarUpdated": "Avatar actualizado: {name}",
-    "sovereignNameSavedProfile": "Nombre de Soberano guardado: {name}",
+    "sovereignNameSavedProfile": "Nombre de Comandante guardado: {name}",
     "xpDecree": "Decreto: {title}",
     "xpResearch": "Investigación: {name}",
     "xpRecruit": "Recluta entrenado",
@@ -1565,7 +1582,7 @@ export const es = {
       "subtitle": "Juego de Azar y Fortuna",
       "emissaryName": "Jack el Estafador",
       "emissaryRole": "Tahúr de Taberna",
-      "description": "Un pícaro de capa de terciopelo te muestra dos dados tallados en hueso de dragón: \"Una tirada noble, Soberano. Duplica tu apuesta o quédate sin nada.\"",
+      "description": "Un pícaro de capa de terciopelo te muestra dos dados tallados en hueso de dragón: \"Una tirada noble, Comandante. Duplica tu apuesta o quédate sin nada.\"",
       "choices": {
         "gambler_roll_gold": {
           "label": "Apostar 100 Oro (Doble o Nada)",
@@ -1719,7 +1736,7 @@ export const es = {
       },
       "q-c4-1": {
         "title": "Corona Imperial",
-        "desc": "Alcanza Nivel de Reino 3 con tu Soberano.",
+        "desc": "Alcanza Nivel de Reino 3 con tu Comandante.",
         "hint": "Gana experiencia construyendo, reclutando y conquistando mazmorras.",
         "action": "Ver Perfil"
       },
@@ -1885,9 +1902,9 @@ export const es = {
   },
   "ranking": {
     "ranking": "Ranking",
-    "rankingTooltip": "Tabla de Clasificación & Ranking de Soberanos",
+    "rankingTooltip": "Tabla de Clasificación & Ranking de Comandantes",
     "tag": "Gran Salón de la Gloria",
-    "title": "Tabla de Soberanos de Avalon",
+    "title": "Tabla de Comandantes de Avalon",
     "seasonTimer": "Temporada Imperial: <strong>{time}</strong> restantes",
     "secondPlace": "2º PUESTO",
     "champion": "1º CAMPEÓN",
@@ -1896,22 +1913,22 @@ export const es = {
     "yourRank": "Tu Rango",
     "yourActiveFortress": "Tu Fortaleza Activa",
     "colRank": "Puesto",
-    "colSovereign": "Soberano & Fortaleza",
+    "colSovereign": "Comandante & Fortaleza",
     "colTitleDetails": "Título & Detalles",
     "colScore": "Puntuación",
-    "goToArena": "Ir a la Arena",
+    "goToArena": "Ir al Vórtice Astral",
     "goToDungeons": "Ir a Mazmorras",
     "backToKingdom": "Volver al Reino",
     "categories": {
       "power": "Poder del Reino",
-      "arena": "Copas de Arena",
+      "arena": "Vórtice Astral",
       "dungeon": "Pisos de Mazmorra"
     },
     "powerUnit": "Poder",
     "crownsUnit": "Copas",
     "floorUnit": "Piso",
     "tournamentInProgress": "Torneo de Temporada en Curso",
-    "liveCompetitors": "Soberanos en Línea",
+    "liveCompetitors": "Comandantes en Línea",
     "seasonResetIn": "El ranking se reinicia en {time}",
     "globalRank": "Rango Global",
     "seasonTimerLead": "Temporada Imperial:",
@@ -1926,7 +1943,7 @@ export const es = {
     },
     "sovereigns": {
       "sov-1": {
-        "name": "Soberano Malakor",
+        "name": "Comandante Malakor",
         "kingdom": "Imperio Celestial",
         "title": "Emperador Primigenio"
       },
@@ -2001,7 +2018,7 @@ export const es = {
         "title": "Dama del Viento"
       }
     },
-    "yourSovereignty": "Tu Reino Soberano",
+    "yourSovereignty": "Tu Mando y Fortaleza",
     "chaosKingdom": "Bastión de las Nubes"
   },
   "techTree": {
@@ -2025,7 +2042,7 @@ export const es = {
     "tag": "Cámara del Tesoro Real",
     "title": "Baúl de Reliquias & Mochila",
     "battleBag": "Bolsa de Batalla & Pociones",
-    "activeGear": "Equipo Activo del Soberano",
+    "activeGear": "Equipo Activo del Comandante",
     "emptySlot": "Ranura Vacía",
     "relicCollection": "Colección de Reliquias Desbloqueadas",
     "legendaryRelics": "Reliquias ({current}/{total})",
@@ -2051,7 +2068,7 @@ export const es = {
     "bundles": {
       "conqueror": {
         "title": "Cofre del Conquistador",
-        "subtitle": "Oferta de Bienvenida para el Soberano"
+        "subtitle": "Oferta de Bienvenida para el Comandante"
       },
       "alliance": {
         "title": "Lote de la Gran Alianza",
@@ -2113,8 +2130,8 @@ export const es = {
       },
       "relic_manto_vencedor": {
         "name": "Manto del Vencedor",
-        "desc": "+10% ATK y +10% DEF. Una capa legendaria para campeones de Arena.",
-        "dropSource": "Tienda de Honor del Coliseo"
+        "desc": "+10% ATK y +10% DEF. Una capa legendaria para guerreros del Vórtice Astral.",
+        "dropSource": "Bóveda de Honor del Vórtice Astral"
       }
     },
     "consumables": {
@@ -2237,7 +2254,7 @@ export const es = {
       "league_silver": "Liga de Plata",
       "league_gold": "Liga de Oro",
       "league_platinum": "Liga de Platino",
-      "league_master": "Soberano Supremo"
+      "league_master": "Gran Conquistador"
     },
     "honorShop": {
       "honor_relic_mantle": "Manto del Vencedor",
@@ -2377,7 +2394,7 @@ export const es = {
       "node-17": {
         "name": "BOSS SUPREMO: Señor de las Tinieblas",
         "subtitle": "Fase 6 · ¡GRAN JEFE FINAL DEL CAPÍTULO!",
-        "desc": "Soberano oscuro desterrado del cielo. Pretende consumir la pureza del Reino de las Nubes con su espada impía."
+        "desc": "Comandante oscuro desterrado del cielo. Pretende consumir la pureza del Reino de las Nubes con su espada impía."
       }
     }
   },
@@ -2593,7 +2610,7 @@ export const es = {
   },
   "chat": {
     "title": "Chat del Reino",
-    "subtitle": "Comunicaciones en tiempo real entre soberanos",
+    "subtitle": "Comunicaciones en tiempo real entre comandantes",
     "global": "Global",
     "alliance": "Alianza",
     "system": "Sistema",

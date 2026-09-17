@@ -1,6 +1,7 @@
 // supabaseClient.js - Cloud Database Persistence & Sync Engine for Realm of the Clouds
 // Aetheria Empires Edition - Fully resilient offline-first Supabase client
 import { createClient } from '@supabase/supabase-js'
+import { generateRandomNobleName } from './nobleNameGenerator'
 
 const DEFAULT_SUPABASE_URL = 'https://ugdzhydclffxwaflomex.supabase.co'
 const DEFAULT_SUPABASE_KEY = 'sb_publishable_eqTBcAWlley9TbPyP3v89Q_J3cDJJZL'
@@ -246,7 +247,9 @@ export async function saveKingdomToCloud(state) {
   const playerId = getPlayerId()
   const playerEmail = getPlayerEmail() || null
 
-  const resolvedName = state.profile?.name || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 'Lord King'
+  const resolvedName = state.profile?.name || 
+    (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 
+    generateRandomNobleName(typeof localStorage !== 'undefined' ? localStorage.getItem('toc_language') : 'es')
   const resolvedAvatar = state.profile?.avatar || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_avatar')) || '/assets/avatars/avatar_king.webp'
 
   const sanitizedLevel = Math.min(10, Math.max(1, Number(state.kingdomLevel) || 1))
@@ -339,8 +342,24 @@ export async function saveKingdomToCloud(state) {
         dungeon_floor: dungeonFloor,
         dungeon_stars: dungeonStars,
         arena_wins: arenaWins,
+        is_bot: false,
         updated_at: new Date().toISOString(),
       }, { onConflict: 'id' })
+
+      // Background sync claimed quests to player_quests table
+      if (Array.isArray(state.claimedQuestIds) && state.claimedQuestIds.length > 0) {
+        Promise.allSettled(
+          state.claimedQuestIds.map(qId => 
+            supabase.from('player_quests').upsert({
+              player_id: playerId,
+              quest_id: qId,
+              chapter: state.activeChapter || 1,
+              is_claimed: true,
+              claimed_at: new Date().toISOString(),
+            }, { onConflict: 'player_id,quest_id' })
+          )
+        ).catch(() => {})
+      }
     } catch (lbErr) {
       // Non-critical, ignore if leaderboard table not ready
     }
@@ -360,12 +379,107 @@ export async function saveKingdomToCloud(state) {
 }
 
 /**
+ * Real-time verification of commander username uniqueness in Supabase
+ */
+export async function checkUsernameAvailable(username, currentPlayerId = null) {
+  if (!username || !username.trim()) {
+    return { available: false, error: 'EMPTY_NAME' }
+  }
+  const clean = username.trim()
+  const myId = currentPlayerId || getPlayerId()
+
+  try {
+    // 1. Try server RPC if deployed
+    const { data: rpcData, error: rpcError } = await supabase.rpc('check_username_available', {
+      p_username: clean,
+      p_exclude_player_id: myId || null,
+    })
+    if (!rpcError && rpcData && typeof rpcData.available === 'boolean') {
+      return rpcData
+    }
+
+    // 2. Direct query fallback against kingdom_saves
+    let query = supabase
+      .from('kingdom_saves')
+      .select('id, player_name')
+      .ilike('player_name', clean)
+      .eq('is_bot', false)
+    if (myId) {
+      query = query.neq('id', myId)
+    }
+
+    const { data, error } = await query.limit(1)
+    if (error) {
+      // Fallback check on leaderboard table
+      const { data: lbData } = await supabase
+        .from('leaderboard')
+        .select('id, player_name')
+        .ilike('player_name', clean)
+        .eq('is_bot', false)
+        .limit(1)
+
+      if (lbData && lbData.length > 0 && lbData[0].id !== myId) {
+        return { available: false, taken: true }
+      }
+      return { available: true }
+    }
+
+    const isTaken = data && data.length > 0 && data[0].id !== myId
+    return { available: !isTaken, taken: isTaken }
+  } catch (err) {
+    return { available: true }
+  }
+}
+
+/**
+ * Syncs a single claimed quest into the player_quests table in Supabase Cloud
+ */
+export async function syncPlayerQuestToCloud(questId, chapter = 1, rewards = {}, questType = 'story', title = '') {
+  const playerId = getPlayerId()
+  if (!playerId || !questId) return { success: false }
+
+  try {
+    // 1. Try RPC claim_player_quest
+    const { data: rpcData, error: rpcError } = await supabase.rpc('claim_player_quest', {
+      p_player_id: playerId,
+      p_quest_id: questId,
+      p_chapter: Number(chapter) || 1,
+      p_quest_type: questType || 'story',
+      p_title: title || questId,
+      p_rewards: rewards || {},
+    })
+
+    if (!rpcError && rpcData) {
+      return rpcData
+    }
+
+    // 2. Direct upsert fallback
+    const { error } = await supabase.from('player_quests').upsert({
+      player_id: playerId,
+      quest_id: questId,
+      chapter: Number(chapter) || 1,
+      quest_type: questType || 'story',
+      title: title || questId,
+      rewards: rewards || {},
+      is_claimed: true,
+      claimed_at: new Date().toISOString(),
+    }, { onConflict: 'player_id,quest_id' })
+
+    return { success: !error }
+  } catch (err) {
+    return { success: false }
+  }
+}
+
+/**
  * Upsert current player data directly to the Supabase leaderboard
  */
 export async function upsertPlayerToLeaderboard(playerData) {
   if (!playerData) return { success: false }
   const playerId = getPlayerId()
-  const name = playerData.playerName || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 'Lord King'
+  const name = playerData.playerName || 
+    (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) || 
+    generateRandomNobleName(typeof localStorage !== 'undefined' ? localStorage.getItem('toc_language') : 'es')
   const avatar = playerData.avatar || (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_avatar')) || '/assets/avatars/avatar_king.webp'
   
   const buildingsPower = (playerData.buildings || []).reduce((acc, b) => acc + (b.level || 1) * 850, 0)
@@ -394,6 +508,7 @@ export async function upsertPlayerToLeaderboard(playerData) {
       dungeon_floor: dungeonFloor,
       dungeon_stars: dungeonStars,
       arena_wins: arenaWins,
+      is_bot: false,
       updated_at: new Date().toISOString(),
     }, { onConflict: 'id' })
 
@@ -407,11 +522,29 @@ export async function upsertPlayerToLeaderboard(playerData) {
 }
 
 /**
- * Fetch live leaderboard rows from Supabase Cloud
+ * Fetch live leaderboard rows from Supabase Cloud (Strictly Real Players, 0 Bots)
  */
 export async function fetchLeaderboardFromCloud(category = 'power', limit = 60) {
   try {
-    let query = supabase.from('leaderboard').select('*').not('id', 'like', 'lb_%')
+    // 1. Attempt to query optimized views (pure real players, dense rank)
+    const viewName = category === 'arena' ? 'v_ranking_arena' : category === 'dungeon' ? 'v_ranking_dungeon' : 'v_ranking_power'
+    const { data: viewData, error: viewError } = await supabase.from(viewName).select('*').limit(limit)
+    if (!viewError && Array.isArray(viewData) && viewData.length > 0) {
+      return { success: true, data: viewData }
+    }
+
+    // 2. Direct fallback to leaderboard table with strict ghost/bot filtering
+    let query = supabase
+      .from('leaderboard')
+      .select('*')
+      .eq('is_bot', false)
+      .not('id', 'like', 'lb_%')
+      .not('id', 'like', 'bot_%')
+      .neq('player_name', 'Señor Feudal')
+      .neq('player_name', 'Lord Soberano')
+      .neq('player_name', 'Soberano Real')
+      .neq('player_name', 'test_real_check')
+
     if (category === 'arena') {
       query = query.order('trophies', { ascending: false }).order('arena_wins', { ascending: false })
     } else if (category === 'dungeon') {

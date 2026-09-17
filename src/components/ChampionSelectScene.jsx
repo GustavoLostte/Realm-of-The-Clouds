@@ -20,13 +20,13 @@ export function ChampionSelectScene({
   onBack,
   onConfirmChampion,
   rival = null,
-  playerName = 'Lord King',
+  playerName = 'Comandante',
   playerAvatar = '/assets/avatars/avatar_king.webp',
 }) {
-  // Player 1 selected champion (defaults to Rey Kael)
-  const [selectedChampionId, setSelectedChampionId] = useState('kael')
+  // Player 1 selected champion (defaults to Luke: Ángel Celestial)
+  const [selectedChampionId, setSelectedChampionId] = useState('luke')
   
-  // Rival champion: automatically the opposite champion
+  // Rival champion: automatically the opposite champion (Lord Malakor)
   const [rivalChampionId, setRivalChampionId] = useState('malakor')
 
   useEffect(() => {
@@ -57,13 +57,13 @@ export function ChampionSelectScene({
     onBack?.()
   }
 
-  // Calculate percentages for stat bars (max base 100 for atk/def/speed, 1600 for hp)
-  const hpPercent = Math.min(100, Math.round((playerChampion.hp / 1600) * 100))
+  // Calculate percentages for stat bars (max base 100 for atk/def/speed, 5500 for hp)
+  const hpPercent = Math.min(100, Math.round((playerChampion.hp / 5500) * 100))
   const atkPercent = Math.min(100, playerChampion.atk)
   const defPercent = Math.min(100, playerChampion.def)
   const speedPercent = Math.min(100, playerChampion.speed)
 
-  const rivalHpPercent = Math.min(100, Math.round((rivalChampion.hp / 1600) * 100))
+  const rivalHpPercent = Math.min(100, Math.round((rivalChampion.hp / 5500) * 100))
   const rivalAtkPercent = Math.min(100, rivalChampion.atk)
   const rivalDefPercent = Math.min(100, rivalChampion.def)
   const rivalSpeedPercent = Math.min(100, rivalChampion.speed)
@@ -89,7 +89,7 @@ export function ChampionSelectScene({
         <div className="mk-header-title-box">
           <div className="mk-header-badge">
             <Swords size={14} className="mk-header-badge-icon" />
-            <span>DUELO DE SOBERANOS</span>
+            <span>DUELO DE COMANDANTES</span>
           </div>
           <h1 className="mk-header-title">SELECCIÓN DE CAMPEÓN</h1>
         </div>

@@ -24,7 +24,7 @@ export function TopBar({
   poppingResource = null,
   onToggleCinematic,
   isCinematicMode = false,
-  playerName = 'Lord King',
+  playerName = 'Comandante',
   playerAvatar = '/assets/avatars/avatar_king.webp',
   onOpenChangeName,
   storageCapacity = null,
@@ -77,7 +77,7 @@ export function TopBar({
           <div className="crest-badge">
             <img 
               src={playerAvatar || "/assets/avatars/avatar_king.webp"} 
-              alt="Avatar Soberano" 
+              alt="Avatar Comandante" 
               className="crest-crown-icon" 
               draggable="false" 
             />

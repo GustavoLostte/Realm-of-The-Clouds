@@ -108,6 +108,7 @@ export function ModalHost({
   levelUpInfo,
   playerName,
   playerAvatar,
+  playerEmail,
   soundEnabled,
   fpsMode,
   particlesEnabled,
@@ -177,6 +178,7 @@ export function ModalHost({
   handleToggleCharacterShadows,
   handleToggleHudEffects,
   handleSavePlayerName,
+  handleLinkEmail,
   handleClaimLevelUpRewards,
   handleCollectOfflineEarnings,
   handleResolveEventChoice,
@@ -285,7 +287,7 @@ export function ModalHost({
         <ChatModal 
           isOpen={chatModalOpen}
           onClose={() => setChatModalOpen(false)}
-          playerName={playerName || 'Lord King'}
+          playerName={playerName || 'Comandante'}
         />
       )}
 
@@ -446,7 +448,7 @@ export function ModalHost({
           onManualSave={handleManualSave}
           onLogout={handleLogout}
           showNotification={showNotification}
-          playerName={playerName || 'Lord King'}
+          playerName={playerName || 'Comandante'}
           onOpenChangeName={() => setUsernameModalOpen(true)}
           onRestartTutorial={() => {
             const activeEmail = gameStorage.getEmail()
@@ -484,10 +486,12 @@ export function ModalHost({
           kingdomXp={kingdomXp}
           xpProgress={xpProgress}
           showNotification={showNotification}
-          playerName={playerName || 'Lord King'}
+          playerName={playerName || 'Comandante'}
           playerAvatar={playerAvatar}
+          playerEmail={playerEmail}
           onOpenChangeName={() => setUsernameModalOpen(true)}
           onSaveName={handleSavePlayerName}
+          onLinkEmail={handleLinkEmail}
           onLogout={handleLogout}
         />
       )}
@@ -637,7 +641,7 @@ export function ModalHost({
           trophies={arenaData.trophies}
           completedNodes={completedNodes}
           unlockedTechIds={unlockedTechIds}
-          playerName={playerName || 'Lord King'}
+          playerName={playerName || 'Comandante'}
           onOpenArena={() => {
             setRankingModalOpen(false)
             handleOpenArena('pvp')

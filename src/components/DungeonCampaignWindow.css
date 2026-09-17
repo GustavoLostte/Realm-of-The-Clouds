@@ -258,15 +258,24 @@
 }
 
 .campaign-close-candy-btn {
-  width: 38px !important;
-  height: 38px !important;
-  min-width: 38px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
   flex-shrink: 0 !important;
   cursor: pointer !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  touch-action: manipulation !important;
+}
+
+.campaign-close-candy-btn img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
 }
 
 .campaign-close-candy-btn:hover {
@@ -274,15 +283,24 @@
 }
 
 .combat-close-candy-btn {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
   flex-shrink: 0 !important;
   cursor: pointer !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  touch-action: manipulation !important;
+}
+
+.combat-close-candy-btn img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 42px !important;
+  max-height: 42px !important;
 }
 
 .combat-close-candy-btn:hover {

@@ -445,7 +445,7 @@ export const CAMPAIGN_BIOMES = [
         avatar: '/assets/mazmorras/boss_avatar.webp',
         enemyIcon: '/assets/hud_icons/icon_crown.webp',
         connectedTo: [],
-        description: 'Soberano oscuro desterrado del cielo. Pretende consumir la pureza del Reino de las Nubes con su espada impía.',
+        description: 'Comandante oscuro desterrado del cielo. Pretende consumir la pureza del Reino de las Nubes con su espada impía.',
       },
     ],
   },

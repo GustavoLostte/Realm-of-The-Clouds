@@ -1,5 +1,5 @@
-import { Container, Sprite, Graphics, Text, TextStyle } from 'pixi.js'
-import { loadPixiTexture } from './PixiTextureLoader'
+import { Container, Sprite, Graphics, Text, TextStyle, AnimatedSprite } from 'pixi.js'
+import { loadPixiTexture, loadPixiSpritesheet } from './PixiTextureLoader'
 import { 
   getSharedShadowTexture, 
   getSharedEmptyPlotTexture, 
@@ -9,17 +9,18 @@ import {
 import { BUILDING_TYPES, getBuildingDef, getMaxProductionBatches } from '../../data/buildingsData'
 
 const BUILDING_DIMENSIONS = {
-  archer_tower: { width: 154, height: 173 },
-  casa_molino: { width: 220, height: 163 },
-  mina_piedra: { width: 180, height: 128 },
-  portal: { width: 172, height: 129 },
-  cuartel: { width: 225, height: 175 },
-  casa: { width: 165, height: 124 },
+  archer_tower: { width: 160, height: 190 },
+  casa_molino: { width: 210, height: 170 },
+  mina_piedra: { width: 185, height: 140 },
+  portal: { width: 180, height: 145 },
+  cuartel: { width: 220, height: 180 },
+  casa: { width: 170, height: 135 },
   castillo: { width: 250, height: 235 },
   ayuntamiento: { width: 250, height: 235 },
-  molino: { width: 175, height: 140 },
-  gold_mine: { width: 175, height: 129 },
-  almacen: { width: 175, height: 135 },
+  molino: { width: 180, height: 145 },
+  gold_mine: { width: 185, height: 140 },
+  almacen: { width: 190, height: 150 },
+  aserradero: { width: 185, height: 145 },
 }
 
 const BUILDING_BASE_OFFSETS = {
@@ -34,6 +35,7 @@ const BUILDING_BASE_OFFSETS = {
   casa: 1.5,
   molino: 1.5,
   almacen: 1.5,
+  aserradero: 1.5,
 }
 
 const RESOURCE_ICONS = {
@@ -140,6 +142,7 @@ class BuildingSlotNode {
     this.levelBadgeSprite = null
     this.harvestDisc = null
     this.constructGfx = null
+    this.constructAnim = null
 
     this.currentBuildingId = null
     this.isConstructing = false
@@ -345,7 +348,7 @@ class BuildingSlotNode {
   async renderConstruction(buildingDef, slot, _vipStatus) {
     const dim = BUILDING_DIMENSIONS[slot.buildingId] || { width: 175, height: 140 }
 
-    // Ghost base blueprint
+    // Faint blueprint ghost behind scaffolding
     if (!this.ghostSprite) {
       const texture = await loadPixiTexture(buildingDef.image)
       this.ghostSprite = new Sprite(texture)
@@ -353,8 +356,28 @@ class BuildingSlotNode {
       this.ghostSprite.width = dim.width
       this.ghostSprite.height = dim.height
       this.ghostSprite.tint = 0x38bdf8
-      this.ghostSprite.alpha = 0.45
+      this.ghostSprite.alpha = 0.20
       this.container.addChild(this.ghostSprite)
+    }
+
+    // Animated Cimientos (scaffolding & builder angel)
+    if (!this.constructAnim) {
+      try {
+        const cimientosSheet = await loadPixiSpritesheet('/assets/structures/cimientos/cimientos.json')
+        if (cimientosSheet?.animations?.play?.length > 0) {
+          const anim = new AnimatedSprite(cimientosSheet.animations.play)
+          anim.anchor.set(0.5, 0.72)
+          anim.width = Math.max(160, dim.width * 0.95)
+          anim.height = Math.max(120, dim.height * 0.95)
+          anim.animationSpeed = 0.40 // ~24 fps at 60Hz ticker
+          anim.loop = true
+          anim.play()
+          this.constructAnim = anim
+          this.container.addChild(anim)
+        }
+      } catch (err) {
+        console.warn('[PixiBuildingsLayer] Failed to load cimientos anim:', err)
+      }
     }
 
     // Construction progress box
@@ -413,6 +436,12 @@ class BuildingSlotNode {
       this.container.removeChild(this.ghostSprite)
       this.ghostSprite.destroy()
       this.ghostSprite = null
+    }
+    if (this.constructAnim) {
+      this.constructAnim.stop()
+      this.container.removeChild(this.constructAnim)
+      this.constructAnim.destroy()
+      this.constructAnim = null
     }
     if (this.constructGfx) {
       this.container.removeChild(this.constructGfx)
