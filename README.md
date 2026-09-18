@@ -1,4 +1,4 @@
-# ☁️ Realm of the Clouds (Reino de las Nubes)
+# 👑 Realm of Kingdoms
 
 Motor progresivo de aplicaciones web y juegos de estrategia descentralizados (PWA + Web3) construido con **React 19**, **Vite 8**, soporte PWA offline-first y persistencia híbrida.
 
