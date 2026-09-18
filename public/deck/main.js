@@ -2,7 +2,7 @@
 // Developed by WizzarDev Studios (Founder: Gustavo / Wizzard)
 
 let currentSlide = 0
-let currentLang = 'es' // 'es' or 'en'
+let currentLang = 'en' // default English
 
 const slides = document.querySelectorAll('.slide')
 const totalSlides = slides.length
@@ -213,9 +213,11 @@ function handleSwipe() {
 document.addEventListener('DOMContentLoaded', () => {
   initDots()
 
-  // Load stored language preference or default to 'es'
-  const savedLang = localStorage.getItem('rok_deck_lang') || 'es'
-  setLanguage(savedLang)
+  // Default to English as primary language (with optional ?lang= query or localStorage)
+  const urlParams = new URLSearchParams(window.location.search)
+  const queryLang = urlParams.get('lang')
+  const savedLang = queryLang || localStorage.getItem('rok_deck_lang') || 'en'
+  setLanguage(savedLang === 'es' && !queryLang ? 'en' : savedLang)
 
   // Handle direct hash navigation (#slide-4)
   if (window.location.hash) {
