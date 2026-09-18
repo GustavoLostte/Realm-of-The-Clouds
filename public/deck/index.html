@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Realm of Kingdoms | Official Investor Pitch Deck</title>
+  <meta name="description" content="Interactive Investor Pitch Deck for Realm of Kingdoms: Mobile-first Web3 4X Strategy & Real-Time Action PvP Coliseum at locked 60 FPS. Built by WizzarDev Studios.">
+  <meta name="author" content="WizzarDev Studios">
+  
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Realm of Kingdoms — Investor Pitch Deck">
+  <meta property="og:description" content="Interactive slides: Mobile-first 60 FPS PWA engine, real-time Coliseum PvP, Polygon settlement.">
+  <meta property="og:image" content="assets/logo.webp">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/logo.webp">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Presentation Header Bar -->
+  <header class="deck-nav">
+    <div class="deck-nav-left">
+      <img src="assets/logo.webp" alt="Realm of Kingdoms Logo" class="deck-nav-logo">
+      <div>
+        <div class="deck-nav-title">Realm of Kingdoms</div>
+        <div class="deck-nav-sub">WizzarDev Studios • Pitch Deck</div>
+      </div>
+    </div>
+
+    <!-- Slide Tracker Title -->
+    <div class="deck-nav-center">
+      <span class="slide-badge-category" id="slide-category">01 • THE VISION</span>
+    </div>
+
+    <div class="deck-nav-right">
+      <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="btn-play-live">
+        <span>⚔️ Play Live Demo</span>
+      </a>
+      <span class="slide-counter" id="slide-counter">1 / 8</span>
+    </div>
+  </header>
+
+  <!-- Deck Slides Container -->
+  <main class="deck-container" id="deck-container">
+
+    <!-- ==================== SLIDE 1: COVER & HOOK ==================== -->
+    <section class="slide active" data-index="0" data-category="01 • THE VISION">
+      <div class="slide-inner slide-cover">
+        <div class="cover-badge-row">
+          <span class="tag-pill gold">👑 Official Investor Deck</span>
+          <span class="tag-pill green">● 100% Playable Core Engine Live</span>
+          <span class="tag-pill cyan">Polygon Ecosystem</span>
+        </div>
+
+        <h1 class="cover-title">
+          Realm of Kingdoms
+        </h1>
+        <p class="cover-tagline">
+          The Mobile-First Web3 4X Strategy & Real-Time PvP Coliseum Running at Locked 60 FPS
+        </p>
+
+        <p class="cover-desc">
+          Frictionless PWA gaming directly inside mobile browsers. Zero 20GB downloads, zero App Store delays, powered by sub-cent Polygon settlement.
+        </p>
+
+        <div class="cover-kpis">
+          <div class="kpi-box">
+            <div class="kpi-val green">60 FPS</div>
+            <div class="kpi-lbl">Locked Frame Budget (16.7ms)</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val cyan">0 MB</div>
+            <div class="kpi-lbl">No App Store Install Needed</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val blue">&lt; $0.001</div>
+            <div class="kpi-lbl">Polygon Gas Micro-Settlement</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val gold">100%</div>
+            <div class="kpi-lbl">Zero Vaporware (Live Today)</div>
+          </div>
+        </div>
+
+        <div class="cover-actions">
+          <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="deck-btn gold">
+            <span>🎮 Launch Live Demo (v1.3)</span>
+          </a>
+          <button class="deck-btn glass" onclick="goToSlide(3)">
+            <span>▶ Watch 60 FPS Video</span>
+          </button>
+          <button class="deck-btn glass" onclick="nextSlide()">
+            <span>Next Slide ➔</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: THE PROBLEM ==================== -->
+    <section class="slide" data-index="1" data-category="02 • MARKET PROBLEM">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <span class="tag-pill red">Market Problem</span>
+          <h2>The Four Bottlenecks Destroying Web3 Gaming</h2>
+          <p>Why 95% of Web3 games fail to retain real players despite millions in funding.</p>
+        </div>
+
+        <div class="grid-2x2">
+          <div class="card flaw">
+            <div class="card-icon red">✕</div>
+            <h3>1. The 2-Year Vaporware Trap</h3>
+            <p>Teams raise millions selling concept art and cinematic trailers while the actual playable game remains delayed for years, exhausting community trust.</p>
+          </div>
+
+          <div class="card flaw">
+            <div class="card-icon red">✕</div>
+            <h3>2. Massive 20GB+ PC Clients</h3>
+            <p>Forcing downloads on Steam or custom launchers completely cuts off the world's 3.2 billion mobile-first gamers who game primarily on phones.</p>
+          </div>
+
+          <div class="card flaw">
+            <div class="card-icon red">✕</div>
+            <h3>3. Laggy 20 FPS WebViews</h3>
+            <p>Unoptimized mobile web games suffer continuous garbage-collection stutters, layout thrashing, and high touch latency, ruining combat feel.</p>
+          </div>
+
+          <div class="card flaw">
+            <div class="card-icon red">✕</div>
+            <h3>4. High Gas Friction & Popups</h3>
+            <p>Games that require constant wallet confirmations and dollar-tier gas fees for simple in-game actions cause immediate user drop-off.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: THE SOLUTION ==================== -->
+    <section class="slide" data-index="2" data-category="03 • THE SOLUTION">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <span class="tag-pill green">Our Solution</span>
+          <h2>Realm of Kingdoms: Frictionless Console-Grade PWA</h2>
+          <p>A proven architecture that delivers triple-A feel on mobile with instant onboarding.</p>
+        </div>
+
+        <div class="grid-2x2">
+          <div class="card fix">
+            <div class="card-icon green">✓</div>
+            <h3>1. Zero Vaporware (Playable Today)</h3>
+            <p>Not a whitepaper promise: the city-building economy, citizen pathfinding, and real-time PvP arena are 100% working and deployed right now.</p>
+          </div>
+
+          <div class="card fix">
+            <div class="card-icon green">✓</div>
+            <h3>2. Frictionless PWA Architecture</h3>
+            <p>One-tap link access. Can be saved directly to the home screen as a standalone app with offline caching and zero App Store 30% fees.</p>
+          </div>
+
+          <div class="card fix">
+            <div class="card-icon green">✓</div>
+            <h3>3. Strictly Locked 60 FPS Engine</h3>
+            <p>Proprietary PixiJS WebGL v8 rendering with GPU perimeter compositing (`translateZ(0)`) running smooth 16.7ms frame times on mid-range Androids.</p>
+          </div>
+
+          <div class="card fix">
+            <div class="card-icon green">✓</div>
+            <h3>4. Sub-Cent Polygon Economics</h3>
+            <p>Leveraging Polygon's high-speed throughput for instant arena wagers, seasonal leaderboards, and cosmetic champion skins at fractions of a cent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: GAMEPLAY & VIDEO SHOWCASE ==================== -->
+    <section class="slide" data-index="3" data-category="04 • GAMEPLAY & 60 FPS VIDEO">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <span class="tag-pill gold">Dual Core Loops & Live Gameplay</span>
+          <h2>Strategic Feudal Economy & Real-Time Action Combat</h2>
+          <p>Live mobile recording showing locked 60 FPS performance and fluid virtual joystick action.</p>
+        </div>
+
+        <div class="split-layout">
+          <!-- Video Player Column -->
+          <div class="pillar-box" style="background: #000; border-color: var(--border-highlight); box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+            <div style="position: relative; width: 100%; height: 100%; min-height: 280px; display: flex; flex-direction: column;">
+              <video src="assets/gameplay_60fps.mp4" controls playsinline preload="metadata" poster="assets/city_gameplay.jpg" style="width: 100%; height: auto; display: block; border-radius: var(--radius-sm);"></video>
+              <div style="padding: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(7,9,14,0.95);">
+                <span class="tag-pill green">▶ Real Mobile Capture (60 FPS)</span>
+                <span style="font-size: 0.75rem; color: var(--text-dim);">Duration: 1:09 min • Samsung Galaxy</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gameplay Details Column -->
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="card" style="padding: 18px;">
+              <h3 style="font-size: 1.15rem; margin-bottom: 6px; color: var(--gold-light);">🏰 Pillar 1: Feudal Strategy (4X City Building)</h3>
+              <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
+                Harvest Gold, Wood, Stone, and Food. Manage 10 upgradable structures, 3-tier Academy tech tree, and dynamic living citizens crossing celestial bridges.
+              </p>
+              <div class="chip-row" style="margin-top: 8px;">
+                <span class="chip">🌾 4 Resources</span>
+                <span class="chip">🏰 10 Buildings</span>
+                <span class="chip">🔬 Tech Tree</span>
+              </div>
+            </div>
+
+            <div class="card" style="padding: 18px;">
+              <h3 style="font-size: 1.15rem; margin-bottom: 6px; color: var(--cyan-primary);">⚔️ Pillar 2: The Coliseum of Sovereigns (PvP)</h3>
+              <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
+                Fast-paced 1v1 action combat engineered for mobile thumbs. Features a responsive virtual analog joystick and a 5-action combat dock (Light, Heavy, Dash, Guard -80%, and Jumping strikes).
+              </p>
+              <div class="chip-row" style="margin-top: 8px;">
+                <span class="chip">🕹️ Virtual Joystick</span>
+                <span class="chip">⚡ Zero Lag</span>
+                <span class="chip">🏆 Ranked Ladders</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: TECHNICAL BENCHMARKS ==================== -->
+    <section class="slide" data-index="4" data-category="05 • TECH & BENCHMARKS">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <span class="tag-pill cyan">Proprietary Technology</span>
+          <h2>Engineered for 60 FPS Mobile Execution</h2>
+          <p>Real telemetry measured on consumer mid-range phones (Samsung Galaxy A-series).</p>
+        </div>
+
+        <div class="grid-3col">
+          <div class="tech-tile">
+            <div class="tile-icon">⚡</div>
+            <h4>PixiJS WebGL v8</h4>
+            <p>Hardware batch rendering, compressed WebP sprite sheets, and zero DOM layout re-rasterization during active gameplay.</p>
+          </div>
+
+          <div class="tech-tile">
+            <div class="tile-icon">⏱️</div>
+            <h4>16.7ms Frame Budget</h4>
+            <p>Replaced full-screen SVG masks with 4 GPU composited perimeter panels, completely eliminating frame drops in mobile tutorials.</p>
+          </div>
+
+          <div class="tech-tile">
+            <div class="tile-icon">🎵</div>
+            <h4>Web Audio Synthesizer</h4>
+            <p>Zero-latency polyphonic audio generation for combat sword clashes and magical blasts without megabyte-heavy audio downloads.</p>
+          </div>
+
+          <div class="tech-tile">
+            <div class="tile-icon">📦</div>
+            <h4>Multi-Tiered Cache (v1.3)</h4>
+            <p>Service Worker with immutable 1-year CDN caching. Returning users load the game locally in under 0.8s consuming 0 bytes of network.</p>
+          </div>
+
+          <div class="tech-tile">
+            <div class="tile-icon">🕹️</div>
+            <h4>Clamped Vector Joystick</h4>
+            <p>PointerEvent capture with deadzone calibration (0.18) ensuring fluid 360° motion without triggering browser swipe gestures.</p>
+          </div>
+
+          <div class="tech-tile">
+            <div class="tile-icon">☁️</div>
+            <h4>Supabase RLS Persistence</h4>
+            <p>Optimistic local client state coupled with secure cloud synchronization for instant responsiveness and cheat-resistant leaderboards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 6: BLOCKCHAIN & TOKENOMICS ==================== -->
+    <section class="slide" data-index="5" data-category="06 • POLYGON SETTLEMENT">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <span class="tag-pill gold">Sustainable Web3 Economy</span>
+          <h2>Powered by Polygon: Low Gas & Skill-Based Wagers</h2>
+          <p>A "Gameplay-First" economy where onchain mechanics reward mastery, not pay-to-win mechanics.</p>
+        </div>
+
+        <div class="grid-3col">
+          <div class="token-box">
+            <div class="token-icon">🪙</div>
+            <h3>Gold & $ROK Token</h3>
+            <span class="token-role">Dual Economy Core</span>
+            <p>In-game soft currency (Gold) earned through kingdom production, paired with the onchain utility token ($ROK) on Polygon for tournament staking and sovereign upgrades.</p>
+          </div>
+
+          <div class="token-box">
+            <div class="token-icon">⚔️</div>
+            <h3>Skill-Based Escrow</h3>
+            <span class="token-role">Coliseum Wager Pools</span>
+            <p>Smart contracts pool 10 $ROK / 1 POL entry fees for ranked duels. The victor automatically claims the pot based on cryptographic match state signatures.</p>
+          </div>
+
+          <div class="token-box">
+            <div class="token-icon">🛡️</div>
+            <h3>Champion NFT Gear</h3>
+            <span class="token-role">True Digital Ownership</span>
+            <p>Cosmetic weapon auras, sovereign armor, and guild banners minted on Polygon (ERC-1155). 100% tradable on secondary markets with zero stat inflation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 7: MILESTONES & GRANT ASK ==================== -->
+    <section class="slide" data-index="6" data-category="07 • GRANT ROADMAP">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <span class="tag-pill green">Capital Efficiency</span>
+          <h2>$20,000 USD Grant: 5-Month Execution Roadmap</h2>
+          <p>Every dollar is directly allocated to smart contracts, real-time multiplayer, and community onboarding.</p>
+        </div>
+
+        <div class="milestone-stack">
+          <div class="m-card">
+            <div class="m-num">01</div>
+            <div class="m-body">
+              <div class="m-row">
+                <div class="m-title">Month 1–2: Polygon Smart Contracts & Gasless Onboarding</div>
+                <div class="m-budget">$6,000 USD</div>
+              </div>
+              <p>Deploy and test core Coliseum escrow contracts and NFT gear on Polygon Amoy Testnet with ERC-4337 Account Abstraction for one-tap social logins.</p>
+            </div>
+          </div>
+
+          <div class="m-card">
+            <div class="m-num">02</div>
+            <div class="m-body">
+              <div class="m-row">
+                <div class="m-title">Month 3–4: Real-Time Authoritative Multiplayer & ELO Leagues</div>
+                <div class="m-budget">$7,000 USD</div>
+              </div>
+              <p>Scale the Coliseum with low-latency WebSocket synchronization, ranked matchmaking ladders, anti-cheat validation, and live spectator arena mode.</p>
+            </div>
+          </div>
+
+          <div class="m-card">
+            <div class="m-num">03</div>
+            <div class="m-body">
+              <div class="m-row">
+                <div class="m-title">Month 5: Polygon Mainnet Launch & Guild Championship</div>
+                <div class="m-budget">$7,000 USD</div>
+              </div>
+              <p>Official audited Polygon Mainnet deployment + Inaugural "Sovereign Championship" tournament co-hosted with leading Web3 guilds (OlaGG, YGG).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: FOUNDER & CONTACT ==================== -->
+    <section class="slide" data-index="7" data-category="08 • STUDIO & CONTACT">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <span class="tag-pill gold">WizzarDev Studios</span>
+          <h2>Execution Before Promises. Working Code First.</h2>
+          <p>Built with relentless discipline, extreme velocity, and zero technical debt.</p>
+        </div>
+
+        <div class="founder-card-deck">
+          <div class="founder-left">
+            <div class="founder-avatar-frame">
+              <img src="assets/luke_idle.webp" alt="Gustavo / Wizzard Avatar">
+            </div>
+            <div class="founder-name-text">Gustavo (Wizzard)</div>
+            <div class="founder-role-text">Founder & Lead Game Engineer</div>
+            <div class="founder-studio-text">WizzarDev Studios</div>
+          </div>
+
+          <div class="founder-right">
+            <div class="quote-text">
+              "We don't raise capital on empty slides. Realm of Kingdoms was built to prove that console-grade 60 FPS mobile gaming can thrive directly in the open browser."
+            </div>
+
+            <p class="founder-summary">
+              Operating with extreme capital efficiency, every milestone delivers concrete software. We are seeking ecosystem grant backing to finalize our Polygon deployment and bring hundreds of thousands of players into the sovereign coliseum.
+            </p>
+
+            <div class="contact-deck-grid">
+              <a href="https://t.me/WizzarDev_1" target="_blank" rel="noopener noreferrer" class="contact-pill">
+                <span class="contact-icon">✈️</span>
+                <div>
+                  <div class="contact-sub">Telegram</div>
+                  <div class="contact-val">@WizzarDev_1</div>
+                </div>
+              </a>
+
+              <a href="https://x.com/PolarDevx" target="_blank" rel="noopener noreferrer" class="contact-pill">
+                <span class="contact-icon">🐦</span>
+                <div>
+                  <div class="contact-sub">X (Twitter)</div>
+                  <div class="contact-val">@PolarDevx</div>
+                </div>
+              </a>
+
+              <div class="contact-pill" id="copy-email-btn" style="cursor: pointer;">
+                <span class="contact-icon">✉️</span>
+                <div>
+                  <div class="contact-sub">Email</div>
+                  <div class="contact-val" id="email-text">kalellostte@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 24px;">
+              <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="deck-btn gold" style="width: 100%; text-align: center; display: block;">
+                <span>⚔️ Launch Live Game Demo (https://realm-of-kingdom.vercel.app/us)</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Deck Floating Controls -->
+  <footer class="deck-controls">
+    <button class="nav-arrow" id="btn-prev" onclick="prevSlide()" aria-label="Previous Slide">
+      <span>‹</span>
+    </button>
+
+    <div class="deck-progress-dots" id="deck-dots">
+      <!-- Generated dynamically by main.js -->
+    </div>
+
+    <button class="nav-arrow" id="btn-next" onclick="nextSlide()" aria-label="Next Slide">
+      <span>›</span>
+    </button>
+
+    <div class="keyboard-tip">
+      Use <kbd>←</kbd> <kbd>→</kbd> or Swipe
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
