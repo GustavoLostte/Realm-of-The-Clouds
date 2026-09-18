@@ -7,7 +7,6 @@ let currentLang = 'es' // 'es' or 'en'
 const slides = document.querySelectorAll('.slide')
 const totalSlides = slides.length
 
-const categoryTextEl = document.getElementById('slide-category-text')
 const counterEl = document.getElementById('slide-counter')
 const dotsContainer = document.getElementById('deck-dots')
 
@@ -17,8 +16,8 @@ const sidePrev = document.getElementById('side-prev-btn')
 const sideNext = document.getElementById('side-next-btn')
 
 const topSegments = document.querySelectorAll('.top-progress-segment')
-const tabsStrip = document.getElementById('slide-tabs-strip')
-const slideTabs = document.querySelectorAll('.slide-tab')
+const tabsStrip = document.getElementById('deck-tabs')
+const slideTabs = document.querySelectorAll('.deck-tab')
 
 const langToggleBtn = document.getElementById('lang-toggle-btn')
 const langFlag = document.getElementById('lang-flag')
@@ -30,7 +29,7 @@ function initDots() {
   dotsContainer.innerHTML = ''
   slides.forEach((_, idx) => {
     const dot = document.createElement('div')
-    dot.className = `dot ${idx === 0 ? 'active' : ''}`
+    dot.className = `b-dot ${idx === 0 ? 'active' : ''}`
     dot.title = `Ir a diapositiva ${idx + 1}`
     dot.addEventListener('click', () => goToSlide(idx))
     dotsContainer.appendChild(dot)
@@ -75,13 +74,6 @@ function goToSlide(index) {
   currentSlide = index
   slides[currentSlide].classList.add('active')
 
-  // Update Category Badge based on current language
-  const categoryEs = slides[currentSlide].getAttribute('data-category') || `DIAPOSITIVA ${currentSlide + 1}`
-  const categoryEn = slides[currentSlide].getAttribute('data-category-en') || `SLIDE ${currentSlide + 1}`
-  if (categoryTextEl) {
-    categoryTextEl.textContent = currentLang === 'en' ? categoryEn : categoryEs
-  }
-
   // Update Slide Counter
   if (counterEl) {
     counterEl.textContent = `${currentSlide + 1} / ${totalSlides}`
@@ -89,7 +81,7 @@ function goToSlide(index) {
 
   // Update Dots
   if (dotsContainer) {
-    const dots = dotsContainer.querySelectorAll('.dot')
+    const dots = dotsContainer.querySelectorAll('.b-dot')
     dots.forEach((dot, idx) => {
       dot.classList.toggle('active', idx === currentSlide)
     })
@@ -110,7 +102,6 @@ function goToSlide(index) {
     const isActive = idx === currentSlide
     tab.classList.toggle('active', isActive)
     if (isActive && tabsStrip) {
-      // Auto-scroll the active tab into view smoothly on mobile/narrow screens
       tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
     }
   })
@@ -167,13 +158,6 @@ function setLanguage(lang) {
     }
   })
 
-  // Refresh active category text
-  const categoryEs = slides[currentSlide].getAttribute('data-category') || `DIAPOSITIVA ${currentSlide + 1}`
-  const categoryEn = slides[currentSlide].getAttribute('data-category-en') || `SLIDE ${currentSlide + 1}`
-  if (categoryTextEl) {
-    categoryTextEl.textContent = currentLang === 'en' ? categoryEn : categoryEs
-  }
-
   localStorage.setItem('rok_deck_lang', lang)
 }
 
@@ -185,7 +169,6 @@ if (langToggleBtn) {
 
 // ==================== KEYBOARD NAVIGATION ====================
 window.addEventListener('keydown', (e) => {
-  // Ignore if user is typing in an input
   if (['input', 'textarea'].includes(document.activeElement.tagName.toLowerCase())) return
 
   if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {

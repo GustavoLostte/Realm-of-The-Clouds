@@ -3,20 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Realm of Kingdoms | Investor Pitch Deck Oficial</title>
+  <title>Realm of Kingdoms | Investor Pitch Deck</title>
   <meta name="description" content="Presentación interactiva para inversores y grants: Realm of Kingdoms. Estrategia 4X y Coliseo de Acción PvP en tiempo real a 60 FPS sólidos en móviles. Desarrollado por WizzarDev Studios.">
   <meta name="author" content="WizzarDev Studios">
-  
-  <!-- OpenGraph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Realm of Kingdoms — Investor Pitch Deck">
-  <meta property="og:description" content="Diapositivas interactivas: Motor PWA 60 FPS, Coliseo PvP y liquidación Polygon.">
-  <meta property="og:image" content="assets/logo.webp">
   
   <!-- Favicon -->
   <link rel="icon" type="image/webp" href="assets/logo.webp">
 
-  <!-- Fonts -->
+  <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -25,7 +19,7 @@
 </head>
 <body data-lang="es">
 
-  <!-- Top Segmented Continuous Progress Bar (Clickable) -->
+  <!-- 1. Top Continuous Segmented Bar (Clickable) -->
   <div class="top-progress-bar" id="top-progress-bar">
     <div class="top-progress-segment active" data-index="0" title="01 • Visión"></div>
     <div class="top-progress-segment" data-index="1" title="02 • Problema"></div>
@@ -37,148 +31,140 @@
     <div class="top-progress-segment" data-index="7" title="08 • Fundador"></div>
   </div>
 
-  <!-- Presentation Header Bar -->
-  <header class="deck-nav">
-    <div class="deck-nav-left">
-      <div class="deck-nav-logo-wrap">
-        <img src="assets/logo.webp" alt="Realm of Kingdoms Logo" class="deck-nav-logo">
-      </div>
-      <div>
-        <div class="deck-nav-title">Realm of Kingdoms</div>
-        <div class="deck-nav-sub">WizzarDev Studios • Pitch Deck</div>
+  <!-- 2. Single Unified Header Bar -->
+  <header class="deck-header">
+    <div class="deck-brand">
+      <img src="assets/logo.webp" alt="Realm of Kingdoms Logo" class="deck-logo">
+      <div class="deck-brand-text">
+        <span class="deck-brand-title">Realm of Kingdoms</span>
+        <span class="deck-brand-sub">WizzarDev Studios • Pitch Deck</span>
       </div>
     </div>
 
-    <!-- Active Category Pill -->
-    <div class="deck-nav-center">
-      <span class="slide-badge-category" id="slide-category">
-        <span>👑</span> <span id="slide-category-text">01 • LA VISIÓN</span>
-      </span>
-    </div>
+    <!-- Integrated Tabs Navigation (1 Click Jump) -->
+    <nav class="deck-tabs" id="deck-tabs">
+      <button class="deck-tab active" data-index="0">
+        <span class="deck-tab-num">01</span>
+        <span>👑</span> <span data-es="Visión" data-en="Vision">Visión</span>
+      </button>
+      <button class="deck-tab" data-index="1">
+        <span class="deck-tab-num">02</span>
+        <span>⚠️</span> <span data-es="Problema" data-en="Problem">Problema</span>
+      </button>
+      <button class="deck-tab" data-index="2">
+        <span class="deck-tab-num">03</span>
+        <span>💡</span> <span data-es="Solución" data-en="Solution">Solución</span>
+      </button>
+      <button class="deck-tab" data-index="3">
+        <span class="deck-tab-num">04</span>
+        <span>🎬</span> <span data-es="Gameplay 60FPS" data-en="60FPS Gameplay">Gameplay 60FPS</span>
+      </button>
+      <button class="deck-tab" data-index="4">
+        <span class="deck-tab-num">05</span>
+        <span>⚡</span> <span data-es="Motor & Tech" data-en="Engine & Tech">Motor & Tech</span>
+      </button>
+      <button class="deck-tab" data-index="5">
+        <span class="deck-tab-num">06</span>
+        <span>🪙</span> <span data-es="Economía Web3" data-en="Web3 Economy">Economía Web3</span>
+      </button>
+      <button class="deck-tab" data-index="6">
+        <span class="deck-tab-num">07</span>
+        <span>🗺️</span> <span data-es="Hoja de Ruta" data-en="Roadmap">Hoja de Ruta</span>
+      </button>
+      <button class="deck-tab" data-index="7">
+        <span class="deck-tab-num">08</span>
+        <span>🧙‍♂️</span> <span data-es="Fundador" data-en="Founder">Fundador</span>
+      </button>
+    </nav>
 
-    <div class="deck-nav-right">
-      <!-- Language Switcher Toggle -->
-      <button class="lang-toggle-btn" id="lang-toggle-btn" title="Cambiar Idioma / Switch Language">
+    <div class="deck-header-right">
+      <!-- Language Switcher -->
+      <button class="lang-btn" id="lang-toggle-btn" title="Cambiar Idioma / Switch Language">
         <span id="lang-flag">🇪🇸</span> <span id="lang-text">ES</span>
       </button>
 
       <!-- Live Demo Link -->
-      <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="btn-play-live">
-        <span>⚔️</span> <span data-es="Probar Demo en Vivo" data-en="Play Live Demo">Probar Demo en Vivo</span>
+      <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="header-play-btn">
+        <span>⚔️</span> <span data-es="Demo en Vivo" data-en="Live Demo">Demo en Vivo</span>
       </a>
 
-      <span class="slide-counter" id="slide-counter">1 / 8</span>
+      <span class="header-counter" id="slide-counter">1 / 8</span>
     </div>
   </header>
 
-  <!-- Interactive Slide Tabs Strip (Ultra-Intuitive Direct Jump) -->
-  <nav class="slide-tabs-strip" id="slide-tabs-strip">
-    <button class="slide-tab active" data-index="0">
-      <span class="slide-tab-num">1</span>
-      <span>👑</span> <span data-es="Visión" data-en="Vision">Visión</span>
-    </button>
-    <button class="slide-tab" data-index="1">
-      <span class="slide-tab-num">2</span>
-      <span>⚠️</span> <span data-es="Problema" data-en="Problem">Problema</span>
-    </button>
-    <button class="slide-tab" data-index="2">
-      <span class="slide-tab-num">3</span>
-      <span>💡</span> <span data-es="Solución" data-en="Solution">Solución</span>
-    </button>
-    <button class="slide-tab" data-index="3">
-      <span class="slide-tab-num">4</span>
-      <span>🎬</span> <span data-es="Gameplay 60FPS" data-en="60FPS Gameplay">Gameplay 60FPS</span>
-    </button>
-    <button class="slide-tab" data-index="4">
-      <span class="slide-tab-num">5</span>
-      <span>⚡</span> <span data-es="Motor & Tech" data-en="Engine & Tech">Motor & Tech</span>
-    </button>
-    <button class="slide-tab" data-index="5">
-      <span class="slide-tab-num">6</span>
-      <span>🪙</span> <span data-es="Economía Web3" data-en="Web3 Economy">Economía Web3</span>
-    </button>
-    <button class="slide-tab" data-index="6">
-      <span class="slide-tab-num">7</span>
-      <span>🗺️</span> <span data-es="Hoja de Ruta" data-en="Roadmap">Hoja de Ruta</span>
-    </button>
-    <button class="slide-tab" data-index="7">
-      <span class="slide-tab-num">8</span>
-      <span>🧙‍♂️</span> <span data-es="Fundador" data-en="Founder">Fundador</span>
-    </button>
-  </nav>
-
-  <!-- Floating Side Navigation Arrows (Impossible to miss) -->
-  <button class="side-nav-arrow prev" id="side-prev-btn" aria-label="Diapositiva Anterior" title="Diapositiva Anterior (←)">
+  <!-- 3. Floating Side Chevrons (Large & Clickable) -->
+  <button class="side-arrow prev" id="side-prev-btn" aria-label="Diapositiva Anterior" title="Diapositiva Anterior (←)">
     ‹
   </button>
-  <button class="side-nav-arrow next" id="side-next-btn" aria-label="Siguiente Diapositiva" title="Siguiente Diapositiva (→)">
+  <button class="side-arrow next" id="side-next-btn" aria-label="Siguiente Diapositiva" title="Siguiente Diapositiva (→)">
     ›
   </button>
 
-  <!-- Deck Slides Container -->
+  <!-- 4. Slides Viewport Container -->
   <main class="deck-container" id="deck-container">
 
     <!-- ==================== SLIDE 1: COVER & HOOK ==================== -->
     <section class="slide active" data-index="0" data-category="01 • LA VISIÓN" data-category-en="01 • THE VISION">
-      <div class="slide-inner slide-cover">
+      <div class="slide-inner cover-layout">
         <div class="cover-badge-row">
-          <span class="tag-pill gold">👑 <span data-es="Pitch Deck Oficial" data-en="Official Investor Deck">Pitch Deck Oficial</span></span>
-          <span class="tag-pill green">● <span data-es="100% Jugable en Vivo Hoy" data-en="100% Playable Live Engine">100% Jugable en Vivo Hoy</span></span>
-          <span class="tag-pill purple">💜 Polygon Ecosystem</span>
-          <span class="tag-pill cyan">⚡ 60 FPS Mobile PWA</span>
+          <span class="cover-pill gold">👑 <span data-es="Pitch Deck Oficial" data-en="Official Investor Deck">Pitch Deck Oficial</span></span>
+          <span class="cover-pill green">● <span data-es="100% Jugable en Vivo Hoy" data-en="100% Playable Live Engine">100% Jugable en Vivo Hoy</span></span>
+          <span class="cover-pill purple">💜 Polygon Ecosystem</span>
+          <span class="cover-pill">⚡ 60 FPS Mobile PWA</span>
         </div>
 
         <h1 class="cover-title">
           Realm of Kingdoms
         </h1>
-        <p class="cover-tagline" data-es="Estrategia 4X y Coliseo de Acción PvP en Tiempo Real para Móviles a 60 FPS Sólidos" data-en="The Mobile-First Web3 4X Strategy & Real-Time PvP Coliseum Running at Locked 60 FPS">
+
+        <p class="cover-subtitle" data-es="Estrategia 4X y Coliseo de Acción PvP en Tiempo Real para Móviles a 60 FPS Sólidos" data-en="The Mobile-First Web3 4X Strategy & Real-Time PvP Coliseum Running at Locked 60 FPS">
           Estrategia 4X y Coliseo de Acción PvP en Tiempo Real para Móviles a 60 FPS Sólidos
         </p>
 
-        <p class="cover-desc" data-es="Juego web progresivo (PWA) de acceso instantáneo directo en el navegador de cualquier teléfono. Sin descargas de 20GB, sin fricción de tiendas de apps y con liquidación onchain en Polygon por fracciones de centavo." data-en="Frictionless PWA gaming directly inside mobile browsers. Zero 20GB downloads, zero App Store delays, powered by sub-cent Polygon settlement.">
+        <p class="cover-text" data-es="Juego web progresivo (PWA) de acceso instantáneo directo en el navegador de cualquier teléfono. Sin descargas de 20GB, sin fricción de tiendas de apps y con liquidación onchain en Polygon por fracciones de centavo." data-en="Frictionless PWA gaming directly inside mobile browsers. Zero 20GB downloads, zero App Store delays, powered by sub-cent Polygon settlement.">
           Juego web progresivo (PWA) de acceso instantáneo directo en el navegador de cualquier teléfono. Sin descargas de 20GB, sin fricción de tiendas de apps y con liquidación onchain en Polygon por fracciones de centavo.
         </p>
 
-        <!-- 4 Vibrant KPI Boxes -->
-        <div class="cover-kpis">
-          <div class="kpi-box kpi-emerald">
-            <div class="kpi-val green">60 FPS</div>
-            <div class="kpi-lbl" data-es="Presupuesto Estricto (16.7ms)" data-en="Locked Frame Budget (16.7ms)">Presupuesto Estricto (16.7ms)</div>
+        <!-- 4 KPI Cards -->
+        <div class="cover-kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-num green">60 FPS</div>
+            <div class="kpi-desc" data-es="Presupuesto Estricto (16.7ms)" data-en="Locked Frame Budget (16.7ms)">Presupuesto Estricto (16.7ms)</div>
           </div>
-          <div class="kpi-box kpi-cyan">
-            <div class="kpi-val cyan">0 MB</div>
-            <div class="kpi-lbl" data-es="Cero Descarga de Tiendas (PWA)" data-en="No App Store Install Needed">Cero Descarga de Tiendas (PWA)</div>
+          <div class="kpi-card">
+            <div class="kpi-num cyan">0 MB</div>
+            <div class="kpi-desc" data-es="Cero Descargas (PWA Directa)" data-en="No App Store Install Needed">Cero Descargas (PWA Directa)</div>
           </div>
-          <div class="kpi-box kpi-purple">
-            <div class="kpi-val purple">&lt; $0.001</div>
-            <div class="kpi-lbl" data-es="Gas Mínimo en Polygon" data-en="Polygon Gas Micro-Settlement">Gas Mínimo en Polygon</div>
+          <div class="kpi-card">
+            <div class="kpi-num purple">&lt; $0.001</div>
+            <div class="kpi-desc" data-es="Gas Mínimo en Polygon" data-en="Polygon Gas Micro-Settlement">Gas Mínimo en Polygon</div>
           </div>
-          <div class="kpi-box">
-            <div class="kpi-val gold">100%</div>
-            <div class="kpi-lbl" data-es="Cero Vaporware (Jugable Hoy)" data-en="Zero Vaporware (Live Today)">Cero Vaporware (Jugable Hoy)</div>
+          <div class="kpi-card">
+            <div class="kpi-num gold">100%</div>
+            <div class="kpi-desc" data-es="Cero Vaporware (Jugable Hoy)" data-en="Zero Vaporware (Live Today)">Cero Vaporware (Jugable Hoy)</div>
           </div>
         </div>
 
-        <!-- Hero Actions -->
-        <div class="cover-actions">
-          <button class="deck-btn gold" onclick="goToSlide(1)">
+        <!-- 3 Prominent Actions -->
+        <div class="cover-cta-row">
+          <button class="btn-primary gold" onclick="goToSlide(1)">
             <span>▶</span> <span data-es="Comenzar Presentación" data-en="Start Presentation">Comenzar Presentación</span>
           </button>
-          <button class="deck-btn purple" onclick="goToSlide(3)">
+          <button class="btn-primary purple" onclick="goToSlide(3)">
             <span>🎬</span> <span data-es="Ver Video Gameplay (60 FPS)" data-en="Watch 60 FPS Video">Ver Video Gameplay (60 FPS)</span>
           </button>
-          <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="deck-btn glass">
+          <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="btn-primary glass">
             <span>⚔️</span> <span data-es="Lanzar Demo en Vivo" data-en="Launch Live Demo">Lanzar Demo en Vivo</span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 2: THE PROBLEM ==================== -->
+    <!-- ==================== SLIDE 2: THE PROBLEM (4 HORIZONTAL COLUMNS) ==================== -->
     <section class="slide" data-index="1" data-category="02 • EL PROBLEMA" data-category-en="02 • MARKET PROBLEM">
       <div class="slide-inner">
-        <div class="slide-header">
-          <span class="tag-pill red">⚠️ <span data-es="Problema del Mercado" data-en="Market Problem">Problema del Mercado</span></span>
+        <div class="slide-title-area">
+          <span class="category-tag red">⚠️ <span data-es="Problema del Mercado" data-en="Market Problem">Problema del Mercado</span></span>
           <h2 data-es="Los Cuatro Cuellos de Botella que Destruyen los Juegos Web3" data-en="The Four Bottlenecks Destroying Web3 Gaming">
             Los Cuatro Cuellos de Botella que Destruyen los Juegos Web3
           </h2>
@@ -187,53 +173,48 @@
           </p>
         </div>
 
-        <div class="grid-2x2">
-          <div class="card flaw">
-            <div class="card-icon red">✕</div>
-            <h3 data-es="1. La Trampa del Vaporware" data-en="1. The 2-Year Vaporware Trap">1. La Trampa del Vaporware</h3>
-            <p data-es="Equipos recaudan millones vendiendo arte conceptual y cinemáticas mientras el juego real se retrasa durante años, destruyendo la confianza de la comunidad." data-en="Teams raise millions selling concept art while the actual playable game remains delayed for years, exhausting community trust.">
-              Equipos recaudan millones vendiendo arte conceptual y cinemáticas mientras el juego real se retrasa durante años, destruyendo la confianza de la comunidad.
+        <!-- 4 Columns Side-by-Side: No vertical overflow! -->
+        <div class="grid-4col">
+          <div class="pill-card problem-theme">
+            <div class="card-badge-icon red">✕</div>
+            <h3 data-es="1. La Trampa del Vaporware" data-en="1. The Vaporware Trap">1. La Trampa del Vaporware</h3>
+            <p data-es="Equipos recaudan millones vendiendo arte conceptual mientras el juego real se retrasa durante años, destruyendo la confianza comunitaria." data-en="Teams raise millions selling concept art while the actual playable game remains delayed for years, exhausting community trust.">
+              Equipos recaudan millones vendiendo arte conceptual mientras el juego real se retrasa durante años, destruyendo la confianza comunitaria.
             </p>
           </div>
 
-          <div class="card flaw">
-            <div class="card-icon red">✕</div>
-            <h3 data-es="2. Clientes Pesados de 20GB+ en PC" data-en="2. Massive 20GB+ PC Clients">2. Clientes Pesados de 20GB+ en PC</h3>
-            <p data-es="Exigir descargas en Steam o lanzadores dedicados excluye al 70% del mercado global: más de 3.200 millones de personas que juegan en teléfonos móviles." data-en="Forcing PC downloads on Steam or custom launchers completely cuts off the world's 3.2 billion mobile-first gamers.">
-              Exigir descargas en Steam o lanzadores dedicados excluye al 70% del mercado global: más de 3.200 millones de personas que juegan en teléfonos móviles.
+          <div class="pill-card problem-theme">
+            <div class="card-badge-icon red">✕</div>
+            <h3 data-es="2. Clientes de 20GB+ en PC" data-en="2. Massive 20GB+ PC Clients">2. Clientes de 20GB+ en PC</h3>
+            <p data-es="Exigir descargas en Steam excluye al 70% del mercado global: más de 3.200 millones de usuarios que juegan en teléfonos móviles." data-en="Forcing PC downloads on Steam or custom launchers completely cuts off the world's 3.2 billion mobile-first gamers.">
+              Exigir descargas en Steam excluye al 70% del mercado global: más de 3.200 millones de usuarios que juegan en teléfonos móviles.
             </p>
           </div>
 
-          <div class="card flaw">
-            <div class="card-icon red">✕</div>
+          <div class="pill-card problem-theme">
+            <div class="card-badge-icon red">✕</div>
             <h3 data-es="3. WebViews Lentos a 20 FPS" data-en="3. Laggy 20 FPS WebViews">3. WebViews Lentos a 20 FPS</h3>
-            <p data-es="Juegos web sin optimización sufren constantes tirones de recolección de basura (GC), renderizado torpe y alta latencia táctil, arruinando el combate de acción." data-en="Unoptimized mobile web games suffer continuous garbage-collection stutters, layout thrashing, and high touch latency, ruining combat.">
-              Juegos web sin optimización sufren constantes tirones de recolección de basura (GC), renderizado torpe y alta latencia táctil, arruinando el combate de acción.
+            <p data-es="Juegos web sin optimización sufren constantes tirones de recolección de basura y alta latencia táctil, arruinando el combate de acción." data-en="Unoptimized mobile web games suffer continuous garbage-collection stutters and high touch latency, ruining combat feel.">
+              Juegos web sin optimización sufren constantes tirones de recolección de basura y alta latencia táctil, arruinando el combate de acción.
             </p>
           </div>
 
-          <div class="card flaw">
-            <div class="card-icon red">✕</div>
-            <h3 data-es="4. Fricción Extrema de Gas y Popups" data-en="4. High Gas Friction & Popups">4. Fricción Extrema de Gas y Popups</h3>
-            <p data-es="Exigir confirmaciones de firma en billeteras y pagar tarifas en dólares por acciones básicas en el juego provoca el abandono inmediato de jugadores reales." data-en="Requiring constant wallet popups and dollar-tier gas fees for simple in-game actions causes immediate user churn.">
-              Exigir confirmaciones de firma en billeteras y pagar tarifas en dólares por acciones básicas en el juego provoca el abandono inmediato de jugadores reales.
+          <div class="pill-card problem-theme">
+            <div class="card-badge-icon red">✕</div>
+            <h3 data-es="4. Fricción de Gas y Popups" data-en="4. High Gas & Popups Friction">4. Fricción de Gas y Popups</h3>
+            <p data-es="Exigir firmas constantes en billeteras y pagar dólares por acciones básicas provoca el abandono inmediato de jugadores reales." data-en="Requiring constant wallet popups and dollar-tier gas fees for simple in-game actions causes immediate user churn.">
+              Exigir firmas constantes en billeteras y pagar dólares por acciones básicas provoca el abandono inmediato de jugadores reales.
             </p>
           </div>
-        </div>
-
-        <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
-          <button class="deck-btn gold" onclick="nextSlide()">
-            <span data-es="Ver Nuestra Solución ➔" data-en="See Our Solution ➔">Ver Nuestra Solución ➔</span>
-          </button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 3: THE SOLUTION ==================== -->
+    <!-- ==================== SLIDE 3: THE SOLUTION (4 HORIZONTAL COLUMNS) ==================== -->
     <section class="slide" data-index="2" data-category="03 • LA SOLUCIÓN" data-category-en="03 • THE SOLUTION">
       <div class="slide-inner">
-        <div class="slide-header">
-          <span class="tag-pill green">💡 <span data-es="Nuestra Solución" data-en="Our Solution">Nuestra Solución</span></span>
+        <div class="slide-title-area">
+          <span class="category-tag green">💡 <span data-es="Nuestra Solución" data-en="Our Solution">Nuestra Solución</span></span>
           <h2 data-es="Realm of Kingdoms: Calidad de Consola en PWA Fluida" data-en="Realm of Kingdoms: Frictionless Console-Grade PWA">
             Realm of Kingdoms: Calidad de Consola en PWA Fluida
           </h2>
@@ -242,134 +223,122 @@
           </p>
         </div>
 
-        <div class="grid-2x2">
-          <div class="card fix">
-            <div class="card-icon green">✓</div>
-            <h3 data-es="1. Cero Vaporware: Motor 100% Jugable Hoy" data-en="1. Zero Vaporware (Playable Today)">1. Cero Vaporware: Motor 100% Jugable Hoy</h3>
-            <p data-es="No es una promesa en un papel: la economía de construcción, navegación de ciudadanos y el Coliseo PvP en tiempo real están funcionando en vivo ahora mismo." data-en="Not a whitepaper promise: the city-building economy, citizen pathfinding, and real-time PvP arena are 100% working and deployed right now.">
-              No es una promesa en un papel: la economía de construcción, navegación de ciudadanos y el Coliseo PvP en tiempo real están funcionando en vivo ahora mismo.
+        <!-- 4 Columns Side-by-Side: No vertical overflow! -->
+        <div class="grid-4col">
+          <div class="pill-card solution-theme">
+            <div class="card-badge-icon green">✓</div>
+            <h3 data-es="1. Cero Vaporware: Jugable Hoy" data-en="1. Zero Vaporware (Playable)">1. Cero Vaporware: Jugable Hoy</h3>
+            <p data-es="No es una promesa en papel: la economía 4X, IA de ciudadanos y el Coliseo PvP en tiempo real están 100% operativos ahora mismo." data-en="Not a whitepaper promise: the city-building economy, citizen pathfinding, and real-time PvP arena are 100% working live right now.">
+              No es una promesa en papel: la economía 4X, IA de ciudadanos y el Coliseo PvP en tiempo real están 100% operativos ahora mismo.
             </p>
           </div>
 
-          <div class="card fix">
-            <div class="card-icon green">✓</div>
-            <h3 data-es="2. Acceso Inmediato en PWA (1 Solo Clic)" data-en="2. Frictionless PWA Architecture">2. Acceso Inmediato en PWA (1 Solo Clic)</h3>
-            <p data-es="Se ejecuta al instante desde un enlace o código QR. Puede guardarse como app nativa en la pantalla de inicio con caché local y sin comisiones del 30% de tiendas." data-en="One-tap link access. Can be saved directly to the home screen as a standalone app with offline caching and zero 30% store tax.">
-              Se ejecuta al instante desde un enlace o código QR. Puede guardarse como app nativa en la pantalla de inicio con caché local y sin comisiones del 30% de tiendas.
+          <div class="pill-card solution-theme">
+            <div class="card-badge-icon green">✓</div>
+            <h3 data-es="2. Acceso PWA en 1 Solo Clic" data-en="2. Frictionless 1-Tap PWA">2. Acceso PWA en 1 Solo Clic</h3>
+            <p data-es="Se ejecuta al instante desde un enlace web. Guardable como app en inicio con caché local y sin comisiones del 30% de tiendas." data-en="One-tap link access. Can be saved directly to the home screen as a standalone app with offline caching and zero store fees.">
+              Se ejecuta al instante desde un enlace web. Guardable como app en inicio con caché local y sin comisiones del 30% de tiendas.
             </p>
           </div>
 
-          <div class="card fix">
-            <div class="card-icon green">✓</div>
-            <h3 data-es="3. Motor Propietario a 60 FPS Bloqueados" data-en="3. Strictly Locked 60 FPS Engine">3. Motor Propietario a 60 FPS Bloqueados</h3>
-            <p data-es="Renderizado WebGL acelerado por hardware (PixiJS v8) con composición perimetral GPU (translateZ), manteniendo 16.7ms incluso en teléfonos Android de gama media." data-en="Proprietary PixiJS WebGL rendering with GPU perimeter compositing running smooth 16.7ms frame times on mid-range Androids.">
-              Renderizado WebGL acelerado por hardware (PixiJS v8) con composición perimetral GPU (translateZ), manteniendo 16.7ms incluso en teléfonos Android de gama media.
+          <div class="pill-card solution-theme">
+            <div class="card-badge-icon green">✓</div>
+            <h3 data-es="3. Motor a 60 FPS Bloqueados" data-en="3. Locked 60 FPS Engine">3. Motor a 60 FPS Bloqueados</h3>
+            <p data-es="PixiJS v8 WebGL por hardware con composición GPU perimetral, garantizando 16.7ms incluso en teléfonos Android de gama media." data-en="Proprietary PixiJS WebGL v8 rendering with GPU perimeter compositing running smooth 16.7ms frame times on consumer devices.">
+              PixiJS v8 WebGL por hardware con composición GPU perimetral, garantizando 16.7ms incluso en teléfonos Android de gama media.
             </p>
           </div>
 
-          <div class="card fix">
-            <div class="card-icon green">✓</div>
-            <h3 data-es="4. Micro-Liquidación en Polygon" data-en="4. Sub-Cent Polygon Economics">4. Micro-Liquidación en Polygon</h3>
-            <p data-es="Aprovechamos la velocidad y bajísimas comisiones de Polygon para apuestas de habilidad en el coliseo, ligas clasificatorias y skins cosméticos por menos de $0.001." data-en="Leveraging Polygon's high-speed throughput for instant arena wagers, seasonal leaderboards, and cosmetic champion skins at fractions of a cent.">
-              Aprovechamos la velocidad y bajísimas comisiones de Polygon para apuestas de habilidad en el coliseo, ligas clasificatorias y skins cosméticos por menos de $0.001.
+          <div class="pill-card solution-theme">
+            <div class="card-badge-icon green">✓</div>
+            <h3 data-es="4. Micro-Liquidación Polygon" data-en="4. Sub-Cent Polygon Settlement">4. Micro-Liquidación Polygon</h3>
+            <p data-es="Aprovechamos la velocidad y bajísimas comisiones de Polygon para apuestas de habilidad en el coliseo por menos de $0.001." data-en="Leveraging Polygon's high-speed throughput for instant arena wagers, seasonal leaderboards, and cosmetic skins at fractions of a cent.">
+              Aprovechamos la velocidad y bajísimas comisiones de Polygon para apuestas de habilidad en el coliseo por menos de $0.001.
             </p>
           </div>
-        </div>
-
-        <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
-          <button class="deck-btn purple" onclick="goToSlide(3)">
-            <span data-es="Ver Gameplay en Video a 60 FPS ➔" data-en="Watch 60 FPS Gameplay Video ➔">Ver Gameplay en Video a 60 FPS ➔</span>
-          </button>
         </div>
       </div>
     </section>
 
     <!-- ==================== SLIDE 4: GAMEPLAY & VIDEO SHOWCASE ==================== -->
-    <section class="slide" data-index="3" data-category="04 • GAMEPLAY & VIDEO 60 FPS" data-category-en="04 • GAMEPLAY & 60 FPS VIDEO">
+    <section class="slide" data-index="3" data-category="04 • GAMEPLAY 60 FPS" data-category-en="04 • 60 FPS GAMEPLAY">
       <div class="slide-inner">
-        <div class="slide-header">
-          <span class="tag-pill gold">🎬 <span data-es="Demostración en Video Real" data-en="Live Video Showcase">Demostración en Video Real</span></span>
+        <div class="slide-title-area">
+          <span class="category-tag gold">🎬 <span data-es="Demostración en Video Real" data-en="Live Video Showcase">Demostración en Video Real</span></span>
           <h2 data-es="Estrategia Feudal 4X y Coliseo de Acción en Tiempo Real" data-en="Strategic Feudal Economy & Real-Time Action Combat">
             Estrategia Feudal 4X y Coliseo de Acción en Tiempo Real
           </h2>
-          <p data-es="Grabación directa capturada en un dispositivo móvil real mostrando el rendimiento a 60 FPS y control táctil ultra-reactivo." data-en="Live mobile recording showing locked 60 FPS performance and fluid virtual joystick action.">
-            Grabación directa capturada en un dispositivo móvil real mostrando el rendimiento a 60 FPS y control táctil ultra-reactivo.
+          <p data-es="Grabación directa capturada en un teléfono real demostrando 60 FPS continuos y control táctil ultra-reactivo." data-en="Live mobile recording showing locked 60 FPS performance and fluid virtual joystick action.">
+            Grabación directa capturada en un teléfono real demostrando 60 FPS continuos y control táctil ultra-reactivo.
           </p>
         </div>
 
-        <div class="split-layout">
+        <div class="video-showcase-split">
           <!-- Video Monitor Frame -->
-          <div class="video-frame-container">
-            <div class="video-status-header">
-              <div class="video-fps-badge">
-                <span class="fps-dot"></span>
+          <div class="video-frame-box">
+            <div class="video-status-top">
+              <div class="live-fps-indicator">
+                <span class="pulse-dot"></span>
                 <span>● 60.0 FPS | 16.6ms</span>
               </div>
-              <span style="font-size: 0.74rem; color: var(--gold-light); font-weight: 700;">
+              <span style="font-size: 0.72rem; color: var(--gold-bright); font-weight: 800;">
                 SAMSUNG GALAXY CAPTURE
               </span>
             </div>
 
-            <div class="video-wrapper">
+            <div class="video-player-wrap">
               <video id="gameplay-video" src="assets/gameplay_60fps.mp4" controls playsinline preload="metadata" poster="assets/city_gameplay.jpg"></video>
             </div>
 
-            <div class="video-hud-footer">
-              <span class="tag-pill green">⚡ <span data-es="PixiJS v8 Hardware WebGL" data-en="PixiJS v8 Hardware WebGL">PixiJS v8 Hardware WebGL</span></span>
-              <span style="font-size: 0.74rem; color: var(--text-dim);">Duración: 1:09 min • 1278x590</span>
+            <div class="video-status-bottom">
+              <span style="color: var(--emerald-bright); font-weight: 700;">⚡ PixiJS v8 Hardware WebGL</span>
+              <span>1:09 min • 1278x590</span>
             </div>
           </div>
 
-          <!-- Gameplay Details Column -->
-          <div style="display: flex; flex-direction: column; gap: 14px; justify-content: center;">
-            <div class="gameplay-pillar-card gold-theme">
-              <h3 style="font-size: 1.2rem; margin-bottom: 6px; color: var(--gold-vibrant);" data-es="🏰 Pilar 1: Estrategia Feudal 4X" data-en="🏰 Pillar 1: Feudal Strategy (4X)">
+          <!-- 2 Pillars Sidebar -->
+          <div class="gameplay-sidebar">
+            <div class="pillar-card gold-trim">
+              <h3 style="color: var(--gold-vibrant);" data-es="🏰 Pilar 1: Estrategia Feudal 4X" data-en="🏰 Pillar 1: Feudal Strategy (4X)">
                 🏰 Pilar 1: Estrategia Feudal 4X
               </h3>
-              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;" data-es="Producción de Oro, Madera, Piedra y Comida. 10 estructuras mejorables, árbol tecnológico de 3 niveles y ciudadanos inteligentes con IA de senderos sobre puentes celestiales." data-en="Harvest Gold, Wood, Stone, and Food. Manage 10 upgradable structures, 3-tier Academy tech tree, and dynamic living citizens crossing bridges.">
-                Producción de Oro, Madera, Piedra y Comida. 10 estructuras mejorables, árbol tecnológico de 3 niveles y ciudadanos inteligentes con IA de senderos sobre puentes celestiales.
+              <p data-es="Producción de Oro, Madera, Piedra y Comida. 10 estructuras mejorables, árbol de tecnologías y ciudadanos inteligentes sobre puentes celestiales." data-en="Harvest Gold, Wood, Stone, and Food. 10 upgradable structures, tech tree, and dynamic living citizens crossing bridges.">
+                Producción de Oro, Madera, Piedra y Comida. 10 estructuras mejorables, árbol de tecnologías y ciudadanos inteligentes sobre puentes celestiales.
               </p>
-              <div class="chip-row">
-                <span class="chip">🌾 4 Recursos</span>
-                <span class="chip">🏰 10 Edificios</span>
-                <span class="chip">🔬 Academia Tech</span>
-                <span class="chip">🚶 Ciudadanos Dinámicos</span>
+              <div class="chip-tag-row">
+                <span class="chip-tag">🌾 4 Recursos</span>
+                <span class="chip-tag">🏰 10 Edificios</span>
+                <span class="chip-tag">🔬 Academia</span>
               </div>
             </div>
 
-            <div class="gameplay-pillar-card cyan-theme">
-              <h3 style="font-size: 1.2rem; margin-bottom: 6px; color: var(--cyan-neon);" data-es="⚔️ Pilar 2: Coliseo de Soberanos (PvP)" data-en="⚔️ Pillar 2: Coliseum of Sovereigns (PvP)">
+            <div class="pillar-card cyan-trim">
+              <h3 style="color: var(--cyan);" data-es="⚔️ Pilar 2: Coliseo de Soberanos (PvP)" data-en="⚔️ Pillar 2: Coliseum of Sovereigns (PvP)">
                 ⚔️ Pilar 2: Coliseo de Soberanos (PvP)
               </h3>
-              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;" data-es="Combate de acción rápida 1v1 diseñado para pulgares móviles. Joystick analógico virtual con zona muerta calibrada (0.18) y dock de combate con 5 acciones tácticas (Ligero, Fuerte, Dash, Guardia -80% y Salto)." data-en="Fast-paced 1v1 action combat engineered for mobile thumbs. Features a responsive virtual analog joystick and a 5-action combat dock (Light, Heavy, Dash, Guard -80%, Jump).">
-                Combate de acción rápida 1v1 diseñado para pulgares móviles. Joystick analógico virtual con zona muerta calibrada (0.18) y dock de combate con 5 acciones tácticas (Ligero, Fuerte, Dash, Guardia -80% y Salto).
+              <p data-es="Combate de acción 1v1 para pulgares móviles. Joystick analógico con zona muerta calibrada (0.18) y dock de combate de 5 acciones tácticas." data-en="Fast-paced 1v1 action combat. Responsive virtual analog joystick (0.18 deadzone) and 5-action combat dock.">
+                Combate de acción 1v1 para pulgares móviles. Joystick analógico con zona muerta calibrada (0.18) y dock de combate de 5 acciones tácticas.
               </p>
-              <div class="chip-row">
-                <span class="chip">🕹️ Joystick 360°</span>
-                <span class="chip">🛡️ Guardia Táctica</span>
-                <span class="chip">⚡ Cero Latencia</span>
-                <span class="chip">🏆 Ligas Clasificatorias</span>
+              <div class="chip-tag-row">
+                <span class="chip-tag">🕹️ Joystick 360°</span>
+                <span class="chip-tag">🛡️ Guardia -80%</span>
+                <span class="chip-tag">⚡ Cero Latencia</span>
               </div>
             </div>
 
-            <div style="display: flex; gap: 10px; margin-top: 4px;">
-              <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="deck-btn gold" style="flex: 1; text-align: center; justify-content: center;">
-                <span>⚔️</span> <span data-es="Probar Combate en Vivo" data-en="Play Live Combat">Probar Combate en Vivo</span>
-              </a>
-              <button class="deck-btn glass" onclick="nextSlide()">
-                <span>➔</span>
-              </button>
-            </div>
+            <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="btn-primary gold" style="text-align: center; justify-content: center; padding: 10px 18px; font-size: 0.88rem;">
+              <span>⚔️</span> <span data-es="Probar Combate en Vivo" data-en="Play Live Combat">Probar Combate en Vivo</span>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 5: TECHNICAL BENCHMARKS ==================== -->
+    <!-- ==================== SLIDE 5: TECH BENCHMARKS (3x2 COMPACT) ==================== -->
     <section class="slide" data-index="4" data-category="05 • MOTOR & TECNOLOGÍA" data-category-en="05 • ENGINE & TECH">
       <div class="slide-inner">
-        <div class="slide-header">
-          <span class="tag-pill cyan">⚡ <span data-es="Tecnología Propietaria" data-en="Proprietary Technology">Tecnología Propietaria</span></span>
+        <div class="slide-title-area">
+          <span class="category-tag cyan">⚡ <span data-es="Tecnología Propietaria" data-en="Proprietary Technology">Tecnología Propietaria</span></span>
           <h2 data-es="Ingeniería Optimizada para Ejecución a 60 FPS en Móviles" data-en="Engineered for 60 FPS Mobile Execution">
             Ingeniería Optimizada para Ejecución a 60 FPS en Móviles
           </h2>
@@ -378,60 +347,54 @@
           </p>
         </div>
 
-        <div class="grid-3col">
-          <div class="tech-tile">
-            <div class="tile-icon">⚡</div>
-            <h4 data-es="PixiJS WebGL v8" data-en="PixiJS WebGL v8">PixiJS WebGL v8</h4>
+        <div class="grid-3x2">
+          <div class="tech-card">
+            <div class="tech-icon">⚡</div>
+            <h4>PixiJS WebGL v8</h4>
             <p data-es="Batch rendering directo en GPU, compresión de texturas WebP y cero recálculo de layout del DOM durante el juego activo." data-en="Hardware batch rendering, compressed WebP sprite sheets, and zero DOM layout re-rasterization during gameplay.">
               Batch rendering directo en GPU, compresión de texturas WebP y cero recálculo de layout del DOM durante el juego activo.
             </p>
           </div>
 
-          <div class="tech-tile">
-            <div class="tile-icon">⏱️</div>
-            <h4 data-es="Presupuesto de 16.7ms" data-en="16.7ms Frame Budget">Presupuesto de 16.7ms</h4>
+          <div class="tech-card">
+            <div class="tech-icon">⏱️</div>
+            <h4 data-es="Presupuesto 16.7ms" data-en="16.7ms Budget">Presupuesto 16.7ms</h4>
             <p data-es="Reemplazo de máscaras SVG pesadas por 4 paneles GPU perimetrales con composición por hardware, eliminando caídas de FPS." data-en="Replaced full-screen SVG masks with 4 GPU composited perimeter panels, completely eliminating frame drops in tutorials.">
               Reemplazo de máscaras SVG pesadas por 4 paneles GPU perimetrales con composición por hardware, eliminando caídas de FPS.
             </p>
           </div>
 
-          <div class="tech-tile">
-            <div class="tile-icon">🎵</div>
-            <h4 data-es="Sintetizador Web Audio" data-en="Web Audio Synthesizer">Sintetizador Web Audio</h4>
-            <p data-es="Generación polifónica sin latencia para impactos de espada y ráfagas mágicas, eliminando descargas de audio de cientos de megabytes." data-en="Zero-latency polyphonic audio generation for combat sword clashes and magical blasts without megabyte-heavy downloads.">
-              Generación polifónica sin latencia para impactos de espada y ráfagas mágicas, eliminando descargas de audio de cientos de megabytes.
+          <div class="tech-card">
+            <div class="tech-icon">🎵</div>
+            <h4 data-es="Sintetizador Web Audio" data-en="Web Audio Synth">Sintetizador Web Audio</h4>
+            <p data-es="Generación polifónica sin latencia para impactos de espada y ráfagas mágicas, eliminando descargas de cientos de megabytes." data-en="Zero-latency polyphonic audio generation for combat sword clashes and magical blasts without megabyte-heavy downloads.">
+              Generación polifónica sin latencia para impactos de espada y ráfagas mágicas, eliminando descargas de cientos de megabytes.
             </p>
           </div>
 
-          <div class="tech-tile">
-            <div class="tile-icon">📦</div>
-            <h4 data-es="Caché Multinivel v1.3" data-en="Multi-Tiered Cache (v1.3)">Caché Multinivel v1.3</h4>
+          <div class="tech-card">
+            <div class="tech-icon">📦</div>
+            <h4 data-es="Caché Multinivel v1.3" data-en="Multi-Tiered Cache">Caché Multinivel v1.3</h4>
             <p data-es="PWA Service Worker con caché inmutable en Edge CDN. Usuarios recurrentes inician el juego en 0.8s consumiendo 0 bytes de red." data-en="Service Worker with immutable 1-year CDN caching. Returning users load locally in under 0.8s consuming 0 network bytes.">
               PWA Service Worker con caché inmutable en Edge CDN. Usuarios recurrentes inician el juego en 0.8s consumiendo 0 bytes de red.
             </p>
           </div>
 
-          <div class="tech-tile">
-            <div class="tile-icon">🕹️</div>
-            <h4 data-es="Joystick Vectorial 360°" data-en="Clamped Vector Joystick">Joystick Vectorial 360°</h4>
+          <div class="tech-card">
+            <div class="tech-icon">🕹️</div>
+            <h4 data-es="Joystick Vectorial 360°" data-en="360° Vector Joystick">Joystick Vectorial 360°</h4>
             <p data-es="Captura con PointerEvents y calibración de zona muerta (0.18) que garantiza movimiento fluido sin activar gestos del navegador." data-en="PointerEvent capture with deadzone calibration (0.18) ensuring fluid 360° motion without triggering browser swipe gestures.">
               Captura con PointerEvents y calibración de zona muerta (0.18) que garantiza movimiento fluido sin activar gestos del navegador.
             </p>
           </div>
 
-          <div class="tech-tile">
-            <div class="tile-icon">☁️</div>
-            <h4 data-es="Persistencia Supabase RLS" data-en="Supabase RLS Persistence">Persistencia Supabase RLS</h4>
+          <div class="tech-card">
+            <div class="tech-icon">☁️</div>
+            <h4 data-es="Persistencia Supabase" data-en="Supabase Persistence">Persistencia Supabase</h4>
             <p data-es="Estado optimista local en cliente acoplado con validación segura en la nube para respuesta instantánea y tablas anti-trampas." data-en="Optimistic local client state coupled with secure cloud synchronization for instant responsiveness and cheat-resistant leaderboards.">
               Estado optimista local en cliente acoplado con validación segura en la nube para respuesta instantánea y tablas anti-trampas.
             </p>
           </div>
-        </div>
-
-        <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
-          <button class="deck-btn gold" onclick="nextSlide()">
-            <span data-es="Ver Economía & Tokenomics ➔" data-en="See Economics & Tokenomics ➔">Ver Economía & Tokenomics ➔</span>
-          </button>
         </div>
       </div>
     </section>
@@ -439,8 +402,8 @@
     <!-- ==================== SLIDE 6: BLOCKCHAIN & TOKENOMICS ==================== -->
     <section class="slide" data-index="5" data-category="06 • ECONOMÍA WEB3" data-category-en="06 • WEB3 ECONOMY">
       <div class="slide-inner">
-        <div class="slide-header">
-          <span class="tag-pill purple">💜 <span data-es="Liquidación en Polygon" data-en="Polygon Settlement">Liquidación en Polygon</span></span>
+        <div class="slide-title-area">
+          <span class="category-tag purple">💜 <span data-es="Liquidación en Polygon" data-en="Polygon Settlement">Liquidación en Polygon</span></span>
           <h2 data-es="Impulsado por Polygon: Bajo Gas y Apuestas de Habilidad" data-en="Powered by Polygon: Low Gas & Skill-Based Wagers">
             Impulsado por Polygon: Bajo Gas y Apuestas de Habilidad
           </h2>
@@ -449,67 +412,60 @@
           </p>
         </div>
 
-        <div class="grid-3col">
-          <div class="token-box">
-            <div class="token-icon">🪙</div>
+        <div class="token-grid-3">
+          <div class="token-card">
+            <div class="token-header-icon">🪙</div>
+            <span class="token-badge-role" data-es="Núcleo Dual" data-en="Dual Core">Núcleo Dual</span>
             <h3 data-es="Oro & Token $ROK" data-en="Gold & $ROK Token">Oro & Token $ROK</h3>
-            <span class="token-role" data-es="Núcleo de Economía Dual" data-en="Dual Economy Core">Núcleo de Economía Dual</span>
-            <p data-es="Moneda suave en el juego (Oro) producida por el reino, emparejada con el token de utilidad onchain ($ROK) en Polygon para torneos, staking y mejoras soberanas." data-en="In-game soft currency (Gold) earned through production, paired with the utility token ($ROK) on Polygon for tournament staking and upgrades.">
-              Moneda suave en el juego (Oro) producida por el reino, emparejada con el token de utilidad onchain ($ROK) en Polygon para torneos, staking y mejoras soberanas.
+            <p data-es="Moneda suave en el juego (Oro) producida por el reino, emparejada con el token onchain ($ROK) en Polygon para torneos y mejoras soberanas." data-en="In-game soft currency (Gold) earned through production, paired with the utility token ($ROK) on Polygon for tournament staking and upgrades.">
+              Moneda suave en el juego (Oro) producida por el reino, emparejada con el token onchain ($ROK) en Polygon para torneos y mejoras soberanas.
             </p>
           </div>
 
-          <div class="token-box">
-            <div class="token-icon">⚔️</div>
-            <h3 data-es="Escrow de Habilidad en Coliseo" data-en="Skill-Based Escrow">Escrow de Habilidad en Coliseo</h3>
-            <span class="token-role" data-es="Pozos de Duelo Seguros" data-en="Coliseum Wager Pools">Pozos de Duelo Seguros</span>
-            <p data-es="Smart contracts retienen las cuotas de entrada (10 $ROK / 1 POL) para duelos de ranking. El vencedor reclama automáticamente el pozo según firmas criptográficas." data-en="Smart contracts pool entry fees (10 $ROK / 1 POL) for ranked duels. The victor automatically claims the pot based on cryptographic match signatures.">
-              Smart contracts retienen las cuotas de entrada (10 $ROK / 1 POL) para duelos de ranking. El vencedor reclama automáticamente el pozo según firmas criptográficas.
+          <div class="token-card">
+            <div class="token-header-icon">⚔️</div>
+            <span class="token-badge-role" data-es="Pozos Seguros" data-en="Wager Pools">Pozos Seguros</span>
+            <h3 data-es="Escrow de Habilidad" data-en="Skill-Based Escrow">Escrow de Habilidad</h3>
+            <p data-es="Smart contracts retienen las cuotas de entrada (10 $ROK / 1 POL) para duelos de ranking. El vencedor reclama automáticamente el pozo." data-en="Smart contracts pool entry fees (10 $ROK / 1 POL) for ranked duels. The victor automatically claims the pot based on signatures.">
+              Smart contracts retienen las cuotas de entrada (10 $ROK / 1 POL) para duelos de ranking. El vencedor reclama automáticamente el pozo.
             </p>
           </div>
 
-          <div class="token-box">
-            <div class="token-icon">🛡️</div>
-            <h3 data-es="Equipamiento NFT Soberano" data-en="Champion NFT Gear">Equipamiento NFT Soberano</h3>
-            <span class="token-role" data-es="Propiedad Digital Real" data-en="True Digital Ownership">Propiedad Digital Real</span>
-            <p data-es="Auras de armas cosméticas, armaduras de campeón y estandartes de gremio acuñados en Polygon (ERC-1155). 100% comercializables en mercados secundarios." data-en="Cosmetic weapon auras, armor, and guild banners minted on Polygon (ERC-1155). 100% tradable on secondary markets with zero stat inflation.">
-              Auras de armas cosméticas, armaduras de campeón y estandartes de gremio acuñados en Polygon (ERC-1155). 100% comercializables en mercados secundarios.
+          <div class="token-card">
+            <div class="token-header-icon">🛡️</div>
+            <span class="token-badge-role" data-es="Propiedad Real" data-en="Digital Ownership">Propiedad Real</span>
+            <h3 data-es="NFTs Cosméticos ERC-1155" data-en="ERC-1155 NFT Gear">NFTs Cosméticos ERC-1155</h3>
+            <p data-es="Auras de armas cosméticas, armaduras de campeón y estandartes de gremio acuñados en Polygon. 100% comercializables sin inflación de stats." data-en="Cosmetic weapon auras, armor, and guild banners minted on Polygon (ERC-1155). 100% tradable on secondary markets with zero stat inflation.">
+              Auras de armas cosméticas, armaduras de campeón y estandartes de gremio acuñados en Polygon. 100% comercializables sin inflación de stats.
             </p>
           </div>
         </div>
 
-        <!-- Economy Flywheel Strip -->
-        <div class="flywheel-strip">
-          <div class="flywheel-node">
+        <div class="flywheel-banner">
+          <div class="flywheel-step">
             <span>🎮</span> <span data-es="Jugador Compite en Coliseo" data-en="Player Enters Arena">Jugador Compite en Coliseo</span>
           </div>
-          <span class="flywheel-arrow">➔</span>
-          <div class="flywheel-node">
-            <span>📜</span> <span data-es="Contrato Escrow en Polygon" data-en="Polygon Escrow Lock">Contrato Escrow en Polygon</span>
+          <span class="flywheel-sep">➔</span>
+          <div class="flywheel-step">
+            <span>📜</span> <span data-es="Escrow Bloquea Cuota en Polygon" data-en="Polygon Escrow Locks Fee">Escrow Bloquea Cuota en Polygon</span>
           </div>
-          <span class="flywheel-arrow">➔</span>
-          <div class="flywheel-node">
-            <span>🏆</span> <span data-es="Victoria Verificada" data-en="Verified Win">Victoria Verificada</span>
+          <span class="flywheel-sep">➔</span>
+          <div class="flywheel-step">
+            <span>🏆</span> <span data-es="Victoria Verificada Onchain" data-en="Verified Onchain Victory">Victoria Verificada Onchain</span>
           </div>
-          <span class="flywheel-arrow">➔</span>
-          <div class="flywheel-node">
+          <span class="flywheel-sep">➔</span>
+          <div class="flywheel-step">
             <span>🔥</span> <span data-es="5% Tarifa Quema $ROK" data-en="5% Fee Burns $ROK">5% Tarifa Quema $ROK</span>
           </div>
-        </div>
-
-        <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
-          <button class="deck-btn gold" onclick="nextSlide()">
-            <span data-es="Ver Hoja de Ruta & Grant ➔" data-en="See Roadmap & Grant Ask ➔">Ver Hoja de Ruta & Grant ➔</span>
-          </button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 7: MILESTONES & GRANT ASK ==================== -->
+    <!-- ==================== SLIDE 7: ROADMAP ($20K GRANT) ==================== -->
     <section class="slide" data-index="6" data-category="07 • HOJA DE RUTA" data-category-en="07 • GRANT ROADMAP">
       <div class="slide-inner">
-        <div class="slide-header">
-          <span class="tag-pill green">🗺️ <span data-es="Eficiencia de Capital" data-en="Capital Efficiency">Eficiencia de Capital</span></span>
+        <div class="slide-title-area">
+          <span class="category-tag green">🗺️ <span data-es="Eficiencia de Capital" data-en="Capital Efficiency">Eficiencia de Capital</span></span>
           <h2 data-es="Grant de $20,000 USD: Hoja de Ruta de Ejecución de 5 Meses" data-en="$20,000 USD Grant: 5-Month Execution Roadmap">
             Grant de $20,000 USD: Hoja de Ruta de Ejecución de 5 Meses
           </h2>
@@ -518,57 +474,51 @@
           </p>
         </div>
 
-        <div class="milestone-stack">
-          <div class="m-card">
-            <div class="m-num">01</div>
-            <div class="m-body">
-              <div class="m-row">
-                <div class="m-title" data-es="Mes 1–2: Smart Contracts en Polygon y Onboarding sin Gas" data-en="Month 1–2: Polygon Smart Contracts & Gasless Onboarding">
+        <div class="roadmap-stack">
+          <div class="roadmap-card">
+            <div class="roadmap-idx">01</div>
+            <div class="roadmap-content">
+              <div class="roadmap-top-row">
+                <div class="roadmap-title" data-es="Mes 1–2: Smart Contracts en Polygon y Onboarding sin Gas" data-en="Month 1–2: Polygon Smart Contracts & Gasless Onboarding">
                   Mes 1–2: Smart Contracts en Polygon y Onboarding sin Gas
                 </div>
-                <div class="m-budget">$6,000 USD</div>
+                <div class="roadmap-cost">$6,000 USD</div>
               </div>
-              <p data-es="Despliegue y auditoría de contratos de escrow para el Coliseo y equipamiento NFT en Polygon Amoy Testnet con Abstracción de Cuentas (ERC-4337) para inicio social con 1 toque." data-en="Deploy and test core Coliseum escrow contracts and NFT gear on Polygon Amoy Testnet with ERC-4337 Account Abstraction for one-tap social logins.">
-                Despliegue y auditoría de contratos de escrow para el Coliseo y equipamiento NFT en Polygon Amoy Testnet con Abstracción de Cuentas (ERC-4337) para inicio social con 1 toque.
+              <p data-es="Despliegue y auditoría de contratos de escrow para el Coliseo y equipamiento NFT en Polygon Amoy Testnet con Abstracción de Cuentas (ERC-4337)." data-en="Deploy and test core Coliseum escrow contracts and NFT gear on Polygon Amoy Testnet with ERC-4337 Account Abstraction.">
+                Despliegue y auditoría de contratos de escrow para el Coliseo y equipamiento NFT en Polygon Amoy Testnet con Abstracción de Cuentas (ERC-4337).
               </p>
             </div>
           </div>
 
-          <div class="m-card">
-            <div class="m-num">02</div>
-            <div class="m-body">
-              <div class="m-row">
-                <div class="m-title" data-es="Mes 3–4: Multijugador Autoritativo en Tiempo Real y Ligas ELO" data-en="Month 3–4: Real-Time Authoritative Multiplayer & ELO Leagues">
+          <div class="roadmap-card">
+            <div class="roadmap-idx">02</div>
+            <div class="roadmap-content">
+              <div class="roadmap-top-row">
+                <div class="roadmap-title" data-es="Mes 3–4: Multijugador Autoritativo en Tiempo Real y Ligas ELO" data-en="Month 3–4: Real-Time Authoritative Multiplayer & ELO Leagues">
                   Mes 3–4: Multijugador Autoritativo en Tiempo Real y Ligas ELO
                 </div>
-                <div class="m-budget">$7,000 USD</div>
+                <div class="roadmap-cost">$7,000 USD</div>
               </div>
-              <p data-es="Escalamiento del Coliseo con sincronización WebSocket de baja latencia, emparejamiento por ranking (matchmaking ELO), validación anti-trampas y modo espectador en vivo." data-en="Scale the Coliseum with low-latency WebSocket synchronization, ranked matchmaking ladders, anti-cheat validation, and live spectator arena mode.">
-                Escalamiento del Coliseo con sincronización WebSocket de baja latencia, emparejamiento por ranking (matchmaking ELO), validación anti-trampas y modo espectador en vivo.
+              <p data-es="Escalamiento del Coliseo con sincronización WebSocket de baja latencia, emparejamiento por ranking (matchmaking ELO) y modo espectador." data-en="Scale the Coliseum with low-latency WebSocket synchronization, ranked matchmaking ladders, anti-cheat validation, and spectator mode.">
+                Escalamiento del Coliseo con sincronización WebSocket de baja latencia, emparejamiento por ranking (matchmaking ELO) y modo espectador.
               </p>
             </div>
           </div>
 
-          <div class="m-card">
-            <div class="m-num">03</div>
-            <div class="m-body">
-              <div class="m-row">
-                <div class="m-title" data-es="Mes 5: Lanzamiento en Polygon Mainnet y Campeonato de Gremios" data-en="Month 5: Polygon Mainnet Launch & Guild Championship">
+          <div class="roadmap-card">
+            <div class="roadmap-idx">03</div>
+            <div class="roadmap-content">
+              <div class="roadmap-top-row">
+                <div class="roadmap-title" data-es="Mes 5: Lanzamiento en Polygon Mainnet y Campeonato de Gremios" data-en="Month 5: Polygon Mainnet Launch & Guild Championship">
                   Mes 5: Lanzamiento en Polygon Mainnet y Campeonato de Gremios
                 </div>
-                <div class="m-budget">$7,000 USD</div>
+                <div class="roadmap-cost">$7,000 USD</div>
               </div>
-              <p data-es="Lanzamiento oficial en Polygon Mainnet + Torneo inaugural 'Campeonato de Soberanos' co-organizado con los principales gremios Web3 de Latinoamérica y el mundo (OlaGG, YGG)." data-en="Official audited Polygon Mainnet deployment + Inaugural 'Sovereign Championship' tournament co-hosted with leading Web3 guilds (OlaGG, YGG).">
-                Lanzamiento oficial en Polygon Mainnet + Torneo inaugural 'Campeonato de Soberanos' co-organizado con los principales gremios Web3 de Latinoamérica y el mundo (OlaGG, YGG).
+              <p data-es="Lanzamiento oficial en Polygon Mainnet + Torneo inaugural 'Campeonato de Soberanos' co-organizado con los principales gremios Web3 (OlaGG, YGG)." data-en="Official audited Polygon Mainnet deployment + Inaugural 'Sovereign Championship' tournament co-hosted with leading Web3 guilds.">
+                Lanzamiento oficial en Polygon Mainnet + Torneo inaugural 'Campeonato de Soberanos' co-organizado con los principales gremios Web3 (OlaGG, YGG).
               </p>
             </div>
           </div>
-        </div>
-
-        <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
-          <button class="deck-btn gold" onclick="nextSlide()">
-            <span data-es="Conocer al Fundador ➔" data-en="Meet the Founder ➔">Conocer al Fundador ➔</span>
-          </button>
         </div>
       </div>
     </section>
@@ -576,8 +526,8 @@
     <!-- ==================== SLIDE 8: FOUNDER & CONTACT ==================== -->
     <section class="slide" data-index="7" data-category="08 • ESTUDIO & CONTACTO" data-category-en="08 • STUDIO & CONTACT">
       <div class="slide-inner">
-        <div class="slide-header">
-          <span class="tag-pill gold">🧙‍♂️ WizzarDev Studios</span>
+        <div class="slide-title-area">
+          <span class="category-tag gold">🧙‍♂️ WizzarDev Studios</span>
           <h2 data-es="Ejecución Antes que Promesas. Código Funcional Primero." data-en="Execution Before Promises. Working Code First.">
             Ejecución Antes que Promesas. Código Funcional Primero.
           </h2>
@@ -586,57 +536,57 @@
           </p>
         </div>
 
-        <div class="founder-card-deck">
-          <div class="founder-left">
-            <div class="founder-avatar-frame">
+        <div class="founder-profile-grid">
+          <div class="founder-avatar-side">
+            <div class="founder-portrait">
               <img src="assets/luke_idle.webp" alt="Gustavo / Wizzard Avatar">
             </div>
-            <div class="founder-name-text">Gustavo (Wizzard)</div>
-            <div class="founder-role-text" data-es="Fundador & Lead Game Engineer" data-en="Founder & Lead Game Engineer">Fundador & Lead Game Engineer</div>
-            <div class="founder-studio-text">WizzarDev Studios</div>
+            <div class="founder-h-name">Gustavo (Wizzard)</div>
+            <div class="founder-h-role" data-es="Fundador & Lead Game Engineer" data-en="Founder & Lead Game Engineer">Fundador & Lead Game Engineer</div>
+            <div class="founder-h-studio">WizzarDev Studios</div>
           </div>
 
-          <div class="founder-right">
-            <div class="quote-text" data-es="&ldquo;No recaudamos capital sobre diapositivas vacías. Realm of Kingdoms fue creado para demostrar que los juegos móviles a 60 FPS con calidad de consola pueden triunfar directamente en el navegador abierto.&rdquo;" data-en="&ldquo;We don't raise capital on empty slides. Realm of Kingdoms was built to prove that console-grade 60 FPS mobile gaming can thrive directly in the open browser.&rdquo;">
+          <div class="founder-info-side">
+            <div class="founder-quote" data-es="&ldquo;No recaudamos capital sobre diapositivas vacías. Realm of Kingdoms fue creado para demostrar que los juegos móviles a 60 FPS con calidad de consola pueden triunfar directamente en el navegador abierto.&rdquo;" data-en="&ldquo;We don't raise capital on empty slides. Realm of Kingdoms was built to prove that console-grade 60 FPS mobile gaming can thrive directly in the open browser.&rdquo;">
               &ldquo;No recaudamos capital sobre diapositivas vacías. Realm of Kingdoms fue creado para demostrar que los juegos móviles a 60 FPS con calidad de consola pueden triunfar directamente en el navegador abierto.&rdquo;
             </div>
 
-            <p class="founder-summary" data-es="Operando con extrema eficiencia de capital, cada hito se traduce en software concreto. Buscamos el respaldo de grants del ecosistema Polygon para culminar la integración Web3 y llevar cientos de miles de jugadores al coliseo soberano." data-en="Operating with extreme capital efficiency, every milestone delivers concrete software. We are seeking ecosystem grant backing to finalize our Polygon deployment and bring hundreds of thousands of players into the arena.">
-              Operando con extrema eficiencia de capital, cada hito se traduce en software concreto. Buscamos el respaldo de grants del ecosistema Polygon para culminar la integración Web3 y llevar cientos de miles de jugadores al coliseo soberano.
+            <p class="founder-bio" data-es="Operando con extrema eficiencia de capital, cada hito se traduce en software concreto. Buscamos el respaldo de grants del ecosistema Polygon para culminar la integración Web3." data-en="Operating with extreme capital efficiency, every milestone delivers concrete software. We are seeking ecosystem grant backing to finalize our Polygon deployment.">
+              Operando con extrema eficiencia de capital, cada hito se traduce en software concreto. Buscamos el respaldo de grants del ecosistema Polygon para culminar la integración Web3.
             </p>
 
-            <div class="contact-deck-grid">
-              <a href="https://t.me/WizzarDev_1" target="_blank" rel="noopener noreferrer" class="contact-pill">
-                <span class="contact-icon">✈️</span>
+            <div class="contact-row-3">
+              <a href="https://t.me/WizzarDev_1" target="_blank" rel="noopener noreferrer" class="contact-btn-box">
+                <span class="contact-btn-icon">✈️</span>
                 <div>
-                  <div class="contact-sub">Telegram</div>
-                  <div class="contact-val">@WizzarDev_1</div>
+                  <div class="contact-btn-sub">Telegram</div>
+                  <div class="contact-btn-val">@WizzarDev_1</div>
                 </div>
               </a>
 
-              <a href="https://x.com/PolarDevx" target="_blank" rel="noopener noreferrer" class="contact-pill">
-                <span class="contact-icon">🐦</span>
+              <a href="https://x.com/PolarDevx" target="_blank" rel="noopener noreferrer" class="contact-btn-box">
+                <span class="contact-btn-icon">🐦</span>
                 <div>
-                  <div class="contact-sub">X (Twitter)</div>
-                  <div class="contact-val">@PolarDevx</div>
+                  <div class="contact-btn-sub">X (Twitter)</div>
+                  <div class="contact-btn-val">@PolarDevx</div>
                 </div>
               </a>
 
-              <div class="contact-pill" id="copy-email-btn" title="Haz clic para copiar">
-                <span class="contact-icon">✉️</span>
+              <div class="contact-btn-box" id="copy-email-btn" title="Haz clic para copiar">
+                <span class="contact-btn-icon">✉️</span>
                 <div>
-                  <div class="contact-sub" id="email-sub-label">Email (Clic para copiar)</div>
-                  <div class="contact-val" id="email-text">kalellostte@gmail.com</div>
+                  <div class="contact-btn-sub" id="email-sub-label">Email (Clic para copiar)</div>
+                  <div class="contact-btn-val" id="email-text">kalellostte@gmail.com</div>
                 </div>
               </div>
             </div>
 
-            <div style="margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap;">
-              <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="deck-btn gold" style="flex: 1; text-align: center; justify-content: center;">
+            <div style="margin-top: 16px; display: flex; gap: 10px;">
+              <a href="https://realm-of-kingdom.vercel.app/us" target="_blank" rel="noopener noreferrer" class="btn-primary gold" style="flex: 1; text-align: center; justify-content: center; padding: 10px 16px; font-size: 0.88rem;">
                 <span>⚔️</span> <span data-es="Lanzar Demo Jugable (https://realm-of-kingdom.vercel.app/us)" data-en="Launch Live Game Demo (realm-of-kingdom.vercel.app/us)">Lanzar Demo Jugable (https://realm-of-kingdom.vercel.app/us)</span>
               </a>
-              <button class="deck-btn glass" onclick="goToSlide(0)">
-                <span>↺</span> <span data-es="Reiniciar Presentación" data-en="Restart Deck">Reiniciar Presentación</span>
+              <button class="btn-primary glass" onclick="goToSlide(0)" style="padding: 10px 18px; font-size: 0.88rem;">
+                <span>↺</span> <span data-es="Reiniciar" data-en="Restart">Reiniciar</span>
               </button>
             </div>
           </div>
@@ -646,21 +596,21 @@
 
   </main>
 
-  <!-- Deck Floating Controls Bottom Bar -->
-  <footer class="deck-controls">
-    <button class="nav-arrow-btn" id="btn-prev" onclick="prevSlide()" aria-label="Diapositiva Anterior">
+  <!-- 5. Bottom Floating Bar (Clean & Non-Intrusive) -->
+  <footer class="deck-bottom-bar">
+    <button class="bottom-nav-btn" id="btn-prev" onclick="prevSlide()" aria-label="Diapositiva Anterior">
       <span>‹</span> <span data-es="Anterior" data-en="Prev">Anterior</span>
     </button>
 
-    <div class="deck-progress-dots" id="deck-dots">
+    <div class="bottom-dots-strip" id="deck-dots">
       <!-- Generated dynamically by main.js -->
     </div>
 
-    <button class="nav-arrow-btn" id="btn-next" onclick="nextSlide()" aria-label="Siguiente Diapositiva">
+    <button class="bottom-nav-btn" id="btn-next" onclick="nextSlide()" aria-label="Siguiente Diapositiva">
       <span data-es="Siguiente" data-en="Next">Siguiente</span> <span>›</span>
     </button>
 
-    <div class="keyboard-tip">
+    <div class="keyboard-shortcut-hint">
       <kbd>←</kbd> <kbd>→</kbd> <span data-es="o Deslizar" data-en="or Swipe">o Deslizar</span>
     </div>
   </footer>
