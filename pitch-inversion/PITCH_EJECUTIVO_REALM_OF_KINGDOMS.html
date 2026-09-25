@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realm of Kingdoms — Documento Ejecutivo de Inversión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --gold-primary: #f59e0b;
+      --gold-light: #fef3c7;
+      --cyan-accent: #38bdf8;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      line-height: 1.65;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .document-container {
+      max-width: 820px;
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 48px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 36px;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 40%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--cyan-accent);
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .quote-box {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 4px solid var(--gold-primary);
+      padding: 14px 20px;
+      border-radius: 6px;
+      font-style: italic;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      margin-top: 14px;
+      text-align: left;
+    }
+
+    /* Cards */
+    .meta-card {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .meta-item {
+      font-size: 0.9rem;
+    }
+
+    .meta-label {
+      color: var(--text-muted);
+      font-weight: 500;
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .meta-value {
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .demo-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-weight: 800;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-top: 4px;
+      transition: transform 0.2s;
+    }
+
+    /* Section Styling */
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.45rem;
+      color: #f8fafc;
+      margin: 32px 0 14px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    p {
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      margin-bottom: 14px;
+    }
+
+    strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    ul {
+      margin-left: 20px;
+      margin-bottom: 18px;
+      color: #cbd5e1;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* Funding Box */
+    .funding-highlight {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.08), rgba(56, 189, 248, 0.04));
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 14px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+
+    .funding-amount {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fbbf24;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 6px;
+    }
+
+    /* Milestones Grid */
+    .milestone-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .milestone-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 16px;
+      border-radius: 10px;
+    }
+
+    .milestone-month {
+      color: var(--cyan-accent);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .milestone-desc {
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      line-height: 1.45;
+    }
+
+    /* Footer Contact */
+    .contact-footer {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 22px;
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .contact-item {
+      font-size: 0.95rem;
+      color: var(--cyan-accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .print-tip {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 24px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        padding: 0;
+      }
+      .document-container {
+        box-shadow: none !important;
+        border: none !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        padding: 0;
+      }
+      h1, h2, strong, .meta-value {
+        color: #0f172a !important;
+        -webkit-text-fill-color: initial !important;
+      }
+      p, li, .milestone-desc {
+        color: #334155 !important;
+      }
+      .quote-box, .meta-card, .milestone-card, .funding-highlight, .contact-footer {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+      .funding-amount {
+        color: #b45309 !important;
+      }
+      .print-tip {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="document-container">
+    
+    <!-- Header -->
+    <header class="header">
+      <span class="badge-tag">Ronda Semilla / Apoyo Inicial</span>
+      <h1>Realm of Kingdoms</h1>
+      <div class="subtitle">Propuesta Ejecutiva de Inversión y Desarrollo</div>
+      <div class="quote-box">
+        "Los mundos virtuales más memorables no nacen del presupuesto desmedido, sino del alma, la resiliencia y el deseo genuino de conectar a las personas."
+      </div>
+    </header>
+
+    <!-- Meta Information -->
+    <div class="meta-card">
+      <div class="meta-item">
+        <span class="meta-label">Género</span>
+        <span class="meta-value">2.5D Action MMORPG</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Estudio Fundador</span>
+        <span class="meta-value">WizzarDev Studios</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Liderazgo & Desarrollo</span>
+        <span class="meta-value">Gustavo (WizzarDev)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Acceso Inmediato</span>
+        <a href="https://realm-of-kingdom.vercel.app" target="_blank" class="demo-link-btn">
+          ⚔️ Probar Demo Jugable
+        </a>
+      </div>
+    </div>
+
+    <!-- 1. Historia y Resiliencia -->
+    <h2>1. La Historia Detrás del Proyecto: Superación y Resiliencia</h2>
+    <p>
+      <strong>Realm of Kingdoms</strong> no nació en una oficina corporativa con millones de dólares de presupuesto. Nació en una habitación modesta, impulsado por una profunda vocación de superación frente a la adversidad.
+    </p>
+    <p>
+      Durante incontables noches de trabajo solitario, cada línea de código, cada animación de combate, cada nota musical y cada mapa fueron construidos con una sola convicción: <strong>demostrar que el talento, la perseverancia y el amor por los videojuegos pueden crear una experiencia viva capaz de competir de tú a tú con producciones de grandes estudios.</strong>
+    </p>
+    <p>
+      Muchos proyectos en esta industria piden inversión antes de haber escrito una sola línea de código. <strong>Nosotros hicimos exactamente lo contrario:</strong> trabajamos en silencio hasta tener una <strong>demo real, funcional, jugable y fluida hoy mismo</strong>, lista en tus manos antes de pedir un solo centavo.
+    </p>
+
+    <!-- 2. La Visión -->
+    <h2>2. La Visión: La Magia de los MMORPG Clásicos, Sin Barreras</h2>
+    <p>
+      Los que crecimos en los años dorados de los juegos de rol recordamos la emoción de entrar a un mundo donde cada combate importaba, donde conseguir un nivel era un logro heroico y donde forjabas amistades para toda la vida.
+    </p>
+    <p>Hoy, la industria ha saturado los juegos con barreras innecesarias:</p>
+    <ul>
+      <li><strong>Descargas gigantescas:</strong> Instaladores de 40 a 80 GB que alejan a los jugadores casuales.</li>
+      <li><strong>Requisitos de hardware inaccesibles:</strong> Exigencias gráficas que excluyen a millones de usuarios en Latinoamérica y mercados emergentes.</li>
+      <li><strong>Mecánicas abusivas:</strong> Economías depredadoras que priorizan el dinero sobre la diversión real.</li>
+    </ul>
+    <p>
+      <strong>Nuestra propuesta es accesible, cálida y directa:</strong> juegas al instante en cualquier navegador a 60 FPS con un solo clic, o en un APK nativo para Android de apenas 12 MB, sin fricciones de hardware ni descargas pesadas.
+    </p>
+
+    <!-- 3. Qué está construido hoy -->
+    <h2>3. Estado Actual: Tracción y Producto Real</h2>
+    <p>A diferencia de conceptos en papel, la base técnica y jugable está completamente construida y operativa hoy:</p>
+    <ul>
+      <li><strong>Combate en Tiempo Real:</strong> Sistema reactivo de golpes con espada, habilidades con enfriamiento dinámico, esquivas y retrocesos fluidos.</li>
+      <li><strong>Sistema de Progresión:</strong> Monitoreo de misiones en tiempo real, acumulación de EXP y fanfarria audiovisual de subida de nivel con efectos de pantalla.</li>
+      <li><strong>Multiplataforma Nativo:</strong> Controles híbridos adaptados para PC (teclado MMORPG con hotkeys numéricas) y dispositivos móviles (D-pad virtual y botones de acción táctiles).</li>
+      <li><strong>Actualizaciones Instantáneas en la Nube (OTA):</strong> Capacidad de aplicar mejoras y parches al juego en 30 segundos sin obligar al usuario a reinstalar la app.</li>
+    </ul>
+
+    <!-- 4. La Inversión -->
+    <h2>4. La Oportunidad: Micro-Ronda de Apoyo</h2>
+    <div class="funding-highlight">
+      <div class="funding-amount">$10,000 – $25,000 USD</div>
+      <p style="margin-bottom: 0; color: #f1f5f9;">
+        Buscamos un <strong>socio con visión humana</strong>: un inversionista ángel o patrocinador que crea en el potencial de los fundadores resilientes y quiera ser parte del crecimiento temprano de esta franquicia.
+      </p>
+    </div>
+
+    <p><strong>Distribución Estratégica del Capital:</strong></p>
+    <ul>
+      <li><strong>65% — Dedicación Exclusiva y Desarrollo (6 a 9 meses de runway):</strong> Permitirá al fundador dedicarse a tiempo completo a la finalización de la primera gran versión, acelerando los tiempos de lanzamiento.</li>
+      <li><strong>20% — Infraestructura Multijugador:</strong> Despliegue de servidores dedicados de baja latencia para albergar las primeras salas de mazmorras cooperativas en vivo.</li>
+      <li><strong>15% — Arte Original y Música Exclusiva:</strong> Colaboración con artistas independientes para diseñar nuevos héroes, jefes de mazmorra y temas orquestales propios.</li>
+    </ul>
+
+    <!-- 5. Hitos -->
+    <h2>5. Hitos de Entrega</h2>
+    <div class="milestone-grid">
+      <div class="milestone-card">
+        <div class="milestone-month">Mes 1 - 2</div>
+        <div class="milestone-desc">Sincronización multijugador en tiempo real (mazmorras cooperativas de 4 jugadores).</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-month">Mes 3 - 4</div>
+        <div class="milestone-desc">Expansión de mundo: 3 biomas nuevos, 5 tipos de monstruos y primer Jefe de Incursión (*Raid Boss*).</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-month">Mes 5 - 6</div>
+        <div class="milestone-desc">Beta Cerrada Global en Google Play y Web escalada a 5,000 jugadores simultáneos.</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-month">Mes 7+</div>
+        <div class="milestone-desc">Lanzamiento oficial e inicio de monetización ética mediante pases cosméticos y skins exclusivas.</div>
+      </div>
+    </div>
+
+    <!-- 6. Conclusión -->
+    <h2>6. Una Invitación Personal</h2>
+    <p>
+      <em>"No te pedimos que inviertas en una promesa abstracta. Te invitamos a probar nuestra demo, sentir el combate en tus manos y conocer a alguien que no se rinde ante los obstáculos y que va a llevar este juego a la meta con o sin viento a favor."</em>
+    </p>
+
+    <!-- Footer -->
+    <div class="contact-footer">
+      <div style="font-weight: 700; font-size: 1.1rem; color: #ffffff;">WizzarDev Studios — Gustavo</div>
+      <p style="font-size: 0.88rem; color: #94a3b8; margin-top: 4px;">Fundador & Desarrollador Principal</p>
+      <div class="contact-links">
+        <a href="mailto:kalellostte@gmail.com" class="contact-item">✉️ kalellostte@gmail.com</a>
+        <a href="https://t.me/WizzarDev_1" target="_blank" class="contact-item">💬 Telegram: @WizzarDev_1</a>
+        <a href="https://realm-of-kingdom.vercel.app" target="_blank" class="contact-item">🎮 Demo: realm-of-kingdom.vercel.app</a>
+      </div>
+    </div>
+
+    <div class="print-tip">
+      💡 Tip: Puedes presionar <strong>Ctrl + P</strong> (o <strong>Cmd + P</strong>) en tu navegador para guardarlo como un PDF elegante y listo para enviar.
+    </div>
+
+  </div>
+
+</body>
+</html>
