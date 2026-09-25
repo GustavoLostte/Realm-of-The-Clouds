@@ -526,7 +526,12 @@ export function DungeonDemoScene({ onBack }) {
           // Smooth lerp: 0.08 per frame for buttery organic camera movement
           cameraCenterRef.current += (targetCenter - cameraCenterRef.current) * 0.08
 
-          const txPercent = 50 - z * cameraCenterRef.current
+          // With transformOrigin: 0% ground%, txPercent moves from 0% (at minCenter) down to (1-z)*100% (at maxCenter)
+          const rawTxPercent = 50 - z * cameraCenterRef.current
+          const minTx = (1 - z) * 100
+          const maxTx = 0
+          const txPercent = Math.min(maxTx, Math.max(minTx, rawTxPercent))
+
           if (shakeX !== 0 || shakeY !== 0) {
             cameraWorldRef.current.style.transform = `translate3d(calc(${txPercent}% + ${shakeX}px), ${shakeY}px, 0) scale(${z})`
           } else {
@@ -1508,7 +1513,7 @@ export function DungeonDemoScene({ onBack }) {
             ref={cameraWorldRef} 
             className="dungeon-camera-world"
             style={{
-              transformOrigin: `50% ${100 - parseFloat(currentMap.groundOffset || 31.48)}%`,
+              transformOrigin: `0% ${100 - parseFloat(currentMap.groundOffset || 31.48)}%`,
             }}
           >
             {/* Pure GPU Hardware-Accelerated Texture Surface (Zero Video Decoders, 0% CPU, PS5-Speed Instant) */}
