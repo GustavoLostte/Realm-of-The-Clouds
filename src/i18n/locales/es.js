@@ -96,7 +96,7 @@ export const es = {
     "devNoticeThanks": "Queremos agradecerte de todo corazón por instalar la aplicación, por tu valiosa paciencia y por tu apoyo incondicional. ¡Tu presencia aquí significa el mundo para nosotros!",
     "devNoticeDiscordCta": "Únete a nuestro Discord oficial y visita nuestro sitio web para ser el primero en enterarte de la apertura de los servidores.",
     "devNoticeCloseBtn": "¡Entendido, esperaré con ansias!",
-    "title": "REALM OF KINGDOM",
+    "title": "REALM OF KINGDOMS",
     "subtitle": "ESTRATEGIA MEDIEVAL MMORPG",
     "touchToStart": "TOCA EN CUALQUIER LUGAR PARA COMENZAR TU REINADO",
     "enterEmailPrompt": "Ingresa tu correo para guardar tu reino en la nube:",

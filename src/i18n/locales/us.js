@@ -96,7 +96,7 @@ export const us = {
     "devNoticeThanks": "We want to thank you from the bottom of our hearts for installing the game, for your patience, and for your wonderful support from day one.",
     "devNoticeDiscordCta": "Join our official Discord community and visit our website to be the first to know the official launch date.",
     "devNoticeCloseBtn": "Understood, I will be waiting eagerly!",
-    "title": "REALM OF KINGDOM",
+    "title": "REALM OF KINGDOMS",
     "subtitle": "MEDIEVAL STRATEGY MMORPG",
     "touchToStart": "TOUCH ANYWHERE TO BEGIN YOUR REIGN",
     "enterEmailPrompt": "Enter your email to save your kingdom in the cloud:",

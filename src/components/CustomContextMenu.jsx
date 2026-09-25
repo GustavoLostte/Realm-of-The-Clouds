@@ -36,6 +36,11 @@ export function CustomContextMenu() {
     }
 
     const handleContextMenu = (e) => {
+      // In local development, allow native right-click for DevTools inspection
+      if (import.meta.env.DEV || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return
+      }
+
       // 1. ALWAYS prevent default browser context menu, iOS callout preview, and link preview
       e.preventDefault()
 

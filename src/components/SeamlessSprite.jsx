@@ -7,6 +7,8 @@ import React, { useEffect, useRef } from 'react'
  */
 export const DECODED_SPRITE_CACHE = new Map()
 
+export const BLANK_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+
 export function preloadAndDecodeSprite(url) {
   if (!url || typeof window === 'undefined' || typeof url !== 'string') return Promise.resolve(null)
   if (DECODED_SPRITE_CACHE.has(url)) {
@@ -60,7 +62,6 @@ export const SeamlessSprite = React.memo(function SeamlessSprite({
   const activeBufferRef = useRef('A')
   const currentSrcRef = useRef(null)
   const lastNonceRef = useRef(animNonce)
-  const swapReqIdRef = useRef(0)
   const isMountedRef = useRef(true)
 
   useEffect(() => {
@@ -78,82 +79,38 @@ export const SeamlessSprite = React.memo(function SeamlessSprite({
 
     currentSrcRef.current = src
     lastNonceRef.current = animNonce
-    const reqId = ++swapReqIdRef.current
 
-    const activeEl = activeBufferRef.current === 'A' ? imgARef.current : imgBRef.current
-    const stagingEl = activeBufferRef.current === 'A' ? imgBRef.current : imgARef.current
+    const imgA = imgARef.current
+    const imgB = imgBRef.current
+    if (!imgA || !imgB || !isMountedRef.current) return
 
-    if (!activeEl || !stagingEl) return
+    const isCurrentA = activeBufferRef.current === 'A'
+    const activeEl = isCurrentA ? imgA : imgB
+    const nextEl = isCurrentA ? imgB : imgA
 
-    // Initial first load on mount
-    if (!activeEl.src || activeEl.src === window.location.href || activeEl.style.opacity === '0') {
+    // 1. Initial first load on mount:
+    if (!activeEl.src || activeEl.src === window.location.href || activeEl.src.startsWith('data:') || activeEl.style.opacity === '0') {
       activeEl.src = src
       activeEl.style.opacity = '1'
       activeEl.style.zIndex = '2'
-      stagingEl.style.opacity = '0'
-      stagingEl.style.zIndex = '1'
-      stagingEl.src = ''
+      nextEl.style.opacity = '0'
+      nextEl.style.zIndex = '1'
       return
     }
 
-    let isCancelled = false
-    let fallbackTimer = null
+    // 2. High-Speed Spam-Proof Double-Buffering:
+    // Update incoming buffer with requested animation (restarts cleanly from frame 0)
+    nextEl.src = src
 
-    const executeSwap = () => {
-      if (fallbackTimer) {
-        clearTimeout(fallbackTimer)
-        fallbackTimer = null
-      }
-      if (isCancelled || !isMountedRef.current || reqId !== swapReqIdRef.current) return
+    // Instant seamless layer handoff (Zero timers, zero cancel races, zero missing sprites):
+    nextEl.style.zIndex = '2'
+    nextEl.style.opacity = '1'
 
-      // Bring staging element to front (100% visible)
-      stagingEl.style.zIndex = '2'
-      stagingEl.style.opacity = '1'
+    activeEl.style.zIndex = '1'
+    activeEl.style.opacity = '0'
 
-      // Retire previously active element
-      activeEl.style.zIndex = '1'
-      activeEl.style.opacity = '0'
-
-      // Swap active buffer pointer
-      activeBufferRef.current = activeBufferRef.current === 'A' ? 'B' : 'A'
-
-      // Clear the retired buffer's src on next frame to release WebP decoder and guarantee fresh frame 0 on next use
-      requestAnimationFrame(() => {
-        if (!isMountedRef.current) return
-        activeEl.src = ''
-      })
-    }
-
-    // Safety fallback: if decode takes more than 40ms, swap anyway so the user NEVER misses the visual animation!
-    fallbackTimer = setTimeout(executeSwap, 40)
-
-    // Assign new src to staging buffer (ensuring fresh frame 0)
-    stagingEl.onload = null
-    stagingEl.onerror = null
-    stagingEl.decoding = 'async'
-    if (stagingEl.src) {
-      stagingEl.src = ''
-    }
-    stagingEl.src = src
-
-    // Off-thread GPU async decode
-    if (typeof stagingEl.decode === 'function') {
-      stagingEl.decode()
-        .then(() => executeSwap())
-        .catch(() => executeSwap())
-    } else {
-      if (stagingEl.complete && stagingEl.naturalWidth > 0) {
-        executeSwap()
-      } else {
-        stagingEl.onload = executeSwap
-        stagingEl.onerror = executeSwap
-      }
-    }
-
-    return () => {
-      isCancelled = true
-      if (fallbackTimer) clearTimeout(fallbackTimer)
-    }
+    // Swap active pointer for next transition
+    activeBufferRef.current = isCurrentA ? 'B' : 'A'
   }, [src, animNonce])
 
   const containerStyle = {
@@ -184,6 +141,7 @@ export const SeamlessSprite = React.memo(function SeamlessSprite({
       <img 
         ref={imgARef}
         alt={alt}
+        src={BLANK_PIXEL}
         className={`seamless-sprite-layer layer-a sprite-${anim} champion-actor-sprite-img`}
         draggable={draggable}
         style={{
@@ -195,6 +153,7 @@ export const SeamlessSprite = React.memo(function SeamlessSprite({
       <img 
         ref={imgBRef}
         alt={alt}
+        src={BLANK_PIXEL}
         className={`seamless-sprite-layer layer-b sprite-${anim} champion-actor-sprite-img`}
         draggable={draggable}
         style={{

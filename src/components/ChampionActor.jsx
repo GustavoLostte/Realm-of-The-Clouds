@@ -12,12 +12,17 @@ export const ChampionProfileCard = React.memo(function ChampionProfileCard({
   state,
   name: nameProp = null,
   level: levelProp = null,
+  exp: expProp = null,
+  expNeeded: expNeededProp = null,
   badge: badgeProp = null,
 }) {
   if (!state) return null
   const displayName = nameProp || state.name || 'Player'
   const displayLevel = levelProp ?? state.level ?? 10
   const displayBadge = badgeProp || state.badge || '👑'
+  const currentExp = expProp ?? state.currentExp ?? state.exp ?? 0
+  const expNeeded = expNeededProp ?? state.expNeeded ?? 140
+  const expPercent = Math.min(100, Math.max(0, Math.round((currentExp / (expNeeded || 1)) * 100)))
 
   return (
     <div className="champion-actor-hud">
@@ -77,19 +82,17 @@ export const ChampionProfileCard = React.memo(function ChampionProfileCard({
             </div>
           </div>
 
-          {/* EXP Bar */}
-          {state.expPercent !== undefined && (
-            <div className="champion-hud-exp-bar" title={`EXP: ${state.currentExp ?? 0} / ${state.expNeeded ?? 140} (${state.expPercent ?? 0}%)`}>
-              <div 
-                className="champion-hud-exp-fill"
-                style={{ width: `${state.expPercent ?? 0}%` }}
-              />
-              <div className="champion-hud-bar-labels">
-                <span className="champion-hud-label-type">EXP</span>
-                <span className="champion-hud-label-value">{state.currentExp ?? 0}/{state.expNeeded ?? 140}</span>
-              </div>
+          {/* EXP Bar - Always live dynamic experience progression */}
+          <div className="champion-hud-exp-bar" title={`EXP: ${currentExp} / ${expNeeded} (${expPercent}%)`}>
+            <div 
+              className="champion-hud-exp-fill"
+              style={{ width: `${expPercent}%` }}
+            />
+            <div className="champion-hud-bar-labels">
+              <span className="champion-hud-label-type">EXP</span>
+              <span className="champion-hud-label-value">{currentExp}/{expNeeded}</span>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Skills Row */}
@@ -223,8 +226,8 @@ export const ChampionActor = React.memo(function ChampionActor({
 
   // Sync level dynamically without recreating the Champion instance
   useEffect(() => {
-    if (champRef.current && levelProp != null) {
-      champRef.current.setLevel?.(levelProp, champRef.current.fury ?? 100)
+    if (champRef.current && levelProp != null && champRef.current.level !== levelProp) {
+      champRef.current.setLevel?.(levelProp, 80)
     }
   }, [levelProp])
 

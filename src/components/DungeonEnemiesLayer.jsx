@@ -542,14 +542,62 @@ export const DungeonEnemiesLayer = memo(forwardRef(function DungeonEnemiesLayer(
       triggerScreenShake(isCrit ? 150 : 120)
     }
 
-    let pendingKillData = null
+    const willDie = (targetEnemy.hp - finalDmg) <= 0
+    let killPayload = null
+
+    if (willDie) {
+      targetEnemy.isDead = true
+      targetEnemy.hp = 0
+
+      const expAward = Math.round(targetEnemy.level * 25 + 60)
+      const goldAward = Math.round(targetEnemy.level * 18 + 45)
+
+      // Generate physical drops
+      const lootDrops = []
+      const goldCoins = Math.round(targetEnemy.level * 18 + 35 + Math.random() * 25)
+      lootDrops.push({
+        type: 'gold',
+        amount: goldCoins,
+        x: Math.max(8, Math.min(92, Number((targetEnemy.x + (Math.random() - 0.5) * 4).toFixed(1)))),
+      })
+
+      if (Math.random() < 0.70) {
+        lootDrops.push({
+          type: 'potion_hp',
+          amount: 1,
+          x: Math.max(8, Math.min(92, Number((targetEnemy.x + (Math.random() - 0.5) * 5).toFixed(1)))),
+        })
+      }
+      if (Math.random() < 0.55) {
+        lootDrops.push({
+          type: 'potion_mp',
+          amount: 1,
+          x: Math.max(8, Math.min(92, Number((targetEnemy.x + (Math.random() - 0.5) * 5).toFixed(1)))),
+        })
+      }
+
+      // Material drop
+      lootDrops.push({
+        type: 'material',
+        materialType: targetEnemy.type,
+        amount: targetEnemy.tier === 'large' ? 3 : targetEnemy.tier === 'medium' ? 2 : 1,
+        x: Math.max(8, Math.min(92, Number((targetEnemy.x + (Math.random() - 0.5) * 3).toFixed(1)))),
+      })
+
+      killPayload = {
+        enemy: targetEnemy,
+        exp: expAward,
+        gold: goldAward,
+        lootDrops,
+      }
+    }
 
     setEnemies((prev) => {
       const updated = prev.map((s) => {
         if (s.id !== enemyId) return s
 
         const nextHp = Math.max(0, s.hp - finalDmg)
-        const isNowDead = nextHp <= 0
+        const isNowDead = nextHp <= 0 || willDie
 
         const newFloatingTexts = [
           ...s.floatingTexts,
@@ -570,49 +618,6 @@ export const DungeonEnemiesLayer = memo(forwardRef(function DungeonEnemiesLayer(
 
       if (isNowDead) {
         playEnemySound(s.soundDead || '/DEMO/ENEMIES/SLIME/sounds/dead.ogg', 0.85)
-
-        const expAward = Math.round(s.level * 25 + 60)
-        const goldAward = Math.round(s.level * 18 + 45)
-
-        // Generate physical drops
-        const lootDrops = []
-        const goldCoins = Math.round(s.level * 18 + 35 + Math.random() * 25)
-        lootDrops.push({
-          type: 'gold',
-          amount: goldCoins,
-          x: Math.max(8, Math.min(92, Number((s.x + (Math.random() - 0.5) * 4).toFixed(1)))),
-        })
-
-        if (Math.random() < 0.70) {
-          lootDrops.push({
-            type: 'potion_hp',
-            amount: 1,
-            x: Math.max(8, Math.min(92, Number((s.x + (Math.random() - 0.5) * 5).toFixed(1)))),
-          })
-        }
-        if (Math.random() < 0.55) {
-          lootDrops.push({
-            type: 'potion_mp',
-            amount: 1,
-            x: Math.max(8, Math.min(92, Number((s.x + (Math.random() - 0.5) * 5).toFixed(1)))),
-          })
-        }
-
-        // Material drop
-        lootDrops.push({
-          type: 'material',
-          materialType: s.type,
-          amount: s.tier === 'large' ? 3 : s.tier === 'medium' ? 2 : 1,
-          x: Math.max(8, Math.min(92, Number((s.x + (Math.random() - 0.5) * 3).toFixed(1)))),
-        })
-
-        // Stash pending kill data for asynchronous parent notification outside render
-        pendingKillData = {
-          enemy: s,
-          exp: expAward,
-          gold: goldAward,
-          lootDrops,
-        }
 
         // Check Slime division mechanic
         if (s.type === 'slime') {
@@ -743,8 +748,7 @@ export const DungeonEnemiesLayer = memo(forwardRef(function DungeonEnemiesLayer(
   })
 
     // Safely dispatch parent kill notification asynchronously outside React's setEnemies pass
-    if (pendingKillData) {
-      const killPayload = pendingKillData
+    if (killPayload) {
       queueMicrotask(() => {
         onEnemyKilled?.(killPayload)
       })

@@ -48,6 +48,15 @@ class SFXChannelPool {
 
   play(src, volume = 0.85, playbackRate = 1) {
     if (!this.channels || this.channels.length === 0 || !src) return
+
+    // High-frequency spam throttle (prevents audio decoder thrashing & frame drops in desktop WebView)
+    const now = typeof performance !== 'undefined' ? performance.now() : Date.now()
+    if (!this.lastPlayTime) this.lastPlayTime = {}
+    if (this.lastPlayTime[src] && now - this.lastPlayTime[src] < 50) {
+      return
+    }
+    this.lastPlayTime[src] = now
+
     const channel = this.channels[this.currentIndex]
     this.currentIndex = (this.currentIndex + 1) % this.channels.length
 

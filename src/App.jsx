@@ -10,6 +10,7 @@ import { RankingLateralButton } from './components/RankingLateralButton'
 import { StoreLateralButton } from './components/StoreLateralButton'
 import { InventoryLateralButton } from './components/InventoryLateralButton'
 import { FpsOverlay } from './components/FpsOverlay'
+// import { LocalDevLogsOverlay } from './components/LocalDevLogsOverlay'
 import { ModalHost } from './components/ModalHost'
 import { EventBadge } from './components/EventBadge'
 import { SwipeableToast } from './components/SwipeableToast'
@@ -578,7 +579,7 @@ export default function App() {
         e.preventDefault()
         soundManager.playClick()
         setIsCinematicMode(false)
-      } else if (e.key === 'Escape' && (currentScene === 'pvp' || currentScene === 'dungeon')) {
+      } else if (e.key === 'Escape' && currentScene === 'pvp') {
         e.preventDefault()
         soundManager.playClick()
         setCurrentScene('kingdom')
@@ -3248,8 +3249,11 @@ export default function App() {
         </div>
       )}
 
-      {/* Superimposed Top Realtime FPS Performance Counter */}
-      <FpsOverlay fpsMode={fpsMode} />
+      {/* Superimposed Top Realtime FPS Performance Counter (Hidden for Production) */}
+      {/* <FpsOverlay fpsMode={fpsMode} /> */}
+
+      {/* In-Game Realtime Developer Error & Debug Log Viewer (Hidden for Production) */}
+      {/* <LocalDevLogsOverlay /> */}
 
       {/* Top HUD */}
       {hasStartedGame && currentScene === 'kingdom' && !marketInteriorOpen && (

@@ -54,10 +54,25 @@ export const MmorpgHudOverlay = React.memo(function MmorpgHudOverlay({
   onUseMpPotion = null,
   activeQuest = null,
   onOpenQuest = null,
+  onClaimQuest = null,
+  isMenuOpen: propIsMenuOpen = null,
+  onToggleMenu = null,
 }) {
   const { currentLang, changeLanguage, languages } = useTranslation()
   const lang = currentLang || 'us'
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [internalMenuOpen, setInternalMenuOpen] = useState(false)
+  const isMenuOpen = propIsMenuOpen !== null ? propIsMenuOpen : internalMenuOpen
+  const setIsMenuOpen = useCallback((valOrFn) => {
+    if (onToggleMenu) {
+      if (typeof valOrFn === 'function') {
+        onToggleMenu((prev) => valOrFn(prev))
+      } else {
+        onToggleMenu(valOrFn)
+      }
+    } else {
+      setInternalMenuOpen(valOrFn)
+    }
+  }, [onToggleMenu])
   const [isInventoryOpen, setIsInventoryOpen] = useState(false)
   const [internalHpPotions, setInternalHpPotions] = useState(25)
   const [internalMpPotions, setInternalMpPotions] = useState(25)
@@ -68,35 +83,7 @@ export const MmorpgHudOverlay = React.memo(function MmorpgHudOverlay({
   const [isJoystickActive, setIsJoystickActive] = useState(false)
   const [showMobileHud, setShowMobileHud] = useState(() => checkIsMobileDevice())
   const userOverrodeRef = useRef(false)
-  const [activeHotkey, setActiveHotkey] = useState(null)
-
-  // FPS and Ping/Frame Time Monitor
-  const [fpsData, setFpsData] = useState({ fps: 0, ms: 0 })
-  useEffect(() => {
-    let frameCount = 0
-    let lastTime = performance.now()
-    let lastFpsTime = lastTime
-    let animId
-
-    const loop = (currentTime) => {
-      const delta = currentTime - lastTime
-      lastTime = currentTime
-      frameCount++
-
-      // Update FPS every second
-      if (currentTime - lastFpsTime >= 1000) {
-        setFpsData({
-          fps: Math.round((frameCount * 1000) / (currentTime - lastFpsTime)),
-          ms: Math.round(delta) // Just taking the last delta as an approximation of MS (or could average)
-        })
-        frameCount = 0
-        lastFpsTime = currentTime
-      }
-      animId = requestAnimationFrame(loop)
-    }
-    animId = requestAnimationFrame(loop)
-    return () => cancelAnimationFrame(animId)
-  }, [])
+  const setActiveHotkey = useState(null)[1]
 
   // Real skill & potion cooldown system
   const [cooldownRemaining, setCooldownRemaining] = useState({
@@ -586,18 +573,6 @@ export const MmorpgHudOverlay = React.memo(function MmorpgHudOverlay({
 
   return (
     <div className={`mmorpg-hud-container ${showMobileHud ? 'is-mobile' : 'is-desktop'}`}>
-      {/* Top Performance Monitor */}
-      <div className="hud-performance-monitor" style={{
-        position: 'absolute', top: '10px', left: '50%', transform: 'translateX(-50%)',
-        background: 'rgba(0,0,0,0.5)', padding: '4px 12px', borderRadius: '20px',
-        color: '#00ffcc', fontSize: '12px', fontWeight: 'bold', zIndex: 100,
-        display: 'flex', gap: '10px', pointerEvents: 'none', border: '1px solid rgba(0,255,204,0.3)',
-        textShadow: '0 0 4px rgba(0,0,0,0.8)'
-      }}>
-        <span>FPS: {fpsData.fps}</span>
-        <span style={{ color: fpsData.ms > 16 ? '#ffaa00' : '#00ffcc' }}>MS: {fpsData.ms}</span>
-      </div>
-
       {/* ====================================================================
           1. TOP-LEFT: Quest Tracker & Lateral Controls (Underneath Profile Card)
           ==================================================================== */}
@@ -613,6 +588,10 @@ export const MmorpgHudOverlay = React.memo(function MmorpgHudOverlay({
             }
             const champ = actorRef?.current
             if (activeQuest) {
+              if (activeQuest.completed && onClaimQuest) {
+                onClaimQuest(activeQuest)
+                return
+              }
               const status = activeQuest.completed ? getDungeonText(lang, 'questSystem', 'completed') : getDungeonText(lang, 'questSystem', 'inProgress')
               champ?.showBanner(`${status} ${activeQuest.title}: ${activeQuest.desc} (${activeQuest.progress}/${activeQuest.targetCount}) • +${activeQuest.expReward} EXP`, activeQuest.completed ? 'levelup' : 'info')
             } else if (currentMapIndex === 8) {

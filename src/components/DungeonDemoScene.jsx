@@ -370,6 +370,7 @@ export function DungeonDemoScene({ onBack }) {
   const [hpPotions, setHpPotions] = useState(8)
   const [mpPotions, setMpPotions] = useState(5)
   const [isBackpackOpen, setIsBackpackOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [backpackMaterials, setBackpackMaterials] = useState(() => [
     {
       id: 'slime_jelly',
@@ -706,39 +707,46 @@ export function DungeonDemoScene({ onBack }) {
 
     // Trigger concise overhead badge on Kina (clean, non-cluttered)
     champActorRef.current?.showBanner?.(
-      getDungeonText(lang, 'levelUp', 'badge', { level: newLevel }),
+      getDungeonText(langRef.current, 'levelUp', 'badge', { level: newLevel }),
       'special'
     )
 
-    addPlayerFloatingText(getDungeonText(lang, 'levelUp', 'badge', { level: newLevel }), 'levelup')
+    addPlayerFloatingText(getDungeonText(langRef.current, 'levelUp', 'badge', { level: newLevel }), 'levelup')
 
     // Reset visual effect after comfortable reading duration (2.2 seconds)
     setTimeout(() => {
       setLevelUpEffect(null)
     }, 2200)
-  }, [addPlayerFloatingText, lang])
+  }, [addPlayerFloatingText])
 
-  const awardPlayerExp = useCallback((amount) => {
+  // Reactive listener: Triggers celestial level-up effects cleanly whenever level advances
+  const prevLevelRef = useRef(progression.level)
+  useEffect(() => {
+    if (progression.level > prevLevelRef.current) {
+      const newLvl = progression.level
+      prevLevelRef.current = newLvl
+      triggerLevelUp(newLvl)
+    } else if (progression.level < prevLevelRef.current) {
+      prevLevelRef.current = progression.level
+    }
+  }, [progression.level, triggerLevelUp])
+
+  const awardPlayerExp = useCallback((amount, showFloating = true) => {
     if (!amount || amount <= 0) return
 
-    addPlayerFloatingText(getDungeonText(lang, 'combat', 'expGain', { exp: amount }), 'exp')
+    if (showFloating) {
+      addPlayerFloatingText(getDungeonText(langRef.current, 'combat', 'expGain', { exp: amount }), 'exp')
+    }
 
     setProgression((prev) => {
       let exp = prev.exp + amount
       let lvl = prev.level
       let needed = prev.expNeeded
-      let didLevelUp = false
 
       while (exp >= needed) {
         exp -= needed
         lvl += 1
         needed = Math.round(needed * 1.35 + 25)
-        didLevelUp = true
-      }
-
-      if (didLevelUp) {
-        const targetLvl = lvl
-        setTimeout(() => triggerLevelUp(targetLvl), 120)
       }
 
       return {
@@ -747,7 +755,7 @@ export function DungeonDemoScene({ onBack }) {
         expNeeded: needed,
       }
     })
-  }, [addPlayerFloatingText, triggerLevelUp])
+  }, [addPlayerFloatingText])
 
   // Active Quest State derived from localized langQuests
   const activeQuestConfig = langQuests[currentQuestIndex] || null
@@ -808,27 +816,74 @@ export function DungeonDemoScene({ onBack }) {
     }
   }, [addPlayerFloatingText, playEnemySound, triggerPlayerHitFlash, triggerScreenShake])
 
+  // Quest Completion Handler: Celebrates victory, awards rewards, and unlocks next mission
+  const handleCompleteQuest = useCallback((quest) => {
+    if (!quest) return
+    soundManager?.playLevelUp?.() || soundManager?.playSuccess?.()
+    champActorRef.current?.showBanner?.(
+      getDungeonText(langRef.current, 'questSystem', 'questCompletedBanner', {
+        title: quest.title,
+        exp: quest.expReward,
+        gold: quest.goldReward,
+      }),
+      'special'
+    )
+    awardPlayerExp(quest.expReward, true)
+    setDungeonGold((g) => g + quest.goldReward)
+    logRecentLoot('gold', getDungeonText(langRef.current, 'questSystem', 'questGoldLoot', { gold: quest.goldReward }), '🪙', quest.goldReward)
+
+    // Advance to next quest
+    setCurrentQuestIndex((idx) => {
+      const nextIdx = idx + 1
+      const nextQ = langQuestsRef.current[nextIdx]
+      if (nextQ) {
+        setTimeout(() => {
+          champActorRef.current?.showBanner?.(
+            getDungeonText(langRef.current, 'questSystem', 'nextQuestBanner', {
+              title: nextQ.title,
+              desc: nextQ.desc,
+            }),
+            'info'
+          )
+        }, 2200)
+      }
+      return nextIdx
+    })
+    setQuestProgress(0)
+  }, [awardPlayerExp, logRecentLoot])
+
   // High-performance callback when an enemy is defeated
   const handleEnemyKilled = useCallback(({ enemy, exp, gold, lootDrops }) => {
-    awardPlayerExp(exp)
-    const expText = getDungeonText(langRef.current, 'combat', 'expGain', { exp })
+    awardPlayerExp(exp, true)
     const goldText = getDungeonText(langRef.current, 'combat', 'lootGold', { amount: gold })
-    const fId1 = generateUniqueId('pexp')
     const fId2 = generateUniqueId('pgold')
     const playerX = champActorRef.current?.posX ?? champPosRef.current ?? champStateRef.current?.posX ?? 18
     setPlayerFloatingTexts((prev) => [
       ...prev,
-      { id: fId1, text: expText, type: 'exp', x: playerX },
       { id: fId2, text: goldText, type: 'gold', x: playerX },
     ])
     setTimeout(() => {
-      setPlayerFloatingTexts((prev) => prev.filter((item) => item.id !== fId1 && item.id !== fId2))
+      setPlayerFloatingTexts((prev) => prev.filter((item) => item.id !== fId2))
     }, 900)
 
     soundManager?.playCollect?.('coins')
 
     // Advance quest progress
-    setQuestProgress((prev) => prev + 1)
+    setQuestProgress((prev) => {
+      const nextProgress = prev + 1
+      const activeQ = activeQuestConfigRef.current
+      if (
+        activeQ && 
+        (!activeQ.targetType || activeQ.targetType === enemy?.type) && 
+        nextProgress >= activeQ.targetCount && 
+        !isQuestDoneRef.current
+      ) {
+        setTimeout(() => {
+          handleCompleteQuest(activeQ)
+        }, 320)
+      }
+      return nextProgress
+    })
 
     // Spawn physical ground loot
     if (lootDrops && lootDrops.length > 0) {
@@ -874,7 +929,7 @@ export function DungeonDemoScene({ onBack }) {
         setGroundLoot((prev) => [...prev, ...formattedDrops])
       }, 160)
     }
-  }, [awardPlayerExp, addPlayerFloatingText])
+  }, [awardPlayerExp, handleCompleteQuest])
 
   // High-performance callback when corridor wave is completely cleared
   const handleWaveCleared = useCallback(() => {
@@ -1077,9 +1132,45 @@ export function DungeonDemoScene({ onBack }) {
     }
   }, [])
 
-  // Keyboard shortcut: E to talk to Fundadora, H for HP Potion, M for MP Potion, Escape to close dialog or return to Start Screen
+  // Keyboard shortcut: E to talk to Fundadora, H for HP Potion, M for MP Potion, Escape to toggle Game Menu
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) return
+
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        e.stopPropagation()
+        e.stopImmediatePropagation?.()
+
+        // 1. If Game Menu is open, Escape closes it
+        if (isMenuOpen) {
+          soundManager?.playClick?.()
+          setIsMenuOpen(false)
+          return
+        }
+
+        // 2. If Backpack/Inventory is open, Escape closes it
+        if (isBackpackOpen) {
+          soundManager?.playClick?.()
+          setIsBackpackOpen(false)
+          return
+        }
+
+        // 3. If Fundadora dialog is open, Escape closes it
+        if (showFundadoraDialog) {
+          soundManager?.playClick?.()
+          setShowFundadoraDialog(false)
+          return
+        }
+
+        // 4. Otherwise, Escape OPENS THE GAME MENU (Never exits directly to the start/kingdom screen)
+        soundManager?.playClick?.()
+        setIsMenuOpen(true)
+        return
+      }
+
+      if (isMenuOpen || isBackpackOpen || showFundadoraDialog) return
+
       if (e.key === 'e' || e.key === 'E') {
         if (selectedMapIndexRef.current === 8) {
           soundManager?.playClick?.()
@@ -1092,31 +1183,14 @@ export function DungeonDemoScene({ onBack }) {
       if (e.key === 'm' || e.key === 'M' || e.code === 'KeyC' || e.key === 'c' || e.key === 'C') {
         handleUseMpPotion()
       }
-      if ((e.key === 'b' || e.key === 'B' || e.key === 'i' || e.key === 'I') && !['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) {
+      if (e.key === 'b' || e.key === 'B' || e.key === 'i' || e.key === 'I') {
         soundManager?.playClick?.()
         setIsBackpackOpen((prev) => !prev)
-      }
-      if (e.key === 'Escape') {
-        if (isBackpackOpen) {
-          e.preventDefault()
-          e.stopImmediatePropagation?.()
-          setIsBackpackOpen(false)
-          soundManager?.playClick?.()
-          return
-        }
-        if (showFundadoraDialog) {
-          e.preventDefault()
-          e.stopImmediatePropagation?.()
-          setShowFundadoraDialog(false)
-          return
-        }
-        soundManager?.playClick?.()
-        onBack()
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [onBack, showFundadoraDialog, isBackpackOpen, handleUseHpPotion, handleUseMpPotion])
+  }, [showFundadoraDialog, isBackpackOpen, isMenuOpen, handleUseHpPotion, handleUseMpPotion])
 
   // Sound toggle
   const toggleSound = () => {
@@ -1487,8 +1561,10 @@ export function DungeonDemoScene({ onBack }) {
     <div 
       className="dungeon-demo-root"
       onContextMenu={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
+        if (!import.meta.env.DEV && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          e.preventDefault()
+          e.stopPropagation()
+        }
       }}
     >
       {/* 0. Ambient Backdrop Glow (For Ultra-Wide Mobile Wings) */}
@@ -1545,7 +1621,7 @@ export function DungeonDemoScene({ onBack }) {
               bottomOffset={currentMap.groundOffset || "31.48%"}
               minX={6}
               maxX={94}
-              enableKeyboard={!isBackpackOpen && !showFundadoraDialog}
+              enableKeyboard={!isBackpackOpen && !showFundadoraDialog && !isMenuOpen}
               showHud={false}
               showOverhead={true}
               showControls={false}
@@ -1834,6 +1910,9 @@ export function DungeonDemoScene({ onBack }) {
           soundManager?.playClick?.()
           setIsBackpackOpen(true)
         }}
+        isMenuOpen={isMenuOpen}
+        onToggleMenu={setIsMenuOpen}
+        onClaimQuest={handleCompleteQuest}
         onBack={onBack}
       />
 

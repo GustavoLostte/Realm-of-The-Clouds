@@ -1,7 +1,7 @@
 {
-  "name": "Realm of Kingdom",
-  "short_name": "RealmKingdom",
-  "description": "Realm of Kingdom - Juego de estrategia y gestión imperial en el reino celestial.",
+  "name": "Realm of Kingdoms",
+  "short_name": "RealmKingdoms",
+  "description": "Realm of Kingdoms - Juego de estrategia y gestión imperial en el reino celestial.",
   "start_url": "/",
   "scope": "/",
   "id": "/",
