@@ -12,9 +12,9 @@ export function PixiGameWorld({
   slots = [],
   vipStatus = {},
   onSelectSlot,
-  onOpenBuildMenu,
   onCollectFromSlot,
   onCitizenGift,
+  onOpenBattle,
   isSuspended = false,
   soundEnabled = true,
   zoom = 1.0,
@@ -85,7 +85,7 @@ export function PixiGameWorld({
     })
   }, [maxPanX, maxPanY, setPan])
 
-  // Update worldContainer transform in Pixi
+  // Sync world transform whenever scale or pan changes
   useEffect(() => {
     if (!worldContainerRef.current) return
     const wc = worldContainerRef.current
@@ -96,13 +96,11 @@ export function PixiGameWorld({
   // Handle building clicks
   const handleBuildingClick = useCallback((e, slot) => {
     soundManager.playClick()
-    if (!slot.buildingId) {
-      onOpenBuildMenu?.(slot)
-    } else {
-      soundManager.playBuildingSound?.(slot.buildingId, slot.isConstructing)
+    if (slot?.buildingId) {
+      soundManager.playBuildingSound?.(slot.buildingId, false)
       onSelectSlot?.(slot)
     }
-  }, [onOpenBuildMenu, onSelectSlot])
+  }, [onSelectSlot])
 
   // Handle building hover
   const handleHoverSlot = useCallback((slot) => {
@@ -117,6 +115,9 @@ export function PixiGameWorld({
 
   const onCitizenGiftRef = useRef(onCitizenGift)
   onCitizenGiftRef.current = onCitizenGift
+
+  const onOpenBattleRef = useRef(onOpenBattle)
+  onOpenBattleRef.current = onOpenBattle
 
   const onHoverRef = useRef(handleHoverSlot)
   onHoverRef.current = handleHoverSlot
@@ -252,6 +253,7 @@ export function PixiGameWorld({
         // 2. Citizens Layer (Animated Sprites - rendered in front of buildings so citizens walk cleanly by structures)
         const citizensLayer = new PixiCitizensLayer({
           shadowsVisible: characterShadows,
+          onOpenBattle: () => onOpenBattleRef.current?.(),
           onCitizenClick: (_citizen) => {
             soundManager.playClick()
           },
@@ -268,8 +270,11 @@ export function PixiGameWorld({
         }
 
         appRef.current = app
-        if (isSuspendedRef.current && app.ticker?.started) {
-          app.ticker.stop()
+        if (isSuspendedRef.current) {
+          if (app.ticker?.started) {
+            app.ticker.stop()
+          }
+          mapLayer.setSuspended(true)
         }
 
         // Main Render Loop Ticker

@@ -773,7 +773,9 @@ export function DungeonCampaignWindow({
           setTimeout(() => setScreenShake(false), Math.round(200 / speedFactor))
         }
 
-        const critText = isUltimate ? `[¡FURIA REAL!] -${damageToEnemy}` : `¡¡CRÍTICO!! -${damageToEnemy}`
+        const critText = isUltimate
+          ? `[${t('dungeonCombat.royalFury') || 'ROYAL FURY!'}] -${damageToEnemy}`
+          : `${t('dungeonCombat.timingCritical') || 'CRITICAL!'} -${damageToEnemy}`
         setFloatingDamage({
           text: strikeType === 'critical' ? critText : `-${damageToEnemy}`,
           type: strikeType,

@@ -2,48 +2,41 @@ import React, { useState, useEffect } from 'react'
 import './BuildingDetailsModal.css'
 import { 
   ArrowUpCircle, 
-  Trash2, 
   Coins, 
   Trees, 
   Mountain, 
   Sparkles, 
   Shield, 
-  Clock, 
-  Zap,
   Wheat,
   Gem,
-  Hammer
+  Store
 } from 'lucide-react'
-import { BUILDING_TYPES, SPEEDUP_TYPES, getMaxProductionBatches, getBuildingDef } from '../data/buildingsData'
+import { BUILDING_TYPES, getMaxProductionBatches, getBuildingDef } from '../data/buildingsData'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'
-import { RoyalConfirmModal } from './RoyalConfirmModal'
 
 export function BuildingDetailsModal({ 
   isOpen, 
   onClose, 
   slot, 
   resources = {}, 
-  speedups = {},
   vipStatus = {},
   onUpgradeBuilding, 
-  onDemolishBuilding,
   onCollect,
-  onSpeedupBuilding,
-  onUseSpeedup,
   onOpenArmy,
   onOpenExpeditions,
   onOpenInventory,
   onOpenTechTree,
+  onOpenMarketInterior,
   storageCapacity,
 }) {
   const { t } = useTranslation()
-  // Local tick for smooth countdown display
+  // Local tick for smooth production countdown display
   const [, setTick] = useState(0)
-  const [selectedSpeedup, setSelectedSpeedup] = useState(null)
-  const [showDemolishConfirm, setShowDemolishConfirm] = useState(false)
+  const [showMarketAdmin, setShowMarketAdmin] = useState(false)
+
   useEffect(() => {
-    if (!isOpen || !slot?.isConstructing) {
+    if (!isOpen) {
       soundManager.stopBuildingSound()
       return
     }
@@ -52,10 +45,11 @@ export function BuildingDetailsModal({
       clearInterval(timer)
       soundManager.stopBuildingSound()
     }
-  }, [isOpen, slot?.isConstructing])
+  }, [isOpen])
 
   if (!isOpen || !slot || !slot.buildingId) return null
 
+  const isMarketBuilding = Boolean(slot.buildingId === 'ayuntamiento' || slot.buildingId === 'castillo' || slot.buildingId === 'mercado')
   const bld = getBuildingDef(slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]
   if (!bld) return null
 
@@ -75,12 +69,10 @@ export function BuildingDetailsModal({
     (resources?.stone || 0) >= upgradeCost.stone
 
   const handleUpgrade = () => {
-    if (!canAffordUpgrade || slot.isConstructing) return
+    if (!canAffordUpgrade) return
     soundManager.playBuildingSound(slot.buildingId, true)
     onUpgradeBuilding(slot, upgradeCost)
   }
-
-  const isIndestructible = bld.id === 'ayuntamiento' || bld.id === 'castillo' || bld.category === 'gobierno'
 
   const handleClose = () => {
     soundManager.stopBuildingSound()
@@ -88,38 +80,8 @@ export function BuildingDetailsModal({
     onClose()
   }
 
-  const handleDemolish = () => {
-    if (isIndestructible) return
-    soundManager.playClick()
-    setShowDemolishConfirm(true)
-  }
-
-  const handleConfirmDemolish = () => {
-    soundManager.stopBuildingSound()
-    soundManager.playButtonClick?.()
-    setShowDemolishConfirm(false)
-    onDemolishBuilding(slot)
-    onClose()
-  }
-
-  // Calculate construction countdown if constructing
+  // Calculate production cycle accumulation
   const now = Date.now()
-  const startedAt = slot.constructionStartedAt || now
-  const durationSec = slot.constructionDurationSec || 60
-  const elapsedSec = Math.max(0, (now - startedAt) / 1000)
-  const remainingSec = Math.max(0, Math.ceil(durationSec - elapsedSec))
-  const progressPct = durationSec > 0 
-    ? Math.min(100, Math.max(0, Math.floor((elapsedSec / durationSec) * 100))) 
-    : 100
-  const remainingMin = Math.floor(remainingSec / 60)
-  const remainingSecRem = remainingSec % 60
-  const countdownFormatted = `${remainingMin.toString().padStart(2, '0')}:${remainingSecRem.toString().padStart(2, '0')}`
-
-  const freeThresholdSec = vipStatus?.hasEngineering ? 300 : 180
-  const isFreeSpeedup = remainingSec <= freeThresholdSec
-  const costGems = isFreeSpeedup ? 0 : Math.max(2, Math.ceil(remainingSec / 50))
-
-  // Calculate production cycle accumulation if completed
   const hasProduction = bld.production && Object.keys(bld.production).length > 0
   const lastHarvest = slot.lastHarvestAt || (now - 60000)
   const harvestElapsedSec = Math.max(0, (now - lastHarvest) / 1000)
@@ -139,12 +101,40 @@ export function BuildingDetailsModal({
     <div className="modal-backdrop" onClick={handleClose}>
       <div className="game-modal details-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <div className="modal-header">
-          <div className="modal-title-wrap">
-            <img src={bld.image} alt={bldName} className="details-header-sprite" draggable="false" />
+        <div className="details-header">
+          <div className="details-title-row">
+            <div 
+              className="building-icon-wrap"
+              style={{
+                width: '52px',
+                height: '52px',
+                minWidth: '52px',
+                maxWidth: '52px',
+                overflow: 'hidden',
+                flexShrink: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '12px',
+              }}
+            >
+              <img 
+                src={bld.poster || bld.image} 
+                alt={bldName} 
+                className="details-building-img"
+                style={{
+                  width: '42px',
+                  height: '42px',
+                  maxWidth: '42px',
+                  maxHeight: '42px',
+                  objectFit: 'contain',
+                  display: 'block',
+                }}
+              />
+            </div>
             <div>
-              <h3>{bldName}</h3>
-              <span className="details-level-badge">{t('buildings.levelLabel', { level: currentLevel })}</span>
+              <h3 className="details-title">{bldName}</h3>
+              <span className="details-level-tag">{t('buildings.levelTag', { level: currentLevel })}</span>
             </div>
           </div>
           <button className="modal-close-candy-btn" onClick={handleClose} title={t('common.close')}>
@@ -154,82 +144,125 @@ export function BuildingDetailsModal({
 
         {/* Content */}
         <div className="details-body">
-          <p className="details-desc">{bldDesc}</p>
-
-          {/* Construction & Speedup Section */}
-          {slot.isConstructing && (
-            <div className="speedup-details-card">
-              <div className="speedup-header">
-                <div className="speedup-header-title">
-                  <Hammer className="clock-anim" size={18} />
-                  <span>{t('buildings.underConstruction')} {slot.targetLevel ? `(${t('buildings.towardsLevel', { level: slot.targetLevel })})` : ''}</span>
+          {/* Gran Mercado Celestial (4 Pasillos Interiores): Informative Card & Enter Button */}
+          {isMarketBuilding && (
+            <div className="market-entry-showcase-box" style={{
+              background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.98) 100%)',
+              border: '1px solid rgba(245, 158, 11, 0.55)',
+              borderRadius: '12px',
+              padding: '14px',
+              marginBottom: '6px',
+              boxShadow: '0 4px 18px rgba(0, 0, 0, 0.4)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Store size={20} style={{ color: '#fbbf24' }} />
+                  <span style={{ fontSize: '0.9rem', fontWeight: '900', color: '#fef08a', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    {t('market.bazaarTitle') || 'Gran Bazar de las Nubes'}
+                  </span>
                 </div>
-                <div className="countdown-pill">
-                  <Clock size={14} />
-                  <span>{countdownFormatted} {t('common.remaining')}</span>
-                </div>
+                <span style={{ fontSize: '0.72rem', background: 'rgba(245, 158, 11, 0.25)', color: '#fde047', padding: '2px 8px', borderRadius: '6px', fontWeight: '800' }}>
+                  4 Pasillos
+                </span>
               </div>
 
-              {/* Progress track */}
-              <div className="details-progress-track">
-                <div 
-                  className="details-progress-fill" 
-                  style={{ width: `${progressPct}%` }} 
-                />
-              </div>
+              <p style={{ fontSize: '0.8rem', color: '#cbd5e1', lineHeight: '1.45', margin: '0 0 10px' }}>
+                {t('market.bazaarDesc') || 'Adéntrate en los corredores dorados del mercado celestial. Recorre las galerías de Alquimia, Armería Sagrada, Gemas Preciosas y Provisiones de Cosecha.'}
+              </p>
 
-              {/* Speedup items row */}
-              <div className="speedup-tokens-container">
-                <span className="speedup-tokens-title">{t('buildings.speedupTokensTitle')}</span>
-                <div className="speedup-tokens-grid">
-                  {Object.entries(SPEEDUP_TYPES).map(([id, item]) => {
-                    const count = speedups[id] || 0
-                    return (
-                      <button
-                        key={id}
-                        className={`speedup-token-btn ${count > 0 ? 'has-tokens' : 'empty'}`}
-                        disabled={count <= 0}
-                        onClick={() => onUseSpeedup?.(slot.id, id)}
-                        title={`${item.name} (-${item.label})`}
-                      >
-                        <span className="speedup-token-icon">
-                          <img src={item.icon} alt="" className="mini-res-icon" style={{ width: 18, height: 18 }} />
-                        </span>
-                        <span className="speedup-token-label">-{item.label}</span>
-                        <span className="speedup-token-count">x{count}</span>
-                      </button>
-                    )
-                  })}
+              {/* 4 Aisle Preview Badges */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 8px', background: 'rgba(168, 85, 247, 0.15)', border: '1px solid rgba(168, 85, 247, 0.35)', borderRadius: '6px', fontSize: '0.72rem', color: '#e9d5ff', fontWeight: '700' }}>
+                  <span>🧪</span>
+                  <span>1. Alquimia & Pociones</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 8px', background: 'rgba(56, 189, 248, 0.15)', border: '1px solid rgba(56, 189, 248, 0.35)', borderRadius: '6px', fontSize: '0.72rem', color: '#bae6fd', fontWeight: '700' }}>
+                  <span>⚔️</span>
+                  <span>2. Armería Sagrada</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 8px', background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.35)', borderRadius: '6px', fontSize: '0.72rem', color: '#fef08a', fontWeight: '700' }}>
+                  <span>💎</span>
+                  <span>3. Gemas & Reliquias</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 8px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.35)', borderRadius: '6px', fontSize: '0.72rem', color: '#a7f3d0', fontWeight: '700' }}>
+                  <span>🌾</span>
+                  <span>4. Cosecha & Provisiones</span>
                 </div>
               </div>
 
-              {/* Instant Gem or Free Finish Button */}
+              {/* Enter Button */}
               <button 
-                className={`btn-finish-instant ${isFreeSpeedup ? 'is-free' : ''}`}
+                type="button"
+                className="btn-enter-market-direct"
                 onClick={() => {
-                  onSpeedupBuilding?.(slot)
+                  soundManager.stopBuildingSound?.()
+                  soundManager.playClick?.()
                   onClose()
+                  onOpenMarketInterior?.()
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '10px',
+                  background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%)',
+                  color: '#ffffff',
+                  border: '1px solid #fde047',
+                  borderRadius: '10px',
+                  padding: '12px 18px',
+                  fontWeight: '900',
+                  fontSize: '0.96rem',
+                  cursor: 'pointer',
+                  width: '100%',
+                  boxShadow: '0 4px 18px rgba(245, 158, 11, 0.45)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.6px',
+                  transition: 'all 0.18s ease',
                 }}
               >
-                <Zap size={16} />
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  {isFreeSpeedup ? (
-                    <>
-                      <img src="/assets/hud_icons/icon_speedup.webp" alt="Acelerar" className="mini-res-icon" style={{ width: 16, height: 16, objectFit: 'contain' }} />
-                      <span>{t('buildings.freeSpeedupBtn')}</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>{t('buildings.instantFinishGems', { cost: costGems })}</span>
-                    </>
-                  )}
-                </span>
+                <Store size={20} style={{ color: '#ffffff' }} />
+                <span>{t('market.enterBtn') || 'Entrar al Mercado (Enter)'}</span>
               </button>
             </div>
           )}
 
+          {/* Market Admin / Tribute Toggle */}
+          {isMarketBuilding && (
+            <button
+              type="button"
+              className="btn-toggle-market-admin"
+              onClick={() => setShowMarketAdmin((prev) => !prev)}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '9px 14px',
+                background: 'rgba(255, 255, 255, 0.04)',
+                border: '1px solid rgba(245, 158, 11, 0.25)',
+                borderRadius: '8px',
+                color: '#cbd5e1',
+                fontSize: '0.78rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                marginBottom: '4px',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Sparkles size={14} style={{ color: '#fbbf24' }} />
+                <span>{showMarketAdmin ? 'Ocultar Mejoras y Producción del Edificio' : `Ver Mejoras y Producción (Nivel ${currentLevel})`}</span>
+              </span>
+              <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{showMarketAdmin ? '▲' : '▼'}</span>
+            </button>
+          )}
+
+          {(!isMarketBuilding || showMarketAdmin) && (
+            <>
+              <p className="details-desc">{bldDesc}</p>
+
           {/* Production & Storage Section */}
-          {!slot.isConstructing && hasProduction && (
+          {hasProduction && (
             <div className="production-cycle-box">
               <div className="production-header-row">
                 <div className="prod-title-group">
@@ -301,41 +334,40 @@ export function BuildingDetailsModal({
           </div>
 
           {/* Upgrade Section */}
-          {!slot.isConstructing && (
-            <div className="upgrade-box">
-              <div className="upgrade-header">
-                <ArrowUpCircle className="upgrade-icon" size={20} />
-                <div>
-                  <h5>{t('buildings.upgradeToLevel', { level: currentLevel + 1 })}</h5>
-                  <p>{t('buildings.upgradeDesc')}</p>
-                </div>
+          <div className="upgrade-box">
+            <div className="upgrade-header">
+              <ArrowUpCircle className="upgrade-icon" size={20} />
+              <div>
+                <h5>{t('buildings.upgradeToLevel', { level: currentLevel + 1 })}</h5>
+                <p>{t('buildings.upgradeDesc')}</p>
               </div>
-
-              <div className="upgrade-costs">
-                <span className={`cost-pill ${resources.gold < upgradeCost.gold ? 'insufficient' : ''}`}>
-                  <Coins size={12} /> {upgradeCost.gold}
-                </span>
-                <span className={`cost-pill ${resources.wood < upgradeCost.wood ? 'insufficient' : ''}`}>
-                  <Trees size={12} /> {upgradeCost.wood}
-                </span>
-                <span className={`cost-pill ${resources.stone < upgradeCost.stone ? 'insufficient' : ''}`}>
-                  <Mountain size={12} /> {upgradeCost.stone}
-                </span>
-              </div>
-
-              <button 
-                className={`btn-upgrade ${canAffordUpgrade ? 'primary' : 'disabled'}`}
-                disabled={!canAffordUpgrade}
-                onClick={handleUpgrade}
-              >
-                <ArrowUpCircle size={16} />
-                {canAffordUpgrade ? t('buildings.upgradeBtnWithLevel') : t('buildings.insufficientResources')}
-              </button>
             </div>
-          )}
+
+            <div className="upgrade-costs">
+              <span className={`cost-pill ${resources.gold < upgradeCost.gold ? 'insufficient' : ''}`}>
+                <Coins size={12} /> {upgradeCost.gold}
+              </span>
+              <span className={`cost-pill ${resources.wood < upgradeCost.wood ? 'insufficient' : ''}`}>
+                <Trees size={12} /> {upgradeCost.wood}
+              </span>
+              <span className={`cost-pill ${resources.stone < upgradeCost.stone ? 'insufficient' : ''}`}>
+                <Mountain size={12} /> {upgradeCost.stone}
+              </span>
+            </div>
+
+            <button 
+              className={`btn-upgrade ${canAffordUpgrade ? 'primary' : 'disabled'}`}
+              disabled={!canAffordUpgrade}
+              onClick={handleUpgrade}
+            >
+              <ArrowUpCircle size={16} />
+              {canAffordUpgrade ? t('buildings.upgradeBtnWithLevel') : t('buildings.insufficientResources')}
+            </button>
+          </div>
+
 
           {/* Cuartel Direct Military Recruitment Action */}
-          {slot.buildingId === 'cuartel' && !slot.isConstructing && onOpenArmy && (
+          {slot.buildingId === 'cuartel' && onOpenArmy && (
             <button 
               className="btn-recruit-troops-direct"
               onClick={() => {
@@ -369,7 +401,7 @@ export function BuildingDetailsModal({
           )}
 
           {/* Portal Arcano: Cosmic Expeditions Action */}
-          {slot.buildingId === 'portal' && !slot.isConstructing && onOpenExpeditions && (
+          {slot.buildingId === 'portal' && onOpenExpeditions && (
             <button 
               className="btn-expeditions-direct"
               onClick={() => {
@@ -402,10 +434,8 @@ export function BuildingDetailsModal({
             </button>
           )}
 
-
-
-          {/* Gran Almacén: Storage Capacity Panel & Inventory Vault Action */}
-          {slot.buildingId === 'almacen' && !slot.isConstructing && (
+          {/* Gran Almacén / Bóveda: Storage Capacity Panel & Inventory Vault Action */}
+          {slot.buildingId === 'almacen' && (
             <div className="almacen-capacity-card" style={{ marginBottom: '10px' }}>
               {storageCapacity && (
                 <div style={{
@@ -466,8 +496,8 @@ export function BuildingDetailsModal({
           )}
 
           {/* Action Row */}
-          <div className="details-footer-actions">
-            {!slot.isConstructing && hasProduction && (
+          {hasProduction && (
+            <div className="details-footer-actions">
               <button 
                 className={`btn-collect-now ${canHarvest ? 'ready-collect' : 'disabled-collect'}`} 
                 disabled={!canHarvest}
@@ -478,33 +508,12 @@ export function BuildingDetailsModal({
                 <Sparkles size={16} /> 
                 {canHarvest ? t('buildings.collectTribute') : `${t('buildings.producing')} (${nextBatchFormatted})`}
               </button>
-            )}
-
-            {isIndestructible ? (
-              <div className="indestructible-throne-tag" title={t('buildings.indestructibleSeatTooltip')} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <img src="/assets/hud_icons/btn_ranking.webp" alt="Corona" className="mini-res-icon" style={{ width: 16, height: 16, objectFit: 'contain' }} />
-                <span>{t('buildings.indestructibleSeat')}</span>
-              </div>
-            ) : (
-              <button className="btn-demolish" onClick={handleDemolish} title={t('buildings.demolish')}>
-                <Trash2 size={16} /> {t('buildings.demolish')}
-              </button>
-            )}
-          </div>
+            </div>
+          )}
+            </>
+          )}
         </div>
       </div>
-
-      {/* Custom Royal Confirmation Modal for Demolishing Building */}
-      <RoyalConfirmModal
-        isOpen={showDemolishConfirm}
-        title={t('buildings.demolish') || 'Demoler Edificación'}
-        message={t('buildings.demolishConfirm', { name: bldName }) || `¿Estás seguro de demoler ${bldName}? Recuperarás parte de los materiales.`}
-        confirmText={t('buildings.demolish') || 'Demoler'}
-        cancelText={t('common.cancel') || 'Cancelar'}
-        danger={true}
-        onConfirm={handleConfirmDemolish}
-        onCancel={() => setShowDemolishConfirm(false)}
-      />
     </div>
   )
 }

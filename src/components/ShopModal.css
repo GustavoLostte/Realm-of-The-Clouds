@@ -108,6 +108,7 @@
   height: 30px;
   object-fit: contain;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
 
 .banner-badge-discount {
@@ -535,6 +536,7 @@
   height: 26px;
   object-fit: contain;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
 
 .shop-tag {
@@ -603,6 +605,7 @@
   height: 18px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(168, 85, 247, 0.6));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(168, 85, 247, 0.6));
 }
 
 .balance-gem-num {
@@ -687,12 +690,14 @@
   max-height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
   flex-shrink: 0;
   display: block;
 }
 
 .shop-tab-btn.active .shop-tab-asset-icon {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) brightness(1.1);
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) brightness(1.1);
 }
 
 .shop-tab-text {
@@ -850,6 +855,7 @@
   height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
 
 .pack-title {
@@ -985,6 +991,7 @@
 .btn-buy-starter:hover {
   transform: scale(1.03);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
   box-shadow: 0 6px 18px rgba(14, 165, 233, 0.6);
 }
 
@@ -1084,6 +1091,7 @@
   height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .vip-badge-tag {
@@ -1150,6 +1158,7 @@
 .btn-activate-perk.can-buy:hover {
   transform: scale(1.02);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }
 
 .btn-activate-perk.need-gems {
@@ -1244,6 +1253,7 @@
   height: 42px;
   object-fit: contain;
   filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.7));
 }
 
 .gem-amount-callout {
@@ -1337,6 +1347,7 @@
   font-size: 2.2rem;
   z-index: 20;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.9));
+  -webkit-filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.9));
 }
 
 .fortune-wheel-disc {
@@ -1376,6 +1387,7 @@
   height: 28px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
 }
 
 .segment-text {
@@ -1513,6 +1525,7 @@
 .btn-spin-wheel.free:hover {
   transform: scale(1.03);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }
 
 .btn-spin-wheel.gems {
@@ -1524,6 +1537,7 @@
 .btn-spin-wheel.gems:hover {
   transform: scale(1.03);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }
 
 .btn-spin-wheel:disabled {
@@ -1582,6 +1596,7 @@
   height: 48px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7));
 }
 
 .success-title {

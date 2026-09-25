@@ -23,6 +23,7 @@ import {
   ExternalLink,
 } from 'lucide-react'
 import { soundManager } from '../utils/audio'
+import { openExternalUrl } from '../utils/openExternalUrl'
 import { useTranslation } from '../i18n/index.jsx'
 import { subscribePWAState, promptPWAInstall } from '../pwa/registerServiceWorker'
 import { toggleGameFullscreen, isMobileOrTouch } from '../utils/fullscreen'
@@ -638,7 +639,7 @@ export function MenuModal({
               <div className="web3-stats-row">
                 <div className="web3-stat-item">
                   <span className="stat-title">{t('menu.activeNetwork')}</span>
-                  <span className="stat-value">Aetheria Cloud L2</span>
+                  <span className="stat-value">Realm Cloud L2</span>
                 </div>
                 <div className="web3-stat-item">
                   <span className="stat-title">{t('menu.tokenChaos')}</span>
@@ -677,7 +678,7 @@ export function MenuModal({
               <div className="info-logo-wrap">
                 <img 
                   src="/assets/logo/logo.webp" 
-                  alt="Reino de las Nubes" 
+                  alt="Realm of Kingdom" 
                   className="info-game-logo" 
                   draggable="false" 
                 />
@@ -695,7 +696,10 @@ export function MenuModal({
                     rel="noopener noreferrer"
                     className="owner-link-btn"
                     title="Visitar WizzarDev Studios"
-                    onClick={() => soundManager?.playClick?.()}
+                    onClick={(e) => {
+                      soundManager?.playClick?.()
+                      openExternalUrl('https://wizzardev.com/', e)
+                    }}
                   >
                     <Globe size={18} className="owner-globe-icon" />
                     <div className="owner-info">

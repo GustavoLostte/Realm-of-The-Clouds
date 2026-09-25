@@ -1,0 +1,1109 @@
+{
+  "frames": {
+    "heraldo_idle_000": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_001": {
+      "frame": {
+        "x": 320,
+        "y": 2,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_002": {
+      "frame": {
+        "x": 638,
+        "y": 2,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_003": {
+      "frame": {
+        "x": 956,
+        "y": 2,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_004": {
+      "frame": {
+        "x": 1274,
+        "y": 2,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_005": {
+      "frame": {
+        "x": 1592,
+        "y": 2,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_006": {
+      "frame": {
+        "x": 2,
+        "y": 210,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_007": {
+      "frame": {
+        "x": 320,
+        "y": 210,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_008": {
+      "frame": {
+        "x": 638,
+        "y": 210,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_009": {
+      "frame": {
+        "x": 956,
+        "y": 210,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_010": {
+      "frame": {
+        "x": 1274,
+        "y": 210,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_011": {
+      "frame": {
+        "x": 1592,
+        "y": 210,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_012": {
+      "frame": {
+        "x": 2,
+        "y": 418,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_013": {
+      "frame": {
+        "x": 320,
+        "y": 418,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_014": {
+      "frame": {
+        "x": 638,
+        "y": 418,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_015": {
+      "frame": {
+        "x": 956,
+        "y": 418,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_016": {
+      "frame": {
+        "x": 1274,
+        "y": 418,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_017": {
+      "frame": {
+        "x": 1592,
+        "y": 418,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_018": {
+      "frame": {
+        "x": 2,
+        "y": 626,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_019": {
+      "frame": {
+        "x": 320,
+        "y": 626,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_020": {
+      "frame": {
+        "x": 638,
+        "y": 626,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_021": {
+      "frame": {
+        "x": 956,
+        "y": 626,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_022": {
+      "frame": {
+        "x": 1274,
+        "y": 626,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_023": {
+      "frame": {
+        "x": 1592,
+        "y": 626,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_024": {
+      "frame": {
+        "x": 2,
+        "y": 834,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_025": {
+      "frame": {
+        "x": 320,
+        "y": 834,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_026": {
+      "frame": {
+        "x": 638,
+        "y": 834,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_027": {
+      "frame": {
+        "x": 956,
+        "y": 834,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_028": {
+      "frame": {
+        "x": 1274,
+        "y": 834,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_029": {
+      "frame": {
+        "x": 1592,
+        "y": 834,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_030": {
+      "frame": {
+        "x": 2,
+        "y": 1042,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_031": {
+      "frame": {
+        "x": 320,
+        "y": 1042,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_032": {
+      "frame": {
+        "x": 638,
+        "y": 1042,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_033": {
+      "frame": {
+        "x": 956,
+        "y": 1042,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_034": {
+      "frame": {
+        "x": 1274,
+        "y": 1042,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_035": {
+      "frame": {
+        "x": 1592,
+        "y": 1042,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_036": {
+      "frame": {
+        "x": 2,
+        "y": 1250,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_037": {
+      "frame": {
+        "x": 320,
+        "y": 1250,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_038": {
+      "frame": {
+        "x": 638,
+        "y": 1250,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_039": {
+      "frame": {
+        "x": 956,
+        "y": 1250,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_040": {
+      "frame": {
+        "x": 1274,
+        "y": 1250,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_041": {
+      "frame": {
+        "x": 1592,
+        "y": 1250,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_042": {
+      "frame": {
+        "x": 2,
+        "y": 1458,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_043": {
+      "frame": {
+        "x": 320,
+        "y": 1458,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_044": {
+      "frame": {
+        "x": 638,
+        "y": 1458,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_045": {
+      "frame": {
+        "x": 956,
+        "y": 1458,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_046": {
+      "frame": {
+        "x": 1274,
+        "y": 1458,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_047": {
+      "frame": {
+        "x": 1592,
+        "y": 1458,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_048": {
+      "frame": {
+        "x": 2,
+        "y": 1666,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_049": {
+      "frame": {
+        "x": 320,
+        "y": 1666,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_050": {
+      "frame": {
+        "x": 638,
+        "y": 1666,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    },
+    "heraldo_idle_051": {
+      "frame": {
+        "x": 956,
+        "y": 1666,
+        "w": 316,
+        "h": 206
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 316,
+        "h": 206
+      },
+      "sourceSize": {
+        "w": 316,
+        "h": 206
+      }
+    }
+  },
+  "animations": {
+    "play": [
+      "heraldo_idle_000",
+      "heraldo_idle_001",
+      "heraldo_idle_002",
+      "heraldo_idle_003",
+      "heraldo_idle_004",
+      "heraldo_idle_005",
+      "heraldo_idle_006",
+      "heraldo_idle_007",
+      "heraldo_idle_008",
+      "heraldo_idle_009",
+      "heraldo_idle_010",
+      "heraldo_idle_011",
+      "heraldo_idle_012",
+      "heraldo_idle_013",
+      "heraldo_idle_014",
+      "heraldo_idle_015",
+      "heraldo_idle_016",
+      "heraldo_idle_017",
+      "heraldo_idle_018",
+      "heraldo_idle_019",
+      "heraldo_idle_020",
+      "heraldo_idle_021",
+      "heraldo_idle_022",
+      "heraldo_idle_023",
+      "heraldo_idle_024",
+      "heraldo_idle_025",
+      "heraldo_idle_026",
+      "heraldo_idle_027",
+      "heraldo_idle_028",
+      "heraldo_idle_029",
+      "heraldo_idle_030",
+      "heraldo_idle_031",
+      "heraldo_idle_032",
+      "heraldo_idle_033",
+      "heraldo_idle_034",
+      "heraldo_idle_035",
+      "heraldo_idle_036",
+      "heraldo_idle_037",
+      "heraldo_idle_038",
+      "heraldo_idle_039",
+      "heraldo_idle_040",
+      "heraldo_idle_041",
+      "heraldo_idle_042",
+      "heraldo_idle_043",
+      "heraldo_idle_044",
+      "heraldo_idle_045",
+      "heraldo_idle_046",
+      "heraldo_idle_047",
+      "heraldo_idle_048",
+      "heraldo_idle_049",
+      "heraldo_idle_050",
+      "heraldo_idle_051"
+    ]
+  },
+  "meta": {
+    "image": "heraldo_idle_atlas.webp",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2048,
+      "h": 2048
+    },
+    "scale": "1"
+  }
+}

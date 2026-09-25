@@ -1,0 +1,1153 @@
+{
+  "frames": {
+    "dragon_idle_000": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_001": {
+      "frame": {
+        "x": 280,
+        "y": 2,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_002": {
+      "frame": {
+        "x": 558,
+        "y": 2,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_003": {
+      "frame": {
+        "x": 836,
+        "y": 2,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_004": {
+      "frame": {
+        "x": 1114,
+        "y": 2,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_005": {
+      "frame": {
+        "x": 1392,
+        "y": 2,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_006": {
+      "frame": {
+        "x": 1670,
+        "y": 2,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_007": {
+      "frame": {
+        "x": 2,
+        "y": 204,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_008": {
+      "frame": {
+        "x": 280,
+        "y": 204,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_009": {
+      "frame": {
+        "x": 558,
+        "y": 204,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_010": {
+      "frame": {
+        "x": 836,
+        "y": 204,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_011": {
+      "frame": {
+        "x": 1114,
+        "y": 204,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_012": {
+      "frame": {
+        "x": 1392,
+        "y": 204,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_013": {
+      "frame": {
+        "x": 1670,
+        "y": 204,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_014": {
+      "frame": {
+        "x": 2,
+        "y": 406,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_015": {
+      "frame": {
+        "x": 280,
+        "y": 406,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_016": {
+      "frame": {
+        "x": 558,
+        "y": 406,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_017": {
+      "frame": {
+        "x": 836,
+        "y": 406,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_018": {
+      "frame": {
+        "x": 1114,
+        "y": 406,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_019": {
+      "frame": {
+        "x": 1392,
+        "y": 406,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_020": {
+      "frame": {
+        "x": 1670,
+        "y": 406,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_021": {
+      "frame": {
+        "x": 2,
+        "y": 608,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_022": {
+      "frame": {
+        "x": 280,
+        "y": 608,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_023": {
+      "frame": {
+        "x": 558,
+        "y": 608,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_024": {
+      "frame": {
+        "x": 836,
+        "y": 608,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_025": {
+      "frame": {
+        "x": 1114,
+        "y": 608,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_026": {
+      "frame": {
+        "x": 1392,
+        "y": 608,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_027": {
+      "frame": {
+        "x": 1670,
+        "y": 608,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_028": {
+      "frame": {
+        "x": 2,
+        "y": 810,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_029": {
+      "frame": {
+        "x": 280,
+        "y": 810,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_030": {
+      "frame": {
+        "x": 558,
+        "y": 810,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_031": {
+      "frame": {
+        "x": 836,
+        "y": 810,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_032": {
+      "frame": {
+        "x": 1114,
+        "y": 810,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_033": {
+      "frame": {
+        "x": 1392,
+        "y": 810,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_034": {
+      "frame": {
+        "x": 1670,
+        "y": 810,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_035": {
+      "frame": {
+        "x": 2,
+        "y": 1012,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_036": {
+      "frame": {
+        "x": 280,
+        "y": 1012,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_037": {
+      "frame": {
+        "x": 558,
+        "y": 1012,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_038": {
+      "frame": {
+        "x": 836,
+        "y": 1012,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_039": {
+      "frame": {
+        "x": 1114,
+        "y": 1012,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_040": {
+      "frame": {
+        "x": 1392,
+        "y": 1012,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_041": {
+      "frame": {
+        "x": 1670,
+        "y": 1012,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_042": {
+      "frame": {
+        "x": 2,
+        "y": 1214,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_043": {
+      "frame": {
+        "x": 280,
+        "y": 1214,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_044": {
+      "frame": {
+        "x": 558,
+        "y": 1214,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_045": {
+      "frame": {
+        "x": 836,
+        "y": 1214,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_046": {
+      "frame": {
+        "x": 1114,
+        "y": 1214,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_047": {
+      "frame": {
+        "x": 1392,
+        "y": 1214,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_048": {
+      "frame": {
+        "x": 1670,
+        "y": 1214,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_049": {
+      "frame": {
+        "x": 2,
+        "y": 1416,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_050": {
+      "frame": {
+        "x": 280,
+        "y": 1416,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_051": {
+      "frame": {
+        "x": 558,
+        "y": 1416,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_052": {
+      "frame": {
+        "x": 836,
+        "y": 1416,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    },
+    "dragon_idle_053": {
+      "frame": {
+        "x": 1114,
+        "y": 1416,
+        "w": 276,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 276,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 200
+      }
+    }
+  },
+  "animations": {
+    "play": [
+      "dragon_idle_000",
+      "dragon_idle_001",
+      "dragon_idle_002",
+      "dragon_idle_003",
+      "dragon_idle_004",
+      "dragon_idle_005",
+      "dragon_idle_006",
+      "dragon_idle_007",
+      "dragon_idle_008",
+      "dragon_idle_009",
+      "dragon_idle_010",
+      "dragon_idle_011",
+      "dragon_idle_012",
+      "dragon_idle_013",
+      "dragon_idle_014",
+      "dragon_idle_015",
+      "dragon_idle_016",
+      "dragon_idle_017",
+      "dragon_idle_018",
+      "dragon_idle_019",
+      "dragon_idle_020",
+      "dragon_idle_021",
+      "dragon_idle_022",
+      "dragon_idle_023",
+      "dragon_idle_024",
+      "dragon_idle_025",
+      "dragon_idle_026",
+      "dragon_idle_027",
+      "dragon_idle_028",
+      "dragon_idle_029",
+      "dragon_idle_030",
+      "dragon_idle_031",
+      "dragon_idle_032",
+      "dragon_idle_033",
+      "dragon_idle_034",
+      "dragon_idle_035",
+      "dragon_idle_036",
+      "dragon_idle_037",
+      "dragon_idle_038",
+      "dragon_idle_039",
+      "dragon_idle_040",
+      "dragon_idle_041",
+      "dragon_idle_042",
+      "dragon_idle_043",
+      "dragon_idle_044",
+      "dragon_idle_045",
+      "dragon_idle_046",
+      "dragon_idle_047",
+      "dragon_idle_048",
+      "dragon_idle_049",
+      "dragon_idle_050",
+      "dragon_idle_051",
+      "dragon_idle_052",
+      "dragon_idle_053"
+    ]
+  },
+  "meta": {
+    "app": "Realm_Of_Kingdoms_Dragon_Packer",
+    "version": "1.0",
+    "image": "dragon_idle_atlas.webp",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2048,
+      "h": 2048
+    },
+    "scale": "1"
+  }
+}

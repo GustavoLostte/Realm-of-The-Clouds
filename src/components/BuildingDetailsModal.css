@@ -1,28 +1,80 @@
 /* ============================================================
    DETAILS MODAL
    ============================================================ */
+.game-modal.details-modal,
 .details-modal {
   box-sizing: border-box;
-  max-width: 520px;
-  max-height: 90dvh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  max-width: 540px !important;
+  max-height: 90dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  background: #0f172a !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 24px rgba(245, 158, 11, 0.25) !important;
 }
 
-.details-modal .modal-header {
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.85);
+  flex-shrink: 0;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.details-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.building-icon-wrap {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  max-width: 52px;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
   flex-shrink: 0;
 }
 
+.details-building-img,
 .details-header-sprite {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
+  width: 42px !important;
+  height: 42px !important;
+  max-width: 42px !important;
+  max-height: 42px !important;
+  object-fit: contain !important;
+  display: block;
 }
 
+.details-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fef08a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.details-level-tag,
 .details-level-badge {
   font-size: 0.75rem;
-  color: var(--gold-primary);
+  color: var(--gold-primary, #f59e0b);
   font-weight: 700;
 }
 
@@ -133,6 +185,7 @@
 
 .btn-upgrade.primary:hover {
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
   transform: translateY(-1px);
 }
 

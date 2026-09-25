@@ -87,6 +87,7 @@
 .dungeon-badge-icon {
   font-size: 1.5rem;
   filter: drop-shadow(0 2px 8px rgba(245, 166, 35, 0.8));
+  -webkit-filter: drop-shadow(0 2px 8px rgba(245, 166, 35, 0.8));
 }
 
 .dungeon-name {
@@ -603,6 +604,7 @@
   font-size: 3rem;
   margin-bottom: 0.35rem;
   filter: drop-shadow(0 4px 16px rgba(14, 165, 233, 0.6));
+  -webkit-filter: drop-shadow(0 4px 16px rgba(14, 165, 233, 0.6));
   animation: bounceTrophy 1.5s infinite ease-in-out;
 }
 

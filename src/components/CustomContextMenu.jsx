@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ExternalLink, Globe, Sparkles, X } from 'lucide-react'
 import './CustomContextMenu.css'
+import { openExternalUrl } from '../utils/openExternalUrl'
 
 const STUDIO_URL = 'https://wizzardev.com/'
 
@@ -9,9 +10,55 @@ export function CustomContextMenu() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const menuRef = useRef(null)
 
+  const lastPointerTypeRef = useRef('mouse')
+
   useEffect(() => {
+    // Helper to detect touch-centric or mobile devices
+    const isTouchOrMobileDevice = () => {
+      try {
+        const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(
+          navigator.userAgent || navigator.vendor || window.opera || ''
+        )
+        const hasTouch = 'ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0)
+        const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches
+        return isMobileUA || (hasTouch && isCoarse)
+      } catch (err) {
+        return false
+      }
+    }
+
+    const handlePointerDown = (e) => {
+      lastPointerTypeRef.current = e.pointerType || (e.touches ? 'touch' : 'mouse')
+    }
+
+    const handleTouchStart = () => {
+      lastPointerTypeRef.current = 'touch'
+    }
+
     const handleContextMenu = (e) => {
+      // 1. ALWAYS prevent default browser context menu, iOS callout preview, and link preview
       e.preventDefault()
+
+      // 2. CRITICAL: NEVER show this custom menu on mobile devices or via touch long-press!
+      const isMobile = isTouchOrMobileDevice()
+      const isTouchPointer =
+        lastPointerTypeRef.current === 'touch' ||
+        lastPointerTypeRef.current === 'pen' ||
+        e.pointerType === 'touch'
+
+      if (isMobile || isTouchPointer) {
+        e.stopPropagation()
+        setVisible(false)
+        return
+      }
+
+      // 3. Only show if it is an actual desktop mouse right-click with fine pointer
+      const isFinePointer = window.matchMedia ? window.matchMedia('(pointer: fine)').matches : true
+      if (!isFinePointer) {
+        e.stopPropagation()
+        setVisible(false)
+        return
+      }
 
       const clickX = e.clientX
       const clickY = e.clientY
@@ -55,12 +102,16 @@ export function CustomContextMenu() {
       setVisible(false)
     }
 
-    window.addEventListener('contextmenu', handleContextMenu, { capture: true })
+    window.addEventListener('pointerdown', handlePointerDown, { capture: true, passive: true })
+    window.addEventListener('touchstart', handleTouchStart, { capture: true, passive: true })
+    window.addEventListener('contextmenu', handleContextMenu, { capture: true, passive: false })
     window.addEventListener('mousedown', handleClickOutside)
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => {
+      window.removeEventListener('pointerdown', handlePointerDown, { capture: true })
+      window.removeEventListener('touchstart', handleTouchStart, { capture: true })
       window.removeEventListener('contextmenu', handleContextMenu, { capture: true })
       window.removeEventListener('mousedown', handleClickOutside)
       window.removeEventListener('keydown', handleKeyDown)
@@ -68,8 +119,8 @@ export function CustomContextMenu() {
     }
   }, [])
 
-  const handleOpenLink = () => {
-    window.open(STUDIO_URL, '_blank', 'noopener,noreferrer')
+  const handleOpenLink = (e) => {
+    openExternalUrl(STUDIO_URL, e)
     setVisible(false)
   }
 

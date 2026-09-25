@@ -1,0 +1,147 @@
+/* ============================================================
+   WIZZARDEV STUDIOS CINEMATIC INTRO SPLASH
+   ============================================================ */
+
+.studio-splash-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 99999999 !important;
+  background: #04060d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.studio-splash-overlay.phase-entering {
+  opacity: 1;
+}
+
+.studio-splash-overlay.phase-holding {
+  opacity: 1;
+}
+
+.studio-splash-overlay.phase-exiting {
+  opacity: 0;
+  filter: blur(8px) brightness(0.8);
+  -webkit-filter: blur(8px) brightness(0.8);
+  pointer-events: none;
+}
+
+/* Atmospheric Radial Glow behind the Logo */
+.studio-splash-bg-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  max-width: 90vw;
+  max-height: 90vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(56, 189, 248, 0.12) 40%, rgba(4, 6, 13, 0) 70%);
+  pointer-events: none;
+  animation: splashGlowPulse 2.8s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+@keyframes splashGlowPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Content Container */
+.studio-splash-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transform: translateZ(0);
+}
+
+.studio-splash-logo-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bright flare sweep */
+.studio-splash-flare {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(56, 189, 248, 0.2) 45%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(12px);
+  -webkit-filter: blur(12px);
+  pointer-events: none;
+  animation: flareBurst 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes flareBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+}
+
+/* The Studio Logo */
+.studio-splash-logo {
+  width: min(340px, 75vw);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.55)) drop-shadow(0 12px 30px rgba(0, 0, 0, 0.8));
+  -webkit-filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.55)) drop-shadow(0 12px 30px rgba(0, 0, 0, 0.8));
+  animation: logoCinematicIntro 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity, filter;
+}
+
+@keyframes logoCinematicIntro {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(12px);
+    filter: drop-shadow(0 0 0px transparent) brightness(0.7);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.02) translateY(0);
+    filter: drop-shadow(0 0 45px rgba(56, 189, 248, 0.75)) brightness(1.15);
+  }
+  60% {
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 32px rgba(14, 165, 233, 0.5)) brightness(1);
+  }
+  100% {
+    transform: scale(1.03) translateY(-2px);
+    filter: drop-shadow(0 0 38px rgba(56, 189, 248, 0.6)) brightness(1.05);
+  }
+}
+
+@media (max-width: 600px) {
+  .studio-splash-logo {
+    width: min(260px, 70vw);
+  }
+}

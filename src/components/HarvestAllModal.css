@@ -63,6 +63,7 @@
   height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .harvest-tag {
@@ -117,6 +118,7 @@
   height: 58px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7));
   animation: gentleFloat 3s ease-in-out infinite;
 }
 
@@ -526,6 +528,7 @@
   height: 20px;
   object-fit: contain;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  -webkit-filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 }
 
 @media (max-width: 480px) {

@@ -85,6 +85,7 @@
 .league-icon-trophy {
   color: #facc15;
   filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.6));
+  -webkit-filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.6));
 }
 
 .league-title-txt {
@@ -196,6 +197,7 @@
   max-width: 290px;
   background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1.5px solid rgba(56, 189, 248, 0.35);
   border-radius: 16px;
   padding: 10px 14px;
@@ -223,6 +225,7 @@
 .crown-icon-gold {
   color: #facc15;
   filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.6));
+  -webkit-filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.6));
 }
 
 .fighter-title {
@@ -349,6 +352,7 @@
   max-width: 100%;
   object-fit: contain;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.85));
+  -webkit-filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.85));
   transition: transform 0.22s ease, filter 0.22s ease;
   z-index: 2;
 }
@@ -471,6 +475,7 @@
 .vs-swords-icon {
   color: #facc15;
   filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.8));
+  -webkit-filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.8));
 }
 
 .vs-text {
@@ -592,6 +597,7 @@
   opacity: 0.45;
   cursor: not-allowed;
   filter: grayscale(0.5);
+  -webkit-filter: grayscale(0.5);
   transform: none !important;
 }
 
@@ -782,6 +788,7 @@
 .outcome-crown {
   color: #fde047;
   filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.8));
+  -webkit-filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.8));
 }
 
 .outcome-title {
@@ -794,6 +801,7 @@
 .outcome-title.victory-txt {
   background: linear-gradient(90deg, #fef08a 0%, #f59e0b 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Swords, Lock, X, Flame, Shield, Trophy, Compass } from 'lucide-react'
+import { Swords, Lock, X, Flame, Shield, Trophy, Compass, Target, Sparkles } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'
 import './CombatModeModal.css'
@@ -9,6 +9,7 @@ export function CombatModeModal({
   onClose,
   onOpenPvE,
   onOpenPvP,
+  onOpenTraining,
   arenaTickets = 0,
   showNotification,
 }) {
@@ -28,12 +29,18 @@ export function CombatModeModal({
     onOpenPvP?.()
   }
 
+  const handleTrainingSelect = () => {
+    soundManager?.playClick?.()
+    onClose?.()
+    onOpenTraining?.()
+  }
+
   const handleCampaignComingSoon = (e) => {
     e?.stopPropagation?.()
     soundManager?.playClick?.()
     if (showNotification) {
       showNotification(
-        t('combatModal.campaignNotice') || '¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Aetheria.',
+        t('combatModal.campaignNotice') || '¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Realm of Kingdom.',
         'info'
       )
     }
@@ -93,7 +100,7 @@ export function CombatModeModal({
             <div className="combat-card-info">
               <h3 className="combat-card-title">{t('combatModal.pveTitle') || 'Campaña y Mazmorras'}</h3>
               <p className="combat-card-desc">
-                {t('combatModal.pveDesc') || 'La senda celestial de Aetheria se abrirá con nuevas mazmorras épicas, jefes supremos y reliquias arcanas.'}
+                {t('combatModal.pveDesc') || 'La senda celestial de Realm of Kingdom se abrirá con nuevas mazmorras épicas, jefes supremos y reliquias arcanas.'}
               </p>
 
               <div className="combat-card-features">
@@ -149,6 +156,45 @@ export function CombatModeModal({
 
             <button className="combat-card-action-btn pvp-btn pulse-action">
               <span>{t('combatModal.pvpBtn') || '¡Entrar al Vórtice Astral!'}</span>
+            </button>
+          </div>
+
+          {/* 3. Modo Entrenamiento: Dojo de Campeones (Valiria) */}
+          <div 
+            className="combat-card training-card featured-active"
+            onClick={handleTrainingSelect}
+            role="button"
+            tabIndex={0}
+          >
+            <div className="combat-card-badge training active-badge">
+              <Target size={14} />
+              <span>{t('combatModal.trainingBadge') || '🎯 Dojo de Campeones (Práctica)'}</span>
+            </div>
+
+            <div className="combat-card-visual">
+              <img 
+                src="/assets/champions/valiria_avatar.webp" 
+                alt="Dojo de Campeones" 
+                className="combat-card-icon-img training-glow" 
+                draggable="false" 
+              />
+            </div>
+
+            <div className="combat-card-info">
+              <h3 className="combat-card-title">{t('combatModal.trainingTitle') || 'Dojo de Campeones (Valiria)'}</h3>
+              <p className="combat-card-desc">
+                {t('combatModal.trainingDesc') || 'Práctica libre de combate 2D con Valiria (Ángel Valquiria). Domina desplazamientos, combos, habilidades especiales, saltos y bloqueos sin límite ni riesgo.'}
+              </p>
+
+              <div className="combat-card-features">
+                <span className="feature-tag training-tag active-tag"><Swords size={12} /> Valiria • Ángel Valquiria</span>
+                <span className="feature-tag training-tag active-tag"><Sparkles size={12} /> Movimientos & Combate</span>
+                <span className="feature-tag training-tag active-tag"><Shield size={12} /> IA Configurable & Práctica</span>
+              </div>
+            </div>
+
+            <button className="combat-card-action-btn training-btn pulse-action">
+              <span>{t('combatModal.trainingBtn') || '¡Entrar al Dojo!'}</span>
             </button>
           </div>
         </div>

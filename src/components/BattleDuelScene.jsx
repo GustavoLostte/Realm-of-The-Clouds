@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { SeamlessSprite } from './SeamlessSprite'
 import './BattleDuelScene.css'
 import { 
   ArrowLeft, 
@@ -17,7 +18,10 @@ import {
   ChevronDown,
   ChevronRight,
   Crosshair,
-  RefreshCw
+  RefreshCw,
+  RotateCcw,
+  BookOpen,
+  X
 } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { getChampionById, getOpponentChampion, getChampionAnimConfig } from '../data/championsData'
@@ -29,8 +33,10 @@ function getFighterVisual(champ, anim) {
     if (anim === 'attacking' || anim === 'attack1') return champ.animations.attack1 || champ.animations.idle
     if (anim === 'attack2') return champ.animations.attack2 || champ.animations.idle
     if (anim === 'special') return champ.animations.special || champ.animations.attack2 || champ.animations.idle
+    if (anim === 'special2') return champ.animations.special2 || champ.animations.special || champ.animations.idle
     if (anim === 'defending' || anim === 'defend') return champ.animations.defend || champ.animations.idle
     if (anim === 'defend_hold') return champ.animations.defend_hold || champ.animations.defend || champ.animations.idle
+    if (anim === 'defend_down') return champ.animations.defend_down || champ.animations.defend || champ.animations.down || champ.animations.idle
     if (anim === 'hit') return champ.animations.hit || champ.animations.idle
     if (anim === 'knockdown') return champ.animations.knockdown || champ.animations.idle
     if (anim === 'lose') return champ.animations.lose || champ.animations.knockdown || champ.animations.idle
@@ -39,6 +45,9 @@ function getFighterVisual(champ, anim) {
     if (anim === 'jump') return champ.animations.jump || champ.animations.idle
     if (anim === 'run') return champ.animations.run || champ.animations.walk || champ.animations.idle
     if (anim === 'walk') return champ.animations.walk || champ.animations.idle
+    if (anim === 'dash_front') return champ.animations.dash_front || champ.animations.run || champ.animations.idle
+    if (anim === 'dash_back') return champ.animations.dash_back || champ.animations.run || champ.animations.idle
+    if (anim === 'down' || anim === 'crouch') return champ.animations.down || champ.animations.idle
     if (champ.animations[anim]) return champ.animations[anim]
   }
   return champ?.idleAnim || champ?.fullImage
@@ -68,9 +77,10 @@ export function BattleDuelScene({
   onExitBattle,
   onVictory,
   onDefeat,
+  isTraining = false,
 }) {
-  // Default to Luke as playable fighter (or passed champion)
-  const initialPlayer = playerChampion || getChampionById('luke')
+  // Default to Valiria as playable fighter (or passed champion)
+  const initialPlayer = playerChampion || getChampionById('valiria')
   const initialRival = rivalChampion || getOpponentChampion(initialPlayer.id)
 
   const [pChamp, setPChamp] = useState(initialPlayer)
@@ -81,8 +91,14 @@ export function BattleDuelScene({
 
   const [playerHp, setPlayerHp] = useState(maxPlayerHp)
   const [rivalHp, setRivalHp] = useState(maxRivalHp)
-  const [playerFury, setPlayerFury] = useState(35)
-  const [rivalFury, setRivalFury] = useState(20)
+  const [playerFury, setPlayerFury] = useState(isTraining ? 100 : 35)
+  const [rivalFury, setRivalFury] = useState(isTraining ? 100 : 20)
+
+  // Training mode dummy AI, guide state, and quick reset
+  const [dummyAiMode, setDummyAiMode] = useState('passive') // 'passive' | 'guard' | 'sparring'
+  const dummyAiModeRef = useRef('passive')
+  const [showMoveList, setShowMoveList] = useState(false)
+  const resetTrainingRef = useRef(null)
 
   // Animation states & browser frame-zero decoders nonces
   const [playerAnim, setPlayerAnim] = useState('idle')
@@ -90,14 +106,30 @@ export function BattleDuelScene({
   const [pAnimNonce, setPAnimNonce] = useState(() => Date.now())
   const [rAnimNonce, setRAnimNonce] = useState(() => Date.now())
 
-  // Real-time 2D Positions & Physics (Close melee engagement standoff: 41% vs 59%)
-  const [pPosX, setPPosX] = useState(41) // percentage across battlefield width
+  // Real-time 2D Positions & Physics (Balanced melee engagement standoff: 30% vs 70%)
+  const [pPosX, setPPosX] = useState(30) // percentage across battlefield width
   const [pPosY, setPPosY] = useState(0)  // vertical jump elevation in px
   const [pFacing, setPFacing] = useState(1) // 1 = right, -1 = left
 
-  const [rPosX, setRPosX] = useState(59)
+  const [rPosX, setRPosX] = useState(70)
   const [rPosY, setRPosY] = useState(0)
   const [rFacing, setRFacing] = useState(-1)
+
+  // Mobile layout & orientation detection for virtual touch joystick sizing
+  const [screenMetrics, setScreenMetrics] = useState(() => ({
+    isMobile: typeof window !== 'undefined' ? (window.innerWidth <= 950 || window.innerHeight <= 520) : false,
+    isLandscape: typeof window !== 'undefined' ? (window.innerWidth > window.innerHeight && window.innerHeight <= 520) : false
+  }))
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 950 || window.innerHeight <= 520
+      const isLandscape = window.innerWidth > window.innerHeight && window.innerHeight <= 520
+      setScreenMetrics({ isMobile, isLandscape })
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   // Combat status & feedback
   const [battleOutcome, setBattleOutcome] = useState(null) // 'victory' | 'defeat' | null
@@ -119,17 +151,29 @@ export function BattleDuelScene({
     k: false,
     l: false,
     i: false,
+    u: false,
     o: false,
   })
 
   // Mutable refs for 60 FPS physics game loop without React state closure lag
-  const pPosRef = useRef({ x: 41, y: 0, velY: 0, isJumping: false })
-  const rPosRef = useRef({ x: 59, y: 0, velY: 0 })
+  const pPosRef = useRef({ x: 30, y: 0, velY: 0, isJumping: false })
+  const rPosRef = useRef({ x: 70, y: 0, velY: 0 })
   const pFacingRef = useRef(1)
   const rFacingRef = useRef(-1)
 
   const pAnimRef = useRef('idle')
   const rAnimRef = useRef('idle')
+
+  // Physical-pixel scaled combat distance for consistent gameplay across all screen sizes
+  const getPixelDist = useCallback((percentDist) => {
+    const screenW = typeof window !== 'undefined' ? (window.innerWidth || 1200) : 1200
+    return (percentDist / 100) * screenW
+  }, [])
+
+  const getDynamicBuffer = useCallback(() => {
+    const screenW = typeof window !== 'undefined' ? (window.innerWidth || 1200) : 1200
+    return Math.max(4.0, Math.min(26.0, (96 / screenW) * 100))
+  }, [])
 
   const isGuardingRef = useRef(false)
   const isRivalGuardingRef = useRef(false)
@@ -145,11 +189,18 @@ export function BattleDuelScene({
   const pActionTimerRef = useRef(null)
   const pImpactTimerRef = useRef(null)
   const pImpactTimer2Ref = useRef(null)
+  const pImpactTimer3Ref = useRef(null)
   const rActionTimerRef = useRef(null)
   const rImpactTimerRef = useRef(null)
   const pHitTimerRef = useRef(null)
   const rHitTimerRef = useRef(null)
   const pJumpTimerRef = useRef({ active: false, startTime: 0, duration: 0 })
+  const pJumpCountRef = useRef(0)
+  const pDashTimerRef = useRef({ active: false, type: null, startTime: 0, duration: 0, facingAtStart: 1 })
+  const lastTapRef = useRef({ key: null, time: 0 })
+  const dirHoldStartRef = useRef(0)
+  const isRunningRef = useRef(false)
+  const isCrouchingRef = useRef(false)
   const pDefendTimerRef = useRef(null)
   const rDefendTimerRef = useRef(null)
   const blockTremorTimerRef = useRef(null)
@@ -160,6 +211,17 @@ export function BattleDuelScene({
   // Play active combat music on scene entry & restore pre-battle music on unmount
   useEffect(() => {
     soundManager?.playCombatMusic?.()
+    // Preload all fighter sprites into browser memory cache
+    ;[pChamp, rChamp].forEach((champ) => {
+      if (champ?.animations) {
+        Object.values(champ.animations).forEach((src) => {
+          if (src && typeof src === 'string') {
+            const img = new Image()
+            img.src = src
+          }
+        })
+      }
+    })
     return () => {
       soundManager?.stopCombatMusic?.(true)
       if (pActionTimerRef.current) clearTimeout(pActionTimerRef.current)
@@ -220,6 +282,16 @@ export function BattleDuelScene({
   const handleBattleFinish = useCallback((outcome) => {
     if (battleEndedRef.current) return
     battleEndedRef.current = true
+
+    if (isTraining) {
+      triggerShake(true)
+      soundManager?.playVictory?.()
+      addFloatingText(outcome === 'victory' ? 'rival' : 'player', '💥 ¡¡K.O. DE PRÁCTICA!!', 'crit')
+      setTimeout(() => {
+        resetTrainingRef.current?.()
+      }, 1600)
+      return
+    }
 
     if (pActionTimerRef.current) clearTimeout(pActionTimerRef.current)
     if (pImpactTimerRef.current) clearTimeout(pImpactTimerRef.current)
@@ -317,7 +389,7 @@ export function BattleDuelScene({
         }, victoryDuration)
       }, loseDuration)
     }
-  }, [pChamp, rChamp, triggerShake, onVictory, onDefeat])
+  }, [pChamp, rChamp, triggerShake, onVictory, onDefeat, isTraining, addFloatingText])
 
   // RIVAL AI: Defend / Block (handles tactical shield raising and block recoil)
   const handleRivalDefend = useCallback((isStart = true) => {
@@ -349,46 +421,133 @@ export function BattleDuelScene({
     }
   }, [rChamp])
 
+  // DOJO DE CAMPEONES: Reset fighters to starting sparring state
+  const handleResetTrainingFighters = useCallback(() => {
+    soundManager?.playClick?.()
+    if (pActionTimerRef.current) clearTimeout(pActionTimerRef.current)
+    if (pImpactTimerRef.current) clearTimeout(pImpactTimerRef.current)
+    if (pImpactTimer2Ref.current) clearTimeout(pImpactTimer2Ref.current)
+    if (rActionTimerRef.current) clearTimeout(rActionTimerRef.current)
+    if (rImpactTimerRef.current) clearTimeout(rImpactTimerRef.current)
+    if (pHitTimerRef.current) clearTimeout(pHitTimerRef.current)
+    if (rHitTimerRef.current) clearTimeout(rHitTimerRef.current)
+    if (pDefendTimerRef.current) clearTimeout(pDefendTimerRef.current)
+    if (rDefendTimerRef.current) clearTimeout(rDefendTimerRef.current)
+    if (blockTremorTimerRef.current) clearTimeout(blockTremorTimerRef.current)
+    if (losePhaseTimerRef.current) clearTimeout(losePhaseTimerRef.current)
+    if (outcomeTimerRef.current) clearTimeout(outcomeTimerRef.current)
+    if (outcomeModalTimerRef.current) clearTimeout(outcomeModalTimerRef.current)
+
+    battleEndedRef.current = false
+    isActionLockedRef.current = false
+    isGuardingRef.current = false
+    isRivalGuardingRef.current = false
+    setBlockTremor(false)
+    setShowVictoryWord(false)
+    setBattleOutcome(null)
+    setComboCount(0)
+
+    pPosRef.current = { x: 30, y: 0, velY: 0, isJumping: false }
+    rPosRef.current = { x: 70, y: 0, velY: 0 }
+    setPPosX(30)
+    setPPosY(0)
+    setRPosX(70)
+    setRPosY(0)
+    pFacingRef.current = 1
+    rFacingRef.current = -1
+    setPFacing(1)
+    setRFacing(-1)
+
+    pAnimRef.current = 'idle'
+    rAnimRef.current = 'idle'
+    setPlayerAnim('idle')
+    setRivalAnim('idle')
+    const now = Date.now()
+    setPAnimNonce(now)
+    setRAnimNonce(now + 1)
+
+    setPlayerHp(maxPlayerHp)
+    setRivalHp(maxRivalHp)
+    setPlayerFury(100)
+    setRivalFury(50)
+
+    if (dummyAiModeRef.current === 'guard') {
+      setTimeout(() => {
+        handleRivalDefend(true)
+      }, 100)
+    }
+
+    addFloatingText('player', '✨ ¡ESTADO RESTAURADO!', 'buff')
+  }, [maxPlayerHp, maxRivalHp, handleRivalDefend, addFloatingText])
+
+  useEffect(() => {
+    resetTrainingRef.current = handleResetTrainingFighters
+  }, [handleResetTrainingFighters])
+
+  // DOJO DE CAMPEONES: Select Dummy AI behavior mode
+  const handleSelectDummyMode = useCallback((mode) => {
+    soundManager?.playClick?.()
+    setDummyAiMode(mode)
+    dummyAiModeRef.current = mode
+    if (mode === 'guard') {
+      handleRivalDefend(true)
+      addFloatingText('rival', '🛡️ ¡MODO GUARDIA ACTIVO!', 'buff')
+    } else {
+      if (isRivalGuardingRef.current) {
+        handleRivalDefend(false)
+      }
+      if (mode === 'passive') {
+        addFloatingText('rival', '🛑 ¡MODO PASIVO (DUMMY)!', 'buff')
+      } else if (mode === 'sparring') {
+        addFloatingText('rival', '⚔️ ¡MODO SPARRING ACTIVO!', 'buff')
+      }
+    }
+  }, [handleRivalDefend, addFloatingText])
+
   // ==============================================================================
   // COMBAT ACTIONS (K, L, I, O, SPACE) - SYNCHRONIZED TO EXACT WEBP DURATIONS
   // ==============================================================================
 
-  // ACTION 1: Attack 1 (Key: K) - Light Attack / Fast Strike
+  // ACTION 1: Attack 1 (Key: K) - Light Attack / 3-Hit Spear Combo (Supports Dash Cancel)
   const handleTriggerAttack1 = useCallback(() => {
-    if (isActionLockedRef.current || pJumpTimerRef.current.active || battleEndedRef.current) return
+    const isDashing = pDashTimerRef.current?.active
+    if ((isActionLockedRef.current && !isDashing) || pJumpTimerRef.current.active || battleEndedRef.current) return
     isActionLockedRef.current = true
 
+    if (isDashing) {
+      const wasFront = pDashTimerRef.current.type === 'front'
+      const dashKey = wasFront ? (pFacingRef.current === 1 ? 'E' : 'Q') : (pFacingRef.current === 1 ? 'Q' : 'E')
+      pDashTimerRef.current.active = false
+      addFloatingText('player', wasFront ? `⚡ DASH COMBO (${dashKey} + J)!` : `🛡️ COUNTER (${dashKey} + J)!`, 'buff')
+    }
+
     const pConfig = getChampionAnimConfig(pChamp.id)
-    const totalDuration = pConfig.durations.attack1
-    const impactDelay = pConfig.impactDelays?.attack1 || Math.round(totalDuration / 2)
+    const totalDuration = pConfig.durations.attack1 || 2088
+    const hit1Delay = pConfig.impactDelays?.attack1_hit1 || 450
+    const hit2Delay = pConfig.impactDelays?.attack1_hit2 || 1150
+    const hit3Delay = pConfig.impactDelays?.attack1_hit3 || 1750
 
     const nonce = Date.now()
     setPAnimNonce(nonce)
     pAnimRef.current = 'attack1'
     setPlayerAnim('attack1')
     playChampSound(pChamp, 'attack1')
-    soundManager?.playHeroAttack?.()
 
     if (pActionTimerRef.current) clearTimeout(pActionTimerRef.current)
     if (pImpactTimerRef.current) clearTimeout(pImpactTimerRef.current)
     if (pImpactTimer2Ref.current) clearTimeout(pImpactTimer2Ref.current)
+    if (pImpactTimer3Ref.current) clearTimeout(pImpactTimer3Ref.current)
 
-    // 1. IMPACT: Triggers at the MIDPOINT of the attack animation (when the blade strikes the rival)
-    pImpactTimerRef.current = setTimeout(() => {
-      pImpactTimerRef.current = null
-
-      // If player was interrupted by an incoming hit, cancel this strike!
+    const executeAttack1Hit = (hitIndex) => {
       if (battleEndedRef.current || pAnimRef.current === 'hit' || pAnimRef.current === 'knockdown') {
         return
       }
 
-      if (battleEndedRef.current) return
       const dist = Math.abs(pPosRef.current.x - rPosRef.current.x)
       const isFacing = (pFacingRef.current === 1 && pPosRef.current.x <= rPosRef.current.x) || (pFacingRef.current === -1 && pPosRef.current.x >= rPosRef.current.x)
-      const inRange = dist <= pConfig.hitboxes.attack1 && isFacing
+      const inRange = getPixelDist(dist) <= ((pConfig.hitboxes.attack1 || 7.2) * 16.5) && isFacing
 
       if (inRange) {
-        // INTERRUPT: Whoever attacks first lands; interrupt rival's pending attack immediately!
         if (rImpactTimerRef.current) {
           clearTimeout(rImpactTimerRef.current)
           rImpactTimerRef.current = null
@@ -399,78 +558,100 @@ export function BattleDuelScene({
         }
 
         if (isRivalGuardingRef.current) {
-          // Rival shields attack 1! Bilateral recoil & pushback
-          const blockDmg = 20
+          const blockDmg = hitIndex === 3 ? 22 : 12
           addFloatingText('rival', `🛡️ BLOQUEO! -${blockDmg}`, 'block')
           soundManager?.playShieldBlock?.()
           triggerShake(false)
           triggerBlockTremor()
 
-          // Push defender (Rival) backward
           const rPushDir = rPosRef.current.x >= pPosRef.current.x ? 1 : -1
-          rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + rPushDir * 3.2))
+          const pushAmt = hitIndex === 3 ? 3.5 : 1.8
+          rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + rPushDir * pushAmt))
           setRPosX(rPosRef.current.x)
-
-          // Recoil attacker (Player) backward
-          pPosRef.current.x = Math.max(8, Math.min(94, pPosRef.current.x - rPushDir * 2.6))
+          pPosRef.current.x = Math.max(8, Math.min(94, pPosRef.current.x - rPushDir * 1.5))
           setPPosX(pPosRef.current.x)
 
-          setPlayerFury((f) => Math.min(100, f + 8))
-
+          setPlayerFury((f) => Math.min(100, f + 6))
           setRivalHp((prev) => {
             const next = Math.max(0, prev - blockDmg)
-            if (next <= 0) {
-              handleBattleFinish('victory')
-            }
+            if (next <= 0) handleBattleFinish('victory')
             return next
           })
           return
         }
 
-        const isCrit = Math.random() > 0.6
-        const baseDmg = Math.round(pChamp.atk * 1.8 + Math.random() * 30)
-        const finalDmg = isCrit ? Math.round(baseDmg * 1.5) : baseDmg
+        const isHit3 = hitIndex === 3
+        const isCrit = isHit3 && Math.random() > 0.4
+        const baseDmg = isHit3
+          ? Math.round(pChamp.atk * 1.6 + Math.random() * 25)
+          : Math.round(pChamp.atk * 0.95 + Math.random() * 15)
+        const finalDmg = isCrit ? Math.round(baseDmg * 1.4) : baseDmg
 
-        addFloatingText('rival', isCrit ? `💥 -${finalDmg} CRÍT!` : `-${finalDmg}`, isCrit ? 'crit' : 'damage')
-        triggerShake(false)
+        const pushDir = pFacingRef.current
+        const pushDist = isHit3 ? 5.2 : 2.0
+        rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + pushDir * pushDist))
+        setRPosX(rPosRef.current.x)
+
+        const hitLabel = isCrit
+          ? `💥 -${finalDmg} ¡REMATE CELESTIAL!`
+          : isHit3
+            ? `⚡ -${finalDmg} ¡ESTOCADA FINAL!`
+            : hitIndex === 2
+              ? `⚔️ -${finalDmg} 2DO TAJO!`
+              : `⚔️ -${finalDmg} 1ER GOLPE!`
+        addFloatingText('rival', hitLabel, (isCrit || isHit3) ? 'crit' : 'damage')
+        triggerShake(isHit3)
         registerCombo()
 
-        // Rival plays full hit reaction (if not already grounded in knockdown)
         const rConfig = getChampionAnimConfig(rChamp.id)
-        const rHitDur = rConfig.durations.hit
+        const reactAnim = isHit3 ? 'knockdown' : (rAnimRef.current === 'knockdown' ? 'knockdown' : 'hit')
+        const reactDur = isHit3 ? rConfig.durations.knockdown : rConfig.durations.hit
 
-        if (rAnimRef.current !== 'knockdown') {
-          playChampSound(rChamp, 'hit')
-          setRAnimNonce(Date.now())
-          rAnimRef.current = 'hit'
-          setRivalAnim('hit')
-        }
+        playChampSound(rChamp, reactAnim)
+        if (isHit3) soundManager?.playCriticalHit?.()
 
-        setPlayerFury((f) => Math.min(100, f + 16))
+        setRAnimNonce(Date.now())
+        rAnimRef.current = reactAnim
+        setRivalAnim(reactAnim)
+
+        setPlayerFury((f) => Math.min(100, f + (isHit3 ? 14 : 7)))
 
         setRivalHp((prev) => {
           const next = Math.max(0, prev - finalDmg)
           if (next <= 0) {
             handleBattleFinish('victory')
           } else {
-            if (rAnimRef.current !== 'knockdown') {
-              if (rHitTimerRef.current) clearTimeout(rHitTimerRef.current)
-              rHitTimerRef.current = setTimeout(() => {
-                if (!battleEndedRef.current && rAnimRef.current === 'hit') {
-                  rAnimRef.current = 'idle'
-                  setRivalAnim('idle')
-                }
-              }, rHitDur)
-            }
+            if (rHitTimerRef.current) clearTimeout(rHitTimerRef.current)
+            rHitTimerRef.current = setTimeout(() => {
+              if (!battleEndedRef.current && (rAnimRef.current === 'hit' || rAnimRef.current === 'knockdown')) {
+                rAnimRef.current = 'idle'
+                setRivalAnim('idle')
+              }
+            }, reactDur)
           }
           return next
         })
       } else {
         addFloatingText('player', '💨 ¡FUERA DE ALCANCE!', 'heal')
       }
-    }, impactDelay)
+    }
 
-    // 2. RECOVERY: At the end of the swing follow-through, unlock player controls and return to idle
+    // 3 sequential impacts matching 3-hit spear combo animation
+    pImpactTimerRef.current = setTimeout(() => {
+      pImpactTimerRef.current = null
+      executeAttack1Hit(1)
+    }, hit1Delay)
+
+    pImpactTimer2Ref.current = setTimeout(() => {
+      pImpactTimer2Ref.current = null
+      executeAttack1Hit(2)
+    }, hit2Delay)
+
+    pImpactTimer3Ref.current = setTimeout(() => {
+      pImpactTimer3Ref.current = null
+      executeAttack1Hit(3)
+    }, hit3Delay)
+
     pActionTimerRef.current = setTimeout(() => {
       isActionLockedRef.current = false
       pActionTimerRef.current = null
@@ -481,40 +662,46 @@ export function BattleDuelScene({
     }, totalDuration)
   }, [pChamp, rChamp, addFloatingText, triggerShake, triggerBlockTremor, registerCombo, handleBattleFinish])
 
-  // ACTION 2: Attack 2 (Key: L) - 2-Hit Combo: Hit 1 at beginning, Hit 2 at end of animation
+  // ACTION 2: Attack 2 (Key: L) - 2-Hit Kick Combo (Supports Dash Cancel)
   const handleTriggerAttack2 = useCallback(() => {
-    if (isActionLockedRef.current || pJumpTimerRef.current.active || battleEndedRef.current) return
+    const isDashing = pDashTimerRef.current?.active
+    if ((isActionLockedRef.current && !isDashing) || pJumpTimerRef.current.active || battleEndedRef.current) return
     isActionLockedRef.current = true
 
+    if (isDashing) {
+      const wasFront = pDashTimerRef.current.type === 'front'
+      const dashKey = wasFront ? (pFacingRef.current === 1 ? 'E' : 'Q') : (pFacingRef.current === 1 ? 'Q' : 'E')
+      pDashTimerRef.current.active = false
+      addFloatingText('player', wasFront ? `🌪️ DASH COMBO (${dashKey} + K)!` : `💥 COUNTER (${dashKey} + K)!`, 'buff')
+    }
+
     const pConfig = getChampionAnimConfig(pChamp.id)
-    const totalDuration = pConfig.durations.attack2
+    const totalDuration = pConfig.durations.attack2 || 1320
     const hit1Delay = pConfig.impactDelays?.attack2_hit1 || 350
-    const hit2Delay = pConfig.impactDelays?.attack2_hit2 || (totalDuration - 250)
+    const hit2Delay = pConfig.impactDelays?.attack2_hit2 || 950
 
     const nonce = Date.now()
     setPAnimNonce(nonce)
     pAnimRef.current = 'attack2'
     setPlayerAnim('attack2')
     playChampSound(pChamp, 'attack2')
-    soundManager?.playSwordSwing?.()
 
     if (pActionTimerRef.current) clearTimeout(pActionTimerRef.current)
     if (pImpactTimerRef.current) clearTimeout(pImpactTimerRef.current)
     if (pImpactTimer2Ref.current) clearTimeout(pImpactTimer2Ref.current)
+    if (pImpactTimer3Ref.current) clearTimeout(pImpactTimer3Ref.current)
 
     // Helper to execute each impact of Attack 2 during animation playback
     const executeAttack2Hit = (hitIndex) => {
-      // If player was interrupted by an incoming hit, knockdown or battle ended, cancel this strike!
       if (battleEndedRef.current || pAnimRef.current === 'hit' || pAnimRef.current === 'knockdown') {
         return
       }
 
       const dist = Math.abs(pPosRef.current.x - rPosRef.current.x)
       const isFacing = (pFacingRef.current === 1 && pPosRef.current.x <= rPosRef.current.x) || (pFacingRef.current === -1 && pPosRef.current.x >= rPosRef.current.x)
-      const inRange = dist <= pConfig.hitboxes.attack2 && isFacing
+      const inRange = getPixelDist(dist) <= ((pConfig.hitboxes.attack2 || 6.8) * 16.5) && isFacing
 
       if (inRange) {
-        // INTERRUPT: Whoever attacks first lands; interrupt rival's pending attack immediately!
         if (rImpactTimerRef.current) {
           clearTimeout(rImpactTimerRef.current)
           rImpactTimerRef.current = null
@@ -525,21 +712,18 @@ export function BattleDuelScene({
         }
 
         if (isRivalGuardingRef.current) {
-          // Rival shields this hit! Bilateral recoil & pushback
           const blockDmg = hitIndex === 1 ? 15 : 22
           addFloatingText('rival', `🛡️ BLOQUEO! -${blockDmg}`, 'block')
           soundManager?.playShieldBlock?.()
           triggerShake(false)
           triggerBlockTremor()
 
-          // Push defender (Rival) backward
           const rPushDir = rPosRef.current.x >= pPosRef.current.x ? 1 : -1
           const pushAmount = hitIndex === 1 ? 2.6 : 3.8
           const recoilAmount = hitIndex === 1 ? 2.0 : 3.0
           rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + rPushDir * pushAmount))
           setRPosX(rPosRef.current.x)
 
-          // Recoil attacker (Player) backward
           pPosRef.current.x = Math.max(8, Math.min(94, pPosRef.current.x - rPushDir * recoilAmount))
           setPPosX(pPosRef.current.x)
 
@@ -555,8 +739,6 @@ export function BattleDuelScene({
           return
         }
 
-        // Direct hit on rival
-        soundManager?.playSwordSwing?.()
         const isHit2 = hitIndex === 2
         const isCrit = isHit2 && Math.random() > 0.45
         const baseDmg = isHit2
@@ -564,7 +746,6 @@ export function BattleDuelScene({
           : Math.round(pChamp.atk * 1.3 + Math.random() * 20)
         const finalDmg = isCrit ? Math.round(baseDmg * 1.4) : baseDmg
 
-        // Pushback on rival: hit 2 produces a deeper knockback as the enemy drops
         const pushDir = pFacingRef.current
         const pushDist = isHit2 ? 5.6 : 2.4
         rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + pushDir * pushDist))
@@ -573,14 +754,13 @@ export function BattleDuelScene({
         const hitLabel = isCrit
           ? `💥 -${finalDmg} ¡DERRIBO CRÍTICO!`
           : isHit2
-            ? `💥 -${finalDmg} ¡CAÍDA POR IMPACTO!`
-            : `⚔️ -${finalDmg} 1ER TAJO!`
+            ? `💥 -${finalDmg} ¡PATADA FINAL!`
+            : `🦵 -${finalDmg} 1RA PATADA!`
         addFloatingText('rival', hitLabel, (isCrit || isHit2) ? 'crit' : 'damage')
         triggerShake(isHit2)
         registerCombo()
 
         const rConfig = getChampionAnimConfig(rChamp.id)
-        // Hit 2 knocks the rival down to the ground ('knockdown'); Hit 1 inflicts flinch ('hit')
         const reactAnim = isHit2 ? 'knockdown' : (rAnimRef.current === 'knockdown' ? 'knockdown' : 'hit')
         const reactDur = isHit2 ? rConfig.durations.knockdown : rConfig.durations.hit
 
@@ -614,19 +794,16 @@ export function BattleDuelScene({
       }
     }
 
-    // 1. PRIMER IMPACTO: En el transcurso de la animación, al principio (hit1Delay)
     pImpactTimerRef.current = setTimeout(() => {
       pImpactTimerRef.current = null
       executeAttack2Hit(1)
     }, hit1Delay)
 
-    // 2. SEGUNDO IMPACTO: En el transcurso de la animación, al final (hit2Delay)
     pImpactTimer2Ref.current = setTimeout(() => {
       pImpactTimer2Ref.current = null
       executeAttack2Hit(2)
     }, hit2Delay)
 
-    // 3. RECUPERACIÓN / FIN DE ANIMACIÓN: Al completarse la duración total de la animación
     pActionTimerRef.current = setTimeout(() => {
       pActionTimerRef.current = null
       isActionLockedRef.current = false
@@ -637,32 +814,38 @@ export function BattleDuelScene({
     }, totalDuration)
   }, [pChamp, rChamp, addFloatingText, triggerShake, triggerBlockTremor, registerCombo, handleBattleFinish])
 
-  // ACTION 3: Special / Ultimate Attack (Key: I)
-  const handleTriggerSpecial = useCallback(() => {
-    if (isActionLockedRef.current || pJumpTimerRef.current.active || battleEndedRef.current) return
+  // ACTION 3: Special / Ultimate Attack (Supports Dash Cancel)
+  const handleTriggerSpecial = useCallback((variant = 1) => {
+    const isDashing = pDashTimerRef.current?.active
+    if ((isActionLockedRef.current && !isDashing) || pJumpTimerRef.current.active || battleEndedRef.current) return
     isActionLockedRef.current = true
 
+    if (isDashing) {
+      pDashTimerRef.current.active = false
+      addFloatingText('player', '✨ DASH CANCEL SPECIAL!', 'buff')
+    }
+
+    const isVariant2 = variant === 2
+    const animKey = isVariant2 ? 'special2' : 'special'
     const pConfig = getChampionAnimConfig(pChamp.id)
-    const totalDuration = pConfig.durations.special
-    const impactDelay = pConfig.impactDelays?.special || Math.round(totalDuration / 2)
+    const totalDuration = pConfig.durations[animKey] || (isVariant2 ? 3264 : 3384)
+    const impactDelay = pConfig.impactDelays?.[animKey] || Math.round(totalDuration / 2)
 
     const nonce = Date.now()
     setPAnimNonce(nonce)
-    pAnimRef.current = 'special'
-    setPlayerAnim('special')
-    playChampSound(pChamp, 'special')
-    soundManager?.playCriticalHit?.()
-    soundManager?.playPurchaseFanfare?.()
+    pAnimRef.current = animKey
+    setPlayerAnim(animKey)
+    playChampSound(pChamp, animKey)
 
     if (pActionTimerRef.current) clearTimeout(pActionTimerRef.current)
     if (pImpactTimerRef.current) clearTimeout(pImpactTimerRef.current)
     if (pImpactTimer2Ref.current) clearTimeout(pImpactTimer2Ref.current)
+    if (pImpactTimer3Ref.current) clearTimeout(pImpactTimer3Ref.current)
 
-    // 1. IMPACT: Triggers at the MIDPOINT of the special animation (when the energy burst explodes)
+    // 1. IMPACT: Triggers at the strike moment of the special animation
     pImpactTimerRef.current = setTimeout(() => {
       pImpactTimerRef.current = null
 
-      // If player was interrupted by an incoming hit, cancel this strike!
       if (battleEndedRef.current || pAnimRef.current === 'hit' || pAnimRef.current === 'knockdown') {
         return
       }
@@ -670,10 +853,9 @@ export function BattleDuelScene({
       if (battleEndedRef.current) return
       const dist = Math.abs(pPosRef.current.x - rPosRef.current.x)
       const isFacing = (pFacingRef.current === 1 && pPosRef.current.x <= rPosRef.current.x) || (pFacingRef.current === -1 && pPosRef.current.x >= rPosRef.current.x)
-      const inRange = dist <= pConfig.hitboxes.special && isFacing
+      const inRange = getPixelDist(dist) <= ((pConfig.hitboxes[animKey] || 9.5) * 16.5) && isFacing
 
       if (inRange) {
-        // INTERRUPT: Special interrupts rival immediately!
         if (rImpactTimerRef.current) {
           clearTimeout(rImpactTimerRef.current)
           rImpactTimerRef.current = null
@@ -690,14 +872,18 @@ export function BattleDuelScene({
           addFloatingText('rival', '💥 ¡GUARDIA ROTA!', 'crit')
         }
 
-        const finalDmg = Math.round(pChamp.atk * 6.2 + Math.random() * 70)
+        const finalDmg = isVariant2
+          ? Math.round(pChamp.atk * 6.6 + Math.random() * 80)
+          : Math.round(pChamp.atk * 6.2 + Math.random() * 70)
 
         // Devastating knockback
         const pushDir = pFacingRef.current
-        rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + pushDir * 8))
+        rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + pushDir * 8.5))
         setRPosX(rPosRef.current.x)
 
-        const skillTitle = pChamp.id === 'luke' ? '¡SENTENCIA CELESTIAL!' : '¡FURIA DEL CAOS!'
+        const skillTitle = isVariant2
+          ? '¡ESTOCADA SÍSMICA!'
+          : (pChamp.id === 'valiria' ? '¡LANZA DEL DESTINO!' : '¡FURIA ASTRAL!')
         addFloatingText('rival', `🔥 -${finalDmg} ${skillTitle}`, 'crit')
         triggerShake(true)
         registerCombo()
@@ -732,89 +918,195 @@ export function BattleDuelScene({
       }
     }, impactDelay)
 
-    // 2. RECOVERY: When the full special burst finishes, unlock player actions and return to idle
     pActionTimerRef.current = setTimeout(() => {
       isActionLockedRef.current = false
       pActionTimerRef.current = null
-      if (!battleEndedRef.current && pAnimRef.current === 'special') {
+      if (!battleEndedRef.current && (pAnimRef.current === 'special' || pAnimRef.current === 'special2')) {
         pAnimRef.current = 'idle'
         setPlayerAnim('idle')
       }
     }, totalDuration)
   }, [pChamp, rChamp, addFloatingText, triggerShake, triggerBlockTremor, handleRivalDefend, registerCombo, handleBattleFinish])
 
-  // ACTION 4: Defend / Block (Key: O or Key: S)
+  // ACTION 4: Defend / Block (Key: O)
   const handleTriggerDefend = useCallback((isStart = true) => {
-    if (battleEndedRef.current || pJumpTimerRef.current.active) return
+    if (battleEndedRef.current || pJumpTimerRef.current.active || pDashTimerRef.current.active) return
     if (isStart) {
       if (isActionLockedRef.current) return
       if (isGuardingRef.current) return // Already guarding; ignore OS key repeat
 
       isGuardingRef.current = true
       setPAnimNonce(Date.now())
-      pAnimRef.current = 'defend'
-      setPlayerAnim('defend')
+      
+      const guardAnim = isCrouchingRef.current ? 'defend_down' : 'defend'
+      pAnimRef.current = guardAnim
+      setPlayerAnim(guardAnim)
+      playChampSound(pChamp, 'defend')
 
       if (pDefendTimerRef.current) clearTimeout(pDefendTimerRef.current)
       const pConfig = getChampionAnimConfig(pChamp.id)
-      const defendDuration = pConfig?.durations?.defend || 300
+      const defendDuration = pConfig?.durations?.[guardAnim] || 1176
 
       // Transition smoothly to frozen hold on the last frame once the animation reaches apex
       pDefendTimerRef.current = setTimeout(() => {
-        if (isGuardingRef.current && pAnimRef.current === 'defend') {
-          pAnimRef.current = 'defend_hold'
-          setPlayerAnim('defend_hold')
+        if (isGuardingRef.current && (pAnimRef.current === 'defend' || pAnimRef.current === 'defend_down')) {
+          pAnimRef.current = isCrouchingRef.current ? 'defend_down' : 'defend_hold'
+          setPlayerAnim(isCrouchingRef.current ? 'defend_down' : 'defend_hold')
         }
       }, defendDuration)
     } else {
       if (pDefendTimerRef.current) clearTimeout(pDefendTimerRef.current)
       isGuardingRef.current = false
-      if (!isActionLockedRef.current && !pJumpTimerRef.current.active && (pAnimRef.current === 'defend' || pAnimRef.current === 'defend_hold')) {
-        pAnimRef.current = 'idle'
-        setPlayerAnim('idle')
+      if (!isActionLockedRef.current && !pJumpTimerRef.current.active && !pDashTimerRef.current.active && (pAnimRef.current === 'defend' || pAnimRef.current === 'defend_hold' || pAnimRef.current === 'defend_down')) {
+        pAnimRef.current = isCrouchingRef.current ? 'defend_down' : 'idle'
+        setPlayerAnim(isCrouchingRef.current ? 'defend_down' : 'idle')
       }
     }
   }, [pChamp])
 
-  // JUMP (Key: Space or Key: W) - SYNCHRONIZED ~1.9s ARC & LANDING
-  const handleTriggerJump = useCallback(() => {
-    if (pJumpTimerRef.current.active || isActionLockedRef.current || battleEndedRef.current) return
+  // ACTION: Down / Crouch (Key: S or ArrowDown or Virtual D-Pad Down)
+  const handleTriggerDown = useCallback((isStart = true) => {
+    if (battleEndedRef.current || pJumpTimerRef.current.active || pDashTimerRef.current.active) return
+    if (isStart) {
+      if (isActionLockedRef.current) return
+      if (isCrouchingRef.current) return
+
+      isCrouchingRef.current = true
+      isGuardingRef.current = true
+      setPAnimNonce(Date.now())
+      pAnimRef.current = 'defend_down'
+      setPlayerAnim('defend_down')
+      playChampSound(pChamp, 'defend')
+    } else {
+      if (isCrouchingRef.current) {
+        isCrouchingRef.current = false
+        isGuardingRef.current = false
+        if (!isActionLockedRef.current && !pJumpTimerRef.current.active && !pDashTimerRef.current.active) {
+          pAnimRef.current = 'idle'
+          setPlayerAnim('idle')
+        }
+      }
+    }
+  }, [pChamp])
+
+  // DASH (Dash Front: 2x adelante | Dash Back: 2x atrás)
+  const handleTriggerDash = useCallback((type) => {
+    if (isActionLockedRef.current || battleEndedRef.current || isGuardingRef.current || pJumpTimerRef.current.active) return
 
     const pConfig = getChampionAnimConfig(pChamp.id)
-    const jumpDuration = pConfig.durations.jump
+    const duration = type === 'front'
+      ? (pConfig?.durations?.dash_front || 500)
+      : (pConfig?.durations?.dash_back || 500)
 
-    pJumpTimerRef.current = {
+    isActionLockedRef.current = true
+    pDashTimerRef.current = {
       active: true,
+      type,
       startTime: performance.now(),
-      duration: jumpDuration,
+      duration,
+      facingAtStart: pFacingRef.current,
     }
-    pPosRef.current.isJumping = true
 
-    const nonce = Date.now()
-    setPAnimNonce(nonce)
-    pAnimRef.current = 'jump'
-    setPlayerAnim('jump')
-    playChampSound(pChamp, 'jump')
-  }, [pChamp])
+    const animName = type === 'front' ? 'dash_front' : 'dash_back'
+    setPAnimNonce(Date.now())
+    pAnimRef.current = animName
+    setPlayerAnim(animName)
+    playChampSound(pChamp, animName)
+
+    addFloatingText('player', type === 'front' ? '⚡ DASH FRONTAL' : '💨 DASH TRASERO', 'buff')
+  }, [pChamp, addFloatingText])
+
+  // Double tap detector for horizontal directions (Left / Right)
+  const handleDirectionTap = useCallback((dirKey) => {
+    const now = performance.now()
+    const last = lastTapRef.current
+    const isDoubleTap = last.key === dirKey && (now - last.time) < 320
+
+    lastTapRef.current = { key: dirKey, time: now }
+
+    if (isDoubleTap) {
+      const facing = pFacingRef.current // 1 = facing right, -1 = facing left
+      const isForward = (facing === 1 && dirKey === 'right') || (facing === -1 && dirKey === 'left')
+      const isBackward = (facing === 1 && dirKey === 'left') || (facing === -1 && dirKey === 'right')
+
+      if (isForward) {
+        handleTriggerDash('front')
+        return true
+      } else if (isBackward) {
+        handleTriggerDash('back')
+        return true
+      }
+    }
+    return false
+  }, [handleTriggerDash])
+
+  // JUMP & DOUBLE JUMP (Key: Space or Key: W)
+  const handleTriggerJump = useCallback(() => {
+    if (isActionLockedRef.current || battleEndedRef.current || isGuardingRef.current || pDashTimerRef.current.active) return
+
+    const pConfig = getChampionAnimConfig(pChamp.id)
+    const baseJumpDuration = pConfig?.durations?.jump || 984
+
+    // FIRST JUMP FROM GROUND
+    if (!pJumpTimerRef.current.active || pJumpCountRef.current === 0) {
+      pJumpCountRef.current = 1
+      pJumpTimerRef.current = {
+        active: true,
+        count: 1,
+        startTime: performance.now(),
+        duration: baseJumpDuration,
+        apex: 38,
+      }
+      pPosRef.current.isJumping = true
+      setPAnimNonce(Date.now())
+      pAnimRef.current = 'jump'
+      setPlayerAnim('jump')
+      playChampSound(pChamp, 'jump')
+      return
+    }
+
+    // SECOND JUMP IN AIR (DOUBLE JUMP)
+    if (pJumpTimerRef.current.active && pJumpCountRef.current === 1) {
+      pJumpCountRef.current = 2
+      const currentY = pPosRef.current.y || 18
+      pJumpTimerRef.current = {
+        active: true,
+        count: 2,
+        startTime: performance.now(),
+        duration: baseJumpDuration * 0.88,
+        startY: currentY,
+        addedApex: 34,
+      }
+      setPAnimNonce(Date.now())
+      pAnimRef.current = 'jump'
+      setPlayerAnim('jump')
+      playChampSound(pChamp, 'jump')
+      addFloatingText('player', '¡DOBLE SALTO!', 'buff')
+    }
+  }, [pChamp, addFloatingText])
 
   // Mobile virtual joystick horizontal movement callback (-1 | 0 | 1)
   const handleJoystickMoveX = useCallback((dir) => {
     if (dir === -1) {
+      handleDirectionTap('left')
       keysDownRef.current['a'] = true
       keysDownRef.current['d'] = false
       setActiveKeys((prev) => ({ ...prev, a: true, d: false }))
     } else if (dir === 1) {
+      handleDirectionTap('right')
       keysDownRef.current['d'] = true
       keysDownRef.current['a'] = false
       setActiveKeys((prev) => ({ ...prev, d: true, a: false }))
     } else {
       keysDownRef.current['a'] = false
       keysDownRef.current['d'] = false
+      dirHoldStartRef.current = 0
+      isRunningRef.current = false
       setActiveKeys((prev) => ({ ...prev, a: false, d: false }))
     }
-  }, [])
+  }, [handleDirectionTap])
 
-  // Swap controlled champion (Luke <-> Malakor)
+  // Swap controlled champion (Valiria <-> Sombra)
   const handleSwapControlledChampion = () => {
     soundManager?.playClick?.()
     if (pActionTimerRef.current) clearTimeout(pActionTimerRef.current)
@@ -833,8 +1125,13 @@ export function BattleDuelScene({
     isActionLockedRef.current = false
     isGuardingRef.current = false
     isRivalGuardingRef.current = false
+    isCrouchingRef.current = false
     setBlockTremor(false)
     pJumpTimerRef.current = { active: false, startTime: 0, duration: 0 }
+    pJumpCountRef.current = 0
+    pDashTimerRef.current = { active: false, type: null, startTime: 0, duration: 0, facingAtStart: 1 }
+    dirHoldStartRef.current = 0
+    isRunningRef.current = false
 
     const tempP = pChamp
     const tempR = rChamp
@@ -842,11 +1139,16 @@ export function BattleDuelScene({
     setRChamp(tempP)
     setPlayerHp(tempR.hp || 5000)
     setRivalHp(tempP.hp || 4800)
-    pPosRef.current = { x: 41, y: 0, velY: 0, isJumping: false }
-    rPosRef.current = { x: 59, y: 0, velY: 0 }
-    setPPosX(41)
+    if (isTraining) {
+      setPlayerFury(100)
+      setRivalFury(50)
+      addFloatingText('player', `🎮 Controlando a ${tempR.name}`, 'buff')
+    }
+    pPosRef.current = { x: 30, y: 0, velY: 0, isJumping: false }
+    rPosRef.current = { x: 70, y: 0, velY: 0 }
+    setPPosX(30)
     setPPosY(0)
-    setRPosX(59)
+    setRPosX(70)
     setRPosY(0)
     pAnimRef.current = 'idle'
     rAnimRef.current = 'idle'
@@ -855,6 +1157,12 @@ export function BattleDuelScene({
     const now = Date.now()
     setPAnimNonce(now)
     setRAnimNonce(now)
+
+    if (isTraining && dummyAiModeRef.current === 'guard') {
+      setTimeout(() => {
+        handleRivalDefend(true)
+      }, 120)
+    }
   }
 
   // ==============================================================================
@@ -872,7 +1180,9 @@ export function BattleDuelScene({
         e.preventDefault()
         keysDownRef.current['space'] = true
         setActiveKeys((prev) => ({ ...prev, space: true }))
-        handleTriggerJump()
+        if (!e.repeat) {
+          handleTriggerJump()
+        }
         return
       }
 
@@ -880,18 +1190,26 @@ export function BattleDuelScene({
         e.preventDefault()
         keysDownRef.current['w'] = true
         setActiveKeys((prev) => ({ ...prev, w: true }))
-        handleTriggerJump()
+        if (!e.repeat) {
+          handleTriggerJump()
+        }
       } else if (key === 'a' || code === 'KeyA' || code === 'ArrowLeft') {
+        if (!e.repeat) {
+          handleDirectionTap('left')
+        }
         keysDownRef.current['a'] = true
         setActiveKeys((prev) => ({ ...prev, a: true }))
       } else if (key === 'd' || code === 'KeyD' || code === 'ArrowRight') {
+        if (!e.repeat) {
+          handleDirectionTap('right')
+        }
         keysDownRef.current['d'] = true
         setActiveKeys((prev) => ({ ...prev, d: true }))
       } else if (key === 's' || code === 'KeyS' || code === 'ArrowDown') {
         e.preventDefault()
         keysDownRef.current['s'] = true
         setActiveKeys((prev) => ({ ...prev, s: true }))
-        handleTriggerDefend(true)
+        handleTriggerDown(true)
       } else if (key === 'k' || code === 'KeyK') {
         keysDownRef.current['k'] = true
         setActiveKeys((prev) => ({ ...prev, k: true }))
@@ -903,11 +1221,31 @@ export function BattleDuelScene({
       } else if (key === 'i' || code === 'KeyI') {
         keysDownRef.current['i'] = true
         setActiveKeys((prev) => ({ ...prev, i: true }))
-        handleTriggerSpecial()
+        handleTriggerSpecial(1)
+      } else if (key === 'u' || code === 'KeyU') {
+        keysDownRef.current['u'] = true
+        setActiveKeys((prev) => ({ ...prev, u: true }))
+        handleTriggerSpecial(2)
       } else if (key === 'o' || code === 'KeyO') {
         keysDownRef.current['o'] = true
         setActiveKeys((prev) => ({ ...prev, o: true }))
         handleTriggerDefend(true)
+      } else if (key === 'e' || code === 'KeyE') {
+        keysDownRef.current['e'] = true
+        setActiveKeys((prev) => ({ ...prev, e: true }))
+        if (!e.repeat) {
+          // Si ve a la derecha (facing === 1), E es Dash Front. Si ve a la izquierda, E es Dash Back.
+          const facing = pFacingRef.current
+          handleTriggerDash(facing === 1 ? 'front' : 'back')
+        }
+      } else if (key === 'q' || code === 'KeyQ') {
+        keysDownRef.current['q'] = true
+        setActiveKeys((prev) => ({ ...prev, q: true }))
+        if (!e.repeat) {
+          // Si ve a la izquierda (facing === -1), Q es Dash Front. Si ve a la derecha, Q es Dash Back.
+          const facing = pFacingRef.current
+          handleTriggerDash(facing === -1 ? 'front' : 'back')
+        }
       }
     }
 
@@ -926,13 +1264,21 @@ export function BattleDuelScene({
       } else if (key === 'a' || code === 'KeyA' || code === 'ArrowLeft') {
         keysDownRef.current['a'] = false
         setActiveKeys((prev) => ({ ...prev, a: false }))
+        if (!keysDownRef.current['d']) {
+          dirHoldStartRef.current = 0
+          isRunningRef.current = false
+        }
       } else if (key === 'd' || code === 'KeyD' || code === 'ArrowRight') {
         keysDownRef.current['d'] = false
         setActiveKeys((prev) => ({ ...prev, d: false }))
+        if (!keysDownRef.current['a']) {
+          dirHoldStartRef.current = 0
+          isRunningRef.current = false
+        }
       } else if (key === 's' || code === 'KeyS' || code === 'ArrowDown') {
         keysDownRef.current['s'] = false
         setActiveKeys((prev) => ({ ...prev, s: false }))
-        handleTriggerDefend(false)
+        handleTriggerDown(false)
       } else if (key === 'k' || code === 'KeyK') {
         keysDownRef.current['k'] = false
         setActiveKeys((prev) => ({ ...prev, k: false }))
@@ -942,10 +1288,19 @@ export function BattleDuelScene({
       } else if (key === 'i' || code === 'KeyI') {
         keysDownRef.current['i'] = false
         setActiveKeys((prev) => ({ ...prev, i: false }))
+      } else if (key === 'u' || code === 'KeyU') {
+        keysDownRef.current['u'] = false
+        setActiveKeys((prev) => ({ ...prev, u: false }))
       } else if (key === 'o' || code === 'KeyO') {
         keysDownRef.current['o'] = false
         setActiveKeys((prev) => ({ ...prev, o: false }))
         handleTriggerDefend(false)
+      } else if (key === 'e' || code === 'KeyE') {
+        keysDownRef.current['e'] = false
+        setActiveKeys((prev) => ({ ...prev, e: false }))
+      } else if (key === 'q' || code === 'KeyQ') {
+        keysDownRef.current['q'] = false
+        setActiveKeys((prev) => ({ ...prev, q: false }))
       }
     }
 
@@ -956,7 +1311,7 @@ export function BattleDuelScene({
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
     }
-  }, [handleTriggerAttack1, handleTriggerAttack2, handleTriggerSpecial, handleTriggerDefend, handleTriggerJump])
+  }, [handleTriggerAttack1, handleTriggerAttack2, handleTriggerSpecial, handleTriggerDefend, handleTriggerDown, handleTriggerJump, handleDirectionTap])
 
   // ==============================================================================
   // 60 FPS REAL-TIME ARCADE PHYSICS & OPPONENT AI LOOP
@@ -970,85 +1325,172 @@ export function BattleDuelScene({
       lastTime = time
 
       if (!battleEndedRef.current) {
-        // 1. Player Horizontal Movement (A and D)
+        // 1. DASH PHYSICS EXECUTION (High-speed burst: Front or Back)
+        if (pDashTimerRef.current.active) {
+          const dash = pDashTimerRef.current
+          const elapsed = time - dash.startTime
+
+          if (elapsed < dash.duration) {
+            // Vuelo ágil sincronizado a 500ms total
+            const isLaunchActive = dash.type === 'front'
+              ? (elapsed >= 60 && elapsed <= (dash.duration * 0.85))
+              : (elapsed <= (dash.duration * 0.85))
+
+            if (isLaunchActive) {
+              const dashSpeed = 1.15
+              const dirMultiplier = dash.type === 'front' ? dash.facingAtStart : -dash.facingAtStart
+              const bodyBuffer = getDynamicBuffer()
+
+              if (dirMultiplier > 0) {
+                // Moving right
+                const maxX = (pPosRef.current.x < rPosRef.current.x)
+                  ? Math.min(94, rPosRef.current.x - bodyBuffer)
+                  : 94
+                pPosRef.current.x = Math.min(maxX, pPosRef.current.x + dashSpeed)
+              } else {
+                // Moving left
+                const minX = (pPosRef.current.x > rPosRef.current.x)
+                  ? Math.max(6, rPosRef.current.x + bodyBuffer)
+                  : 6
+                pPosRef.current.x = Math.max(minX, pPosRef.current.x - dashSpeed)
+              }
+            }
+          } else {
+            // Dash finished!
+            pDashTimerRef.current.active = false
+            isActionLockedRef.current = false
+
+            // Requirement: "el run pasa despues del dash"
+            // If the user continues holding the forward direction, seamlessly transition into RUN
+            const hasForwardHeld = (dash.facingAtStart === 1 && keysDownRef.current['d']) ||
+                                   (dash.facingAtStart === -1 && keysDownRef.current['a'])
+            if (dash.type === 'front' && hasForwardHeld) {
+              isRunningRef.current = true
+              pAnimRef.current = 'run'
+              setPlayerAnim('run')
+            } else if (keysDownRef.current['a'] || keysDownRef.current['d']) {
+              pAnimRef.current = isRunningRef.current ? 'run' : 'walk'
+              setPlayerAnim(pAnimRef.current)
+            } else {
+              isRunningRef.current = false
+              dirHoldStartRef.current = 0
+              pAnimRef.current = 'idle'
+              setPlayerAnim('idle')
+            }
+          }
+        }
+
+        // 2. PLAYER HORIZONTAL MOVEMENT (Walk & Run)
         const isJumping = pJumpTimerRef.current.active
-        // Ground speed: 0.55. Air speed: 0.18 (+15% air speed, prevents excessive flying while allowing agile repositions)
-        const moveSpeed = isJumping ? 0.18 : 0.55
+        const isDashing = pDashTimerRef.current.active
         let isMoving = false
 
-        // Can navigate horizontally if not locked by attack or guard
-        if (!isActionLockedRef.current && !isGuardingRef.current) {
-          const bodyBuffer = 3.6 // Minimum spacing to prevent ghost body clipping while on ground
-          if (keysDownRef.current['a']) {
-            const minX = (!isJumping && pPosRef.current.x > rPosRef.current.x)
-              ? Math.max(6, rPosRef.current.x + bodyBuffer)
-              : 6
-            pPosRef.current.x = Math.max(minX, pPosRef.current.x - moveSpeed)
+        if (!isActionLockedRef.current && !isGuardingRef.current && !isDashing) {
+          const bodyBuffer = getDynamicBuffer()
+          const leftPressed = keysDownRef.current['a']
+          const rightPressed = keysDownRef.current['d']
+
+          if (leftPressed || rightPressed) {
             isMoving = true
-            pFacingRef.current = -1
-          } else if (keysDownRef.current['d']) {
-            const maxX = (!isJumping && pPosRef.current.x < rPosRef.current.x)
-              ? Math.min(94, rPosRef.current.x - bodyBuffer)
-              : 94
-            pPosRef.current.x = Math.min(maxX, pPosRef.current.x + moveSpeed)
-            isMoving = true
-            pFacingRef.current = 1
+            if (dirHoldStartRef.current === 0) {
+              dirHoldStartRef.current = time
+            }
+
+            // Requirement: "o cuando despues de que el usuario tiene 2.5 segundos presionado el direccional"
+            const holdElapsed = time - dirHoldStartRef.current
+            if (holdElapsed >= 2500) {
+              isRunningRef.current = true
+            }
+
+            const currentSpeed = isJumping 
+              ? 0.22 
+              : (isRunningRef.current ? 0.72 : 0.40)
+
+            if (leftPressed && !rightPressed) {
+              const minX = (!isJumping && pPosRef.current.x > rPosRef.current.x)
+                ? Math.max(6, rPosRef.current.x + bodyBuffer)
+                : 6
+              pPosRef.current.x = Math.max(minX, pPosRef.current.x - currentSpeed)
+              pFacingRef.current = -1
+            } else if (rightPressed && !leftPressed) {
+              const maxX = (!isJumping && pPosRef.current.x < rPosRef.current.x)
+                ? Math.min(94, rPosRef.current.x - bodyBuffer)
+                : 94
+              pPosRef.current.x = Math.min(maxX, pPosRef.current.x + currentSpeed)
+              pFacingRef.current = 1
+            }
+          } else {
+            // No direction keys pressed
+            dirHoldStartRef.current = 0
+            isRunningRef.current = false
           }
         }
 
         // Automatic face-to-face orientation when stopping and on ground
-        if (!isMoving && !isJumping) {
+        if (!isMoving && !isJumping && !isDashing) {
           pFacingRef.current = pPosRef.current.x <= rPosRef.current.x ? 1 : -1
         }
         rFacingRef.current = rPosRef.current.x >= pPosRef.current.x ? -1 : 1
 
-        // Movement footsteps audio
-        if (isMoving && !isJumping) {
-          if (time - runSoundTimeRef.current > 380) {
+        // Movement footsteps audio (walk vs run)
+        if (isMoving && !isJumping && !isDashing) {
+          const stepInterval = isRunningRef.current ? 260 : 480
+          if (time - runSoundTimeRef.current > stepInterval) {
             runSoundTimeRef.current = time
-            playChampSound(pChamp, 'run')
+            playChampSound(pChamp, isRunningRef.current ? 'run' : 'walk')
           }
         }
 
-        // 2. Player Vertical Jump Physics & Full Animation Cycle (+15% height: 28px -> 32.2px)
+        // 3. PLAYER VERTICAL JUMP PHYSICS (Single & Double Jump)
         if (isJumping) {
-          const elapsed = time - pJumpTimerRef.current.startTime
-          const totalJumpDur = pJumpTimerRef.current.duration
+          const jumpData = pJumpTimerRef.current
+          const elapsed = time - jumpData.startTime
+          const totalJumpDur = jumpData.duration
 
           if (elapsed < totalJumpDur) {
-            // Calibrated athletic jump elevation:
-            // Combines baked-in vertical sprite frame rise with 32.2px CSS elevation apex
-            const anticipation = totalJumpDur * 0.09
-            const flightEnd = totalJumpDur * 0.78
-            if (elapsed < anticipation) {
-              pPosRef.current.y = 0
-            } else if (elapsed < flightEnd) {
-              const flightProgress = (elapsed - anticipation) / (flightEnd - anticipation)
-              pPosRef.current.y = Math.sin(flightProgress * Math.PI) * 32.2
+            if (jumpData.count === 1) {
+              // First jump from ground: anticipation -> sine arc -> landing
+              const anticipation = totalJumpDur * 0.08
+              const flightEnd = totalJumpDur * 0.82
+              if (elapsed < anticipation) {
+                pPosRef.current.y = 0
+              } else if (elapsed < flightEnd) {
+                const flightProgress = (elapsed - anticipation) / (flightEnd - anticipation)
+                pPosRef.current.y = Math.sin(flightProgress * Math.PI) * (jumpData.apex || 38)
+              } else {
+                pPosRef.current.y = 0
+              }
             } else {
-              pPosRef.current.y = 0
+              // Double jump in mid-air: additional upward impulse from mid-air Y
+              const progress = elapsed / totalJumpDur // 0 to 1
+              const impulse = Math.sin(progress * Math.PI) * (jumpData.addedApex || 34)
+              const startDecay = (jumpData.startY || 0) * (1 - progress * progress)
+              pPosRef.current.y = Math.max(0, impulse + startDecay)
             }
 
             // Lock animation strictly to 'jump' so it is never overwritten by movement
             pAnimRef.current = 'jump'
           } else {
-            // Jump completed its full ~1900ms cycle!
+            // Jump completed and landed!
             pJumpTimerRef.current.active = false
+            pJumpCountRef.current = 0
             pPosRef.current.isJumping = false
             pPosRef.current.y = 0
-            if (!isActionLockedRef.current && !isGuardingRef.current) {
-              pAnimRef.current = isMoving ? 'run' : 'idle'
+
+            if (!isActionLockedRef.current && !isGuardingRef.current && !pDashTimerRef.current.active) {
+              pAnimRef.current = isMoving ? (isRunningRef.current ? 'run' : 'walk') : 'idle'
               setPlayerAnim(pAnimRef.current)
             }
           }
         }
 
-        // 3. Update Player Animation State (Only when NOT locked by attack/hit/jump/guard)
-        if (!isActionLockedRef.current && !isGuardingRef.current && !pJumpTimerRef.current.active) {
+        // 4. UPDATE PLAYER ANIMATION STATE (Only when NOT locked by action/jump/guard/dash)
+        if (!isActionLockedRef.current && !isGuardingRef.current && !pJumpTimerRef.current.active && !pDashTimerRef.current.active) {
           if (isMoving) {
-            if (pAnimRef.current !== 'run') {
-              pAnimRef.current = 'run'
-              setPlayerAnim('run')
+            const nextAnim = isRunningRef.current ? 'run' : 'walk'
+            if (pAnimRef.current !== nextAnim) {
+              pAnimRef.current = nextAnim
+              setPlayerAnim(nextAnim)
             }
           } else {
             if (pAnimRef.current !== 'idle') {
@@ -1061,164 +1503,156 @@ export function BattleDuelScene({
         // 4. Rival Interactive AI (Moves, tracks and counters in close melee)
         const dist = Math.abs(pPosRef.current.x - rPosRef.current.x)
 
-        if (rAnimRef.current === 'idle' || rAnimRef.current === 'run') {
-          // Both are melee: rival aggressively closes the distance to close melee striking range (5.5%)
-          if (dist > 5.5) {
-            const dir = pPosRef.current.x < rPosRef.current.x ? -0.22 : 0.22
-            rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + dir))
-            if (rAnimRef.current !== 'run') {
-              rAnimRef.current = 'run'
-              setRivalAnim('run')
-            }
-          } else if (dist < 3.6) {
-            // Slight separation if overlapping bodies too closely
-            const dir = pPosRef.current.x < rPosRef.current.x ? 0.12 : -0.12
-            rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + dir))
-          } else {
-            if (rAnimRef.current !== 'idle') {
-              rAnimRef.current = 'idle'
-              setRivalAnim('idle')
-            }
+        if (isTraining && dummyAiModeRef.current === 'passive') {
+          // Training Dummy Mode: PASSIVE (Stays completely stationary in idle)
+          if (rAnimRef.current !== 'idle' && rAnimRef.current !== 'hit' && rAnimRef.current !== 'knockdown' && rAnimRef.current !== 'lose' && rAnimRef.current !== 'lose_hold') {
+            rAnimRef.current = 'idle'
+            setRivalAnim('idle')
           }
-        }
-
-        // Rival Tactical Guard AI Trigger (chance to guard for ~850ms when in close melee range)
-        if (time - rivalGuardTimerRef.current > 3400 && dist <= 5.8 && rAnimRef.current === 'idle' && !isRivalGuardingRef.current) {
-          rivalGuardTimerRef.current = time
-          if (Math.random() < 0.32) {
+        } else if (isTraining && dummyAiModeRef.current === 'guard') {
+          // Training Dummy Mode: GUARD (Holds shield defense continuously to practice breaking guard)
+          if (!isRivalGuardingRef.current && rAnimRef.current !== 'hit' && rAnimRef.current !== 'knockdown' && rAnimRef.current !== 'lose' && rAnimRef.current !== 'lose_hold') {
             handleRivalDefend(true)
-            setTimeout(() => {
-              if (!battleEndedRef.current && isRivalGuardingRef.current) {
-                handleRivalDefend(false)
-              }
-            }, 850)
           }
-        }
-
-        // Rival Attack AI Trigger (strikes every ~2.6s when strictly in close melee range <= 5.8%)
-        if (time - rivalAiTimerRef.current > 2600 && dist <= 5.8 && rAnimRef.current === 'idle' && !isRivalGuardingRef.current) {
-          rivalAiTimerRef.current = time
-          
-          const rConfig = getChampionAnimConfig(rChamp.id)
-          const rAttackDur = rConfig.durations.attack1
-          const rImpactDelay = rConfig.impactDelays?.attack1 || Math.round(rAttackDur / 2)
-
-          const rNonce = Date.now()
-          setRAnimNonce(rNonce)
-          rAnimRef.current = 'attack1'
-          setRivalAnim('attack1')
-          playChampSound(rChamp, 'attack1')
-          soundManager?.playEnemyAttack?.('orc')
-
-          if (rActionTimerRef.current) clearTimeout(rActionTimerRef.current)
-          if (rImpactTimerRef.current) clearTimeout(rImpactTimerRef.current)
-
-          // 1. Rival impact triggers at the MIDPOINT of the attack animation (when the blade hits)
-          rImpactTimerRef.current = setTimeout(() => {
-            rImpactTimerRef.current = null
-
-            // If rival was interrupted by a player hit, cancel rival's strike!
-            if (battleEndedRef.current || rAnimRef.current === 'hit' || rAnimRef.current === 'knockdown') {
-              return
-            }
-
-            if (battleEndedRef.current) return
-
-            const currentDist = Math.abs(pPosRef.current.x - rPosRef.current.x)
-            const currentRConfig = getChampionAnimConfig(rChamp.id)
-
-            // Strict melee verification at moment of impact: if player backed away, attack misses
-            if (currentDist > currentRConfig.hitboxes.attack1) {
-              addFloatingText('rival', '💨 ¡FALLADO!', 'heal')
-              return
-            }
-
-            // If player is airborne high, rival attack misses!
-            if (pPosRef.current.y > 14) {
-              addFloatingText('player', '💨 ¡ESQUIVADO!', 'heal')
-            } else if (isGuardingRef.current) {
-              // Player shields the attack! Bilateral recoil & pushback
-              const blockDmg = 25
-              addFloatingText('player', `🛡️ BLOQUEO! -${blockDmg}`, 'block')
-              soundManager?.playShieldBlock?.()
-              triggerShake(false)
-              triggerBlockTremor()
-
-              // Bilateral pushback & recoil:
-              // Push Player (defender) backward away from Rival
-              const pPushDir = pPosRef.current.x <= rPosRef.current.x ? -1 : 1
-              pPosRef.current.x = Math.max(8, Math.min(94, pPosRef.current.x + pPushDir * 3.2))
-              setPPosX(pPosRef.current.x)
-
-              // Recoil Rival (attacker) backward away from Player
-              rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x - pPushDir * 2.6))
-              setRPosX(rPosRef.current.x)
-
-              setRivalFury((f) => Math.min(100, f + 8))
-
-              setPlayerHp((prev) => {
-                const next = Math.max(0, prev - blockDmg)
-                if (next <= 0) {
-                  handleBattleFinish('defeat')
-                }
-                return next
-              })
+        } else {
+          // Standard Sparring & Real Arena Combat AI
+          if (rAnimRef.current === 'idle' || rAnimRef.current === 'run') {
+            const pxDist = getPixelDist(dist)
+            // Both are melee: rival closes the distance to striking range (~115px)
+            if (pxDist > 115) {
+              const dir = pPosRef.current.x < rPosRef.current.x ? -0.22 : 0.22
+              rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + dir))
+              if (rAnimRef.current !== 'run') {
+                rAnimRef.current = 'run'
+                setRivalAnim('run')
+              }
+            } else if (pxDist < 96) {
+              // Slight separation if overlapping bodies too closely
+              const dir = pPosRef.current.x < rPosRef.current.x ? 0.12 : -0.12
+              rPosRef.current.x = Math.max(8, Math.min(94, rPosRef.current.x + dir))
             } else {
-              // Direct hit on player: INTERRUPT player's pending attack!
-              if (pImpactTimerRef.current) {
-                clearTimeout(pImpactTimerRef.current)
-                pImpactTimerRef.current = null
+              if (rAnimRef.current !== 'idle') {
+                rAnimRef.current = 'idle'
+                setRivalAnim('idle')
               }
-              if (pImpactTimer2Ref.current) {
-                clearTimeout(pImpactTimer2Ref.current)
-                pImpactTimer2Ref.current = null
-              }
-              if (pActionTimerRef.current) {
-                clearTimeout(pActionTimerRef.current)
-                pActionTimerRef.current = null
-              }
-
-              const hitDmg = Math.round(rChamp.atk * 1.5 + Math.random() * 25)
-              addFloatingText('player', `-${hitDmg}`, 'damage')
-              triggerShake(false)
-              playChampSound(pChamp, 'hit')
-
-              const pConfig = getChampionAnimConfig(pChamp.id)
-              const pHitDur = pConfig.durations.hit
-
-              isActionLockedRef.current = true
-              setPAnimNonce(Date.now())
-              pAnimRef.current = 'hit'
-              setPlayerAnim('hit')
-
-              setPlayerHp((prev) => {
-                const next = Math.max(0, prev - hitDmg)
-                if (next <= 0) {
-                  handleBattleFinish('defeat')
-                }
-                else {
-                  if (pHitTimerRef.current) clearTimeout(pHitTimerRef.current)
-                  pHitTimerRef.current = setTimeout(() => {
-                    isActionLockedRef.current = false
-                    if (!battleEndedRef.current && pAnimRef.current === 'hit') {
-                      pAnimRef.current = 'idle'
-                      setPlayerAnim('idle')
-                    }
-                  }, pHitDur)
-                }
-                return next
-              })
             }
-          }, rImpactDelay)
+          }
 
-          // 2. Rival recovery: returns to idle when the full attack animation finishes
-          rActionTimerRef.current = setTimeout(() => {
-            rActionTimerRef.current = null
-            if (!battleEndedRef.current && rAnimRef.current === 'attack1') {
-              rAnimRef.current = 'idle'
-              setRivalAnim('idle')
+          // Rival Tactical Guard AI Trigger (chance to guard for ~850ms when in striking range)
+          if (time - rivalGuardTimerRef.current > 3400 && getPixelDist(dist) <= 125 && rAnimRef.current === 'idle' && !isRivalGuardingRef.current) {
+            rivalGuardTimerRef.current = time
+            if (Math.random() < 0.32) {
+              handleRivalDefend(true)
+              setTimeout(() => {
+                if (!battleEndedRef.current && isRivalGuardingRef.current) {
+                  handleRivalDefend(false)
+                }
+              }, 850)
             }
-          }, rAttackDur)
+          }
+
+          // Rival Attack AI Trigger (strikes every ~2.6s when strictly in striking range)
+          if (time - rivalAiTimerRef.current > 2600 && getPixelDist(dist) <= 125 && rAnimRef.current === 'idle' && !isRivalGuardingRef.current) {
+            rivalAiTimerRef.current = time
+            
+            const rConfig = getChampionAnimConfig(rChamp.id)
+            const rAttackDur = rConfig.durations.attack1
+            const rImpactDelay = rConfig.impactDelays?.attack1 || Math.round(rAttackDur / 2)
+
+            const rNonce = Date.now()
+            setRAnimNonce(rNonce)
+            rAnimRef.current = 'attack1'
+            setRivalAnim('attack1')
+            playChampSound(rChamp, 'attack1')
+
+            if (rActionTimerRef.current) clearTimeout(rActionTimerRef.current)
+            if (rImpactTimerRef.current) clearTimeout(rImpactTimerRef.current)
+
+            // 1. Rival impact triggers at the MIDPOINT of the attack animation (when the blade hits)
+            rImpactTimerRef.current = setTimeout(() => {
+              rImpactTimerRef.current = null
+
+              // If rival was interrupted by a player hit, cancel rival's strike!
+              if (battleEndedRef.current || rAnimRef.current === 'hit' || rAnimRef.current === 'knockdown') {
+                return
+              }
+
+              if (battleEndedRef.current) return
+
+              const currentDist = Math.abs(pPosRef.current.x - rPosRef.current.x)
+              if (getPixelDist(currentDist) > 125) {
+                // Missed because player jumped or moved away
+                return
+              }
+
+              if (isGuardingRef.current) {
+                // Player blocked with shield: -80% damage
+                const blockedDmg = Math.max(1, Math.round(rChamp.atk * 0.3 + Math.random() * 8))
+                addFloatingText('player', `🛡️ -${blockedDmg} BLOQUEADO`, 'block')
+                soundManager?.playShieldBlock?.()
+                triggerBlockTremor()
+                setPlayerHp((prev) => {
+                  const next = Math.max(0, prev - blockedDmg)
+                  if (next <= 0) handleBattleFinish('defeat')
+                  return next
+                })
+              } else {
+                // Direct hit on player: INTERRUPT player's pending attack!
+                if (pImpactTimerRef.current) {
+                  clearTimeout(pImpactTimerRef.current)
+                  pImpactTimerRef.current = null
+                }
+                if (pImpactTimer2Ref.current) {
+                  clearTimeout(pImpactTimer2Ref.current)
+                  pImpactTimer2Ref.current = null
+                }
+                if (pActionTimerRef.current) {
+                  clearTimeout(pActionTimerRef.current)
+                  pActionTimerRef.current = null
+                }
+
+                const hitDmg = Math.round(rChamp.atk * 1.5 + Math.random() * 25)
+                addFloatingText('player', `-${hitDmg}`, 'damage')
+                triggerShake(false)
+                playChampSound(pChamp, 'hit')
+
+                const pConfig = getChampionAnimConfig(pChamp.id)
+                const pHitDur = pConfig.durations.hit
+
+                isActionLockedRef.current = true
+                setPAnimNonce(Date.now())
+                pAnimRef.current = 'hit'
+                setPlayerAnim('hit')
+
+                setPlayerHp((prev) => {
+                  const next = Math.max(0, prev - hitDmg)
+                  if (next <= 0) {
+                    handleBattleFinish('defeat')
+                  }
+                  else {
+                    if (pHitTimerRef.current) clearTimeout(pHitTimerRef.current)
+                    pHitTimerRef.current = setTimeout(() => {
+                      isActionLockedRef.current = false
+                      if (!battleEndedRef.current && pAnimRef.current === 'hit') {
+                        pAnimRef.current = 'idle'
+                        setPlayerAnim('idle')
+                      }
+                    }, pHitDur)
+                  }
+                  return next
+                })
+              }
+            }, rImpactDelay)
+
+            // 2. Rival recovery: returns to idle when the full attack animation finishes
+            rActionTimerRef.current = setTimeout(() => {
+              rActionTimerRef.current = null
+              if (!battleEndedRef.current && rAnimRef.current === 'attack1') {
+                rAnimRef.current = 'idle'
+                setRivalAnim('idle')
+              }
+            }, rAttackDur)
+          }
         }
 
         // Commit coordinates to state for smooth transform updates
@@ -1254,7 +1688,7 @@ export function BattleDuelScene({
 
   // Distances & health percentages
   const liveDist = Math.abs(pPosX - rPosX)
-  const isInStrikingRange = liveDist <= 5.8
+  const isInStrikingRange = getPixelDist(liveDist) <= 125
   const pHealthPercent = Math.max(0, Math.round((playerHp / maxPlayerHp) * 100))
   const rHealthPercent = Math.max(0, Math.round((rivalHp / maxRivalHp) * 100))
 
@@ -1266,31 +1700,101 @@ export function BattleDuelScene({
       <div className="battle-map-horizon-fog" />
 
       {/* TOP BAR HUD */}
-      <header className="battle-hud-top">
+      <header className={`battle-hud-top ${isTraining ? 'is-training-bar' : ''}`}>
         {/* Left: Exit button */}
         <button 
           id="btn-exit-battle"
           className="battle-exit-btn"
           onClick={handleExitClick}
-          title="Salir de la escena de batalla"
+          title={isTraining ? "Salir del Dojo de Entrenamiento" : "Salir de la escena de batalla"}
         >
           <ArrowLeft size={18} />
           <span>Salir</span>
         </button>
 
-        {/* Center: Fighter Control Info & Swap */}
-        <div className="battle-center-header-badge">
-          <button 
-            type="button"
-            className="battle-swap-ctrl-btn"
-            onClick={handleSwapControlledChampion}
-            title="Haz clic para alternar el luchador que controlas"
-          >
-            <RefreshCw size={13} className="swap-icon" />
-            <span>Luchador Activo: <strong>{pChamp.name}</strong></span>
-            <span className="swap-hint-tag">Cambiar</span>
-          </button>
-        </div>
+        {isTraining ? (
+          <div className="training-toolbar-center">
+            <div className="training-title-tag">
+              <span className="training-belt-icon">🥋</span>
+              <span className="training-title-text">DOJO</span>
+            </div>
+
+            {/* Dummy AI Mode Selectors */}
+            <div className="training-ai-modes">
+              <button
+                type="button"
+                className={`training-mode-btn ${dummyAiMode === 'passive' ? 'is-active' : ''}`}
+                onClick={() => handleSelectDummyMode('passive')}
+                title="Modo Pasivo: El rival no se mueve ni ataca (Dummy de práctica)"
+              >
+                🛑 Pasivo
+              </button>
+              <button
+                type="button"
+                className={`training-mode-btn ${dummyAiMode === 'guard' ? 'is-active' : ''}`}
+                onClick={() => handleSelectDummyMode('guard')}
+                title="Modo Guardia: El rival bloquea continuamente para practicar romper defensa"
+              >
+                🛡️ Guardia
+              </button>
+              <button
+                type="button"
+                className={`training-mode-btn ${dummyAiMode === 'sparring' ? 'is-active' : ''}`}
+                onClick={() => handleSelectDummyMode('sparring')}
+                title="Modo Sparring: El rival se mueve y ataca como en combate real"
+              >
+                ⚔️ Sparring
+              </button>
+            </div>
+
+            {/* Training Action Tools */}
+            <div className="training-quick-tools">
+              <button 
+                type="button"
+                className="training-tool-btn btn-reset"
+                onClick={handleResetTrainingFighters}
+                title="Restaurar vida, furia y posiciones de los campeones"
+              >
+                <RotateCcw size={13} />
+                <span>Reset</span>
+              </button>
+
+              <button 
+                type="button"
+                className="training-tool-btn btn-swap"
+                onClick={handleSwapControlledChampion}
+                title={`Cambiar control para manejar a ${rChamp.name}`}
+              >
+                <RefreshCw size={13} />
+                <span>Luchador: <strong>{pChamp.name}</strong></span>
+              </button>
+
+              <button 
+                type="button"
+                className="training-tool-btn btn-moves"
+                onClick={() => setShowMoveList(true)}
+                title="Ver guía completa de movimientos y comandos de los campeones"
+              >
+                <BookOpen size={13} />
+                <span>Guía</span>
+              </button>
+            </div>
+          </div>
+        ) : (
+          /* Normal Match Center: Fighter Control Info & Swap */
+          <div className="battle-center-header-badge">
+            <button 
+              type="button"
+              className="battle-swap-ctrl-btn"
+              onClick={handleSwapControlledChampion}
+              title="Haz clic para alternar el luchador que controlas"
+            >
+              <RefreshCw size={13} className="swap-icon" />
+              <span>Luchador Activo: <strong>{pChamp.name}</strong></span>
+              <span className="swap-hint-tag">Cambiar</span>
+            </button>
+          </div>
+        )}
 
         {/* Right: Sound Control */}
         <button 
@@ -1397,21 +1901,14 @@ export function BattleDuelScene({
               }}
             />
             <div className="fighter-aura-glow" style={{ background: pChamp.color }} />
-            {(() => {
-              const visual = getFighterVisual(pChamp, playerAnim)
-              const isAction = ['attack1', 'attack2', 'special', 'jump', 'hit', 'defend', 'defend_hold', 'knockdown', 'victory', 'lose', 'lose_hold'].includes(playerAnim)
-              const src = isAction ? `${visual}?v=${pAnimNonce}` : visual
-              return (
-                <img 
-                  key={`${pChamp.id}-${playerAnim}-${isAction ? pAnimNonce : 'loop'}`}
-                  src={src} 
-                  alt={pChamp.name} 
-                  className={`fighter-idle-sprite player-sprite state-${playerAnim}`}
-                  style={{ transform: `scaleX(${pFacing})` }}
-                  draggable="false" 
-                />
-              )
-            })()}
+            <SeamlessSprite 
+              src={getFighterVisual(pChamp, playerAnim)} 
+              alt={pChamp.name} 
+              className={`fighter-idle-sprite player-sprite state-${playerAnim}`}
+              facing={pFacing}
+              anim={playerAnim}
+              draggable={false} 
+            />
           </div>
 
           <div className="fighter-pedestal-label">
@@ -1445,21 +1942,14 @@ export function BattleDuelScene({
               }}
             />
             <div className="fighter-aura-glow" style={{ background: rChamp.color }} />
-            {(() => {
-              const visual = getFighterVisual(rChamp, rivalAnim)
-              const isAction = ['attack1', 'attack2', 'special', 'jump', 'hit', 'defend', 'defend_hold', 'knockdown', 'victory', 'lose', 'lose_hold'].includes(rivalAnim)
-              const src = isAction ? `${visual}?v=${rAnimNonce}` : visual
-              return (
-                <img 
-                  key={`${rChamp.id}-${rivalAnim}-${isAction ? rAnimNonce : 'loop'}`}
-                  src={src} 
-                  alt={rChamp.name} 
-                  className={`fighter-idle-sprite rival-sprite state-${rivalAnim}`}
-                  style={{ transform: `scaleX(${rFacing})` }}
-                  draggable="false" 
-                />
-              )
-            })()}
+            <SeamlessSprite 
+              src={getFighterVisual(rChamp, rivalAnim)} 
+              alt={rChamp.name} 
+              className={`fighter-idle-sprite rival-sprite state-${rivalAnim}`}
+              facing={rFacing}
+              anim={rivalAnim}
+              draggable={false} 
+            />
           </div>
 
           <div className="fighter-pedestal-label rival-pedestal">
@@ -1473,13 +1963,14 @@ export function BattleDuelScene({
       {/* ==================================================================== */}
       <footer className="battle-action-dock arcade-dock">
         <div className="arcade-controller-wrapper">
-          {/* MOBILE: VIRTUAL TOUCH JOYSTICK (60 FPS Analog Left/Right/Jump/Guard) */}
+          {/* MOBILE: VIRTUAL TOUCH JOYSTICK (60 FPS Analog Left/Right/Jump/Crouch) */}
           <div className="arcade-mobile-joystick-wrap">
             <VirtualJoystick
               onMoveX={handleJoystickMoveX}
               onJump={handleTriggerJump}
-              onDefend={handleTriggerDefend}
+              onDefend={handleTriggerDown}
               disabled={battleOutcome !== null}
+              size={screenMetrics.isMobile ? (screenMetrics.isLandscape ? 92 : 88) : 118}
             />
           </div>
 
@@ -1497,7 +1988,7 @@ export function BattleDuelScene({
                   className={`arcade-btn dpad-btn btn-w ${activeKeys.w ? 'is-pressed' : ''}`}
                   onMouseDown={handleTriggerJump}
                   onTouchStart={handleTriggerJump}
-                  title="Salto / Impulso (W / Flecha Arriba)"
+                  title="Salto / Doble Salto (W / Flecha Arriba)"
                 >
                   <span className="arcade-key-badge">W</span>
                   <ChevronUp size={16} />
@@ -1510,22 +2001,32 @@ export function BattleDuelScene({
                   type="button"
                   className={`arcade-btn dpad-btn btn-a ${activeKeys.a ? 'is-pressed' : ''}`}
                   onMouseDown={() => {
+                    handleDirectionTap('left')
                     keysDownRef.current['a'] = true
                     setActiveKeys((prev) => ({ ...prev, a: true }))
                   }}
                   onMouseUp={() => {
                     keysDownRef.current['a'] = false
                     setActiveKeys((prev) => ({ ...prev, a: false }))
+                    if (!keysDownRef.current['d']) {
+                      dirHoldStartRef.current = 0
+                      isRunningRef.current = false
+                    }
                   }}
                   onTouchStart={() => {
+                    handleDirectionTap('left')
                     keysDownRef.current['a'] = true
                     setActiveKeys((prev) => ({ ...prev, a: true }))
                   }}
                   onTouchEnd={() => {
                     keysDownRef.current['a'] = false
                     setActiveKeys((prev) => ({ ...prev, a: false }))
+                    if (!keysDownRef.current['d']) {
+                      dirHoldStartRef.current = 0
+                      isRunningRef.current = false
+                    }
                   }}
-                  title="Mover a la Izquierda (A / Flecha Izq)"
+                  title="Mover Izq / 2x Dash Atrás (A / Flecha Izq)"
                 >
                   <span className="arcade-key-badge">A</span>
                   <ChevronLeft size={16} />
@@ -1534,11 +2035,11 @@ export function BattleDuelScene({
                 <button
                   type="button"
                   className={`arcade-btn dpad-btn btn-s ${activeKeys.s ? 'is-pressed' : ''}`}
-                  onMouseDown={() => handleTriggerDefend(true)}
-                  onMouseUp={() => handleTriggerDefend(false)}
-                  onTouchStart={() => handleTriggerDefend(true)}
-                  onTouchEnd={() => handleTriggerDefend(false)}
-                  title="Agacharse / Guardia (S / Flecha Abajo)"
+                  onMouseDown={() => handleTriggerDown(true)}
+                  onMouseUp={() => handleTriggerDown(false)}
+                  onTouchStart={() => handleTriggerDown(true)}
+                  onTouchEnd={() => handleTriggerDown(false)}
+                  title="Agacharse / Guardia Baja (S / Flecha Abajo)"
                 >
                   <span className="arcade-key-badge">S</span>
                   <ChevronDown size={16} />
@@ -1548,22 +2049,32 @@ export function BattleDuelScene({
                   type="button"
                   className={`arcade-btn dpad-btn btn-d ${activeKeys.d ? 'is-pressed' : ''}`}
                   onMouseDown={() => {
+                    handleDirectionTap('right')
                     keysDownRef.current['d'] = true
                     setActiveKeys((prev) => ({ ...prev, d: true }))
                   }}
                   onMouseUp={() => {
                     keysDownRef.current['d'] = false
                     setActiveKeys((prev) => ({ ...prev, d: false }))
+                    if (!keysDownRef.current['a']) {
+                      dirHoldStartRef.current = 0
+                      isRunningRef.current = false
+                    }
                   }}
                   onTouchStart={() => {
+                    handleDirectionTap('right')
                     keysDownRef.current['d'] = true
                     setActiveKeys((prev) => ({ ...prev, d: true }))
                   }}
                   onTouchEnd={() => {
                     keysDownRef.current['d'] = false
                     setActiveKeys((prev) => ({ ...prev, d: false }))
+                    if (!keysDownRef.current['a']) {
+                      dirHoldStartRef.current = 0
+                      isRunningRef.current = false
+                    }
                   }}
-                  title="Mover a la Derecha (D / Flecha Der)"
+                  title="Mover Der / 2x Dash Frontal (D / Flecha Der)"
                 >
                   <span className="arcade-key-badge">D</span>
                   <ChevronRight size={16} />
@@ -1610,12 +2121,98 @@ export function BattleDuelScene({
           {/* RIGHT: COMBAT ACTIONS (K, L, I, O) + MOBILE JUMP */}
           <div className="arcade-cluster arcade-actions-cluster">
             <div className="arcade-cluster-title">
-              <span>ACCIONES • K L I O</span>
+              <span>ACCIONES • U I K L O</span>
             </div>
 
             <div className="arcade-actions-diamond">
-              {/* TOP: I (Special Attack) + Mobile Jump */}
+              {/* TOP: U (Special 2 - Seismic Thrust) + I (Special 1 - Celestial Slash) */}
               <div className="action-row action-row-top">
+                <button
+                  type="button"
+                  className={`arcade-action-btn btn-special-u ${activeKeys.u ? 'is-pressed' : ''} ${playerFury >= 100 ? 'is-ready' : ''}`}
+                  onClick={() => handleTriggerSpecial(2)}
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'touch') {
+                      e.preventDefault()
+                      handleTriggerSpecial(2)
+                    }
+                  }}
+                  title="Especial 2: Estocada Sísmica con Ondas (Tecla U)"
+                >
+                  <div className="action-key-header">
+                    <span className="arcade-key-badge badge-gold">U</span>
+                    <Zap size={15} style={{ color: '#fbbf24' }} />
+                  </div>
+                  <span className="action-btn-title">SÍSMICA</span>
+                  <span className="action-btn-sub">Onda Choque</span>
+                </button>
+
+                <button
+                  type="button"
+                  className={`arcade-action-btn btn-special-i ${activeKeys.i ? 'is-pressed' : ''} ${playerFury >= 100 ? 'is-ready' : ''}`}
+                  onClick={() => handleTriggerSpecial(1)}
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'touch') {
+                      e.preventDefault()
+                      handleTriggerSpecial(1)
+                    }
+                  }}
+                  title="Especial 1: Lanza Celestial / Tajo de Luz (Tecla I)"
+                >
+                  <div className="action-key-header">
+                    <span className="arcade-key-badge badge-red">I</span>
+                    <Flame size={15} className="flame-pulse-icon" />
+                  </div>
+                  <span className="action-btn-title">CELESTIAL</span>
+                  <span className="action-btn-sub">Tajo de Luz</span>
+                </button>
+              </div>
+
+              {/* MIDDLE: K (Attack 1 - Spear Combo) and L (Attack 2 - Kick Combo) */}
+              <div className="action-row action-row-mid">
+                <button
+                  type="button"
+                  className={`arcade-action-btn btn-attack1-k ${activeKeys.k ? 'is-pressed' : ''}`}
+                  onClick={handleTriggerAttack1}
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'touch') {
+                      e.preventDefault()
+                      handleTriggerAttack1()
+                    }
+                  }}
+                  title="Ataque 1: Combo de Lanza 3 Golpes (Tecla K)"
+                >
+                  <div className="action-key-header">
+                    <span className="arcade-key-badge badge-blue">K</span>
+                    <Swords size={15} />
+                  </div>
+                  <span className="action-btn-title">LANZA</span>
+                  <span className="action-btn-sub">Combo 3 Golpes</span>
+                </button>
+
+                <button
+                  type="button"
+                  className={`arcade-action-btn btn-attack2-l ${activeKeys.l ? 'is-pressed' : ''}`}
+                  onClick={handleTriggerAttack2}
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'touch') {
+                      e.preventDefault()
+                      handleTriggerAttack2()
+                    }
+                  }}
+                  title="Ataque 2: Combo de Patadas (Tecla L)"
+                >
+                  <div className="action-key-header">
+                    <span className="arcade-key-badge badge-amber">L</span>
+                    <Zap size={15} />
+                  </div>
+                  <span className="action-btn-title">PATADAS</span>
+                  <span className="action-btn-sub">Combo Ágil</span>
+                </button>
+              </div>
+
+              {/* BOTTOM: Jump (Mobile) + O (Defend / Shield) */}
+              <div className="action-row action-row-bot">
                 {/* Mobile Jump Button */}
                 <button
                   type="button"
@@ -1636,72 +2233,6 @@ export function BattleDuelScene({
 
                 <button
                   type="button"
-                  className={`arcade-action-btn btn-special-i ${activeKeys.i ? 'is-pressed' : ''} ${playerFury >= 100 ? 'is-ready' : ''}`}
-                  onClick={handleTriggerSpecial}
-                  onPointerDown={(e) => {
-                    if (e.pointerType === 'touch') {
-                      e.preventDefault()
-                      handleTriggerSpecial()
-                    }
-                  }}
-                  title="Ataque Especial Furia del Caos (Tecla I)"
-                >
-                  <div className="action-key-header">
-                    <span className="arcade-key-badge badge-red">I</span>
-                    <Flame size={15} className="flame-pulse-icon" />
-                  </div>
-                  <span className="action-btn-title">ESPECIAL</span>
-                  <span className="action-btn-sub">Furia Caos</span>
-                </button>
-              </div>
-
-              {/* MIDDLE: K (Attack 1) and L (Attack 2) */}
-              <div className="action-row action-row-mid">
-                <button
-                  type="button"
-                  className={`arcade-action-btn btn-attack1-k ${activeKeys.k ? 'is-pressed' : ''}`}
-                  onClick={handleTriggerAttack1}
-                  onPointerDown={(e) => {
-                    if (e.pointerType === 'touch') {
-                      e.preventDefault()
-                      handleTriggerAttack1()
-                    }
-                  }}
-                  title="Ataque 1: Combo Ligero (Tecla K)"
-                >
-                  <div className="action-key-header">
-                    <span className="arcade-key-badge badge-blue">K</span>
-                    <Swords size={15} />
-                  </div>
-                  <span className="action-btn-title">ATAQUE 1</span>
-                  <span className="action-btn-sub">Combo Ágil</span>
-                </button>
-
-                <button
-                  type="button"
-                  className={`arcade-action-btn btn-attack2-l ${activeKeys.l ? 'is-pressed' : ''}`}
-                  onClick={handleTriggerAttack2}
-                  onPointerDown={(e) => {
-                    if (e.pointerType === 'touch') {
-                      e.preventDefault()
-                      handleTriggerAttack2()
-                    }
-                  }}
-                  title="Ataque 2: Tajo Pesado (Tecla L)"
-                >
-                  <div className="action-key-header">
-                    <span className="arcade-key-badge badge-amber">L</span>
-                    <Zap size={15} />
-                  </div>
-                  <span className="action-btn-title">ATAQUE 2</span>
-                  <span className="action-btn-sub">Tajo Fuerte</span>
-                </button>
-              </div>
-
-              {/* BOTTOM: O (Defend / Shield) */}
-              <div className="action-row action-row-bot">
-                <button
-                  type="button"
                   className={`arcade-action-btn btn-defend-o ${activeKeys.o ? 'is-pressed' : ''}`}
                   onMouseDown={() => handleTriggerDefend(true)}
                   onMouseUp={() => handleTriggerDefend(false)}
@@ -1713,14 +2244,14 @@ export function BattleDuelScene({
                     e.preventDefault()
                     handleTriggerDefend(false)
                   }}
-                  title="Defensa Táctica / Bloqueo con Escudo (Tecla O)"
+                  title="Guardia y Bloqueo (Tecla O / Agacharse + O para Guardia Baja)"
                 >
                   <div className="action-key-header">
                     <span className="arcade-key-badge badge-cyan">O</span>
                     <Shield size={15} />
                   </div>
-                  <span className="action-btn-title">DEFENSA</span>
-                  <span className="action-btn-sub">Guardia -80%</span>
+                  <span className="action-btn-title">GUARDIA</span>
+                  <span className="action-btn-sub">Bloqueo -80%</span>
                 </button>
               </div>
             </div>
@@ -1766,6 +2297,170 @@ export function BattleDuelScene({
                 <ArrowLeft size={18} />
                 <span>Continuar</span>
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* DOJO COMMAND SHEET / MOVE LIST MODAL */}
+        {showMoveList && (
+          <div className="battle-movelist-overlay" onClick={() => setShowMoveList(false)}>
+            <div className="battle-movelist-modal" onClick={(e) => e.stopPropagation()}>
+              <header className="movelist-modal-header">
+                <div className="movelist-header-left">
+                  <BookOpen size={22} className="movelist-icon" />
+                  <div>
+                    <h2 className="movelist-title">GUÍA DE COMBATE • DOJO DE CAMPEONES</h2>
+                    <span className="movelist-subtitle">Manual de combate de Valiria (Ángel Valquiria)</span>
+                  </div>
+                </div>
+                <button 
+                  type="button"
+                  className="movelist-close-btn"
+                  onClick={() => setShowMoveList(false)}
+                  title="Cerrar guía"
+                >
+                  <X size={20} />
+                </button>
+              </header>
+
+              <div className="movelist-modal-body">
+                {/* Champions Showcase */}
+                <div className="movelist-champions-grid">
+                  {/* Valiria */}
+                  <div className={`movelist-champ-card ${pChamp.id === 'valiria' ? 'is-active-champ' : ''}`}>
+                    <div className="movelist-champ-header">
+                      <div className="movelist-champ-avatar">
+                        <img src="/assets/champions/valiria_avatar.webp" alt="Valiria" />
+                      </div>
+                      <div>
+                        <h3 className="movelist-champ-name" style={{ color: '#38bdf8' }}>Valiria</h3>
+                        <span className="movelist-champ-role">Ángel Valquiria • Ágil & Letal</span>
+                      </div>
+                      {pChamp.id === 'valiria' && <span className="movelist-active-tag">En Control</span>}
+                    </div>
+                    <ul className="movelist-attacks-list">
+                      <li>
+                        <div className="movelist-cmd-badge">K (Ataque 1)</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Combo de Lanza (3 Golpes):</strong> Secuencia fluida de estocadas y cortes con la lanza sagrada.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge">L (Ataque 2)</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Combo de Patadas (2 Golpes):</strong> Cadena acrobática de patadas rápidas para romper guardias.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge badge-fury">I (Especial 1)</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Lanza Celestial (Tajo de Luz):</strong> Salto y tajo descendente masivo de fuego sagrado.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge badge-fury">U (Especial 2)</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Estocada Sísmica:</strong> Clava la lanza con fuerza creando ondas de choque expansivas en el suelo.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge">O / S + O</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Guardia Alta / Baja:</strong> Bloquea ataques de pie o agachada absorbiendo el 80% del daño.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge">2x Adelante / Atrás</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Dash Frontal / Trasero:</strong> Ráfaga de velocidad instantánea o salto evasivo.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge">W / Espacio (x2)</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Doble Salto:</strong> Salto acrobático inicial y un segundo impulso aéreo inmediato.
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Sombra de Valiria */}
+                  <div className={`movelist-champ-card ${pChamp.id !== 'valiria' ? 'is-active-champ' : ''}`}>
+                    <div className="movelist-champ-header">
+                      <div className="movelist-champ-avatar">
+                        <img src="/assets/champions/valiria_avatar.webp" alt="Sombra de Valiria" style={{ filter: 'hue-rotate(270deg)' }} />
+                      </div>
+                      <div>
+                        <h3 className="movelist-champ-name" style={{ color: '#c084fc' }}>Sombra de Valiria</h3>
+                        <span className="movelist-champ-role">Espejo Astral • Sparring Partner</span>
+                      </div>
+                      {pChamp.id !== 'valiria' && <span className="movelist-active-tag">En Control</span>}
+                    </div>
+                    <ul className="movelist-attacks-list">
+                      <li>
+                        <div className="movelist-cmd-badge">Modos IA</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Sparring / Guardia / Pasivo:</strong> Selecciona el comportamiento del muñeco de prueba.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge">🔄 Cambiar</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Intercambio Inmediato:</strong> Toma el control directo del rival con el botón superior.
+                        </div>
+                      </li>
+                      <li>
+                        <div className="movelist-cmd-badge badge-fury">I (100% Furia)</div>
+                        <div className="movelist-cmd-info">
+                          <strong>Ira Astral:</strong> Descarga de energía etérea para probar defensas y contragolpes.
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Universal Controls Section */}
+                <div className="movelist-universal-grid">
+                  <div className="movelist-box">
+                    <h4 className="movelist-box-title">⌨️ Controles de Teclado (PC)</h4>
+                    <div className="movelist-keys-table">
+                      <div className="key-row"><span className="kbd-badge">A / D</span> o <span className="kbd-badge">← / →</span><span>Desplazamiento horizontal (Caminar / Correr)</span></div>
+                      <div className="key-row"><span className="kbd-badge">Espacio</span> o <span className="kbd-badge">W</span><span>Salto evasivo acrobático</span></div>
+                      <div className="key-row"><span className="kbd-badge">S</span><span>Agacharse (Posición baja evasiva)</span></div>
+                      <div className="key-row"><span className="kbd-badge">K</span><span>Ataque 1: Combo de Lanza (3 impactos)</span></div>
+                      <div className="key-row"><span className="kbd-badge">L</span><span>Ataque 2: Combo de Patadas (2 impactos)</span></div>
+                      <div className="key-row"><span className="kbd-badge">I</span><span>Especial 1: Lanza Celestial / Tajo de Luz (100% Furia)</span></div>
+                      <div className="key-row"><span className="kbd-badge">U</span><span>Especial 2: Estocada Sísmica con Ondas (100% Furia)</span></div>
+                      <div className="key-row"><span className="kbd-badge">O</span><span>Guardia Táctica / Bloqueo (-80% daño; S+O guardia baja)</span></div>
+                    </div>
+                  </div>
+
+                  <div className="movelist-box">
+                    <h4 className="movelist-box-title">📱 Controles Móviles (Táctil)</h4>
+                    <div className="movelist-keys-table">
+                      <div className="key-row"><span className="kbd-badge">Joystick Virtual</span><span>Desliza a la izquierda o derecha para moverte</span></div>
+                      <div className="key-row"><span className="kbd-badge">Botón Salto</span><span>Salto acrobático evasivo</span></div>
+                      <div className="key-row"><span className="kbd-badge">Botonera Derecha</span><span>Acceso directo a K (Golpe), L (Combo), I (Especial) y O (Guardia)</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tactical Tips */}
+                <div className="movelist-tips-box">
+                  <div className="tip-item">
+                    <span className="tip-badge">🛡️ Romper Guardia</span>
+                    <p>Si el rival se protege con escudo (Modo Guardia), la técnica especial (I) romperá su guardia y lo derribará.</p>
+                  </div>
+                  <div className="tip-item">
+                    <span className="tip-badge">⚡ Prioridad e Interrupción</span>
+                    <p>Golpear con Ataque 1 justo cuando el rival inicia su animación cancela su acción por completo.</p>
+                  </div>
+                  <div className="tip-item">
+                    <span className="tip-badge">👥 Alternar Campeón</span>
+                    <p>Puedes alternar el control en cualquier momento con el botón superior para practicar con ambos lados.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -63,7 +63,7 @@ export function resolveInitialLanguage() {
 
   if (typeof window !== 'undefined') {
     try {
-      const saved = normalizeLanguageCode(localStorage.getItem('toc_game_lang'))
+      const saved = normalizeLanguageCode(localStorage.getItem('toc_game_lang')) || normalizeLanguageCode(localStorage.getItem('toc_language'))
       if (saved) return saved
     } catch {
       // Ignore storage errors
@@ -119,6 +119,7 @@ export function LanguageProvider({ children }) {
     if (typeof window !== 'undefined') {
       try {
         localStorage.setItem('toc_game_lang', normalized)
+        localStorage.setItem('toc_language', normalized)
       } catch {
         // Storage failover
       }

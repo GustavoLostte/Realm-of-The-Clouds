@@ -1,0 +1,793 @@
+/* ChampionActor.css - Reusable Champion Presentation & Controller */
+
+.champion-actor-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ============================================================
+   TOP-LEFT MMORPG STATUS HUD (User Mockup Design)
+   ============================================================ */
+.champion-actor-hud {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  user-select: none;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.85));
+  -webkit-filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.85));
+}
+
+/* Avatar Box with Bronze Double Frame */
+.champion-hud-avatar-box {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 45% 45%, #2a1e18 0%, #150e0a 100%);
+  border: 3px solid #231610;
+  box-shadow: 
+    0 0 0 3px #b89379,
+    inset 0 0 0 2px #382319,
+    0 4px 12px rgba(0, 0, 0, 0.9);
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+.champion-hud-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+/* Level Tag in Bottom-Right of Avatar (Clear & Unobscured) */
+.champion-hud-level-tag {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  z-index: 5;
+  background: radial-gradient(circle at 40% 35%, #4a342a 0%, #2b1d16 65%, #160e0a 100%);
+  border: 1.5px solid #d4af37;
+  border-radius: 10px;
+  padding: 2.5px 7px;
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.champion-hud-level-tag .champion-hud-level-num {
+  color: #f7d36a;
+}
+
+/* Badge Token (Crown) in Top-Left of Avatar */
+.champion-hud-badge-token {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #4a342a 0%, #2b1d16 65%, #160e0a 100%);
+  border: 2px solid #000000;
+  box-shadow: 
+    inset 0 0 0 2px #826049,
+    inset 0 0 0 3px #1f120c,
+    0 3px 6px rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  flex-shrink: 0;
+}
+
+.champion-hud-badge-token span {
+  font-size: 0.95rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+  -webkit-filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+/* Right Info Section */
+.champion-hud-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Name */
+.champion-hud-name-row {
+  display: flex;
+  align-items: center;
+}
+
+.champion-hud-name {
+  color: #f7e6d0;
+  font-family: 'Outfit', 'Nunito', system-ui, sans-serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.4px;
+  -webkit-text-stroke: 1.5px #3a2216;
+  paint-order: stroke fill;
+  text-shadow:
+    -1.5px -1.5px 0 #28170e,
+     1.5px -1.5px 0 #28170e,
+    -1.5px  1.5px 0 #28170e,
+     1.5px  1.5px 0 #28170e,
+     0px 2.5px 5px rgba(0, 0, 0, 0.95);
+}
+
+/* Dual Status Bars Frame */
+.champion-hud-bars-frame {
+  width: 250px;
+  background: #18110e;
+  border: 2px solid #231610;
+  box-shadow: 
+    0 0 0 2px #b89379,
+    inset 0 0 0 1.5px #2b1a12,
+    0 4px 10px rgba(0, 0, 0, 0.85);
+  border-radius: 7px;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* HP Bar */
+.champion-hud-hp-bar {
+  position: relative;
+  height: 20px;
+  background: #2b140e;
+  border-radius: 4px;
+  border: 1.5px solid #140d09;
+  overflow: hidden;
+}
+
+.champion-hud-hp-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #ff4c36 0%, #e6251b 50%, #b21414 100%);
+  box-shadow: 
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.55),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.5);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* MP Bar */
+.champion-hud-mp-bar {
+  position: relative;
+  height: 20px;
+  background: #0d1926;
+  border-radius: 4px;
+  border: 1.5px solid #09111a;
+  overflow: hidden;
+}
+
+.champion-hud-mp-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 50%, #0284c7 100%);
+  box-shadow: 
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.55),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.5);
+  transition: width 0.25s ease;
+}
+
+/* Text Overlay on Bars */
+.champion-hud-bar-labels {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.champion-hud-label-type {
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 0.84rem;
+  line-height: 1;
+  -webkit-text-stroke: 1.2px #000000;
+  paint-order: stroke fill;
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+.champion-hud-label-value {
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 0.84rem;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  -webkit-text-stroke: 1.2px #000000;
+  paint-order: stroke fill;
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+/* Skills Row */
+.champion-hud-exp-bar {
+  position: relative;
+  height: 14px;
+  background: #180b26;
+  border-radius: 3px;
+  border: 1px solid #10061c;
+  overflow: hidden;
+  margin-top: 1px;
+}
+
+.champion-hud-exp-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #c084fc 0%, #a855f7 50%, #7e22ce 100%);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.champion-hud-exp-bar .champion-hud-label-type {
+  font-size: 0.65rem;
+  color: #f5d0fe;
+}
+
+.champion-hud-exp-bar .champion-hud-label-value {
+  font-size: 0.65rem;
+  color: #fdf4ff;
+}
+
+.champion-hud-skills-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1px;
+}
+
+.champion-hud-skill-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #1c1410;
+  border: 2px solid #231610;
+  box-shadow: 
+    0 0 0 1.5px #8c674e,
+    inset 0 0 4px rgba(0, 0, 0, 0.8),
+    0 3px 6px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.champion-hud-skill-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Playfield Sprite Node */
+.champion-actor-node {
+  position: absolute;
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+/* Ground Contact Shadow for Champions */
+.champion-actor-ground-shadow {
+  position: absolute;
+  left: 50%;
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.65);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.11);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.82) 0%, rgba(14, 10, 18, 0.55) 45%, rgba(0, 0, 0, 0) 75%);
+  filter: blur(2.5px);
+  -webkit-filter: blur(2.5px);
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+.champion-actor-sprite-wrap {
+  position: relative;
+  height: var(--dungeon-sprite-height, 21dvh);
+  aspect-ratio: 16 / 9;
+  width: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2;
+  transform-origin: center bottom;
+  overflow: visible;
+}
+
+.champion-actor-sprite {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-origin: center bottom;
+  overflow: visible;
+}
+
+.champion-actor-sprite img,
+.champion-actor-sprite-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: center bottom;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* MMORPG Overhead Health Bar & Nameplate (Exact Reference Design - 100% Proportional Desktop/Mobile) */
+.champion-actor-overhead {
+  position: absolute;
+  bottom: calc(88% + 6px); /* Snug clearance above hair without floating */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.champion-overhead-name {
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', system-ui, -apple-system, sans-serif;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.088);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.3px;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-text-stroke: clamp(1px, calc(var(--dungeon-sprite-height, 21dvh) * 0.009), 2px) #000000;
+  paint-order: stroke fill;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.95);
+}
+
+.champion-overhead-level {
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', system-ui, -apple-system, sans-serif;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.072);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.2px;
+  text-align: center;
+  white-space: nowrap;
+  margin-top: calc(var(--dungeon-sprite-height, 21dvh) * 0.008);
+  margin-bottom: calc(var(--dungeon-sprite-height, 21dvh) * 0.015);
+  -webkit-text-stroke: clamp(0.8px, calc(var(--dungeon-sprite-height, 21dvh) * 0.007), 1.6px) #000000;
+  paint-order: stroke fill;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.95);
+}
+
+.champion-overhead-bar-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.62);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.11);
+}
+
+.champion-overhead-medallion {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.125);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.125);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #423024 0%, #281d16 100%);
+  border: clamp(1px, calc(var(--dungeon-sprite-height, 21dvh) * 0.01), 2.2px) solid #9e8767;
+  box-shadow: 
+    0 0 0 clamp(1px, calc(var(--dungeon-sprite-height, 21dvh) * 0.007), 1.5px) #000000,
+    0 2px 5px rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+.champion-overhead-medallion span {
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', system-ui, -apple-system, sans-serif;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.055);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  -webkit-text-stroke: clamp(0.5px, calc(var(--dungeon-sprite-height, 21dvh) * 0.005), 1px) #000000;
+  paint-order: stroke fill;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.champion-overhead-bar-frame {
+  margin-left: calc(var(--dungeon-sprite-height, 21dvh) * 0.065); /* Tucks behind medallion */
+  flex: 1;
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.075);
+  background: #231610;
+  border: clamp(1px, calc(var(--dungeon-sprite-height, 21dvh) * 0.009), 2px) solid #000000;
+  border-radius: calc(var(--dungeon-sprite-height, 21dvh) * 0.018);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.champion-overhead-hp-track {
+  height: 68%;
+  background: #231610;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.champion-overhead-hp-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #d62c1b 0%, #b82a1e 100%) !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.champion-overhead-fury-track {
+  height: 32%;
+  background: #1a120d;
+  border-top: clamp(0.5px, calc(var(--dungeon-sprite-height, 21dvh) * 0.005), 1.2px) solid #000000;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.champion-overhead-fury-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #f0cc66 0%, #d4a64a 100%) !important;
+  box-shadow: 
+    inset 0 0.5px 0.5px rgba(255, 255, 255, 0.65),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.5);
+  transition: width 0.25s ease;
+}
+
+/* Floating Action Banners (Hardware Composited, Zero Blur Overhead) */
+.champion-actor-banner {
+  position: absolute;
+  top: -82px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 30;
+  display: none;
+  will-change: transform, opacity;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.champion-actor-banner.active {
+  animation: championBannerFloat 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.champion-actor-banner.attack1,
+.champion-actor-banner.attack1_1,
+.champion-actor-banner.attack2_1 {
+  background: rgba(234, 179, 8, 0.95);
+  color: #1a1a2e;
+  border: 1px solid #fde047;
+}
+
+.champion-actor-banner.attack2,
+.champion-actor-banner.attack1_2,
+.champion-actor-banner.attack2_2 {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: #ffffff;
+  border: 1px solid #fed7aa;
+}
+
+.champion-actor-banner.attack1_3 {
+  background: linear-gradient(135deg, #ef4444, #f59e0b);
+  color: #ffffff;
+  border: 1px solid #fef08a;
+  font-size: 0.95rem;
+}
+
+.champion-actor-banner.special {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #ffffff;
+  border: 1px solid #7dd3fc;
+}
+
+.champion-actor-banner.special2 {
+  background: linear-gradient(135deg, #f59e0b, #ec4899);
+  color: #ffffff;
+  border: 1px solid #fbcfe8;
+}
+
+.champion-actor-banner.defend {
+  background: rgba(59, 130, 246, 0.9);
+  color: #ffffff;
+  border: 1px solid #93c5fd;
+}
+
+@keyframes championBannerFloat {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  25% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  85% {
+    opacity: 1;
+    transform: translate3d(0, -12px, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -22px, 0);
+  }
+}
+
+/* Controller Dock (Bottom of Scene) */
+.champion-actor-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px 24px 14px;
+  pointer-events: none;
+  background: transparent; /* Crystal clear floor view - no dark occlusion */
+}
+
+.champion-dpad-wrap {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.champion-dpad-btn {
+  background: rgba(18, 24, 46, 0.85);
+  border: 1.5px solid rgba(246, 211, 101, 0.45);
+  color: #ffffff;
+  min-width: 52px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.75rem;
+  gap: 2px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.champion-dpad-btn:hover {
+  background: rgba(246, 211, 101, 0.25);
+  border-color: #f6d365;
+  transform: translateY(-2px);
+}
+
+.champion-dpad-btn:active {
+  background: rgba(246, 211, 101, 0.45);
+  transform: translateY(1px) scale(0.95);
+}
+
+.champion-dpad-btn span {
+  font-size: 0.65rem;
+  color: rgba(246, 211, 101, 0.85);
+}
+
+/* Center Guide */
+.champion-controls-hint {
+  pointer-events: auto;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.78rem;
+  background: rgba(10, 14, 28, 0.75);
+  border: 1px solid rgba(246, 211, 101, 0.25);
+  padding: 6px 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.champion-controls-hint kbd {
+  background: rgba(246, 211, 101, 0.25);
+  border: 1px solid rgba(246, 211, 101, 0.6);
+  color: #f6d365;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin: 0 2px;
+}
+
+/* Action Buttons */
+.champion-actions-wrap {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.champion-action-btn {
+  background: rgba(18, 24, 46, 0.85);
+  border: 1.5px solid rgba(246, 211, 101, 0.45);
+  color: #ffffff;
+  min-width: 60px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.76rem;
+  gap: 2px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.champion-action-btn:hover {
+  transform: translateY(-3px);
+}
+
+.champion-action-btn:active {
+  transform: translateY(1px) scale(0.95);
+}
+
+.champion-action-btn.attack {
+  border-color: #eab308;
+}
+.champion-action-btn.attack:hover {
+  background: rgba(234, 179, 8, 0.3);
+  box-shadow: 0 4px 16px rgba(234, 179, 8, 0.5);
+}
+
+.champion-action-btn.heavy {
+  border-color: #f97316;
+}
+.champion-action-btn.heavy:hover {
+  background: rgba(249, 115, 22, 0.3);
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.5);
+}
+
+.champion-action-btn.special {
+  border-color: #38bdf8;
+}
+.champion-action-btn.special:hover {
+  background: rgba(56, 189, 248, 0.3);
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.5);
+}
+
+.champion-action-btn.ultimate {
+  border-color: #ec4899;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(245, 158, 11, 0.2));
+}
+.champion-action-btn.ultimate:hover {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.35), rgba(245, 158, 11, 0.35));
+  box-shadow: 0 4px 18px rgba(236, 72, 153, 0.6);
+}
+
+.champion-action-btn.defend {
+  border-color: #3b82f6;
+}
+.champion-action-btn.defend:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.champion-action-btn span {
+  font-size: 0.65rem;
+  color: rgba(246, 211, 101, 0.85);
+}
+
+@media (max-width: 768px) and (min-height: 521px) {
+  .champion-actor-hud {
+    top: 64px;
+    left: 12px;
+    padding: 6px 12px 6px 6px;
+  }
+  .champion-actor-avatar-frame {
+    width: 44px;
+    height: 44px;
+  }
+  .champion-controls-hint {
+    display: none;
+  }
+  .champion-actor-controls {
+    padding: 6px 12px 10px;
+  }
+  .champion-dpad-btn {
+    min-width: 44px;
+    height: 44px;
+  }
+  .champion-action-btn {
+    min-width: 48px;
+    height: 46px;
+  }
+  .champion-actor-nameplate {
+    top: 8px;
+    font-size: 0.65rem;
+  }
+  .champion-actor-banner {
+    top: -14px;
+    font-size: 0.78rem;
+  }
+}
+
+/* Mobile Landscape (e.g. iPhone, Android in horizontal gaming mode) */
+@media (max-height: 540px) {
+  .champion-actor-hud {
+    top: 8px !important;
+    left: 12px !important;
+    transform-origin: top left;
+    transform: scale(0.70);
+  }
+
+  .champion-actor-banner {
+    top: -50px;
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-height: 410px) {
+  .champion-actor-hud {
+    top: 6px !important;
+    left: 8px !important;
+    transform: scale(0.62);
+  }
+}
+

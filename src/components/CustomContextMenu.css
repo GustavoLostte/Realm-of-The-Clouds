@@ -45,6 +45,7 @@
 .custom-context-brand .brand-icon {
   color: #38bdf8;
   filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+  -webkit-filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
   animation: brandPulse 2.5s ease-in-out infinite alternate;
 }
 
@@ -61,6 +62,7 @@
   text-transform: uppercase;
   background: linear-gradient(135deg, #bae6fd 0%, #0ea5e9 50%, #0284c7 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -124,6 +126,7 @@
 .custom-context-btn.primary-link .item-icon {
   color: #38bdf8;
   filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
+  -webkit-filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
 }
 
 .custom-context-btn .btn-labels {

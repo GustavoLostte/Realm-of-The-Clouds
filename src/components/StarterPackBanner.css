@@ -60,6 +60,7 @@
   height: 30px;
   object-fit: contain;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
 
 .banner-badge-discount {

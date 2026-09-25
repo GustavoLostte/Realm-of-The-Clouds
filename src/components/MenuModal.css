@@ -216,6 +216,7 @@
 .candy-action-btn.primary:hover {
   transform: translateY(-2px);
   filter: brightness(1.08);
+  -webkit-filter: brightness(1.08);
 }
 
 .candy-action-btn.secondary {
@@ -371,6 +372,7 @@
   height: 56px;
   margin: 0 auto 10px;
   filter: drop-shadow(0 4px 12px rgba(14, 165, 233, 0.5));
+  -webkit-filter: drop-shadow(0 4px 12px rgba(14, 165, 233, 0.5));
 }
 
 .game-info-title {

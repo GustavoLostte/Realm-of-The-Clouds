@@ -100,6 +100,9 @@ export async function preloadPixiAssets() {
     '/assets/npcs/spritesheets/worker_walk_back.json',
     '/assets/npcs/spritesheets/comandante_idle.json',
     '/assets/npcs/spritesheets/soldado_vigia_idle.json',
+    '/assets/npcs/spritesheets/heraldo_idle.json',
+    '/assets/buildings/dirigible/dirigible_idle.json',
+    '/assets/buildings/dirigible/dirigible_poster.webp',
     '/assets/map/map_base_1080p.webp',
   ]
 

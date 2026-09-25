@@ -87,6 +87,7 @@
   height: 42px;
   object-fit: contain;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.75));
+  -webkit-filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.75));
   pointer-events: none;
   transition: transform 0.2s ease;
 }

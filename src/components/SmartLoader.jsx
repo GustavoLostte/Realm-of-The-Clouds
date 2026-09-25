@@ -82,7 +82,7 @@ export function SmartLoader({
       }
     }
     return {
-      title: title || 'REINO DE LAS NUBES',
+      title: title || 'REALM OF KINGDOM',
       subtitle: subtitle || t('loader.loadingCity') || 'Construyendo la Ciudadela...',
       icon: null,
     }
@@ -122,7 +122,7 @@ export function SmartLoader({
           {variant === 'city' ? (
             <img 
               src="/assets/logo/logo.webp" 
-              alt="Reino de las Nubes" 
+              alt="Realm of Kingdom" 
               className="smart-loader-logo"
               draggable="false"
             />

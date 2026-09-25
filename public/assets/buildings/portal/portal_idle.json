@@ -1,0 +1,1615 @@
+{
+  "frames": {
+    "portal_idle_000": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_001": {
+      "frame": {
+        "x": 196,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_002": {
+      "frame": {
+        "x": 392,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_003": {
+      "frame": {
+        "x": 588,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_004": {
+      "frame": {
+        "x": 784,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_005": {
+      "frame": {
+        "x": 980,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_006": {
+      "frame": {
+        "x": 1176,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_007": {
+      "frame": {
+        "x": 1372,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_008": {
+      "frame": {
+        "x": 1568,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_009": {
+      "frame": {
+        "x": 1764,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_010": {
+      "frame": {
+        "x": 0,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_011": {
+      "frame": {
+        "x": 196,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_012": {
+      "frame": {
+        "x": 392,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_013": {
+      "frame": {
+        "x": 588,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_014": {
+      "frame": {
+        "x": 784,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_015": {
+      "frame": {
+        "x": 980,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_016": {
+      "frame": {
+        "x": 1176,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_017": {
+      "frame": {
+        "x": 1372,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_018": {
+      "frame": {
+        "x": 1568,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_019": {
+      "frame": {
+        "x": 1764,
+        "y": 214,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_020": {
+      "frame": {
+        "x": 0,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_021": {
+      "frame": {
+        "x": 196,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_022": {
+      "frame": {
+        "x": 392,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_023": {
+      "frame": {
+        "x": 588,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_024": {
+      "frame": {
+        "x": 784,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_025": {
+      "frame": {
+        "x": 980,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_026": {
+      "frame": {
+        "x": 1176,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_027": {
+      "frame": {
+        "x": 1372,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_028": {
+      "frame": {
+        "x": 1568,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_029": {
+      "frame": {
+        "x": 1764,
+        "y": 428,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_030": {
+      "frame": {
+        "x": 0,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_031": {
+      "frame": {
+        "x": 196,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_032": {
+      "frame": {
+        "x": 392,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_033": {
+      "frame": {
+        "x": 588,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_034": {
+      "frame": {
+        "x": 784,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_035": {
+      "frame": {
+        "x": 980,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_036": {
+      "frame": {
+        "x": 1176,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_037": {
+      "frame": {
+        "x": 1372,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_038": {
+      "frame": {
+        "x": 1568,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_039": {
+      "frame": {
+        "x": 1764,
+        "y": 642,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_040": {
+      "frame": {
+        "x": 0,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_041": {
+      "frame": {
+        "x": 196,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_042": {
+      "frame": {
+        "x": 392,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_043": {
+      "frame": {
+        "x": 588,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_044": {
+      "frame": {
+        "x": 784,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_045": {
+      "frame": {
+        "x": 980,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_046": {
+      "frame": {
+        "x": 1176,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_047": {
+      "frame": {
+        "x": 1372,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_048": {
+      "frame": {
+        "x": 1568,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_049": {
+      "frame": {
+        "x": 1764,
+        "y": 856,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_050": {
+      "frame": {
+        "x": 0,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_051": {
+      "frame": {
+        "x": 196,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_052": {
+      "frame": {
+        "x": 392,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_053": {
+      "frame": {
+        "x": 588,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_054": {
+      "frame": {
+        "x": 784,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_055": {
+      "frame": {
+        "x": 980,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_056": {
+      "frame": {
+        "x": 1176,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_057": {
+      "frame": {
+        "x": 1372,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_058": {
+      "frame": {
+        "x": 1568,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_059": {
+      "frame": {
+        "x": 1764,
+        "y": 1070,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_060": {
+      "frame": {
+        "x": 0,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_061": {
+      "frame": {
+        "x": 196,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_062": {
+      "frame": {
+        "x": 392,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_063": {
+      "frame": {
+        "x": 588,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_064": {
+      "frame": {
+        "x": 784,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_065": {
+      "frame": {
+        "x": 980,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_066": {
+      "frame": {
+        "x": 1176,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_067": {
+      "frame": {
+        "x": 1372,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_068": {
+      "frame": {
+        "x": 1568,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_069": {
+      "frame": {
+        "x": 1764,
+        "y": 1284,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_070": {
+      "frame": {
+        "x": 0,
+        "y": 1498,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_071": {
+      "frame": {
+        "x": 196,
+        "y": 1498,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_072": {
+      "frame": {
+        "x": 392,
+        "y": 1498,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_073": {
+      "frame": {
+        "x": 588,
+        "y": 1498,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_074": {
+      "frame": {
+        "x": 784,
+        "y": 1498,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    },
+    "portal_idle_075": {
+      "frame": {
+        "x": 980,
+        "y": 1498,
+        "w": 196,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 196,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 196,
+        "h": 214
+      }
+    }
+  },
+  "animations": {
+    "play": [
+      "portal_idle_000",
+      "portal_idle_001",
+      "portal_idle_002",
+      "portal_idle_003",
+      "portal_idle_004",
+      "portal_idle_005",
+      "portal_idle_006",
+      "portal_idle_007",
+      "portal_idle_008",
+      "portal_idle_009",
+      "portal_idle_010",
+      "portal_idle_011",
+      "portal_idle_012",
+      "portal_idle_013",
+      "portal_idle_014",
+      "portal_idle_015",
+      "portal_idle_016",
+      "portal_idle_017",
+      "portal_idle_018",
+      "portal_idle_019",
+      "portal_idle_020",
+      "portal_idle_021",
+      "portal_idle_022",
+      "portal_idle_023",
+      "portal_idle_024",
+      "portal_idle_025",
+      "portal_idle_026",
+      "portal_idle_027",
+      "portal_idle_028",
+      "portal_idle_029",
+      "portal_idle_030",
+      "portal_idle_031",
+      "portal_idle_032",
+      "portal_idle_033",
+      "portal_idle_034",
+      "portal_idle_035",
+      "portal_idle_036",
+      "portal_idle_037",
+      "portal_idle_038",
+      "portal_idle_039",
+      "portal_idle_040",
+      "portal_idle_041",
+      "portal_idle_042",
+      "portal_idle_043",
+      "portal_idle_044",
+      "portal_idle_045",
+      "portal_idle_046",
+      "portal_idle_047",
+      "portal_idle_048",
+      "portal_idle_049",
+      "portal_idle_050",
+      "portal_idle_051",
+      "portal_idle_052",
+      "portal_idle_053",
+      "portal_idle_054",
+      "portal_idle_055",
+      "portal_idle_056",
+      "portal_idle_057",
+      "portal_idle_058",
+      "portal_idle_059",
+      "portal_idle_060",
+      "portal_idle_061",
+      "portal_idle_062",
+      "portal_idle_063",
+      "portal_idle_064",
+      "portal_idle_065",
+      "portal_idle_066",
+      "portal_idle_067",
+      "portal_idle_068",
+      "portal_idle_069",
+      "portal_idle_070",
+      "portal_idle_071",
+      "portal_idle_072",
+      "portal_idle_073",
+      "portal_idle_074",
+      "portal_idle_075"
+    ]
+  },
+  "meta": {
+    "app": "Realm_Of_Kingdoms_Portal_Packer",
+    "version": "1.0",
+    "image": "portal_idle_atlas.webp",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1960,
+      "h": 1712
+    },
+    "scale": "1"
+  }
+}

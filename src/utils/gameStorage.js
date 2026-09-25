@@ -11,7 +11,8 @@ import {
   setActivePlayer,
   setActiveGuestPlayer,
   clearActivePlayer,
-  flushCloudSave
+  flushCloudSave,
+  supabase
 } from './supabaseClient.js'
 
 const LEGACY_STORAGE_KEY = 'toc_foe_kingdom_save_v1'
@@ -174,6 +175,9 @@ export const gameStorage = {
   },
 
   setActive(email, id = null) {
+    if (typeof window !== 'undefined') {
+      try { localStorage.removeItem('toc_session_disconnected') } catch {}
+    }
     if (email) {
       setActivePlayer(email, id)
     } else {
@@ -183,6 +187,57 @@ export const gameStorage = {
 
   purgeSession() {
     clearActivePlayer()
+  },
+
+  /**
+   * Returns the currently remembered account if the user has not explicitly disconnected
+   */
+  getRememberedAccount() {
+    if (typeof window === 'undefined') return null
+    try {
+      if (localStorage.getItem('toc_session_disconnected') === 'true') {
+        return null
+      }
+      const activeEmail = this.getEmail()
+      const accounts = this.getKnownAccounts()
+      if (activeEmail) {
+        const found = accounts.find(a => a.email.toLowerCase() === activeEmail.toLowerCase())
+        if (found) return found
+        const sName = localStorage.getItem(`toc_player_name_${activeEmail}`) || localStorage.getItem('toc_player_name') || activeEmail.split('@')[0]
+        const sAvatar = localStorage.getItem(`toc_player_avatar_${activeEmail}`) || '/assets/avatars/avatar_king.webp'
+        const sSave = this.load(activeEmail)
+        return {
+          email: activeEmail,
+          name: sName,
+          avatar: sAvatar,
+          level: sSave?.kingdomLevel || 1,
+          lastPlayed: Date.now()
+        }
+      }
+      if (accounts.length > 0) {
+        return accounts[0]
+      }
+      return null
+    } catch (e) {
+      return null
+    }
+  },
+
+  /**
+   * Explicitly disconnects and logs out the active account
+   */
+  async disconnectAccount() {
+    if (typeof window !== 'undefined') {
+      try { localStorage.setItem('toc_session_disconnected', 'true') } catch {}
+    }
+    this.purgeSession()
+    try {
+      if (supabase && supabase.auth) {
+        await supabase.auth.signOut()
+      }
+    } catch (e) {
+      console.warn('Could not signOut Supabase on disconnect:', e)
+    }
   },
 
   async checkCloud() {
@@ -325,38 +380,15 @@ export const gameStorage = {
 
     const updatedSlots = slots.map((slot) => {
       if (slot && slot.isConstructing) {
-        const durationSec = slot.constructionDurationSec || 60
-        const startedAt = slot.constructionStartedAt || (now - ((slot.progress || 0) / 100) * durationSec * 1000)
-        const elapsedSec = Math.max(0, (now - startedAt) / 1000)
-
-        if (elapsedSec >= durationSec) {
-          const finalLevel = slot.targetLevel || slot.level || 1
-          const bDef = Object.values(BUILDING_TYPES).find((b) => b.id === slot.buildingId) || BUILDING_TYPES[slot.buildingId?.toUpperCase()]
-          completedBuildings.push({
-            slotId: slot.id,
-            buildingId: slot.buildingId,
-            name: bDef?.name || 'Edificio',
-            level: finalLevel,
-            completedAt: startedAt + (durationSec * 1000)
-          })
-          return {
-            ...slot,
-            isConstructing: false,
-            progress: 100,
-            level: finalLevel,
-            targetLevel: undefined,
-            constructionStartedAt: undefined,
-            constructionDurationSec: undefined,
-            lastHarvestAt: now,
-          }
-        }
-
-        const nextProgress = Math.min(99, Math.floor((elapsedSec / durationSec) * 100))
+        const finalLevel = slot.targetLevel || slot.level || 1
         return {
           ...slot,
-          progress: nextProgress,
-          constructionStartedAt: startedAt,
-          constructionDurationSec: durationSec,
+          isConstructing: false,
+          progress: 100,
+          level: finalLevel,
+          targetLevel: undefined,
+          constructionStartedAt: undefined,
+          constructionDurationSec: undefined,
         }
       }
       return slot
@@ -443,7 +475,7 @@ export const gameStorage = {
 
     const slotList = updatedSlots || []
     slotList.forEach((slot) => {
-      if (slot.buildingId && !slot.isConstructing) {
+      if (slot.buildingId) {
         const bDef = Object.values(BUILDING_TYPES).find((b) => b.id === slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]
         const lvl = slot.level || 1
         const cycleSec = bDef?.productionCycleSec || 120

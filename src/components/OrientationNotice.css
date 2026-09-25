@@ -99,6 +99,7 @@
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 16px rgba(14, 165, 233, 0.35));
+  -webkit-filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 16px rgba(14, 165, 233, 0.35));
 }
 
 /* Top Imperial Badge */
@@ -157,6 +158,7 @@
   border-left: 3px solid transparent;
   animation: orientationOrbitSpin 3s linear infinite;
   filter: drop-shadow(0 0 6px rgba(14, 165, 233, 0.6));
+  -webkit-filter: drop-shadow(0 0 6px rgba(14, 165, 233, 0.6));
 }
 
 /* Animated 3D Smartphone Device */
@@ -206,6 +208,7 @@
   height: 20px;
   color: #0ea5e9;
   filter: drop-shadow(0 0 4px rgba(14, 165, 233, 0.8));
+  -webkit-filter: drop-shadow(0 0 4px rgba(14, 165, 233, 0.8));
   animation: orientationScreenPulse 1.6s ease-in-out infinite alternate;
 }
 
@@ -228,8 +231,10 @@
   line-height: 1.25;
   background: linear-gradient(180deg, #ffffff 30%, #bae6fd 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .orientation-desc {

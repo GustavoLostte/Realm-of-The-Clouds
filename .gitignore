@@ -38,4 +38,10 @@ public/assets/map_change_mask.png
 public/assets/characters/ANIMADOS/
 *.mp4
 *.mov
+build-android/
+archive_raw_frames/
+public_demo/
+public_teaser/
+src-tauri/gen/android/app/build/
+src-tauri/gen/android/.gradle/
 

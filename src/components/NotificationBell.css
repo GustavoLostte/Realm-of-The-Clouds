@@ -54,6 +54,7 @@
 
 .bell-svg-icon {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
 }
 
 /* Ringing animation when unread notifications arrive */
@@ -192,6 +193,7 @@
 .notif-modal-header-icon {
   color: #fef08a !important;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6)) !important;
+  -webkit-filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6)) !important;
 }
 
 .notif-modal-title-col {

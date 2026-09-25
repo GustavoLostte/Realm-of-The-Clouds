@@ -78,6 +78,7 @@
   height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
 }
 
 .royal-confirm-title {
@@ -153,6 +154,7 @@
 .royal-confirm-btn-confirm.primary:hover {
   background: linear-gradient(180deg, #fcd34d 0%, #0369a1 100%);
   filter: brightness(1.08);
+  -webkit-filter: brightness(1.08);
 }
 
 .royal-confirm-btn-confirm.danger {
@@ -165,6 +167,7 @@
 .royal-confirm-btn-confirm.danger:hover {
   background: linear-gradient(180deg, #f87171 0%, #991b1b 100%);
   filter: brightness(1.08);
+  -webkit-filter: brightness(1.08);
 }
 
 @media (max-width: 480px) {

@@ -42,6 +42,7 @@
   height: 44px;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(14, 165, 233, 0.5));
+  -webkit-filter: drop-shadow(0 4px 10px rgba(14, 165, 233, 0.5));
   animation: floatSubtle 2.5s ease-in-out infinite;
 }
 
@@ -194,6 +195,7 @@
 .btn-claim-candy:hover {
   transform: scale(1.06);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }
 
 .pulse-anim {

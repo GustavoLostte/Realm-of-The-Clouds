@@ -1,16 +1,16 @@
 export const BUILDING_TYPES = {
   AYUNTAMIENTO: {
     id: 'ayuntamiento',
-    name: 'Palacio Soberano',
+    name: 'Gran Mercado Celestial',
     category: 'gobierno',
     minKingdomLevel: 1,
     maxAllowed: 1,
     isUnique: true,
-    description: 'El corazón sagrado de tu reino. Incrementa el límite de población, defensa global y la recaudación de tributos.',
-    image: '/assets/structures/cutout/01_palacio_soberano.webp',
-    animIdle: '/assets/structures/cutout/01_palacio_soberano.webp',
+    description: 'El corazón comercial y sagrado de tu reino. Incrementa el límite de población, defensa global y la recaudación de tributos y mercancías.',
+    image: '/assets/structures/cutout/01_palacio_soberano.webp?v=1789764500',
+    animIdle: '/assets/structures/cutout/01_palacio_soberano.webp?v=1789764500',
     animConstruct: '/assets/structures/cimientos/cimientos.json',
-    poster: '/assets/structures/cutout/01_palacio_soberano.webp',
+    poster: '/assets/structures/cutout/01_palacio_soberano.webp?v=1789764500',
     atlasIdle: null,
     atlasConstruct: null,
     cost: { gold: 250, wood: 200, stone: 150 },
@@ -73,11 +73,11 @@ export const BUILDING_TYPES = {
     minKingdomLevel: 1,
     maxAllowed: 2,
     description: 'Aprovecha las corrientes del firmamento para moler grano sagrado y sostener la fuerza alimentaria del reino.',
-    image: '/assets/structures/cutout/04_molino_alado.webp',
-    animIdle: '/assets/structures/cutout/04_molino_alado.webp',
+    image: '/assets/buildings/molino/molino_poster.webp',
+    animIdle: '/assets/buildings/molino/molino_idle.webp',
     animConstruct: '/assets/structures/cimientos/cimientos.json',
-    poster: '/assets/structures/cutout/04_molino_alado.webp',
-    atlasIdle: null,
+    poster: '/assets/buildings/molino/molino_poster.webp',
+    atlasIdle: '/assets/buildings/molino/molino_idle.json',
     atlasConstruct: null,
     cost: { gold: 90, wood: 130, stone: 60 },
     production: { food: 95 },
@@ -118,11 +118,11 @@ export const BUILDING_TYPES = {
     maxAllowed: 1,
     isUnique: true,
     description: 'Vórtice cósmico hacia Mazmorras secretas y Desafíos de Jefes. Permite conseguir gemas y skins de prestigio.',
-    image: '/assets/structures/cutout/06_portal_arcano.webp',
-    animIdle: '/assets/structures/cutout/06_portal_arcano.webp',
+    image: '/assets/buildings/portal/portal_poster.webp',
+    animIdle: '/assets/buildings/portal/portal_idle.webp',
     animConstruct: '/assets/structures/cimientos/cimientos.json',
-    poster: '/assets/structures/cutout/06_portal_arcano.webp',
-    atlasIdle: null,
+    poster: '/assets/buildings/portal/portal_poster.webp',
+    atlasIdle: '/assets/buildings/portal/portal_idle.json',
     atlasConstruct: null,
     cost: { gold: 300, wood: 200, stone: 250, gems: 10 },
     production: { gems: 1 },
@@ -157,16 +157,16 @@ export const BUILDING_TYPES = {
   },
   ALMACEN: {
     id: 'almacen',
-    name: 'Gran Bóveda',
-    category: 'gobierno',
+    name: 'Núcleo Arcano',
+    category: 'arcano',
     minKingdomLevel: 1,
     maxAllowed: 2,
-    description: 'Cámara acorazada divina. Protege tus reservas de oro, madera y piedra para que ningún asaltante pueda saquearlas.',
-    image: '/assets/structures/cutout/08_gran_boveda.webp',
-    animIdle: '/assets/structures/cutout/08_gran_boveda.webp',
+    description: 'Generador magitecnológico de energía divina. Canaliza el flujo de plasma y maná cósmico para alimentar las defensas y maravillas del reino.',
+    image: '/assets/buildings/almacen/almacen_poster.webp?v=1789772000',
+    animIdle: '/assets/buildings/almacen/almacen_idle.webp?v=1789772000',
     animConstruct: '/assets/structures/cimientos/cimientos.json',
-    poster: '/assets/structures/cutout/08_gran_boveda.webp',
-    atlasIdle: null,
+    poster: '/assets/buildings/almacen/almacen_poster.webp?v=1789772000',
+    atlasIdle: '/assets/buildings/almacen/almacen_idle.json?v=1789772000',
     atlasConstruct: null,
     cost: { gold: 200, wood: 180, stone: 200 },
     production: {},
@@ -340,43 +340,139 @@ export function getBuildingAnimationDuration(buildingId) {
 // The central plaza spans from roughly 28% to 75% in X, and 20% to 72% in Y (isometric diamond)
 // The kingdom starts with ONLY the central Imperial Castle on Slot 1, leaving 11 plots to build step by step.
 export const INITIAL_PLAZA_SLOTS = [
-  { id: 'slot-1', x: 50, y: 36, buildingId: 'ayuntamiento', level: 1, isConstructing: false, progress: 100, lastHarvestAt: Date.now() - 75000 },
-  { id: 'slot-2', x: 42, y: 44, buildingId: null, level: 0 },
+  { id: 'slot-1', x: 50, y: 29, buildingId: 'ayuntamiento', level: 1, isConstructing: false, progress: 100, lastHarvestAt: Date.now() - 75000 },
   { id: 'slot-3', x: 58, y: 44, buildingId: null, level: 0 },
   { id: 'slot-4', x: 34, y: 52, buildingId: null, level: 0 },
-  { id: 'slot-5', x: 50, y: 52, buildingId: null, level: 0 },
   { id: 'slot-6', x: 66, y: 52, buildingId: null, level: 0 },
   { id: 'slot-7', x: 42, y: 60, buildingId: null, level: 0 },
-  { id: 'slot-8', x: 58, y: 60, buildingId: null, level: 0 },
-  { id: 'slot-9', x: 50, y: 68, buildingId: null, level: 0 },
-  { id: 'slot-10', x: 36, y: 38, buildingId: null, level: 0 },
-  { id: 'slot-11', x: 64, y: 38, buildingId: null, level: 0 },
-  { id: 'slot-12', x: 28, y: 46, buildingId: null, level: 0 },
+  { id: 'slot-9', x: 50, y: 74, buildingId: 'casa_molino', level: 1, isConstructing: false, progress: 100 },
+  { id: 'slot-11', x: 62, y: 41.5, buildingId: 'almacen', level: 1, isConstructing: false, progress: 100 },
+  { id: 'slot-12', x: 28, y: 46, buildingId: 'portal', level: 1, isConstructing: false, progress: 100 },
 ]
 
 export function sanitizeKingdomSlots(slots) {
   if (!Array.isArray(slots) || slots.length === 0) return INITIAL_PLAZA_SLOTS
 
+  // Check if player had buildings on previous slots
+  const prevMolino = slots.find((s) => s && (s.buildingId === 'casa_molino' || s.buildingId === 'molino'))
+  const prevAlmacen = slots.find((s) => s && s.buildingId === 'almacen')
+
   return INITIAL_PLAZA_SLOTS.map((baseSlot) => {
     const matched = slots.find((s) => s && s.id === baseSlot.id)
-    if (!matched) return { ...baseSlot }
+    if (!matched) {
+      if (baseSlot.id === 'slot-11') {
+        return {
+          ...baseSlot,
+          x: 62,
+          y: 41.5,
+          buildingId: 'almacen',
+          level: prevAlmacen?.level || 1,
+          isConstructing: false,
+          progress: 100,
+        }
+      }
+      if (baseSlot.id === 'slot-9') {
+        return {
+          ...baseSlot,
+          x: 50,
+          y: 74,
+          buildingId: 'casa_molino',
+          level: prevMolino?.level || 1,
+          isConstructing: false,
+          progress: 100,
+        }
+      }
+      return { ...baseSlot }
+    }
 
     if (baseSlot.id === 'slot-1') {
       return {
         ...baseSlot,
         ...matched,
+        x: 50,
+        y: 29,
         buildingId: 'ayuntamiento',
         level: Math.max(1, matched.level || 1),
       }
     }
 
+    // Clear old slot-3 if it had casa_molino, because molino moved to slot-9 (South sun medallion)
+    if (baseSlot.id === 'slot-3' && matched.buildingId === 'casa_molino') {
+      return {
+        ...baseSlot,
+        ...matched,
+        buildingId: null,
+        level: 0,
+        isConstructing: false,
+        progress: 0,
+      }
+    }
+
+    // Clear old slot-4 if it had almacen, because boveda moved to slot-11 (Terrace beside Palace)
+    if (baseSlot.id === 'slot-4' && matched.buildingId === 'almacen') {
+      return {
+        ...baseSlot,
+        ...matched,
+        buildingId: null,
+        level: 0,
+        isConstructing: false,
+        progress: 0,
+      }
+    }
+
+    if (baseSlot.id === 'slot-12' && (!matched.buildingId || matched.buildingId === 'portal')) {
+      return {
+        ...baseSlot,
+        ...matched,
+        x: 28,
+        y: 46,
+        buildingId: 'portal',
+        level: Math.max(1, matched.level || 1),
+        isConstructing: false,
+        progress: 100,
+      }
+    }
+
+    // Ensure slot-11 (Gran Bóveda) is at x: 62, y: 41.5, balanced without occluding the stairs
+    if (baseSlot.id === 'slot-11') {
+      const finalLevel = matched.buildingId ? (matched.level || 1) : (prevAlmacen?.level || 1)
+      return {
+        ...baseSlot,
+        ...matched,
+        x: 62,
+        y: 41.5,
+        buildingId: 'almacen',
+        level: finalLevel,
+        isConstructing: false,
+        progress: 100,
+      }
+    }
+
+    // Ensure slot-9 (South corner sun medallion) has casa_molino
+    if (baseSlot.id === 'slot-9') {
+      const finalLevel = matched.buildingId ? (matched.level || 1) : (prevMolino?.level || 1)
+      return {
+        ...baseSlot,
+        ...matched,
+        x: 50,
+        y: 74,
+        buildingId: 'casa_molino',
+        level: finalLevel,
+        isConstructing: false,
+        progress: 100,
+      }
+    }
+
+    const finalBuildingId = matched?.buildingId || baseSlot.buildingId || null
+    const finalLevel = matched?.buildingId ? (matched.level || 1) : (baseSlot.buildingId ? (baseSlot.level || 1) : 0)
+
     return {
       ...baseSlot,
       ...matched,
-      buildingId: matched.buildingId || null,
-      level: matched.level || 0,
-      isConstructing: Boolean(matched.isConstructing),
-      progress: typeof matched.progress === 'number' ? matched.progress : (matched.buildingId ? 100 : 0),
+      buildingId: finalBuildingId,
+      level: finalLevel,
+      isConstructing: false,
+      progress: finalBuildingId ? 100 : 0,
     }
   })
 }
@@ -428,7 +524,7 @@ export function getKingdomStorageCapacity(slots = [], kingdomLevel = 1, vipStatu
   let warehouseBonus = 0
   if (Array.isArray(slots)) {
     slots.forEach((s) => {
-      if (s.buildingId === 'almacen' && !s.isConstructing) {
+      if (s.buildingId === 'almacen') {
         warehouseBonus += (s.level || 1) * 6000
       }
     })

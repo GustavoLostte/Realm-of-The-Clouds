@@ -1,5 +1,4 @@
 import React from 'react'
-import { MessageSquare } from 'lucide-react'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'
 import './LeftActionControls.css'
@@ -24,23 +23,7 @@ export function LeftActionControls({
 
   return (
     <aside className="left-action-controls" aria-label="Acciones del Reino y Chat">
-      {/* Botón Candy de Chat (Arriba de Reino) */}
-      <button
-        id="left-btn-chat"
-        className="left-chat-candy-btn"
-        onClick={() => {
-          if (isTutorialActive) return
-          soundManager?.playClick?.()
-          onOpenChat?.()
-        }}
-        title={t('chat.title') || 'Chat del Reino'}
-        aria-label={t('chat.title') || 'Chat'}
-      >
-        <MessageSquare size={22} className="left-chat-candy-icon" />
-        {unreadChatCount > 0 && (
-          <span className="left-chat-badge">{unreadChatCount}</span>
-        )}
-      </button>
+      {/* Botón de Chat desactivado temporalmente por solicitud */}
 
       {/* Botón Grande: REINO / MENÚ - Alineado en la esquina inferior izquierda */}
       <button
@@ -53,7 +36,7 @@ export function LeftActionControls({
         <div className="btn-glow-aura"></div>
         <div className="btn-icon-wrapper">
           <img
-            src="/assets/hud_icons/btn_build.webp"
+            src="/assets/hud_icons/icon_crown.webp"
             alt={t('rightControls.kingdom') || 'Reino'}
             className="left-btn-candy-icon kingdom-icon"
             draggable="false"

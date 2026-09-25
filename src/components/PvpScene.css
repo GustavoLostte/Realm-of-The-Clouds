@@ -631,6 +631,7 @@
 .league-trophy-gold {
   color: #fef08a;
   filter: drop-shadow(0 0 6px rgba(254, 240, 138, 0.6));
+  -webkit-filter: drop-shadow(0 0 6px rgba(254, 240, 138, 0.6));
 }
 
 .league-banner-details {

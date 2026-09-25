@@ -11,6 +11,7 @@ export function VirtualJoystick({
   onDefend,
   disabled = false,
   size = 118,
+  allowJump = false,
 }) {
   const baseRef = useRef(null)
   const [knobPos, setKnobPos] = useState({ x: 0, y: 0 })
@@ -98,8 +99,8 @@ export function VirtualJoystick({
     }
 
     // Vertical gestures:
-    // Flick up (normY < -0.55) triggers Jump once
-    if (normY < -0.55) {
+    // Flick up (normY < -0.55) triggers Jump once (solo si allowJump está activado)
+    if (allowJump && normY < -0.55) {
       if (!jumpTriggeredRef.current) {
         jumpTriggeredRef.current = true
         onJump?.()
@@ -155,7 +156,7 @@ export function VirtualJoystick({
       <div className="joystick-outer-ring" />
 
       {/* Direction Guide Icons */}
-      <div className="joystick-marker marker-up" title="Deslizar arriba: Saltar">▲</div>
+      {allowJump && <div className="joystick-marker marker-up" title="Deslizar arriba: Saltar">▲</div>}
       <div className="joystick-marker marker-left" title="Deslizar izquierda: Correr">◀</div>
       <div className="joystick-marker marker-right" title="Deslizar derecha: Correr">▶</div>
       <div className="joystick-marker marker-down" title="Deslizar abajo: Cubrirse">▼</div>

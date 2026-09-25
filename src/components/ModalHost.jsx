@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { soundManager } from '../utils/audio'
 import { gameStorage } from '../utils/gameStorage'
@@ -9,7 +9,6 @@ const CombatModeModal = lazy(() => import('./CombatModeModal').then((m) => ({ de
 const KingdomHubModal = lazy(() => import('./KingdomHubModal').then((m) => ({ default: m.KingdomHubModal })))
 const ChatModal = lazy(() => import('./ChatModal').then((m) => ({ default: m.ChatModal })))
 const DungeonCampaignWindow = lazy(() => import('./DungeonCampaignWindow').then((m) => ({ default: m.DungeonCampaignWindow })))
-const BuildModal = lazy(() => import('./BuildModal').then((m) => ({ default: m.BuildModal })))
 const BuildingDetailsModal = lazy(() => import('./BuildingDetailsModal').then((m) => ({ default: m.BuildingDetailsModal })))
 const QuestsModal = lazy(() => import('./QuestsModal').then((m) => ({ default: m.QuestsModal })))
 const ArmyModal = lazy(() => import('./ArmyModal').then((m) => ({ default: m.ArmyModal })))
@@ -30,6 +29,7 @@ const ArenaBattleView = lazy(() => import('./ArenaBattleView').then((m) => ({ de
 const RankingModal = lazy(() => import('./RankingModal').then((m) => ({ default: m.RankingModal })))
 const HarvestAllModal = lazy(() => import('./HarvestAllModal').then((m) => ({ default: m.HarvestAllModal })))
 const UsernameModal = lazy(() => import('./UsernameModal').then((m) => ({ default: m.UsernameModal })))
+const MarketInteriorView = lazy(() => import('./MarketInteriorView').then((m) => ({ default: m.MarketInteriorView })))
 
 export function ModalHost({
   // Modal visibility flags & setters
@@ -41,8 +41,6 @@ export function ModalHost({
   setChatModalOpen,
   campaignWindowOpen,
   setCampaignWindowOpen,
-  buildModalOpen,
-  setBuildModalOpen,
   detailsModalOpen,
   setDetailsModalOpen,
   questsModalOpen,
@@ -83,6 +81,8 @@ export function ModalHost({
   setHarvestModalOpen,
   usernameModalOpen,
   setUsernameModalOpen,
+  marketInteriorOpen,
+  setMarketInteriorOpen,
 
   // Game data
   resources,
@@ -144,6 +144,7 @@ export function ModalHost({
 
   // Callbacks
   handleOpenArena,
+  handleOpenTraining,
   handleOpenBuildMenu,
   handleOpenShop,
   handleOpenRanking,
@@ -207,7 +208,6 @@ export function ModalHost({
     if (typeof window === 'undefined') return
     const preloadLoaders = [
       () => import('./MenuModal'),
-      () => import('./BuildModal'),
       () => import('./BuildingDetailsModal'),
       () => import('./QuestsModal'),
       () => import('./InventoryModal'),
@@ -254,13 +254,20 @@ export function ModalHost({
 
   return (
     <Suspense fallback={null}>
-      {/* Combat Mode Selector Modal (Single Player PvE vs Multiplayer PvP) */}
+      {/* Combat Mode Selector Modal (Single Player PvE vs Multiplayer PvP vs Training) */}
       {combatModeModalOpen && (
         <CombatModeModal 
           isOpen={combatModeModalOpen}
           onClose={() => setCombatModeModalOpen(false)}
           onOpenPvE={() => setCampaignWindowOpen(true)}
           onOpenPvP={() => handleOpenArena('pvp')}
+          onOpenTraining={() => {
+            if (handleOpenTraining) {
+              handleOpenTraining()
+            } else {
+              handleOpenArena('training')
+            }
+          }}
           arenaTickets={arenaData.tickets}
           showNotification={showNotification}
         />
@@ -271,7 +278,6 @@ export function ModalHost({
         <KingdomHubModal 
           isOpen={kingdomHubModalOpen}
           onClose={() => setKingdomHubModalOpen(false)}
-          onOpenBuild={() => handleOpenBuildMenu(null)}
           onOpenShop={() => handleOpenShop('offers')}
           onOpenInventory={() => setInventoryModalOpen(true)}
           onOpenQuests={() => setQuestsModalOpen(true)}
@@ -318,23 +324,6 @@ export function ModalHost({
         </ErrorBoundary>
       )}
 
-      {/* Build Catalog Modal */}
-      {buildModalOpen && (
-        <BuildModal 
-          isOpen={buildModalOpen}
-          onClose={() => {
-            setBuildModalOpen(false)
-            setRecommendedBuildId(null)
-          }}
-          onSelectBuilding={handleSelectBuilding}
-          targetSlot={selectedSlot}
-          resources={resources}
-          kingdomLevel={kingdomLevel}
-          recommendedBuildingId={recommendedBuildId || activeStoryQuest?.targetBuilding || null}
-          slots={slots}
-        />
-      )}
-
       {/* Building Details Modal */}
       {detailsModalOpen && (
         <BuildingDetailsModal 
@@ -345,18 +334,21 @@ export function ModalHost({
           }}
           slot={selectedSlot ? slots.find((s) => s.id === selectedSlot.id) || selectedSlot : null}
           resources={resources}
-          speedups={speedups}
           vipStatus={vipStatus}
           onUpgradeBuilding={handleUpgradeBuilding}
-          onDemolishBuilding={handleDemolishBuilding}
           onCollect={handleCollectFromSlot}
-          onSpeedupBuilding={handleSpeedupBuilding}
-          onUseSpeedup={handleUseSpeedup}
           storageCapacity={storageCapacity}
           onOpenArmy={() => setArmyModalOpen(true)}
-          onOpenExpeditions={() => setExpeditionModalOpen(true)}
+          onOpenExpeditions={() => {
+            setDetailsModalOpen(false)
+            window.dispatchEvent(new CustomEvent('toc-open-expeditions'))
+          }}
           onOpenInventory={() => setInventoryModalOpen(true)}
           onOpenTechTree={() => setTechTreeModalOpen(true)}
+          onOpenMarketInterior={() => {
+            setDetailsModalOpen(false)
+            setMarketInteriorOpen(true)
+          }}
         />
       )}
 
@@ -376,7 +368,7 @@ export function ModalHost({
 
       {/* Army & Garrison Modal */}
       {armyModalOpen && (() => {
-        const cuartelSlot = slots.find((s) => s.buildingId === 'cuartel' && !s.isConstructing)
+        const cuartelSlot = slots.find((s) => s.buildingId === 'cuartel')
         const cuartelLevel = cuartelSlot ? (cuartelSlot.level || 1) : 1
         return (
           <ArmyModal 
@@ -392,7 +384,6 @@ export function ModalHost({
             onSpeedupTraining={handleSpeedupTraining}
             onInstantFinishTraining={handleInstantFinishTraining}
             speedups={speedups}
-            onOpenBuild={handleOpenBuildMenu}
           />
         )
       })()}
@@ -636,7 +627,7 @@ export function ModalHost({
           onClose={() => setRankingModalOpen(false)}
           initialCategory={rankingCategory}
           kingdomLevel={kingdomLevel}
-          buildings={slots.filter((s) => s.buildingId && !s.isConstructing)}
+          buildings={slots.filter((s) => s.buildingId)}
           troops={troops}
           trophies={arenaData.trophies}
           completedNodes={completedNodes}
@@ -648,7 +639,7 @@ export function ModalHost({
           }}
           onOpenCampaign={() => {
             setRankingModalOpen(false)
-            showNotification(t('combatModal.campaignNotice') || '¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Aetheria.', 'info')
+            showNotification(t('combatModal.campaignNotice') || '¡Próximamente! La Campaña Celestial estará disponible en la próxima actualización de Realm of Kingdom.', 'info')
           }}
         />
       )}
@@ -681,6 +672,16 @@ export function ModalHost({
           currentAvatar={playerAvatar}
           onSave={handleSavePlayerName}
         />
+      )}
+
+      {/* Grand Celestial Market Interior (4 Aisles Walkthrough) */}
+      {marketInteriorOpen && (
+        <ErrorBoundary onReset={() => setMarketInteriorOpen(false)}>
+          <MarketInteriorView 
+            isOpen={marketInteriorOpen}
+            onClose={() => setMarketInteriorOpen(false)}
+          />
+        </ErrorBoundary>
       )}
     </Suspense>
   )

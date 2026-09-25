@@ -1,0 +1,578 @@
+/* ============================================================
+   CHAMPIONS SCALE WORKBENCH MODAL (MARKET BACKGROUND)
+   Laboratory view for 4 classes side-by-side with synchronized actions
+   ============================================================ */
+
+.scale-workbench-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  background-color: #030712;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Ambient shadow & atmospheric vignette over market background */
+.scale-workbench-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.25) 0%, rgba(3, 7, 18, 0.78) 95%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   TOP CONTROL BAR
+   ============================================================ */
+.scale-workbench-topbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: rgba(10, 15, 29, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.scale-workbench-title-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scale-workbench-title-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  color: #fde68a;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.scale-workbench-title-text {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+.scale-workbench-top-center-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.scale-workbench-pill-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.scale-workbench-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scale-workbench-pill-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.scale-workbench-pill-btn.is-active {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: 1px solid #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+}
+
+.scale-workbench-pill-btn.is-gold-active {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: #ffffff;
+  border: 1px solid #fbbf24;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+}
+
+.scale-workbench-pill-btn.is-saved-active {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff;
+  border: 1px solid #34d399;
+  box-shadow: 0 0 14px rgba(52, 211, 153, 0.65);
+  animation: scaleWorkbenchSavedPulse 0.4s ease-out;
+}
+
+.scale-workbench-pill-btn.is-popout-btn {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.28) 0%, rgba(79, 70, 229, 0.45) 100%);
+  border: 1.5px solid rgba(129, 140, 248, 0.7);
+  color: #e0e7ff;
+  box-shadow: 0 0 14px rgba(99, 102, 241, 0.35);
+}
+
+.scale-workbench-pill-btn.is-popout-btn:hover {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.5) 0%, rgba(79, 70, 229, 0.75) 100%);
+  border-color: #a5b4fc;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(99, 102, 241, 0.6);
+}
+
+.scale-workbench-pill-btn.is-game-focus-btn {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.28) 0%, rgba(5, 150, 105, 0.45) 100%);
+  border: 1.5px solid rgba(52, 211, 153, 0.7);
+  color: #a7f3d0;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+}
+
+.scale-workbench-pill-btn.is-game-focus-btn:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.5) 0%, rgba(5, 150, 105, 0.75) 100%);
+  border-color: #6ee7b7;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.6);
+}
+
+/* Dual screen live indicator */
+.scale-workbench-dual-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px;
+  background: rgba(6, 78, 59, 0.85);
+  border: 1px solid rgba(52, 211, 153, 0.75);
+  border-radius: 999px;
+  color: #a7f3d0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+  white-space: nowrap;
+}
+
+.scale-workbench-dual-beacon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px #34d399;
+  animation: dualBeaconPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes dualBeaconPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 6px #34d399; }
+  50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 14px #34d399; }
+}
+
+/* Standalone window styles */
+.scale-workbench-overlay.is-standalone-workbench {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background-size: cover;
+  background-position: center;
+}
+
+@keyframes scaleWorkbenchSavedPulse {
+  0% { transform: scale(0.94); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.scale-workbench-btn-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.18);
+  border: 1.5px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scale-workbench-btn-close:hover {
+  background: rgba(239, 68, 68, 0.35);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.45);
+}
+
+/* ============================================================
+   MAIN STAGE: 4 CHAMPIONS LINED UP ON GROUND
+   ============================================================ */
+.scale-workbench-stage {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  padding: 0 20px 105px 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  --controls-height: 120px;
+}
+
+/* Ground Line Laser for Foot Alignment */
+.scale-workbench-floor-laser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(105px + 10px + var(--controls-height) + 6px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #f59e0b 20%, #fef08a 50%, #f59e0b 80%, transparent 100%);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.8), 0 0 20px rgba(254, 240, 138, 0.6);
+  pointer-events: none;
+  z-index: 6;
+}
+
+.scale-workbench-floor-label {
+  position: absolute;
+  left: 20px;
+  top: -18px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #fde68a;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+/* ============================================================
+   INDIVIDUAL CLASS COLUMN
+   ============================================================ */
+.scale-workbench-class-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-width: 250px;
+  max-width: 320px;
+}
+
+/* Header badge of the class */
+.scale-workbench-class-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  margin-bottom: 8px;
+}
+
+.scale-workbench-class-title {
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+/* Mini gender toggle for this specific class */
+.scale-workbench-gender-mini {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.scale-workbench-gender-btn-mini {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.scale-workbench-gender-btn-mini.is-active {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+/* Sprite Container & Ground Pedestal */
+.scale-workbench-actor-wrap {
+  position: relative;
+  width: 280px;
+  height: 288px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Ground shadow / rune under feet */
+.scale-workbench-pedestal {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 170px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.45) 0%, rgba(245, 158, 11, 0.15) 50%, transparent 75%);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.3);
+  pointer-events: none;
+}
+
+.scale-workbench-sprite {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform-origin: bottom center;
+  pointer-events: none;
+  max-width: none;
+  height: 288px;
+  width: 512px;
+  image-rendering: auto;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.65));
+  -webkit-filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.65));
+  transition: transform 0.1s ease-out;
+}
+
+/* ============================================================
+   SCALE SLIDER & CONTROLLER BOX UNDER CHARACTER
+   ============================================================ */
+.scale-workbench-controls-box {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  min-height: var(--controls-height, 120px);
+  box-sizing: border-box;
+}
+
+.scale-workbench-value-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #cbd5e1;
+}
+
+.scale-workbench-offset-label {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scale-workbench-val-percent {
+  color: #38bdf8;
+  font-weight: 900;
+  font-size: 0.82rem;
+}
+
+.scale-workbench-val-offset {
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.scale-workbench-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.scale-workbench-range {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  accent-color: #38bdf8;
+  cursor: pointer;
+}
+
+.scale-workbench-range-offset {
+  accent-color: #4ade80;
+}
+
+.scale-workbench-btn-step {
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.scale-workbench-btn-step:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+/* ============================================================
+   BOTTOM SYNCHRONIZED ACTION BAR (ALL 4 AT THE SAME TIME)
+   ============================================================ */
+.scale-workbench-bottom-bar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px 16px 20px;
+  background: rgba(10, 15, 29, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1.5px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.7);
+}
+
+.scale-workbench-bottom-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #fde68a;
+  text-transform: uppercase;
+}
+
+.scale-workbench-actions-btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.scale-workbench-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  color: #f1f5f9;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.scale-workbench-action-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.35);
+}
+
+.scale-workbench-action-btn.is-active {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   JUMP & ALIGNMENT CALIBRATION BANNER
+   ============================================================ */
+.scale-workbench-jump-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 24px;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1.5px solid rgba(234, 179, 8, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  z-index: 25;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.scale-workbench-jump-banner-info {
+  font-size: 0.8rem;
+  color: #fde68a;
+  line-height: 1.35;
+}
+
+.scale-workbench-jump-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.scale-workbench-btn-step.is-copy-idle-btn {
+  background: rgba(234, 179, 8, 0.16);
+  border-color: rgba(234, 179, 8, 0.55);
+  color: #fde047;
+  font-weight: 800;
+  transition: all 0.15s ease;
+}
+
+.scale-workbench-btn-step.is-copy-idle-btn:hover {
+  background: rgba(234, 179, 8, 0.35);
+  border-color: #facc15;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+}

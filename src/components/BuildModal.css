@@ -80,6 +80,7 @@
   max-height: 85%;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  -webkit-filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
 }
 
 .bld-tag {
@@ -204,6 +205,7 @@
 .btn-build-submit.primary:hover {
   transform: translateY(-1px);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }
 
 .btn-build-submit.disabled {

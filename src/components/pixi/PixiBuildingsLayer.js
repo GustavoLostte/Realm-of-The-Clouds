@@ -2,7 +2,6 @@ import { Container, Sprite, Graphics, Text, TextStyle, AnimatedSprite } from 'pi
 import { loadPixiTexture, loadPixiSpritesheet } from './PixiTextureLoader'
 import { 
   getSharedShadowTexture, 
-  getSharedEmptyPlotTexture, 
   getSharedBadgeTexture, 
   getSharedHarvestDiscTexture 
 } from './PixiSharedTextures'
@@ -10,16 +9,16 @@ import { BUILDING_TYPES, getBuildingDef, getMaxProductionBatches } from '../../d
 
 const BUILDING_DIMENSIONS = {
   archer_tower: { width: 160, height: 190 },
-  casa_molino: { width: 210, height: 170 },
+  casa_molino: { width: 200, height: 210 },
   mina_piedra: { width: 185, height: 140 },
-  portal: { width: 180, height: 145 },
+  portal: { width: 180, height: 195 },
   cuartel: { width: 220, height: 180 },
   casa: { width: 170, height: 135 },
-  castillo: { width: 250, height: 235 },
-  ayuntamiento: { width: 250, height: 235 },
-  molino: { width: 180, height: 145 },
+  castillo: { width: 312, height: 304 },
+  ayuntamiento: { width: 312, height: 304 },
+  molino: { width: 200, height: 210 },
   gold_mine: { width: 185, height: 140 },
-  almacen: { width: 190, height: 150 },
+  almacen: { width: 205, height: 205 },
   aserradero: { width: 185, height: 145 },
 }
 
@@ -36,6 +35,12 @@ const BUILDING_BASE_OFFSETS = {
   molino: 1.5,
   almacen: 1.5,
   aserradero: 1.5,
+}
+
+// Pixel Y offset adjustments to ground structures perfectly on island tiles
+const BUILDING_Y_OFFSETS = {
+  ayuntamiento: 18,
+  castillo: 18,
 }
 
 const RESOURCE_ICONS = {
@@ -129,23 +134,19 @@ class BuildingSlotNode {
     // Position in 1920x1080 space
     this.x = (slot.x / 100) * 1920
     this.y = (slot.y / 100) * 1080
-    this.container.position.set(this.x, this.y)
+    const yOffset = BUILDING_Y_OFFSETS[slot.buildingId] || 0
+    this.container.position.set(this.x, this.y + yOffset)
 
     // Interactive root
     this.container.eventMode = 'static'
     this.container.cursor = 'pointer'
 
     this.buildingSprite = null
-    this.ghostSprite = null
     this.shadowSprite = null
-    this.emptyMarkerSprite = null
     this.levelBadgeSprite = null
     this.harvestDisc = null
-    this.constructGfx = null
-    this.constructAnim = null
 
     this.currentBuildingId = null
-    this.isConstructing = false
     this.isHarvestReady = false
 
     this.setupInteractions()
@@ -153,7 +154,7 @@ class BuildingSlotNode {
 
   setupInteractions() {
     this.container.on('pointertap', (e) => {
-      if (this.callbacks.onBuildingClick) {
+      if (this.slot?.buildingId && this.callbacks.onBuildingClick) {
         this.callbacks.onBuildingClick(e, this.slot)
       }
     })
@@ -162,7 +163,7 @@ class BuildingSlotNode {
       if (this.buildingSprite) {
         this.buildingSprite.scale.set(this.baseScaleX * 1.04, this.baseScaleY * 1.04)
       }
-      if (this.callbacks.onHoverSlot) {
+      if (this.callbacks.onHoverSlot && this.slot?.buildingId) {
         this.callbacks.onHoverSlot(this.slot)
       }
     })
@@ -183,82 +184,117 @@ class BuildingSlotNode {
       ? (getBuildingDef(slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]) 
       : null
 
-    const baseOffset = slot.buildingId ? (BUILDING_BASE_OFFSETS[slot.buildingId] || 3.5) : 0
-    this.container.zIndex = Math.round((slot.y + baseOffset) * 10)
-
-    // Case 1: Empty Plot
-    if (!slot.buildingId && !slot.isConstructing) {
+    // Empty or non-existing building: hide completely (no empty markers in progressive mode)
+    if (!slot.buildingId || !buildingDef) {
       this.clearBuildingContent()
-      this.renderEmptyMarker()
+      this.container.visible = false
+      this.container.eventMode = 'none'
+      this.container.cursor = 'default'
       return
     }
 
-    // Case 2: Under Construction
-    if (slot.buildingId && slot.isConstructing && buildingDef) {
-      this.clearEmptyMarker()
-      this.renderConstruction(buildingDef, slot, vipStatus)
-      return
-    }
+    const yOffset = BUILDING_Y_OFFSETS[slot.buildingId] || 0
+    this.x = (slot.x / 100) * 1920
+    this.y = (slot.y / 100) * 1080
+    this.container.position.set(this.x, this.y + yOffset)
 
-    // Case 3: Completed Building
-    if (slot.buildingId && !slot.isConstructing && buildingDef) {
-      this.clearEmptyMarker()
-      this.clearConstruction()
-      this.renderCompletedBuilding(buildingDef, slot, vipStatus)
-    }
-  }
+    const baseOffset = BUILDING_BASE_OFFSETS[slot.buildingId] || 3.5
+    this.container.zIndex = Math.round((slot.y + baseOffset) * 10)
+    this.container.visible = true
+    this.container.eventMode = 'static'
+    this.container.cursor = 'pointer'
 
-  renderEmptyMarker() {
-    if (!this.emptyMarkerSprite) {
-      const tex = getSharedEmptyPlotTexture()
-      this.emptyMarkerSprite = new Sprite(tex)
-      this.emptyMarkerSprite.anchor.set(0.5, 0.5)
-      this.container.addChild(this.emptyMarkerSprite)
-    }
-  }
-
-  clearEmptyMarker() {
-    if (this.emptyMarkerSprite) {
-      this.container.removeChild(this.emptyMarkerSprite)
-      this.emptyMarkerSprite.destroy()
-      this.emptyMarkerSprite = null
-    }
+    this.renderCompletedBuilding(buildingDef, slot, vipStatus)
   }
 
   async renderCompletedBuilding(buildingDef, slot, vipStatus) {
     const dim = BUILDING_DIMENSIONS[slot.buildingId] || { width: 175, height: 140 }
 
     // Ground Shadow under building (shared batchable sprite)
-    if (!this.shadowSprite) {
-      const shadowTex = getSharedShadowTexture()
-      this.shadowSprite = new Sprite(shadowTex)
-      this.shadowSprite.anchor.set(0.5, 0.5)
-      this.shadowSprite.width = dim.width * 0.95
-      this.shadowSprite.height = 36
-      this.shadowSprite.position.set(0, 5)
-      this.container.addChildAt(this.shadowSprite, 0)
+    // El usuario solicitó explícitamente: "quitale esa sombra el molino y al castillo"
+    const noShadowBuildings = ['castillo', 'ayuntamiento', 'casa_molino', 'molino']
+    const hasShadow = !noShadowBuildings.includes(slot.buildingId)
+
+    if (hasShadow) {
+      if (!this.shadowSprite) {
+        const shadowTex = getSharedShadowTexture()
+        this.shadowSprite = new Sprite(shadowTex)
+        this.shadowSprite.anchor.set(0.5, 0.5)
+        this.shadowSprite.width = dim.width * 0.95
+        this.shadowSprite.height = Math.round(dim.height * 0.16)
+        this.shadowSprite.position.set(0, 5)
+        this.container.addChildAt(this.shadowSprite, 0)
+      } else {
+        this.shadowSprite.visible = true
+      }
+    } else {
+      if (this.shadowSprite) {
+        this.container.removeChild(this.shadowSprite)
+        this.shadowSprite.destroy()
+        this.shadowSprite = null
+      }
     }
 
-    // Building Sprite (strictly static)
-    const spriteUrl = buildingDef.poster || buildingDef.image || buildingDef.animIdle
-    if (this.currentBuildingUrl !== spriteUrl || !this.buildingSprite) {
-      this.currentBuildingUrl = spriteUrl
-      const texture = await loadPixiTexture(spriteUrl)
-
-      if (!this.buildingSprite) {
-        this.buildingSprite = new Sprite(texture)
-        this.buildingSprite.anchor.set(0.5, 0.75)
-        this.container.addChild(this.buildingSprite)
-      } else {
-        this.buildingSprite.texture = texture
+    // Building Sprite (Animated if atlasIdle is available, else static sprite)
+    if (buildingDef.atlasIdle) {
+      if (this.currentBuildingUrl !== buildingDef.atlasIdle || !this.buildingAnimSprite) {
+        this.currentBuildingUrl = buildingDef.atlasIdle
+        try {
+          const sheet = await loadPixiSpritesheet(buildingDef.atlasIdle)
+          if (sheet?.animations?.play?.length > 0) {
+            if (this.buildingSprite) {
+              this.container.removeChild(this.buildingSprite)
+              this.buildingSprite.destroy()
+              this.buildingSprite = null
+            }
+            if (!this.buildingAnimSprite) {
+              this.buildingAnimSprite = new AnimatedSprite(sheet.animations.play)
+              this.buildingAnimSprite.anchor.set(0.5, 0.75)
+              this.container.addChild(this.buildingAnimSprite)
+            } else {
+              this.buildingAnimSprite.textures = sheet.animations.play
+            }
+            this.buildingAnimSprite.width = dim.width
+            this.buildingAnimSprite.height = dim.height
+            this.buildingAnimSprite.animationSpeed = 0.40
+            this.buildingAnimSprite.loop = true
+            this.buildingAnimSprite.play()
+            this.baseScaleX = this.buildingAnimSprite.scale.x
+            this.baseScaleY = this.buildingAnimSprite.scale.y
+            this.buildingAnimSprite.tint = 0xffffff
+            this.buildingAnimSprite.alpha = 1.0
+          }
+        } catch (err) {
+          console.warn('[PixiBuildingsLayer] Failed to load atlasIdle:', err)
+        }
       }
+    } else {
+      if (this.buildingAnimSprite) {
+        this.buildingAnimSprite.stop()
+        this.container.removeChild(this.buildingAnimSprite)
+        this.buildingAnimSprite.destroy()
+        this.buildingAnimSprite = null
+      }
+      const spriteUrl = buildingDef.poster || buildingDef.image || buildingDef.animIdle
+      if (this.currentBuildingUrl !== spriteUrl || !this.buildingSprite) {
+        this.currentBuildingUrl = spriteUrl
+        const texture = await loadPixiTexture(spriteUrl)
 
-      this.buildingSprite.width = dim.width
-      this.buildingSprite.height = dim.height
-      this.baseScaleX = this.buildingSprite.scale.x
-      this.baseScaleY = this.buildingSprite.scale.y
-      this.buildingSprite.tint = 0xffffff
-      this.buildingSprite.alpha = 1.0
+        if (!this.buildingSprite) {
+          this.buildingSprite = new Sprite(texture)
+          this.buildingSprite.anchor.set(0.5, 0.75)
+          this.container.addChild(this.buildingSprite)
+        } else {
+          this.buildingSprite.texture = texture
+        }
+
+        this.buildingSprite.width = dim.width
+        this.buildingSprite.height = dim.height
+        this.baseScaleX = this.buildingSprite.scale.x
+        this.baseScaleY = this.buildingSprite.scale.y
+        this.buildingSprite.tint = 0xffffff
+        this.buildingSprite.alpha = 1.0
+      }
     }
 
     // Level Badge Tag (batched sprite)
@@ -345,114 +381,15 @@ class BuildingSlotNode {
     }
   }
 
-  async renderConstruction(buildingDef, slot, _vipStatus) {
-    const dim = BUILDING_DIMENSIONS[slot.buildingId] || { width: 175, height: 140 }
-
-    // Faint blueprint ghost behind scaffolding
-    if (!this.ghostSprite) {
-      const texture = await loadPixiTexture(buildingDef.image)
-      this.ghostSprite = new Sprite(texture)
-      this.ghostSprite.anchor.set(0.5, 0.75)
-      this.ghostSprite.width = dim.width
-      this.ghostSprite.height = dim.height
-      this.ghostSprite.tint = 0x38bdf8
-      this.ghostSprite.alpha = 0.20
-      this.container.addChild(this.ghostSprite)
-    }
-
-    // Animated Cimientos (scaffolding & builder angel)
-    if (!this.constructAnim) {
-      try {
-        const cimientosSheet = await loadPixiSpritesheet('/assets/structures/cimientos/cimientos.json')
-        if (cimientosSheet?.animations?.play?.length > 0) {
-          const anim = new AnimatedSprite(cimientosSheet.animations.play)
-          anim.anchor.set(0.5, 0.72)
-          anim.width = Math.max(160, dim.width * 0.95)
-          anim.height = Math.max(120, dim.height * 0.95)
-          anim.animationSpeed = 0.40 // ~24 fps at 60Hz ticker
-          anim.loop = true
-          anim.play()
-          this.constructAnim = anim
-          this.container.addChild(anim)
-        }
-      } catch (err) {
-        console.warn('[PixiBuildingsLayer] Failed to load cimientos anim:', err)
-      }
-    }
-
-    // Construction progress box
-    if (!this.constructGfx) {
-      this.constructGfx = new Container()
-      this.constructGfx.y = -dim.height * 0.75 - 12
-
-      // Background
-      const bg = new Graphics()
-      bg.roundRect(-42, -10, 84, 20, 6)
-      bg.fill({ color: 0x0f172a, alpha: 0.95 })
-      bg.stroke({ width: 1.5, color: 0x38bdf8, alpha: 0.85 })
-      this.constructGfx.addChild(bg)
-
-      // Progress bar wrap
-      this.progressBarFill = new Graphics()
-      this.constructGfx.addChild(this.progressBarFill)
-
-      // Time Text
-      const timeStyle = new TextStyle({
-        fontFamily: 'Inter, system-ui, sans-serif',
-        fontSize: 10,
-        fontWeight: 'bold',
-        fill: '#ffffff',
-      })
-      this.constructTimeText = new Text({ text: '0:00', style: timeStyle })
-      this.constructTimeText.anchor.set(0.5, 0.5)
-      this.constructGfx.addChild(this.constructTimeText)
-
-      this.container.addChild(this.constructGfx)
-    }
-
-    // Update progress values
-    const now = Date.now()
-    const durationSec = slot.constructionDurationSec || buildingDef.buildTimeSec || 60
-    const elapsedSec = slot.constructionStartedAt ? Math.max(0, (now - slot.constructionStartedAt) / 1000) : 0
-    const remainingSec = Math.max(0, Math.ceil(durationSec - elapsedSec))
-    const progressPct = Math.min(100, Math.max(0, (elapsedSec / durationSec) * 100))
-
-    const mins = Math.floor(remainingSec / 60)
-    const secs = Math.floor(remainingSec % 60)
-    if (this.constructTimeText) {
-      this.constructTimeText.text = `${mins}:${secs.toString().padStart(2, '0')}`
-    }
-
-    if (this.progressBarFill) {
-      this.progressBarFill.clear()
-      const fillW = Math.max(0, (76 * progressPct) / 100)
-      this.progressBarFill.roundRect(-38, 5, fillW, 3, 2)
-      this.progressBarFill.fill({ color: 0x38bdf8, alpha: 0.9 })
-    }
-  }
-
-  clearConstruction() {
-    if (this.ghostSprite) {
-      this.container.removeChild(this.ghostSprite)
-      this.ghostSprite.destroy()
-      this.ghostSprite = null
-    }
-    if (this.constructAnim) {
-      this.constructAnim.stop()
-      this.container.removeChild(this.constructAnim)
-      this.constructAnim.destroy()
-      this.constructAnim = null
-    }
-    if (this.constructGfx) {
-      this.container.removeChild(this.constructGfx)
-      this.constructGfx.destroy({ children: true })
-      this.constructGfx = null
-    }
-  }
-
   clearBuildingContent() {
-    this.clearConstruction()
     this.clearHarvestDisc()
+    if (this.buildingAnimSprite) {
+      this.buildingAnimSprite.stop()
+      this.container.removeChild(this.buildingAnimSprite)
+      this.buildingAnimSprite.destroy()
+      this.buildingAnimSprite = null
+      this.currentBuildingUrl = null
+    }
     if (this.buildingSprite) {
       this.container.removeChild(this.buildingSprite)
       this.buildingSprite.destroy()

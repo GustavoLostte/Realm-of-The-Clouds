@@ -87,6 +87,7 @@
   height: 22px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
 .cuartel-level-pill {
@@ -705,6 +706,7 @@
   height: 95%;
   object-fit: contain;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
 }
 
 .unit-squad-badge {
@@ -832,6 +834,7 @@
 .btn-recruit-candy.primary:hover {
   transform: translateY(-2px);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }
 
 .btn-recruit-candy.secondary {
@@ -852,6 +855,7 @@
   cursor: not-allowed;
   transform: none !important;
   filter: grayscale(0.5);
+  -webkit-filter: grayscale(0.5);
 }
 
 .multi-recruit-row {

@@ -51,6 +51,7 @@
   height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
 
 .tech-tree-tag {
@@ -96,6 +97,7 @@
   height: 16px;
   object-fit: contain;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+  -webkit-filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
 }
 
 .tech-branches-nav {
@@ -153,6 +155,7 @@
   height: 26px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .branch-tab-text-col {
@@ -232,6 +235,7 @@
   height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
 }
 
 .branch-hero-title {
@@ -299,6 +303,7 @@
 .tech-card.locked_deps {
   opacity: 0.62;
   filter: grayscale(0.35);
+  -webkit-filter: grayscale(0.35);
 }
 
 .tech-card-header {
@@ -326,6 +331,7 @@
   height: 34px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
 }
 
 .tech-unlocked-badge {
@@ -504,6 +510,7 @@
 .btn-research-action.active:hover {
   transform: scale(1.02);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
   box-shadow: 0 6px 18px rgba(14, 165, 233, 0.6);
 }
 
@@ -696,6 +703,7 @@
   .tech-card.locked_deps {
     opacity: 1 !important;
     filter: none !important;
+    -webkit-filter: none !important;
     background: linear-gradient(180deg, rgba(20, 26, 40, 0.94) 0%, rgba(11, 15, 25, 0.98) 100%) !important;
     border-color: rgba(148, 163, 184, 0.25) !important;
   }

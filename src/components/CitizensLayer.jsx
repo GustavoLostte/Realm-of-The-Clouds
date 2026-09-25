@@ -512,18 +512,93 @@ const SentryGuards = React.memo(function SentryGuards({ onCitizenGift }) {
   )
 })
 
+/**
+ * DRAGÓN CELESTIAL DURMIENTE
+ * Estacionado en el medallón solar de la terraza oriental (x: 70.3%, y: 50.0%)
+ */
+const SleepingCelestialDragon = React.memo(function SleepingCelestialDragon({ onCitizenGift }) {
+  const [speech, setSpeech] = useState(false)
+  const timerRef = useRef(null)
+
+  const handleClick = (e) => {
+    e.stopPropagation()
+    soundManager.playClick?.()
+    setSpeech('Zzz... *El Dragón Celestial descansa plácidamente en el sello solar*... Zzz')
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => setSpeech(false), 3000)
+
+    if (onCitizenGift && Math.random() < 0.40) {
+      const gift = { type: 'gems', amount: 1, text: '✨ +1 Escama Celestial' }
+      onCitizenGift({ id: 'dragon-celestial', name: 'Dragón Celestial' }, gift)
+      soundManager.playCollect?.()
+    }
+  }
+
+  return (
+    <div
+      className="citizen-actor dragon-actor"
+      style={{
+        left: '70.3%',
+        top: '50.0%',
+        opacity: 1,
+        pointerEvents: 'auto',
+        zIndex: 500,
+        transform: 'translate(-50%, -50%)',
+        transition: 'none',
+      }}
+      onClick={handleClick}
+      title="Dragón Celestial Durmiente"
+    >
+      {speech && (
+        <div className="citizen-speech-bubble" style={{ bottom: '110px' }}>
+          <span>{speech}</span>
+        </div>
+      )}
+
+      {/* Sombra suave de suelo bajo el dragón */}
+      <div
+        className="citizen-ground-shadow"
+        style={{
+          width: '150px',
+          height: '46px',
+          bottom: '12px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.18) 50%, transparent 75%)',
+        }}
+      />
+
+      <img
+        src="/assets/npcs/dragon_celestial_dormido.webp"
+        alt="Dragón Celestial Durmiente"
+        className="citizen-sprite dragon-sprite"
+        style={{
+          width: '190px',
+          height: '138px',
+          objectFit: 'contain',
+          pointerEvents: 'auto',
+          cursor: 'pointer',
+          filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.25))',
+        }}
+        draggable="false"
+      />
+    </div>
+  )
+})
+
 export const CitizensLayer = React.memo(function CitizensLayer({ 
   slots = [], 
   onCitizenClick, 
   onCitizenGift, 
+  onOpenBattle,
   fpsMode = '60fps',
   isSuspended = false,
 }) {
   const { t } = useTranslation()
 
   // Dynamic conditions based on player's kingdom buildings
-  const hasHouse = slots?.some((s) => (s.buildingId === 'casa' || s.buildingId === 'casa_molino') && !s.isConstructing)
-  const hasBarracks = slots?.some((s) => s.buildingId === 'cuartel' && !s.isConstructing)
+  const hasHouse = slots?.some((s) => s.buildingId === 'casa' || s.buildingId === 'casa_molino')
+  const hasBarracks = slots?.some((s) => s.buildingId === 'cuartel')
 
   const activeConfig = useMemo(() => getActiveCitizensConfig(hasHouse, hasBarracks), [hasHouse, hasBarracks])
   const activeConfigRef = useRef(activeConfig)
@@ -708,6 +783,11 @@ export const CitizensLayer = React.memo(function CitizensLayer({
 
       {/* Sentry Soldiers stationed at the platform left corners */}
       <SentryGuards 
+        onCitizenGift={onCitizenGift} 
+      />
+
+      {/* Sleeping Celestial Dragon stationed on the East Sun Emblem */}
+      <SleepingCelestialDragon 
         onCitizenGift={onCitizenGift} 
       />
 

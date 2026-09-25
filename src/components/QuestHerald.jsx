@@ -20,7 +20,6 @@ export function QuestHerald({
   chapterData,
   questProgress,
   onClaimQuest,
-  onOpenBuild,
   onOpenArmy,
   onOpenCampaign,
   onOpenQuestsModal,
@@ -108,9 +107,6 @@ export function QuestHerald({
     }
 
     switch (activeQuest.actionType) {
-      case 'build':
-        onOpenBuild?.(activeQuest.targetBuilding)
-        break
       case 'army':
         onOpenArmy?.()
         break
@@ -121,8 +117,8 @@ export function QuestHerald({
         onOpenProfile?.()
         break
       case 'upgrade':
-        onOpenBuild?.()
-        break
+      case 'inspect':
+      case 'harvest':
       default:
         onOpenQuestsModal?.()
         break
@@ -312,7 +308,7 @@ export function QuestHerald({
               disabled={isTutorialActive}
               title={isTutorialActive ? (t('tutorial.blockedInTutorial') || 'Completa o finaliza el tutorial con el Senescal primero') : undefined}
             >
-              {activeQuest.actionType === 'build' && <Hammer size={15} />}
+              {activeQuest.actionType === 'upgrade' && <Hammer size={15} />}
               {activeQuest.actionType === 'army' && <Swords size={15} />}
               {activeQuest.actionType === 'campaign' && <Compass size={15} />}
               <span>{isTutorialActive ? (t('tutorial.blockedInTutorialShort') || 'En Tutorial...') : questActionLabel}</span>

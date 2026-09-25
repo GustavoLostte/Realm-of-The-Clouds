@@ -7,7 +7,7 @@ export const CHAPTERS_DATA = [
     title: 'Capítulo I: El Despertar en las Alturas',
     subtitle: 'Reconstruye el santuario sagrado y consolida tu primer asentamiento sobre el mar de nubes.',
     badge: 'Capítulo I',
-    icon: '/assets/hud_icons/btn_build.webp',
+    icon: '/assets/hud_icons/btn_upgrade.webp',
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ export const CHAPTERS_DATA = [
 ]
 
 export const STORY_QUESTS = [
-  // --- CAPÍTULO I: EL RENACER DEL FEUDO (Flujo de Construcción Progresivo) ---
+  // --- CAPÍTULO I: EL RENACER DEL FEUDO (Flujo Progresivo del Reino) ---
   {
     id: 'q-c1-1',
     chapter: 1,
@@ -46,7 +46,7 @@ export const STORY_QUESTS = [
     reward: { gold: 250, wood: 200, stone: 200, food: 150, xp: 120 },
     evaluate: (state) => {
       const hasCastle = state.slots.some(
-        (s) => (s.buildingId === 'ayuntamiento' || s.buildingId === 'castillo') && !s.isConstructing
+        (s) => s.buildingId === 'ayuntamiento' || s.buildingId === 'castillo'
       )
       return { completed: hasCastle, current: hasCastle ? 1 : 0, max: 1 }
     },
@@ -54,33 +54,31 @@ export const STORY_QUESTS = [
   {
     id: 'q-c1-2',
     chapter: 1,
-    title: 'Fiebre del Oro',
-    desc: 'Selecciona una parcela vacía y erige una Mina de Oro Profunda para asegurar ingresos.',
-    hint: 'Haz clic en cualquier parcela con el símbolo [+] para abrir el catálogo y erigir la mina.',
-    actionType: 'build',
-    targetBuilding: 'gold_mine',
-    actionLabel: 'Construir Mina',
+    title: 'El Molino Alado',
+    desc: 'Inspecciona el Molino Celestial en el flanco sur para asegurar las reservas de harina y trigo.',
+    hint: 'El molino alado genera recursos indispensables para alimentar al reino y la guarnición.',
+    actionType: 'inspect',
+    targetBuilding: 'casa_molino',
+    actionLabel: 'Ver Molino',
     reward: { gold: 250, wood: 150, stone: 150, gems: 10, xp: 150 },
     evaluate: (state) => {
-      const hasMine = state.slots.some((s) => s.buildingId === 'gold_mine' && !s.isConstructing)
-      return { completed: hasMine, current: hasMine ? 1 : 0, max: 1 }
+      const hasMill = state.slots.some((s) => s.buildingId === 'casa_molino')
+      return { completed: hasMill, current: hasMill ? 1 : 0, max: 1 }
     },
   },
   {
     id: 'q-c1-3',
     chapter: 1,
-    title: 'Cobijo y Población',
-    desc: 'Construye una Casa de Colonos para aumentar la capacidad de trabajadores de tu reino.',
-    hint: 'Cada casa proporciona cobijo y atrae nuevos habitantes necesarios para las obras y el ejército.',
-    actionType: 'build',
-    targetBuilding: 'casa',
-    actionLabel: 'Construir Casa',
+    title: 'La Gran Bóveda Real',
+    desc: 'Inspecciona la Bóveda del Tesoro en la terraza oriental para gestionar el acopio imperial.',
+    hint: 'La Gran Bóveda custodia los recursos imperiales y expande la capacidad de tus arcas.',
+    actionType: 'inspect',
+    targetBuilding: 'almacen',
+    actionLabel: 'Ver Bóveda',
     reward: { gold: 200, wood: 180, stone: 180, food: 120, xp: 140 },
     evaluate: (state) => {
-      const houseCount = state.slots.filter(
-        (s) => s.buildingId === 'casa' && !s.isConstructing
-      ).length
-      return { completed: houseCount >= 1, current: Math.min(houseCount, 1), max: 1 }
+      const hasVault = state.slots.some((s) => s.buildingId === 'almacen')
+      return { completed: hasVault, current: hasVault ? 1 : 0, max: 1 }
     },
   },
   {
@@ -88,7 +86,7 @@ export const STORY_QUESTS = [
     chapter: 1,
     title: 'El Fruto del Trabajo',
     desc: 'Recolecta tributos o recursos generados por tus edificios en la plaza.',
-    hint: 'Toca el globo flotante de monedas sobre un edificio o pulsa "Cosechar Todo" en la barra superior.',
+    hint: 'Toca el globo flotante de recursos sobre un edificio o pulsa "Cosechar Todo" en la barra superior.',
     actionType: 'harvest',
     actionLabel: 'Recolectar Recursos',
     reward: { gold: 200, wood: 120, stone: 120, food: 100, xp: 130 },
@@ -101,39 +99,38 @@ export const STORY_QUESTS = [
   {
     id: 'q-c1-5',
     chapter: 1,
-    title: 'Aserradero del Río',
-    desc: 'Erige un Aserradero del Río en una parcela vacía para procesar madera continuamente.',
-    hint: 'La madera refinada es indispensable para erigir defensas, cuarteles y armas.',
-    actionType: 'build',
-    targetBuilding: 'casa_molino',
-    actionLabel: 'Construir Aserradero',
+    title: 'Crecimiento Progresivo',
+    desc: 'Mejora el Molino Alado o cualquier edificio al Nivel 2 para elevar la prosperidad del reino.',
+    hint: 'Haz clic en una estructura existente y selecciona "Mejorar Edificio" para subir su nivel al instante.',
+    actionType: 'upgrade',
+    actionLabel: 'Mejorar Estructura',
     reward: { gold: 220, wood: 150, stone: 150, xp: 160 },
     evaluate: (state) => {
-      const hasSawmill = state.slots.some((s) => s.buildingId === 'casa_molino' && !s.isConstructing)
-      return { completed: hasSawmill, current: hasSawmill ? 1 : 0, max: 1 }
+      const upgraded = state.slots.some((s) => s.buildingId && (s.level || 1) >= 2)
+      return { completed: upgraded, current: upgraded ? 1 : 0, max: 1 }
     },
   },
   {
     id: 'q-c1-6',
     chapter: 1,
-    title: 'Fortaleza Militar',
-    desc: 'Construye un Cuartel de Guerra para comenzar la instrucción de tropas militares.',
-    hint: 'El Cuartel es el centro de reclutamiento de infantes, arqueros y magos de guerra.',
-    actionType: 'build',
-    targetBuilding: 'cuartel',
-    actionLabel: 'Construir Cuartel',
+    title: 'El Portal Arcano',
+    desc: 'Inspecciona el Portal Arcano situado en la terraza occidental junto al Ángel Centinela.',
+    hint: 'El portal místico canaliza las corrientes astrales y conecta el reino con dimensiones inexploradas.',
+    actionType: 'inspect',
+    targetBuilding: 'portal',
+    actionLabel: 'Ver Portal',
     reward: { gold: 250, wood: 150, stone: 150, food: 150, xp: 180 },
     evaluate: (state) => {
-      const hasBarracks = state.slots.some((s) => s.buildingId === 'cuartel' && !s.isConstructing)
-      return { completed: hasBarracks, current: hasBarracks ? 1 : 0, max: 1 }
+      const hasPortal = state.slots.some((s) => s.buildingId === 'portal' || s.buildingId === 'portal_arcano')
+      return { completed: hasPortal, current: hasPortal ? 1 : 0, max: 1 }
     },
   },
   {
     id: 'q-c1-7',
     chapter: 1,
     title: 'Instrucción de la Guardia',
-    desc: 'Recluta al menos 4 soldados en tu guarnición desde el Cuartel de Guerra.',
-    hint: 'Abre el Cuartel y entrena reclutas usando oro y víveres para defender la plaza.',
+    desc: 'Recluta al menos 4 soldados en tu guarnición desde el panel militar.',
+    hint: 'Abre el menú militar y entrena reclutas usando oro y víveres para defender la plaza.',
     actionType: 'army',
     actionLabel: 'Reclutar Tropas',
     reward: { gold: 250, food: 150, gems: 10, xp: 200 },
@@ -149,16 +146,18 @@ export const STORY_QUESTS = [
   {
     id: 'q-c1-8',
     chapter: 1,
-    title: 'Vigía de las Murallas',
-    desc: 'Construye una Torre de Arqueros para vigilar las fronteras y defender el reino.',
-    hint: 'Las defensas fortificadas disuaden a los merodeadores y aumentan la seguridad de la plaza.',
-    actionType: 'build',
-    targetBuilding: 'archer_tower',
-    actionLabel: 'Erigir Torre',
+    title: 'Vigía y Defensa Imperial',
+    desc: 'Eleva el Palacio Soberano al Nivel 2 para robustecer la soberanía de tu feudo.',
+    hint: 'Selecciona el Castillo Imperial y auméntalo al Nivel 2 para desbloquear mayor capacidad y tributos.',
+    actionType: 'upgrade',
+    actionLabel: 'Mejorar Castillo',
     reward: { gold: 220, stone: 140, xp: 190 },
     evaluate: (state) => {
-      const hasTower = state.slots.some((s) => s.buildingId === 'archer_tower' && !s.isConstructing)
-      return { completed: hasTower, current: hasTower ? 1 : 0, max: 1 }
+      const castleSlot = state.slots.find(
+        (s) => s.buildingId === 'ayuntamiento' || s.buildingId === 'castillo'
+      )
+      const lvl = castleSlot?.level || 1
+      return { completed: lvl >= 2, current: Math.min(lvl, 2), max: 2 }
     },
   },
   {
@@ -180,30 +179,29 @@ export const STORY_QUESTS = [
   {
     id: 'q-c2-1',
     chapter: 2,
-    title: 'Cantera de Granito',
-    desc: 'Erigir una Cantera de Granito para abastecer al reino con bloques macizos de piedra.',
-    hint: 'La piedra es indispensable para elevar murallas pesadas y estructuras avanzadas.',
-    actionType: 'build',
-    targetBuilding: 'mina_piedra',
-    actionLabel: 'Construir Cantera',
+    title: 'Provisión del Reino',
+    desc: 'Efectúa al menos 3 cosechas de tributos en tus edificios de la plaza.',
+    hint: 'Recoge las cosechas periódicas de tus edificios para abastecer las arcas reales.',
+    actionType: 'harvest',
+    actionLabel: 'Cosechar Recursos',
     reward: { wood: 200, stone: 200, xp: 220 },
     evaluate: (state) => {
-      const hasQuarry = state.slots.some((s) => s.buildingId === 'mina_piedra' && !s.isConstructing)
-      return { completed: hasQuarry, current: hasQuarry ? 1 : 0, max: 1 }
+      const harvests = state.totalHarvests || 0
+      return { completed: harvests >= 3, current: Math.min(harvests, 3), max: 3 }
     },
   },
   {
     id: 'q-c2-2',
     chapter: 2,
     title: 'Fortaleza en Expansión',
-    desc: 'Mejora cualquier edificio a Nivel 2 o superior en la plaza.',
-    hint: 'Haz clic en una estructura existente y selecciona "Mejorar Edificio".',
+    desc: 'Mejora al menos dos edificios a Nivel 2 o superior en la plaza.',
+    hint: 'Eleva el nivel de tus estructuras para maximizar su producción y resistencia.',
     actionType: 'upgrade',
-    actionLabel: 'Mejorar Edificio',
+    actionLabel: 'Mejorar Edificios',
     reward: { gold: 400, wood: 250, xp: 300 },
     evaluate: (state) => {
-      const upgraded = state.slots.some((s) => s.buildingId && (s.level || 1) >= 2 && !s.isConstructing)
-      return { completed: upgraded, current: upgraded ? 1 : 0, max: 1 }
+      const count = state.slots.filter((s) => s.buildingId && (s.level || 1) >= 2).length
+      return { completed: count >= 2, current: Math.min(count, 2), max: 2 }
     },
   },
   {
@@ -223,16 +221,16 @@ export const STORY_QUESTS = [
   {
     id: 'q-c2-4',
     chapter: 2,
-    title: 'El Gran Almacén Real',
-    desc: 'Erige un Gran Almacén Real para maximizar el acopio de provisiones del imperio.',
-    hint: 'El almacén protege los recursos de los saqueos y produce materiales auxiliares.',
-    actionType: 'build',
-    targetBuilding: 'almacen',
-    actionLabel: 'Construir Almacén',
+    title: 'Prosperidad de la Bóveda',
+    desc: 'Eleva la Gran Bóveda Real al Nivel 2 para ampliar los depósitos y blindar el tesoro.',
+    hint: 'Selecciona la Gran Bóveda en la terraza oriental y mejórala al Nivel 2.',
+    actionType: 'upgrade',
+    actionLabel: 'Mejorar Bóveda',
     reward: { gold: 500, gems: 20, xp: 350 },
     evaluate: (state) => {
-      const hasWarehouse = state.slots.some((s) => s.buildingId === 'almacen' && !s.isConstructing)
-      return { completed: hasWarehouse, current: hasWarehouse ? 1 : 0, max: 1 }
+      const vault = state.slots.find((s) => s.buildingId === 'almacen')
+      const lvl = vault?.level || 1
+      return { completed: lvl >= 2, current: Math.min(lvl, 2), max: 2 }
     },
   },
   {
@@ -271,16 +269,15 @@ export const STORY_QUESTS = [
   {
     id: 'q-c3-2',
     chapter: 3,
-    title: 'Bóveda Real',
-    desc: 'Construye un Gran Almacén Real para guardar las provisiones del imperio.',
-    hint: 'El almacén genera madera y piedra mientras protege las riquezas.',
-    actionType: 'build',
-    targetBuilding: 'almacen',
-    actionLabel: 'Erigir Almacén',
+    title: 'Reino Fortificado',
+    desc: 'Eleva al menos 3 edificios de tu reino al Nivel 2 o superior.',
+    hint: 'Fortalece la infraestructura permanente de la meseta celestial.',
+    actionType: 'upgrade',
+    actionLabel: 'Mejorar Reino',
     reward: { gold: 500, wood: 400, stone: 300, xp: 400 },
     evaluate: (state) => {
-      const hasStorage = state.slots.some((s) => s.buildingId === 'almacen' && !s.isConstructing)
-      return { completed: hasStorage, current: hasStorage ? 1 : 0, max: 1 }
+      const count = state.slots.filter((s) => s.buildingId && (s.level || 1) >= 2).length
+      return { completed: count >= 3, current: Math.min(count, 3), max: 3 }
     },
   },
   {
@@ -318,7 +315,7 @@ export const STORY_QUESTS = [
     chapter: 4,
     title: 'Corona Imperial',
     desc: 'Alcanza el Nivel 3 de Reino con tu Comandante.',
-    hint: 'Gana experiencia construyendo, reclutando y conquistando mazmorras.',
+    hint: 'Gana experiencia mejorando santuarios, reclutando y conquistando mazmorras.',
     actionType: 'level',
     actionLabel: 'Ver Perfil',
     reward: { gold: 2000, gems: 80, xp: 1200 },
@@ -344,15 +341,18 @@ export const STORY_QUESTS = [
   {
     id: 'q-c4-3',
     chapter: 4,
-    title: 'La Gran Metrópolis',
-    desc: 'Ocupa al menos 10 parcelas de la plaza imperial con edificios activos.',
-    hint: 'Transforma la meseta flotante en una capital inexpugnable.',
-    actionType: 'build',
-    actionLabel: 'Construir en Plaza',
+    title: 'Cúspide de la Ciudadela',
+    desc: 'Eleva el Palacio Soberano al Nivel 3 y consolida la supremacía de la ciudadela.',
+    hint: 'Lleva el Castillo Imperial al Nivel 3 para convertirte en el soberano indiscutible del cielo.',
+    actionType: 'upgrade',
+    actionLabel: 'Elevar Palacio',
     reward: { gold: 3500, gems: 150, xp: 2000 },
     evaluate: (state) => {
-      const count = state.slots.filter((s) => s.buildingId && !s.isConstructing).length
-      return { completed: count >= 10, current: Math.min(count, 10), max: 10 }
+      const castleSlot = state.slots.find(
+        (s) => s.buildingId === 'ayuntamiento' || s.buildingId === 'castillo'
+      )
+      const lvl = castleSlot?.level || 1
+      return { completed: lvl >= 3, current: Math.min(lvl, 3), max: 3 }
     },
   },
 ]
@@ -365,7 +365,7 @@ export const DAILY_QUESTS_TEMPLATE = [
     reward: { gold: 150, food: 80, xp: 100 },
     timeRemaining: '11h 45m',
     evaluate: (state) => {
-      const readyToCollect = state.slots.filter((s) => s.buildingId && !s.isConstructing).length
+      const readyToCollect = state.slots.filter((s) => s.buildingId).length
       return { completed: readyToCollect >= 3, current: Math.min(readyToCollect, 3), max: 3 }
     },
   },
@@ -405,7 +405,7 @@ export const EPIC_FEATS_TEMPLATE = [
     reward: { gold: 2000, gems: 50, xp: 600 },
     evaluate: (state) => {
       const castleSlot = state.slots.find(
-        (s) => (s.buildingId === 'ayuntamiento' || s.buildingId === 'castillo') && !s.isConstructing
+        (s) => s.buildingId === 'ayuntamiento' || s.buildingId === 'castillo'
       )
       const lvl = castleSlot?.level || 1
       return { completed: lvl >= 3, current: Math.min(lvl, 3), max: 3 }
@@ -420,7 +420,7 @@ export const EPIC_FEATS_TEMPLATE = [
       let totalPop = state.resources?.populationMax || 30
       let fromBuildings = 0
       state.slots.forEach((s) => {
-        if (s.buildingId && !s.isConstructing) {
+        if (s.buildingId) {
           const bDef = Object.values(BUILDING_TYPES).find((b) => b.id === s.buildingId)
           const lvl = s.level || 1
           if (bDef?.populationProvided) fromBuildings += bDef.populationProvided * lvl

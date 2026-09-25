@@ -27,6 +27,7 @@
   height: 20px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .hud-trophies-pill .trophies-val {
@@ -45,6 +46,7 @@
 
 .hud-trophies-pill .peace-shield-svg {
   filter: drop-shadow(0 0 4px #38bdf8);
+  -webkit-filter: drop-shadow(0 0 4px #38bdf8);
 }
 
 @keyframes pulseShield {
@@ -165,6 +167,7 @@
   height: 18px;
   object-fit: contain;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  -webkit-filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
 }
 
 .arena-pill-icon {
@@ -172,6 +175,7 @@
   height: 20px;
   object-fit: contain;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+  -webkit-filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
 }
 
 .arena-tab-img {
@@ -179,6 +183,7 @@
   height: 22px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
 
 .arena-header-sub {
@@ -397,6 +402,7 @@
   height: 52px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
 }
 
 .league-hero-name {
@@ -856,6 +862,7 @@
   height: 20px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
 
 .rival-body {
@@ -1060,6 +1067,7 @@
   color: #bae6fd;
   flex-shrink: 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
   animation: swordsClashAnim 1.8s infinite ease-in-out;
 }
 
@@ -1222,6 +1230,7 @@
   height: 44px;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(2, 132, 199, 0.8));
+  -webkit-filter: drop-shadow(0 4px 10px rgba(2, 132, 199, 0.8));
 }
 
 .podium-laurel {
@@ -1579,6 +1588,7 @@
   height: 22px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
 
 .honor-items-grid {
@@ -1625,6 +1635,7 @@
   height: 38px;
   object-fit: contain;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+  -webkit-filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
 }
 
 .honor-item-name {

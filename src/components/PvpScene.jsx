@@ -27,6 +27,7 @@ import { BattleDuelScene } from './BattleDuelScene'
 
 export function PvpScene({
   onBack,
+  initialMode = 'pvp',
   resources = {},
   arenaData = {},
   playerName = 'Comandante',
@@ -42,8 +43,11 @@ export function PvpScene({
   const tickets = arenaData?.tickets ?? 3
   const currentLeague = getLeagueForTrophies(trophies)
   
+  const [isTraining, setIsTraining] = useState(() => initialMode === 'training')
+
   // View mode: 'rooms' (rooms list) | 'champion-select' (Mortal Kombat style selection) | 'battle-duel' (map duel)
   const [currentView, setCurrentView] = useState(() => {
+    if (initialMode === 'training') return 'battle-duel'
     try {
       const params = new URLSearchParams(window.location.search)
       if (params.get('view') === 'battle') return 'battle-duel'
@@ -59,7 +63,7 @@ export function PvpScene({
         return {
           id: 'room_101',
           name: 'Comandante Valerius',
-          championId: 'malakor',
+          championId: 'valiria_rival',
           avatar: '/assets/avatars/avatar_king.webp',
           kingdom: 'Bastión del Fénix',
           trophies: 280,
@@ -70,19 +74,21 @@ export function PvpScene({
     return null
   })
   const [selectedPlayerChamp, setSelectedPlayerChamp] = useState(() => {
+    if (initialMode === 'training') return getChampionById('valiria')
     try {
       const params = new URLSearchParams(window.location.search)
       if (params.get('view') === 'battle') {
-        return getChampionById('luke')
+        return getChampionById('valiria')
       }
     } catch {}
     return null
   })
   const [selectedRivalChamp, setSelectedRivalChamp] = useState(() => {
+    if (initialMode === 'training') return getChampionById('valiria_rival')
     try {
       const params = new URLSearchParams(window.location.search)
       if (params.get('view') === 'battle') {
-        return getChampionById('malakor')
+        return getChampionById('valiria_rival')
       }
     } catch {}
     return null
@@ -148,17 +154,11 @@ export function PvpScene({
     setCurrentView('champion-select')
   }
 
-  const handleQuickPracticeLuke = () => {
+  const handleQuickPracticeValiria = () => {
     soundManager?.playButtonClick?.()
-    setSelectedPlayerChamp(getChampionById('luke'))
-    setSelectedRivalChamp(getChampionById('malakor'))
-    setCurrentView('battle-duel')
-  }
-
-  const handleQuickPracticeMalakor = () => {
-    soundManager?.playButtonClick?.()
-    setSelectedPlayerChamp(getChampionById('malakor'))
-    setSelectedRivalChamp(getChampionById('luke'))
+    setIsTraining(true)
+    setSelectedPlayerChamp(getChampionById('valiria'))
+    setSelectedRivalChamp(getChampionById('valiria_rival'))
     setCurrentView('battle-duel')
   }
 
@@ -175,16 +175,26 @@ export function PvpScene({
   if (currentView === 'battle-duel') {
     return (
       <BattleDuelScene 
-        playerChampion={selectedPlayerChamp || getChampionById('luke')}
-        rivalChampion={selectedRivalChamp || getChampionById('malakor')}
-        onExitBattle={() => setCurrentView('rooms')}
+        playerChampion={selectedPlayerChamp || getChampionById('valiria')}
+        rivalChampion={selectedRivalChamp || getChampionById('valiria_rival')}
+        isTraining={isTraining}
+        onExitBattle={() => {
+          if (initialMode === 'training') {
+            onBack?.()
+          } else {
+            setIsTraining(false)
+            setCurrentView('rooms')
+          }
+        }}
         onVictory={(rivalChamp) => {
+          if (isTraining) return
           if (showNotification) {
             showNotification(`¡Victoria legendaria! ${selectedPlayerChamp?.name || 'Tu campeón'} triunfó sobre ${rivalChamp?.name || 'su rival'}.`, 'success')
           }
           setCurrentView('rooms')
         }}
         onDefeat={(rivalChamp) => {
+          if (isTraining) return
           if (showNotification) {
             showNotification(`Has caído en batalla ante ${rivalChamp?.name || 'el rival'}. ¡Entrena y regresa más fuerte!`, 'warning')
           }
@@ -309,39 +319,21 @@ export function PvpScene({
               </div>
             </button>
 
-            {/* BUTTON ARCADE LUKE - REAL TIME WASD + KLIO */}
+            {/* BUTTON ARCADE VALIRIA - REAL TIME WASD + KLIO */}
             <button 
               className="mode-toggle-card arcade-luke-card"
-              onClick={handleQuickPracticeLuke}
-              title="Entrar directo al combate arcade de Luke (Ángel Celestial) con controles WASD, Espacio y KLIO"
+              onClick={handleQuickPracticeValiria}
+              title="Entrar directo al combate arcade de Valiria (Ángel Valquiria) con controles WASD, Espacio y Combate"
             >
               <div className="mode-toggle-icon angel-mode-icon">
                 <Sparkles size={20} />
               </div>
               <div className="mode-toggle-text">
                 <div className="mode-title-row">
-                  <span className="mode-name arcade-luke-title">ARCADE LUKE</span>
-                  <span className="mode-active-pill arcade-badge-luke">WASD + KLIO</span>
+                  <span className="mode-name arcade-luke-title">ARCADE VALIRIA</span>
+                  <span className="mode-active-pill arcade-badge-luke">WASD + ACCIÓN</span>
                 </div>
-                <span className="mode-desc">Combate de acción celestial con Luke</span>
-              </div>
-            </button>
-
-            {/* BUTTON ARCADE MALAKOR - REAL TIME WASD + KLIO */}
-            <button 
-              className="mode-toggle-card arcade-malakor-card"
-              onClick={handleQuickPracticeMalakor}
-              title="Entrar directo al combate arcade de Lord Malakor con controles WASD, Espacio y KLIO"
-            >
-              <div className="mode-toggle-icon flame-mode-icon">
-                <Flame size={20} />
-              </div>
-              <div className="mode-toggle-text">
-                <div className="mode-title-row">
-                  <span className="mode-name arcade-malakor-title">ARCADE MALAKOR</span>
-                  <span className="mode-active-pill arcade-badge">WASD + KLIO</span>
-                </div>
-                <span className="mode-desc">Combate en tiempo real con Lord Malakor</span>
+                <span className="mode-desc">Combate en tiempo real con Valiria</span>
               </div>
             </button>
 
@@ -389,7 +381,7 @@ export function PvpScene({
                 <h3 className="profile-player-name">{playerName}</h3>
                 <div className="profile-badge-tag">
                   <Award size={13} className="award-icon" />
-                  <span>Comandante de Aetheria</span>
+                  <span>{t('start.commander') || 'Commander'} • Realm of Kingdom</span>
                 </div>
               </div>
             </div>

@@ -1,0 +1,1105 @@
+/* ============================================================
+   CHAMPION SELECTION & CREATION SCREEN (MMORPG LOBBY STYLING)
+   ============================================================ */
+
+.champion-screen-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at 50% 35%, rgba(18, 26, 47, 0.96) 0%, rgba(8, 12, 22, 0.99) 70%, rgba(4, 6, 12, 1) 100%);
+  color: #f8fafc;
+  overflow: hidden;
+  user-select: none;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  animation: championScreenFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes championScreenFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Cosmic Background Particles / Grid Overlay */
+.champion-screen-bg-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(rgba(245, 158, 11, 0.08) 1px, transparent 1px),
+    radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px, 60px 60px;
+  background-position: 0 0, 20px 20px;
+  opacity: 0.7;
+}
+
+.champion-aether-light {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.15) 0%, rgba(56, 189, 248, 0.08) 45%, transparent 70%);
+  filter: blur(50px);
+  -webkit-filter: blur(50px);
+  pointer-events: none;
+}
+
+/* ============================================================
+   TOP NAVIGATION & REALM BAR
+   ============================================================ */
+.champion-top-bar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 28px;
+  background: rgba(8, 12, 22, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.champion-server-pill-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.champion-server-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.12);
+  color: #fde68a;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.18);
+}
+
+.champion-server-badge.harmonia-theme {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.12);
+  color: #a7f3d0;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.18);
+}
+
+.champion-ping-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  color: #94a3b8;
+  font-weight: 700;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.champion-ping-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+}
+
+.champion-btn-change-server {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #7dd3fc;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.champion-btn-change-server:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.champion-top-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+.champion-top-account-pill {
+  color: #e2e8f0;
+  font-weight: 700;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================
+   MAIN WORKSPACE LAYOUT: SLOTS (LEFT) + STAGE (RIGHT)
+   ============================================================ */
+.champion-main-layout {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  padding: 20px 28px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------
+   LEFT COLUMN: CHARACTER SLOTS LIST
+   ------------------------------------------------------------ */
+.champion-slots-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.champion-slots-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.champion-slots-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fde68a;
+  margin: 0;
+}
+
+.champion-slots-counter {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.champion-slots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 4px;
+  flex: 1;
+}
+
+.champion-slots-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.champion-slots-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.champion-slots-list::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.3);
+  border-radius: 4px;
+}
+
+/* Individual Slot Card */
+.champion-slot-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.champion-slot-card:hover {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(245, 158, 11, 0.45);
+  transform: translateX(3px);
+}
+
+.champion-slot-card.is-active {
+  background: linear-gradient(90deg, rgba(45, 28, 14, 0.95) 0%, rgba(20, 14, 10, 0.95) 100%);
+  border-color: #f59e0b;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.3), inset 0 0 12px rgba(245, 158, 11, 0.1);
+}
+
+.champion-slot-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #020617;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.champion-slot-card.is-active .champion-slot-avatar {
+  border-color: #f59e0b;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.champion-slot-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.champion-slot-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.champion-slot-name {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.4px;
+}
+
+.champion-slot-card.is-active .champion-slot-name {
+  color: #fef08a;
+}
+
+.champion-slot-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.champion-slot-level-badge {
+  color: #38bdf8;
+  font-weight: 800;
+  background: rgba(56, 189, 248, 0.15);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.champion-slot-role {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Empty Slot Card (+ Crear Campeón) */
+.champion-slot-card.is-empty {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.3);
+  justify-content: center;
+  padding: 16px 14px;
+}
+
+.champion-slot-card.is-empty:hover {
+  border-color: rgba(56, 189, 248, 0.6);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.champion-slot-card.is-empty.is-active {
+  border-style: solid;
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.14);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+}
+
+.champion-empty-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.4px;
+}
+
+.champion-slot-card.is-empty:hover .champion-empty-prompt {
+  color: #38bdf8;
+}
+
+/* ============================================================
+   RIGHT COLUMN: STAGE PANEL (SHOWCASE WITH IDLE ANIMATION)
+   ============================================================ */
+.champion-stage-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 24px;
+  background: rgba(10, 15, 28, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.champion-stage-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+/* Class Header & Gender Switch Row */
+.champion-class-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.champion-class-title-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.champion-class-main-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #fef08a;
+  text-shadow: 0 0 16px rgba(245, 158, 11, 0.5);
+  margin: 0;
+}
+
+.champion-class-alias-pill {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fde68a;
+}
+
+/* Gender Selector Toggle Group (Hombre ♂ / Mujer ♀) */
+.champion-gender-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+}
+
+.champion-gender-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.champion-gender-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.champion-gender-btn.is-active {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+  border: 1px solid #38bdf8;
+}
+
+.champion-gender-sym {
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+/* ============================================================
+   CENTRAL HERO SHOWCASE STAGE & IDLE ANIMATION
+   ============================================================ */
+.champion-stage-hero-showcase {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 330px;
+  max-height: 46vh;
+  margin: 4px 0;
+  background: radial-gradient(ellipse at center 75%, rgba(15, 23, 42, 0.85) 0%, transparent 70%);
+}
+
+/* Floating Navigation Arrows */
+.champion-nav-arrow {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1.5px solid rgba(245, 158, 11, 0.45);
+  color: #fde68a;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 14px rgba(245, 158, 11, 0.2);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.champion-nav-arrow:hover {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: #fef08a;
+  color: #ffffff;
+  transform: scale(1.12);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4);
+}
+
+.champion-nav-arrow:active {
+  transform: scale(0.96);
+}
+
+/* Character Stage & Pedestal */
+.champion-character-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 320px;
+  width: 100%;
+  max-width: 440px;
+}
+
+/* Celestial Rune Pedestal Platform */
+.champion-pedestal-platform {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) rotateX(68deg);
+  width: 250px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 158, 11, 0.55);
+  box-shadow: 0 0 35px rgba(245, 158, 11, 0.4), inset 0 0 25px rgba(245, 158, 11, 0.3);
+  pointer-events: none;
+}
+
+.champion-pedestal-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  filter: blur(14px);
+  -webkit-filter: blur(14px);
+}
+
+.champion-pedestal-rune-ring {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.45);
+  animation: pedestalRuneSpin 18s linear infinite;
+}
+
+@keyframes pedestalRuneSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Standing Animated Idle Sprite */
+.champion-standing-idle-img {
+  position: relative;
+  z-index: 2;
+  height: 340px;
+  max-height: 45vh;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.9));
+  -webkit-filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.9));
+  transform-origin: bottom center;
+  animation: championIdleHover 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes championIdleHover {
+  0%, 100% {
+    transform: scale(var(--hero-scale, 1)) translateY(0);
+  }
+  50% {
+    transform: scale(var(--hero-scale, 1)) translateY(-4px);
+  }
+}
+
+/* ============================================================
+   CLASS SELECTOR PILLS (KNIGHT, PALADIN, MAGE, HEALER)
+   ============================================================ */
+.champion-class-pills-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.champion-class-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.champion-class-pill-btn:hover {
+  background: rgba(30, 41, 59, 0.85);
+  color: #f8fafc;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.champion-class-pill-btn.is-selected {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.28) 100%);
+  border-color: #f59e0b;
+  color: #fef08a;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+}
+
+.champion-pill-icon {
+  flex-shrink: 0;
+}
+
+/* Quote & Passive Skill Band */
+.champion-info-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.champion-quote-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  flex: 1;
+  min-width: 200px;
+}
+
+.champion-quote-mark {
+  font-size: 1.2rem;
+  font-family: Georgia, serif;
+  color: #f59e0b;
+  font-weight: 900;
+}
+
+.champion-quote-text {
+  margin: 0;
+}
+
+.champion-passive-badge-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #a7f3d0;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Stat Attributes Grid */
+.champion-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.champion-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.champion-stat-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.champion-stat-bar-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.champion-stat-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.champion-stat-bar-fill.attack {
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+
+.champion-stat-bar-fill.defense {
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+}
+
+.champion-stat-bar-fill.speed {
+  background: linear-gradient(90deg, #ec4899, #f43f5e);
+}
+
+.champion-stat-bar-fill.magic {
+  background: linear-gradient(90deg, #8b5cf6, #c084fc);
+}
+
+/* ============================================================
+   CREATION FOOTER (NAME INPUT + ACTION BUTTONS)
+   ============================================================ */
+.champion-creation-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: auto;
+}
+
+.champion-name-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.champion-name-field-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #cbd5e1;
+}
+
+.champion-name-field-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.champion-name-text-input {
+  flex: 1;
+  padding: 9px 14px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.champion-name-text-input:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.champion-dice-roll-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1.5px solid rgba(245, 158, 11, 0.4);
+  color: #fde68a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.champion-dice-roll-btn:hover {
+  background: rgba(245, 158, 11, 0.3);
+  border-color: #fbbf24;
+  color: #ffffff;
+  transform: rotate(20deg) scale(1.08);
+}
+
+.champion-name-error-msg {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #f87171;
+}
+
+/* Action Buttons Row */
+.champion-create-buttons-row,
+.champion-showcase-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.champion-showcase-actions-row {
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.champion-btn-cancel-create,
+.champion-btn-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.champion-btn-delete {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.champion-btn-delete:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.champion-btn-cancel-create:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.champion-btn-confirm-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: 1.5px solid #fef08a;
+  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.5), 0 0 14px rgba(245, 158, 11, 0.35);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.champion-btn-confirm-enter:hover {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border-color: #ffffff;
+  box-shadow: 0 6px 26px rgba(217, 119, 6, 0.7), 0 0 20px rgba(245, 158, 11, 0.6);
+  transform: translateY(-2px);
+}
+
+.champion-btn-confirm-enter:active {
+  transform: translateY(0);
+}
+
+.champion-key-hint {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fde68a;
+  border: 1px solid rgba(253, 230, 138, 0.4);
+}
+
+/* ============================================================
+   CONNECTING TRANSITION OVERLAY
+   ============================================================ */
+.server-connecting-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, rgba(10, 16, 32, 0.98) 0%, rgba(4, 6, 14, 0.99) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: connectingBackdropFade 0.3s ease;
+}
+
+@keyframes connectingBackdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.server-connecting-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 36px 44px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(8, 12, 24, 0.95) 100%);
+  border: 1.5px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(245, 158, 11, 0.25);
+  text-align: center;
+  max-width: 440px;
+  width: 90%;
+}
+
+.server-connecting-card.harmonia-theme {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(16, 185, 129, 0.25);
+}
+
+.server-connecting-crest-wrap {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.server-connecting-spinner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(245, 158, 11, 0.15);
+  border-top-color: #f59e0b;
+  border-right-color: #fbbf24;
+  animation: connectingSpin 1.1s infinite linear;
+}
+
+.server-connecting-card.harmonia-theme .server-connecting-spinner-ring {
+  border-color: rgba(16, 185, 129, 0.15);
+  border-top-color: #10b981;
+  border-right-color: #34d399;
+}
+
+@keyframes connectingSpin {
+  to { transform: rotate(360deg); }
+}
+
+.server-connecting-crest {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.18);
+  border: 1.5px solid rgba(245, 158, 11, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.server-connecting-card.harmonia-theme .server-connecting-crest {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.server-connecting-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fef08a;
+  margin: 0;
+}
+
+.server-connecting-card.harmonia-theme .server-connecting-title {
+  color: #a7f3d0;
+}
+
+.server-connecting-step-text {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.server-connecting-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.server-connecting-ping {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 900px) {
+  .champion-main-layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+  .champion-slots-panel {
+    max-height: 200px;
+  }
+  .champion-standing-idle-img {
+    height: 260px;
+  }
+}
+
+/* ============================================================
+   CHAMPION ANIMATION & AUDIO TESTER BAR
+   ============================================================ */
+.champion-anim-tester-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 12px 0;
+  width: 100%;
+}
+
+.champion-anim-tester-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.champion-anim-tester-btns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.champion-anim-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.65);
+  color: #cbd5e1;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.champion-anim-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.champion-anim-btn.is-active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(3, 105, 161, 0.5) 100%);
+  border-color: #38bdf8;
+  color: #f0f9ff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+

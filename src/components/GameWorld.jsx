@@ -61,10 +61,9 @@ export function GameWorld({
   vipStatus = {},
   activeStoryQuest = null,
   onSelectSlot, 
-  onOpenBuildMenu, 
   onCollectFromSlot,
   onCitizenGift,
-  onSpeedupBuilding,
+  onOpenBattle,
   onToggleCinematic,
   isCinematicMode = false,
   soundEnabled = true,
@@ -97,17 +96,13 @@ export function GameWorld({
     }
   }, [])
 
-  // Local tick to ensure countdowns, ghost transitions and harvest states re-render smoothly (suspended in combat)
+  // Local tick to ensure harvest states re-render smoothly (suspended in combat)
   const [, setWorldTick] = useState(0)
-  const hasActiveConstruction = useMemo(() => slots.some((s) => s.isConstructing), [slots])
   useEffect(() => {
     if (isSuspended) return
-    // When buildings are constructing, tick every 1000ms for accurate progress bar countdowns.
-    // When idle / harvesting, tick every 10,000ms (reduces 90% of idle re-renders).
-    const intervalMs = hasActiveConstruction ? 1000 : 10000
-    const timer = setInterval(() => setWorldTick((t) => t + 1), intervalMs)
+    const timer = setInterval(() => setWorldTick((t) => t + 1), 10000)
     return () => clearInterval(timer)
-  }, [isSuspended, hasActiveConstruction])
+  }, [isSuspended])
   const [zoom, setZoom] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
@@ -413,10 +408,8 @@ export function GameWorld({
   const handleBuildingClick = (e, slot) => {
     e.stopPropagation()
     soundManager.playClick()
-    if (!slot.buildingId) {
-      onOpenBuildMenu(slot)
-    } else {
-      soundManager.playBuildingSound(slot.buildingId, slot.isConstructing)
+    if (slot.buildingId) {
+      soundManager.playBuildingSound(slot.buildingId)
       onSelectSlot(slot)
     }
   }
@@ -532,12 +525,12 @@ export function GameWorld({
           slots={slots}
           vipStatus={vipStatus}
           onSelectSlot={onSelectSlot}
-          onOpenBuildMenu={onOpenBuildMenu}
           onCollectFromSlot={handlePixiCollect}
           onCitizenGift={(citizen, gift) => {
             triggerFloatingEffect(citizen, gift.text)
             onCitizenGift?.(citizen, gift)
           }}
+          onOpenBattle={onOpenBattle}
           isSuspended={isSuspended}
           soundEnabled={soundEnabled}
           zoom={zoom}
@@ -566,21 +559,17 @@ export function GameWorld({
         >
           {/* Plaza Building Slots */}
         <div className="plaza-slots-layer">
-          {(() => {
-            const isBuildQuest = activeStoryQuest?.actionType === 'build'
-            const recommendedSlot = isBuildQuest ? slots.find((s) => !s.buildingId) : null
-            const targetDef = activeStoryQuest?.targetBuilding ? (getBuildingDef(activeStoryQuest.targetBuilding) || BUILDING_TYPES[activeStoryQuest.targetBuilding.toUpperCase()]) : null
+          {slots.map((slot) => {
+            const buildingDef = slot.buildingId ? (getBuildingDef(slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]) : null
+            const isHovered = hoveredSlot === slot.id
+            const baseOffset = slot.buildingId ? (BUILDING_BASE_OFFSETS[slot.buildingId] || 3.5) : 0
 
-            return slots.map((slot) => {
-              const buildingDef = slot.buildingId ? (getBuildingDef(slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]) : null
-              const isHovered = hoveredSlot === slot.id
-              const baseOffset = slot.buildingId ? (BUILDING_BASE_OFFSETS[slot.buildingId] || 3.5) : 0
-              const isRecommendedPlot = recommendedSlot && recommendedSlot.id === slot.id
+            if (!slot.buildingId || !buildingDef) return null
 
               return (
                 <div 
                   key={slot.id}
-                  className={`building-plot ${slot.buildingId ? 'has-building' : 'is-empty'} ${slot.isConstructing ? 'in-construction' : ''}`}
+                  className="building-plot has-building"
                   style={{
                     left: `${slot.x}%`,
                     top: `${slot.y}%`,
@@ -590,79 +579,8 @@ export function GameWorld({
                   onMouseEnter={() => setHoveredSlot(slot.id)}
                   onMouseLeave={() => setHoveredSlot(null)}
                 >
-                  {/* Empty Slot — circular + button (no rectangular guides) */}
-                  {!slot.buildingId && !slot.isConstructing && (
-                    <div className={`empty-slot-marker ${isRecommendedPlot ? 'is-recommended-plot' : ''}`}>
-                      <button className="build-here-btn" aria-label="Construir aquí">+</button>
-                    </div>
-                  )}
-
-                {/* Building Under Construction */}
-                {slot.buildingId && slot.isConstructing && buildingDef && (() => {
-                  const now = Date.now()
-                  const durationSec = slot.constructionDurationSec || buildingDef.buildTimeSec || 60
-                  const elapsedSec = slot.constructionStartedAt ? Math.max(0, (now - slot.constructionStartedAt) / 1000) : 0
-                  const remainingSec = Math.max(0, Math.ceil(durationSec - elapsedSec))
-                  const progressPct = Math.min(100, Math.max(0, (elapsedSec / durationSec) * 100))
-                  
-                  const freeThresholdSec = vipStatus.hasEngineering ? 300 : 180
-                  const isFree = remainingSec <= freeThresholdSec
-                  const gemCost = isFree ? 0 : Math.max(1, Math.ceil(remainingSec / 50))
-
-                  const mins = Math.floor(remainingSec / 60)
-                  const secs = Math.floor(remainingSec % 60)
-                  const timeFormatted = `${mins}:${secs.toString().padStart(2, '0')}`
-
-                  // Show ghost blueprint + animated construction overlay throughout the entire build
-                  return (
-                    <div className="constructing-wrapper">
-                      {/* Ghost blueprint base (semi-transparent final building) */}
-                      <div className="building-ghost-wrap">
-                        <img 
-                          key={`${slot.id}-ghost`}
-                          src={buildingDef.image} 
-                          alt={`${buildingDef.name} (En construcción)`} 
-                          className={`building-sprite building-ghost sprite-${slot.buildingId}`}
-                          draggable="false"
-                        />
-                        <div className="ghost-blueprint-aura" />
-                      </div>
-                      <div className="construction-indicator">
-                        <Hammer className="hammer-anim" size={16} />
-                        <div className="construction-indicator-center">
-                          <span className="construction-timer-text">{timeFormatted}</span>
-                          <div className="progress-bar-wrap">
-                            <div 
-                              className="progress-bar-fill" 
-                              style={{ width: `${progressPct}%` }} 
-                            />
-                          </div>
-                        </div>
-                        <button 
-                          className={`btn-speedup-quick ${isFree ? 'is-free' : ''}`}
-                          title={isFree ? t('buildings.freeSpeedupBtn') : t('buildings.instantFinishGems', { cost: gemCost })}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onSpeedupBuilding?.(slot)
-                          }}
-                        >
-                          {isFree ? (
-                            <span className="speedup-label-box">
-                              <img src="/assets/hud_icons/icon_speedup.webp" alt={t('common.free')} className="mini-res-icon" /> {t('common.free')}
-                            </span>
-                          ) : (
-                            <span className="speedup-label-box">
-                              <img src="/assets/hud_icons/icon_gem.webp" alt={t('resources.gems')} className="mini-res-icon" /> {gemCost}
-                            </span>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  )
-                })()}
-
                 {/* Completed Building */}
-                {slot.buildingId && !slot.isConstructing && buildingDef && (() => {
+                {(() => {
                   const produced = getBuildingGeneratedResources(buildingDef, t)
                   const primaryRes = produced[0]
                   const secondaryRes = produced[1]
@@ -816,8 +734,7 @@ export function GameWorld({
                 })()}
               </div>
             )
-          })
-        })()}
+          })}
         </div>
 
         {/* Wandering Population NPCs Layer */}
@@ -825,6 +742,7 @@ export function GameWorld({
           slots={slots}
           fpsMode={fpsMode}
           isSuspended={isSuspended}
+          onOpenBattle={onOpenBattle}
           onCitizenGift={(citizen, gift) => {
             triggerFloatingEffect(citizen, gift.text)
             onCitizenGift?.(citizen, gift)

@@ -3,7 +3,6 @@ import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n'
 
 export function BottomDock({ 
-  onOpenBuild, 
   onOpenArmy, 
   onOpenArena,
   onOpenRanking,
@@ -28,23 +27,6 @@ export function BottomDock({
   return (
     <nav className="game-bottom-dock" aria-label="Acciones del Reino">
       <div className="dock-container">
-        {/* 1. Construir */}
-        <button 
-          id="dock-btn-build"
-          className="dock-item build-highlight" 
-          onClick={() => handleClick(onOpenBuild)}
-          title={t('dock.buildTooltip')}
-        >
-          <div className="dock-icon-box">
-            <img 
-              src="/assets/hud_icons/btn_build.webp" 
-              alt={t('dock.build')} 
-              className="hud-candy-icon" 
-              draggable="false" 
-            />
-          </div>
-          <span className="dock-label">{t('dock.build')}</span>
-        </button>
 
         {/* 2. Ejército */}
         <button 

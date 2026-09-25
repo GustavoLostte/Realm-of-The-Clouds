@@ -5,12 +5,14 @@ const BUILDING_SOUND_MAP = {
   cuartel: '/assets/sounds/construction.ogg',
   gold_mine: '/assets/sounds/construction.ogg',
   casa_molino: '/assets/sounds/construction.ogg',
+  molino: '/assets/sounds/construction.ogg',
   archer_tower: '/assets/sounds/construction.ogg',
   portal: '/assets/sounds/construction.ogg',
   casa: '/assets/sounds/construction.ogg',
   almacen: '/assets/sounds/construction.ogg',
   aserradero: '/assets/sounds/construction.ogg',
   mina_piedra: '/assets/sounds/construction.ogg',
+  dirigible: '/assets/sounds/dirigible.ogg',
 }
 
 const BUILDING_IDLE_MAP = {
@@ -18,12 +20,14 @@ const BUILDING_IDLE_MAP = {
   cuartel: '/assets/sounds/barracks_build.ogg',
   gold_mine: '/assets/sounds/gold_mine_loop.ogg',
   casa_molino: '/assets/sounds/windmill_loop.ogg',
+  molino: '/assets/sounds/windmill_loop.ogg',
   archer_tower: '/assets/sounds/archer_tower.ogg',
   portal: '/assets/sounds/portal.ogg',
   casa: '/assets/sounds/house_build.ogg',
   almacen: '/assets/sounds/warehouse_build.ogg',
   aserradero: '/assets/sounds/sawmill.ogg',
   mina_piedra: '/assets/sounds/stone_mine.ogg',
+  dirigible: '/assets/sounds/dirigible.ogg',
 }
 
 class SFXChannelPool {
@@ -700,6 +704,126 @@ class SoundController {
         gain.connect(this.audioCtx.destination)
         osc.start(now + time)
         osc.stop(now + time + dur)
+      })
+    } catch {
+      // ignore
+    }
+  }
+
+  // Triumphant MMORPG Golden Level-Up Fanfare (Rich Multi-Layered Celestial Fanfare)
+  playLevelUp() {
+    this.initCtx()
+    if (!this.audioCtx) return
+    try {
+      const now = this.audioCtx.currentTime
+      const vol = (this.sfxVolume ?? 0.8)
+
+      // Master Level-Up Output with subtle compression/limiting
+      const masterGain = this.audioCtx.createGain()
+      masterGain.gain.setValueAtTime(vol * 0.95, now)
+      masterGain.connect(this.audioCtx.destination)
+
+      // 1. Resonant Golden Sub-Impact (Tactile Power Surge)
+      const subOsc = this.audioCtx.createOscillator()
+      const subGain = this.audioCtx.createGain()
+      subOsc.type = 'sine'
+      subOsc.frequency.setValueAtTime(130, now)
+      subOsc.frequency.exponentialRampToValueAtTime(45, now + 0.32)
+      subGain.gain.setValueAtTime(0.42, now)
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.32)
+      subOsc.connect(subGain)
+      subGain.connect(masterGain)
+      subOsc.start(now)
+      subOsc.stop(now + 0.33)
+
+      // 2. Crystalline Harp / Celestial Arpeggio Cascade
+      // Rapid ascending golden chimes (C5, E5, G5, B5, C6, E6, G6, C7)
+      const harpNotes = [
+        { freq: 523.25, t: 0.00, dur: 0.30 }, // C5
+        { freq: 659.25, t: 0.045, dur: 0.30 }, // E5
+        { freq: 783.99, t: 0.09, dur: 0.32 }, // G5
+        { freq: 987.77, t: 0.135, dur: 0.32 }, // B5
+        { freq: 1046.50, t: 0.18, dur: 0.35 }, // C6
+        { freq: 1318.51, t: 0.225, dur: 0.38 }, // E6
+        { freq: 1567.98, t: 0.27, dur: 0.42 }, // G6
+        { freq: 2093.00, t: 0.315, dur: 0.60 }, // C7
+      ]
+      harpNotes.forEach(({ freq, t, dur }) => {
+        const osc = this.audioCtx.createOscillator()
+        const oscHarm = this.audioCtx.createOscillator()
+        const g = this.audioCtx.createGain()
+        
+        osc.type = 'sine'
+        osc.frequency.setValueAtTime(freq, now + t)
+        
+        // Slight shimmer octave overtone
+        oscHarm.type = 'triangle'
+        oscHarm.frequency.setValueAtTime(freq * 2, now + t)
+        
+        g.gain.setValueAtTime(0.24, now + t)
+        g.gain.exponentialRampToValueAtTime(0.0001, now + t + dur)
+        
+        osc.connect(g)
+        oscHarm.connect(g)
+        g.connect(masterGain)
+        
+        osc.start(now + t)
+        oscHarm.start(now + t)
+        osc.stop(now + t + dur)
+        oscHarm.stop(now + t + dur)
+      })
+
+      // 3. Triumphant Regal Brass / Golden Arc Fanfare Chord (Impact at t = 0.32s)
+      const chordStart = now + 0.32
+      const chordNotes = [
+        { freq: 261.63, type: 'sawtooth', gain: 0.18, dur: 1.10 }, // C4
+        { freq: 392.00, type: 'triangle', gain: 0.22, dur: 1.15 }, // G4
+        { freq: 523.25, type: 'triangle', gain: 0.24, dur: 1.25 }, // C5
+        { freq: 659.25, type: 'triangle', gain: 0.22, dur: 1.30 }, // E5
+        { freq: 1046.50, type: 'sine',     gain: 0.25, dur: 1.45 }, // C6
+        { freq: 1318.51, type: 'sine',     gain: 0.20, dur: 1.50 }, // E6
+      ]
+      
+      const filter = this.audioCtx.createBiquadFilter()
+      filter.type = 'lowpass'
+      filter.frequency.setValueAtTime(1400, chordStart)
+      filter.frequency.exponentialRampToValueAtTime(2800, chordStart + 0.12)
+      filter.frequency.exponentialRampToValueAtTime(800, chordStart + 1.4)
+      filter.Q.setValueAtTime(2.2, chordStart)
+      filter.connect(masterGain)
+
+      chordNotes.forEach(({ freq, type, gain, dur }) => {
+        const osc = this.audioCtx.createOscillator()
+        const g = this.audioCtx.createGain()
+        osc.type = type
+        osc.frequency.setValueAtTime(freq, chordStart)
+        g.gain.setValueAtTime(gain, chordStart)
+        g.gain.exponentialRampToValueAtTime(0.0001, chordStart + dur)
+        osc.connect(g)
+        g.connect(filter)
+        osc.start(chordStart)
+        osc.stop(chordStart + dur)
+      })
+
+      // 4. Fairy Dust / Celestial Shimmer Star Twinkles (Scattered high sparkles)
+      const sparkles = [
+        { freq: 2349.32, t: 0.44, dur: 0.20 }, // D7
+        { freq: 2793.83, t: 0.54, dur: 0.22 }, // F7
+        { freq: 3135.96, t: 0.66, dur: 0.24 }, // G7
+        { freq: 3520.00, t: 0.78, dur: 0.22 }, // A7
+        { freq: 4186.01, t: 0.92, dur: 0.30 }, // C8
+      ]
+      sparkles.forEach(({ freq, t, dur }) => {
+        const osc = this.audioCtx.createOscillator()
+        const g = this.audioCtx.createGain()
+        osc.type = 'sine'
+        osc.frequency.setValueAtTime(freq, now + t)
+        g.gain.setValueAtTime(0.14, now + t)
+        g.gain.exponentialRampToValueAtTime(0.0001, now + t + dur)
+        osc.connect(g)
+        g.connect(masterGain)
+        osc.start(now + t)
+        osc.stop(now + t + dur)
       })
     } catch {
       // ignore
@@ -1387,6 +1511,56 @@ class SoundController {
     } catch {}
   }
 
+  playParry() {
+    if (!this.canPlayGameSound()) return
+    this.initCtx()
+    if (!this.audioCtx) return
+
+    try {
+      const now = this.audioCtx.currentTime
+      const pitchMod = this.getRandomPitch(0.06)
+
+      // 1. High-frequency sharp steel deflection "CLANG"
+      const ping = this.audioCtx.createOscillator()
+      const pingGain = this.audioCtx.createGain()
+      ping.type = 'sine'
+      ping.frequency.setValueAtTime(2200 * pitchMod, now)
+      ping.frequency.exponentialRampToValueAtTime(1650 * pitchMod, now + 0.28)
+      pingGain.gain.setValueAtTime(0.45 * this.sfxVolume, now)
+      pingGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35)
+      ping.connect(pingGain)
+      pingGain.connect(this.audioCtx.destination)
+      ping.start(now)
+      ping.stop(now + 0.35)
+
+      // 2. Bell-like metallic resonance harmonic
+      const harm = this.audioCtx.createOscillator()
+      const harmGain = this.audioCtx.createGain()
+      harm.type = 'triangle'
+      harm.frequency.setValueAtTime(3120 * pitchMod, now)
+      harm.frequency.exponentialRampToValueAtTime(2400 * pitchMod, now + 0.38)
+      harmGain.gain.setValueAtTime(0.25 * this.sfxVolume, now)
+      harmGain.gain.exponentialRampToValueAtTime(0.001, now + 0.42)
+      harm.connect(harmGain)
+      harmGain.connect(this.audioCtx.destination)
+      harm.start(now)
+      harm.stop(now + 0.42)
+
+      // 3. Crisp shockwave body
+      const body = this.audioCtx.createOscillator()
+      const bodyGain = this.audioCtx.createGain()
+      body.type = 'square'
+      body.frequency.setValueAtTime(440 * pitchMod, now)
+      body.frequency.exponentialRampToValueAtTime(110 * pitchMod, now + 0.12)
+      bodyGain.gain.setValueAtTime(0.30 * this.sfxVolume, now)
+      bodyGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14)
+      body.connect(bodyGain)
+      bodyGain.connect(this.audioCtx.destination)
+      body.start(now)
+      body.stop(now + 0.14)
+    } catch {}
+  }
+
   playHammer() {
     if (!this.canPlayGameSound()) return
     this.initCtx()
@@ -1467,43 +1641,7 @@ class SoundController {
 
   playLevelUp() {
     if (!this.canPlayGameSound()) return
-    this.initCtx()
-    if (!this.audioCtx) return
-
-    try {
-      const now = this.audioCtx.currentTime
-      // Majestic ascending harp glissando + triumphant golden chord
-      const arpeggio = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50, 1318.51]
-      arpeggio.forEach((freq, idx) => {
-        const osc = this.audioCtx.createOscillator()
-        const gain = this.audioCtx.createGain()
-        osc.type = 'sine'
-        const t = now + idx * 0.07
-        osc.frequency.setValueAtTime(freq, t)
-        gain.gain.setValueAtTime(0.26 * this.sfxVolume, t)
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.4)
-        osc.connect(gain)
-        gain.connect(this.audioCtx.destination)
-        osc.start(t)
-        osc.stop(t + 0.4)
-      })
-
-      // Sustained chord on finale (C5 + E5 + G5 + C6)
-      const chordTime = now + arpeggio.length * 0.07
-      const chord = [523.25, 659.25, 783.99, 1046.50]
-      chord.forEach((freq) => {
-        const osc = this.audioCtx.createOscillator()
-        const gain = this.audioCtx.createGain()
-        osc.type = 'triangle'
-        osc.frequency.setValueAtTime(freq, chordTime)
-        gain.gain.setValueAtTime(0.25 * this.sfxVolume, chordTime)
-        gain.gain.exponentialRampToValueAtTime(0.001, chordTime + 1.2)
-        osc.connect(gain)
-        gain.connect(this.audioCtx.destination)
-        osc.start(chordTime)
-        osc.stop(chordTime + 1.2)
-      })
-    } catch {}
+    SoundController.prototype.playLevelUp.call(this)
   }
 
   playQuestSuccess() {

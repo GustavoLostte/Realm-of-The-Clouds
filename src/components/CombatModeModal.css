@@ -26,7 +26,7 @@
 
 .combat-mode-container {
   width: 100%;
-  max-width: 680px;
+  max-width: 860px;
   max-height: min(94dvh, calc(100dvh - 20px));
   background: linear-gradient(165deg, rgba(17, 24, 43, 0.98) 0%, rgba(10, 15, 30, 0.99) 100%);
   border: 1.8px solid rgba(147, 197, 253, 0.35);
@@ -85,6 +85,7 @@
   letter-spacing: 0.3px;
   background: linear-gradient(90deg, #ffffff 0%, #93c5fd 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.15;
 }
@@ -120,10 +121,11 @@
   transform: scale(1.05);
 }
 
-/* Grid of 2 Cards */
+/* Grid of Cards */
+.combat-mode-body,
 .combat-mode-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -164,6 +166,10 @@
   background: linear-gradient(90deg, #f59e0b, #ef4444);
 }
 
+.combat-card.training-card::before {
+  background: linear-gradient(90deg, #10b981, #06b6d4);
+}
+
 .combat-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
@@ -183,6 +189,12 @@
 .combat-card.pvp-card:active {
   border-color: rgba(245, 158, 11, 0.7);
   box-shadow: 0 12px 30px rgba(239, 68, 68, 0.35);
+}
+
+.combat-card.training-card:hover,
+.combat-card.training-card:active {
+  border-color: rgba(52, 211, 153, 0.7);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35);
 }
 
 .combat-card-badge {
@@ -209,6 +221,12 @@
   border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
+.combat-card-badge.training {
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
 .combat-card-visual {
   position: relative;
   width: 72px;
@@ -231,10 +249,17 @@
 
 .pve-glow {
   filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.65));
+  -webkit-filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.65));
 }
 
 .pvp-glow {
   filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.65));
+  -webkit-filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.65));
+}
+
+.training-glow {
+  filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.65));
+  -webkit-filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.65));
 }
 
 .combat-ticket-badge {
@@ -335,6 +360,28 @@
   transform: translateY(-1px);
 }
 
+.training-btn {
+  background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+  color: #fff;
+  border: 1px solid #6ee7b7;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.45);
+}
+
+.training-btn:hover,
+.training-btn:active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  transform: translateY(-1px);
+}
+
+.training-tag {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #a7f3d0 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* Coming Soon Card Styles */
 .combat-card.coming-soon {
   opacity: 0.85;
@@ -358,6 +405,7 @@
 
 .locked-filter {
   filter: grayscale(0.6) brightness(0.85);
+  -webkit-filter: grayscale(0.6) brightness(0.85);
 }
 
 .coming-soon-lock-overlay {
@@ -486,6 +534,7 @@
     border-radius: 12px;
   }
 
+  .combat-mode-body,
   .combat-mode-grid {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -527,8 +576,9 @@
     padding: 10px 14px;
     gap: 8px;
   }
+  .combat-mode-body,
   .combat-mode-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
   .combat-card {

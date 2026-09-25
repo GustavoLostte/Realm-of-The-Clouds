@@ -1,6 +1,7 @@
 import { Container, Sprite, Graphics, AnimatedSprite } from 'pixi.js'
 import { loadPixiTexture, loadPixiSpritesheet } from './PixiTextureLoader'
 import { getSharedShadowTexture } from './PixiSharedTextures'
+import { soundManager } from '../../utils/audio'
 
 const ISOMETRIC_AVENUE = [
   { x: 26.0, y: 21.0 },
@@ -178,7 +179,7 @@ export class PixiCitizensLayer {
   }
 
   initGuards() {
-    // 1. Sky Commander
+    // 1. Sky Commander (East Corner / Right Balcony)
     const commander = new SkyCommanderNode(this.callbacks)
     this.guards.push(commander)
     this.container.addChild(commander.container)
@@ -187,6 +188,21 @@ export class PixiCitizensLayer {
     const sentry = new SentryGuardNode(this.callbacks)
     this.guards.push(sentry)
     this.container.addChild(sentry.container)
+
+    // 3. Sleeping Celestial Dragon (East Sun Emblem, beside Commander)
+    const dragon = new CelestialDragonNode(this.callbacks)
+    this.guards.push(dragon)
+    this.container.addChild(dragon.container)
+
+    // 4. Royal Herald Carpet with Treasure Chest (Between Portal & Mill)
+    const carpet = new HeraldCarpetNode(this.callbacks)
+    this.guards.push(carpet)
+    this.container.addChild(carpet.container)
+
+    // 5. Celestial Dirigible (East Airship Dock - exit on the right)
+    const dirigible = new CelestialDirigibleNode(this.callbacks)
+    this.guards.push(dirigible)
+    this.container.addChild(dirigible.container)
   }
 
   tick(deltaSec, isSuspended = false) {
@@ -466,7 +482,7 @@ class SentryGuardNode {
     this.container.eventMode = 'static'
     this.container.cursor = 'pointer'
 
-    // Position: 21.8%, 49.8%
+    // Position: West Balcony (21.8%, 49.8%)
     const stageX = (21.8 / 100) * 1920
     const stageY = (49.8 / 100) * 1080
     this.container.position.set(stageX, stageY)
@@ -542,4 +558,344 @@ class SentryGuardNode {
     this.container.destroy({ children: true })
   }
 }
+
+class CelestialDragonNode {
+  constructor(callbacks) {
+    this.callbacks = callbacks
+    this.container = new Container()
+    this.container.label = 'dragon-east-sun'
+    this.container.eventMode = 'static'
+    this.container.cursor = 'pointer'
+
+    // Position: East Sun Emblem (x: 70.3%, y: 50.0%)
+    const stageX = (70.3 / 100) * 1920
+    const stageY = (50.0 / 100) * 1080
+    this.container.position.set(stageX, stageY)
+    this.container.zIndex = Math.round(50.0 * 10)
+
+    // Shadow (soft ground shadow under dragon)
+    const shadowTex = getSharedShadowTexture()
+    this.shadow = new Sprite(shadowTex)
+    this.shadow.anchor.set(0.5, 0.4)
+    this.shadow.width = 160
+    this.shadow.height = 50
+    this.shadow.alpha = 0.55
+    this.container.addChild(this.shadow)
+
+    // Dragon Sprite
+    this.sprite = null
+    this.baseScaleX = 1
+    this.baseScaleY = 1
+    this.breathTime = 0
+    this.loadTexture()
+
+    this.container.on('pointertap', (e) => {
+      e.stopPropagation()
+      soundManager.playClick?.()
+      if (this.callbacks.onCitizenClick) {
+        this.callbacks.onCitizenClick({ id: 'dragon-celestial', name: 'Dragón Celestial Durmiente' })
+      }
+      if (this.callbacks.onCitizenGift && Math.random() < 0.40) {
+        const gift = { type: 'gems', amount: 1, text: '✨ +1 Escama Celestial' }
+        this.callbacks.onCitizenGift({ id: 'dragon-celestial', name: 'Dragón Celestial' }, gift)
+      }
+    })
+  }
+
+  async loadTexture() {
+    try {
+      const sheet = await loadPixiSpritesheet('/assets/npcs/spritesheets/dragon_idle.json')
+      if (sheet && sheet.animations?.play && sheet.animations.play.length > 0) {
+        const anim = new AnimatedSprite(sheet.animations.play)
+        anim.anchor.set(0.5, 0.5)
+        anim.width = 190
+        anim.height = 138
+        anim.animationSpeed = 0.20 // ~12 fps breathing cycle on 60fps ticker
+        anim.play()
+        this.sprite = anim
+        this.container.addChild(anim)
+      } else {
+        const tex = await loadPixiTexture('/assets/npcs/dragon_celestial_dormido.webp')
+        const spr = new Sprite(tex)
+        spr.anchor.set(0.5, 0.5)
+        spr.width = 190
+        spr.height = 138
+        this.baseScaleX = spr.scale.x
+        this.baseScaleY = spr.scale.y
+        this.sprite = spr
+        this.container.addChild(spr)
+      }
+    } catch (err) {
+      console.warn('[CelestialDragonNode] Failed to load dragon texture', err)
+    }
+  }
+
+  setSuspended(isSuspended) {
+    this.isSuspended = isSuspended
+    if (this.sprite instanceof AnimatedSprite) {
+      if (isSuspended) {
+        if (this.sprite.playing) this.sprite.stop()
+      } else {
+        if (!this.sprite.playing) this.sprite.play()
+      }
+    }
+  }
+
+  setShadowVisible(visible) {
+    if (this.shadow) {
+      this.shadow.visible = visible
+    }
+  }
+
+  tick(deltaSec) {
+    if (this.isSuspended || !this.sprite) return
+    if (!(this.sprite instanceof AnimatedSprite)) {
+      this.breathTime += deltaSec * 1.6
+      const breath = 1 + Math.sin(this.breathTime) * 0.018
+      this.sprite.scale.set(this.baseScaleX * breath, this.baseScaleY * (2 - breath))
+    }
+  }
+
+  destroy() {
+    this.container.destroy({ children: true })
+  }
+}
+
+class HeraldCarpetNode {
+  constructor(callbacks) {
+    this.callbacks = callbacks
+    this.container = new Container()
+    this.container.label = 'herald-carpet'
+    this.container.eventMode = 'static'
+    this.container.cursor = 'pointer'
+
+    // Position: Between Portal (28%, 46%) and Molino (50%, 74%) - subtle nudge towards Mill
+    const stageX = (37.8 / 100) * 1920
+    const stageY = (60.0 / 100) * 1080
+    this.container.position.set(stageX, stageY)
+    // zIndex keeps carpet flat on the ground beneath walkers
+    this.container.zIndex = Math.round(53.0 * 10)
+
+    this.sprite = null
+    this.heraldSprite = null
+    this.heraldShadow = null
+    this.baseScaleX = 1
+    this.baseScaleY = 1
+    this.breathTime = 0
+
+    this.loadTextures()
+
+    this.container.on('pointertap', (e) => {
+      e.stopPropagation()
+      soundManager.playClick?.()
+      // Open quest herald banner in HUD
+      window.dispatchEvent(new CustomEvent('toc-expand-herald'))
+      if (this.callbacks.onCitizenClick) {
+        this.callbacks.onCitizenClick({ id: 'heraldo-celestial', name: 'Heraldo Real de los Cielos' })
+      }
+    })
+  }
+
+  async loadTextures() {
+    try {
+      // 1. Royal Square Carpet
+      const carpetTex = await loadPixiTexture('/assets/structures/cutout/alfombra_heraldo.webp?v=1789766000')
+      const carpetSpr = new Sprite(carpetTex)
+      carpetSpr.anchor.set(0.5, 0.5)
+      carpetSpr.width = 180
+      carpetSpr.height = 180
+      carpetSpr.rotation = -3.2 * (Math.PI / 180)
+      this.sprite = carpetSpr
+      this.container.addChild(carpetSpr)
+
+      // 2. Soft ground shadow under Herald's boots (matches Portal Sentry 38x12)
+      const shadowTex = getSharedShadowTexture()
+      const shadow = new Sprite(shadowTex)
+      shadow.anchor.set(0.5, 0.5)
+      shadow.width = 38
+      shadow.height = 12
+      shadow.alpha = 0.45
+      shadow.position.set(-8, 12)
+      this.heraldShadow = shadow
+      this.container.addChild(shadow)
+
+      // 3. Golden-Winged Celestial Herald Character (Animated, height 68 matching Portal Sentry scale)
+      const sheet = await loadPixiSpritesheet('/assets/npcs/spritesheets/heraldo_idle.json')
+      if (sheet && sheet.animations?.play && sheet.animations.play.length > 0) {
+        const anim = new AnimatedSprite(sheet.animations.play)
+        anim.anchor.set(0.5, 0.98)
+        anim.height = 68
+        anim.scale.x = anim.scale.y
+        anim.position.set(-8, 12)
+        anim.animationSpeed = 0.33
+        anim.play()
+        this.heraldSprite = anim
+        this.container.addChild(anim)
+      } else {
+        // Fallback static
+        const heraldTex = await loadPixiTexture('/assets/npcs/heraldo_celestial.webp?v=1789769800')
+        const heraldSpr = new Sprite(heraldTex)
+        heraldSpr.anchor.set(0.5, 0.90)
+        heraldSpr.width = 54
+        heraldSpr.height = 68
+        heraldSpr.position.set(-8, 12)
+        this.heraldSprite = heraldSpr
+        this.baseScaleX = heraldSpr.scale.x
+        this.baseScaleY = heraldSpr.scale.y
+        this.container.addChild(heraldSpr)
+      }
+    } catch (err) {
+      console.warn('[HeraldCarpetNode] Failed to load textures', err)
+    }
+  }
+
+  setSuspended(isSuspended) {
+    this.isSuspended = isSuspended
+    if (this.heraldSprite instanceof AnimatedSprite) {
+      if (isSuspended) {
+        if (this.heraldSprite.playing) this.heraldSprite.stop()
+      } else {
+        if (!this.heraldSprite.playing) this.heraldSprite.play()
+      }
+    }
+  }
+
+  setShadowVisible(visible) {
+    if (this.heraldShadow) {
+      this.heraldShadow.visible = visible
+    }
+  }
+
+  tick(deltaSec) {
+    if (this.isSuspended || !this.heraldSprite) return
+    if (!(this.heraldSprite instanceof AnimatedSprite)) {
+      this.breathTime += deltaSec * 2.0
+      const breath = 1 + Math.sin(this.breathTime) * 0.015
+      this.heraldSprite.scale.set(this.baseScaleX * breath, this.baseScaleY * (2 - breath))
+    }
+  }
+
+  destroy() {
+    if (this.heraldSprite instanceof AnimatedSprite) {
+      this.heraldSprite.stop()
+    }
+    this.container.destroy({ children: true })
+  }
+}
+
+class CelestialDirigibleNode {
+  constructor(callbacks) {
+    this.callbacks = callbacks
+    this.container = new Container()
+    this.container.label = 'dirigible-celestial-dock'
+    this.container.eventMode = 'static'
+    this.container.cursor = 'pointer'
+
+    // Position: East Airship Dock (exit on the right, x: 79.7%, y: 72.2%)
+    const stageX = (79.7 / 100) * 1920
+    const stageY = (72.2 / 100) * 1080
+    this.baseX = stageX
+    this.baseY = stageY
+    this.container.position.set(stageX, stageY)
+    this.container.zIndex = Math.round(72.2 * 10)
+
+    // Soft floating shadow under the airship
+    const shadowTex = getSharedShadowTexture()
+    this.shadow = new Sprite(shadowTex)
+    this.shadow.anchor.set(0.5, 0.5)
+    this.shadow.width = 220
+    this.shadow.height = 65
+    this.shadow.alpha = 0.38
+    this.shadow.position.set(0, 140)
+    this.container.addChild(this.shadow)
+
+    this.sprite = null
+    this.floatTime = Math.random() * Math.PI
+    this.isSuspended = false
+
+    this.loadTexture()
+
+    this.container.on('pointertap', (e) => {
+      e.stopPropagation()
+      soundManager.playBuildingSound?.('dirigible', false)
+      window.dispatchEvent(new CustomEvent('toc-open-expeditions'))
+      if (this.callbacks?.onCitizenClick) {
+        this.callbacks.onCitizenClick({ id: 'dirigible-celestial', name: 'Dirigible Real de Expedición' })
+      }
+      if (this.callbacks?.onCitizenGift && Math.random() < 0.45) {
+        const gift = Math.random() < 0.3
+          ? { type: 'gems', amount: 1, text: '💎 +1 Gema de Expedición' }
+          : { type: 'gold', amount: 50, text: '✨ +50 Oro de Navegación' }
+        this.callbacks.onCitizenGift({ id: 'dirigible-celestial', name: 'Dirigible Real' }, gift)
+      }
+    })
+  }
+
+  async loadTexture() {
+    try {
+      const sheet = await loadPixiSpritesheet('/assets/buildings/dirigible/dirigible_idle.json')
+      if (sheet && sheet.animations?.play && sheet.animations.play.length > 0) {
+        const anim = new AnimatedSprite(sheet.animations.play)
+        anim.anchor.set(0.5, 0.5)
+        anim.width = 330
+        anim.height = 316
+        // 44 frames @ 12 fps -> 12 / 60 = 0.20 animationSpeed
+        anim.animationSpeed = 0.20
+        anim.play()
+        this.sprite = anim
+        this.container.addChild(anim)
+      } else {
+        const tex = await loadPixiTexture('/assets/buildings/dirigible/dirigible_poster.webp')
+        const spr = new Sprite(tex)
+        spr.anchor.set(0.5, 0.5)
+        spr.width = 330
+        spr.height = 316
+        this.sprite = spr
+        this.container.addChild(spr)
+      }
+    } catch (err) {
+      console.warn('[CelestialDirigibleNode] Failed to load textures', err)
+    }
+  }
+
+  setSuspended(isSuspended) {
+    this.isSuspended = isSuspended
+    if (this.sprite instanceof AnimatedSprite) {
+      if (isSuspended) {
+        if (this.sprite.playing) this.sprite.stop()
+      } else {
+        if (!this.sprite.playing) this.sprite.play()
+      }
+    }
+  }
+
+  setShadowVisible(visible) {
+    if (this.shadow) {
+      this.shadow.visible = visible
+    }
+  }
+
+  tick(deltaSec) {
+    if (this.isSuspended) return
+    this.floatTime += deltaSec * 1.5
+    const bobOffset = Math.sin(this.floatTime) * 5.5
+    this.container.position.y = this.baseY + bobOffset
+
+    if (this.shadow) {
+      const shadowScale = 1 - Math.sin(this.floatTime) * 0.05
+      this.shadow.scale.set(shadowScale)
+      this.shadow.alpha = 0.38 - Math.sin(this.floatTime) * 0.04
+    }
+  }
+
+  destroy() {
+    if (this.sprite instanceof AnimatedSprite) {
+      this.sprite.stop()
+    }
+    this.container.destroy({ children: true })
+  }
+}
+
+
+
 

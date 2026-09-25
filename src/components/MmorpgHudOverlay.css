@@ -1,0 +1,2006 @@
+/* ==========================================================================
+   MMORPG HUD OVERLAY - Pixel-Perfect Replica of Reference Design
+   ========================================================================== */
+
+.mmorpg-hud-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-drag: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: none;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+}
+
+.mmorpg-hud-container *,
+.mmorpg-hud-container *::before,
+.mmorpg-hud-container *::after {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-drag: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Allow pointer events for interactive elements */
+.mmorpg-hud-container button,
+.mmorpg-hud-container .hud-clickable {
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   1. TOP-LEFT: Quest Tracker (Underneath Profile Card)
+   ========================================================================== */
+
+.hud-left-column {
+  position: absolute;
+  top: 148px;
+  left: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.hud-left-column > * {
+  pointer-events: auto;
+}
+
+.hud-quest-tracker {
+  position: relative;
+  min-width: 175px;
+  max-width: 210px;
+  background: linear-gradient(180deg, #131b2e 0%, #0c121e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9px;
+  padding: 7px 11px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transform-origin: top left;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.hud-quest-tracker:hover {
+  background: rgba(24, 30, 46, 0.95);
+  border-color: rgba(245, 210, 104, 0.35);
+  transform: translateY(-1px);
+}
+
+.hud-quest-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hud-quest-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-quest-icon {
+  font-size: 15px;
+}
+
+.hud-quest-title {
+  color: #f7d36a;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.hud-quest-check-badge {
+  width: 17px;
+  height: 17px;
+  background: linear-gradient(135deg, #c79a4b 0%, #875c1c 100%);
+  border: 1px solid #f6d268;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.hud-quest-check-badge svg {
+  width: 11px;
+  height: 11px;
+  stroke: #ffffff;
+  stroke-width: 3.5;
+}
+
+.hud-quest-desc {
+  margin-top: 3px;
+  padding-left: 21px;
+  color: #d1d5db;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.hud-quest-desc.completed {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.hud-quest-desc.war-active {
+  color: #fca5a5;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+}
+
+.hud-quest-check-badge.war-badge {
+  background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+  border-color: #f87171;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+/* ==========================================================================
+   2. TOP-RIGHT: Navigation Icons & Currency Bar
+   ========================================================================== */
+
+.hud-top-right {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  transform-origin: top right;
+}
+
+/* Icons Row */
+.hud-nav-icons-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hud-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: transform 0.12s ease;
+}
+
+.hud-nav-btn:hover {
+  transform: scale(1.08);
+}
+
+.hud-nav-btn:active {
+  transform: scale(0.95);
+}
+
+.hud-nav-btn-icon-wrap {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hud-nav-btn-label {
+  margin-top: 2px;
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 4px rgba(0, 0, 0, 0.7);
+}
+
+.hud-nav-btn-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Notification badge on friends/guild icon */
+.hud-nav-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  background: #ef4444;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  animation: pulse-badge 2s infinite ease-in-out;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Hamburger Menu Button */
+.hud-menu-btn {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #44382e 0%, #221c17 100%);
+  border: 2px solid #b89360;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3.5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.2s ease;
+}
+
+.hud-menu-btn:hover {
+  transform: scale(1.06);
+  border-color: #f7d36a;
+}
+
+.hud-menu-btn-bar {
+  width: 18px;
+  height: 2.5px;
+  background: #e5c593;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Currency Widget */
+.hud-currency-bar {
+  background: linear-gradient(180deg, #131b2e 0%, #0c121e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 125px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.hud-currency-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hud-currency-icon-wrap {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hud-currency-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.hud-currency-val {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.hud-currency-val.gold {
+  color: #ffd752;
+}
+
+.hud-currency-val.gem {
+  color: #7dd3fc;
+}
+
+/* Toggle Pills Row (War Mode & Virtual Camera Zoom) */
+.hud-pill-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* War Mode Toggle Pill */
+.hud-war-mode-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.hud-war-mode-pill:hover {
+  transform: translateY(-1px);
+  border-color: #f59e0b;
+  color: #fbbf24;
+}
+
+.hud-war-mode-pill.active {
+  background: linear-gradient(135deg, rgba(185, 28, 28, 0.9) 0%, rgba(127, 29, 29, 0.95) 100%);
+  border-color: #f87171;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5), 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hud-war-mode-icon {
+  font-size: 0.85rem;
+}
+
+/* Virtual Camera Zoom Toggle Pill */
+.hud-camera-zoom-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1.5px solid rgba(96, 165, 250, 0.5);
+  color: #e0f2fe;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.35), 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.hud-camera-zoom-pill:hover {
+  transform: translateY(-1px);
+  border-color: #93c5fd;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.6);
+}
+
+.hud-camera-zoom-pill.active {
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.9) 0%, rgba(30, 58, 138, 0.95) 100%);
+  border-color: #60a5fa;
+  color: #ffffff;
+}
+
+.hud-zoom-icon {
+  font-size: 0.82rem;
+}
+
+
+/* ==========================================================================
+   3. BOTTOM-LEFT: Virtual D-PAD & Chat Button
+   ========================================================================== */
+
+/* Chat Button (Directly below Quests / Missions on the Left Lateral) */
+.hud-chat-btn-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  transform-origin: top left;
+  z-index: 60;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.hud-chat-btn-wrap:hover {
+  opacity: 1;
+}
+
+.hud-chat-btn {
+  width: 40px;
+  height: 32px;
+  background: linear-gradient(135deg, rgba(227, 196, 152, 0.95) 0%, rgba(196, 158, 104, 0.90) 100%);
+  border: 1px solid rgba(235, 212, 178, 0.95);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+  position: relative;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hud-chat-btn:hover {
+  transform: scale(1.08);
+}
+
+.hud-chat-btn:active {
+  transform: scale(0.94);
+}
+
+.hud-chat-dots {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.hud-chat-dot {
+  width: 4px;
+  height: 4px;
+  background: #382410;
+  border-radius: 50%;
+}
+
+.hud-chat-bar-indicator {
+  width: 32px;
+  height: 4px;
+  background: #84cc16;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   Virtual Analog Joystick ("Palanca" - MMORPG Golden Bronze & Celestial Obsidian)
+   Mismo estilo que los botones de acción: Bronce dorado, núcleo obsidiana y gema de oro
+   ========================================================================== */
+
+.hud-joystick-container,
+.hud-dpad-container {
+  position: absolute;
+  bottom: 30px;
+  left: 72px; /* Shifted to the right for natural ergonomic thumb landing */
+  width: 140px;
+  height: 140px;
+  pointer-events: auto;
+  touch-action: none;
+  transform-origin: bottom left;
+  opacity: 1 !important; /* 100% visible, fully opaque and responsive */
+  transition: transform 0.15s ease;
+  z-index: 55;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hud-joystick-container:hover,
+.hud-joystick-container.active,
+.hud-dpad-container:hover,
+.hud-dpad-container.active {
+  opacity: 1 !important;
+}
+
+.hud-joystick-base {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 70%, #020617 100%);
+  border: 2.5px solid #d4a059;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 0 16px rgba(245, 158, 11, 0.35),
+    inset 0 1.5px 3px rgba(255, 230, 180, 0.45),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.85),
+    0 8px 24px rgba(0, 0, 0, 0.70);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hud-joystick-container.active .hud-joystick-base,
+.hud-dpad-container.active .hud-joystick-base {
+  border-color: #ffd276;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 0 24px rgba(255, 210, 118, 0.65),
+    inset 0 2px 4px rgba(255, 240, 200, 0.60),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.90),
+    0 10px 28px rgba(0, 0, 0, 0.85);
+}
+
+/* Subtle MMORPG Gold Orbital Track (Guía orbital en oro envejecido) */
+.hud-joystick-orbit-ring {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 1px dashed rgba(212, 160, 89, 0.32);
+  pointer-events: none;
+}
+
+/* Faint crosshair track lines (Guías de mira en degradé dorado sutil) */
+.hud-joystick-cross-h {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 160, 89, 0.35) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+.hud-joystick-cross-v {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(212, 160, 89, 0.35) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* 3D Analog Thumb Knob ("Palanca" - Mismo estilo que el botón de corte de espada) */
+.hud-joystick-knob {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 10;
+}
+
+.hud-joystick-knob-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(61, 47, 34, 0.95) 0%, rgba(32, 25, 20, 0.96) 45%, rgba(18, 14, 10, 0.98) 85%, #0a0705 100%);
+  border: 3px solid #967852;
+  box-shadow: 
+    0 0 0 2px #3a2b1d,
+    0 6px 18px rgba(0, 0, 0, 0.85),
+    inset 0 2px 3px rgba(255, 240, 200, 0.50),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.85),
+    0 0 16px rgba(212, 160, 89, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.hud-joystick-container.active .hud-joystick-knob-core,
+.hud-dpad-container.active .hud-joystick-knob-core {
+  transform: scale(1.08);
+  border-color: #ffd276;
+  box-shadow: 
+    0 0 0 2px #5a4220,
+    0 8px 22px rgba(0, 0, 0, 0.95),
+    inset 0 2px 4px rgba(255, 255, 255, 0.70),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.90),
+    0 0 22px rgba(255, 210, 118, 0.65);
+}
+
+/* Tactile Concentric Rubber Grip Ring (Aro concéntrico de bronce cepillado) */
+.hud-joystick-knob-grip {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212, 160, 89, 0.50);
+  background: radial-gradient(circle at 40% 40%, rgba(42, 36, 31, 0.95) 0%, rgba(18, 14, 10, 0.98) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(255, 230, 180, 0.3);
+}
+
+/* Glowing Center Pip (Gema dorada celestial en lugar de azul) */
+.hud-joystick-knob-pip {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fef08a 40%, #eab308 75%, #ca8a04 100%);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================================================
+   3.5 BACKPACK BUTTON (Centrado entre la Palanca y la Poción de Vida)
+   ========================================================================== */
+
+.hud-backpack-center-slot {
+  position: absolute;
+  left: 212px;
+  right: 453px;
+  bottom: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 55;
+}
+
+.hud-backpack-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s cubic-bezier(0.18, 0.89, 0.32, 1.28), filter 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hud-backpack-btn:hover {
+  transform: translateY(-2px) scale(1.06);
+}
+
+.hud-backpack-btn:active {
+  transform: scale(0.92);
+}
+
+.hud-backpack-disc {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2.5px solid #d4a059;
+  background: radial-gradient(circle at 40% 35%, #1e293b 0%, #0f172a 100%);
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 14px rgba(0, 0, 0, 0.75),
+    0 0 10px rgba(245, 158, 11, 0.35),
+    inset 0 1.5px 2px rgba(255, 230, 180, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hud-backpack-btn:hover .hud-backpack-disc {
+  border-color: #ffd276;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 0 18px rgba(255, 210, 118, 0.6),
+    0 4px 14px rgba(0, 0, 0, 0.8),
+    inset 0 1.5px 3px rgba(255, 240, 200, 0.6);
+}
+
+.hud-backpack-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform 0.15s ease;
+}
+
+.hud-backpack-btn:hover .hud-backpack-img {
+  transform: scale(1.08);
+}
+
+.hud-backpack-label {
+  position: absolute;
+  bottom: -15px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #fbbf24;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 4px rgba(245, 158, 11, 0.5);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   4. BOTTOM-RIGHT: MMORPG Action / Knight Skills Cluster (Translucent)
+   ========================================================================== */
+
+.hud-actions-cluster {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 480px;
+  height: 270px;
+  pointer-events: none;
+  transform-origin: bottom right;
+  z-index: 55;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* Action button generic frame */
+.hud-action-btn-wrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-drag: none !important;
+}
+
+.hud-action-btn {
+  border-radius: 14px;
+  border: 2.5px solid #d4a059;
+  background: radial-gradient(circle at 40% 35%, #1e293b 0%, #0f172a 75%, #020617 100%);
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 14px rgba(0, 0, 0, 0.75), 
+    0 0 12px rgba(245, 158, 11, 0.30),
+    inset 0 1.5px 3px rgba(255, 240, 200, 0.45),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1), filter 0.1s ease, box-shadow 0.1s ease;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-drag: none !important;
+  opacity: 1 !important; /* 100% visible, fully opaque */
+}
+
+/* Generous invisible touch hitbox so thumbs never miss */
+.hud-action-btn::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 14px;
+  pointer-events: auto;
+}
+
+.is-mobile .hud-action-btn,
+.is-mobile .hud-action-btn::after {
+  border-radius: 50%;
+}
+
+.hud-action-btn:hover {
+  opacity: 1 !important;
+  border-color: #ffd276;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 16px rgba(0, 0, 0, 0.8), 
+    0 0 16px rgba(245, 158, 11, 0.6);
+}
+
+/* Instant tactile depression on thumb touch */
+.hud-action-btn:active {
+  opacity: 1 !important;
+  transform: scale(0.90) !important;
+  border-color: #fef08a !important;
+  background: radial-gradient(circle at 40% 35%, #334155 0%, #1e293b 70%, #0f172a 100%) !important;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 2px 8px rgba(0, 0, 0, 0.9), 
+    0 0 20px rgba(255, 210, 118, 0.75),
+    inset 0 1px 3px rgba(255, 255, 255, 0.7) !important;
+  filter: brightness(1.2) contrast(1.1) !important;
+  -webkit-filter: brightness(1.2) contrast(1.1) !important;
+}
+
+.hud-action-btn-label {
+  position: absolute;
+  bottom: -16px;
+  color: #f8fafc;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px #000000, 0 0 4px #000000, 0 0 8px rgba(0, 0, 0, 0.95);
+  pointer-events: none;
+  white-space: nowrap;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* --- Specific Button Positions & Dimensions --- */
+
+/* 1. CORTE DE ESPADA (Principal - Combo Básico) */
+.hud-btn-main-attack {
+  right: 99px;
+  bottom: 47px;
+  width: 98px;
+  height: 98px;
+}
+
+.hud-btn-main-attack .hud-action-btn-label {
+  bottom: -18px;
+  color: #fef08a;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-shadow: 0 2px 4px #000000, 0 0 6px rgba(245, 158, 11, 0.7);
+}
+
+.hud-btn-main-attack .hud-action-btn {
+  width: 98px;
+  height: 98px;
+  border-width: 3.5px;
+  border-color: #fbbf24;
+  background: radial-gradient(circle at 40% 35%, #1e293b 0%, #0f172a 75%, #020617 100%);
+  box-shadow: 
+    0 0 0 2.5px #0f172a,
+    0 6px 20px rgba(0, 0, 0, 0.85), 
+    0 0 20px rgba(245, 158, 11, 0.55),
+    inset 0 2px 4px rgba(255, 240, 200, 0.55),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.85);
+  opacity: 1 !important;
+}
+
+.hud-btn-main-attack .hud-action-btn:hover {
+  border-color: #fef08a;
+  opacity: 1 !important;
+  box-shadow: 
+    0 0 0 2.5px #0f172a,
+    0 6px 24px rgba(0, 0, 0, 0.95), 
+    0 0 28px rgba(255, 210, 118, 0.75);
+}
+
+/* 2. SALTO (Arc 1 - Posición inferior: right: 244px, bottom: 32px) */
+.hud-btn-jump {
+  right: 244px;
+  bottom: 32px;
+  width: 65px;
+  height: 65px;
+}
+.hud-btn-jump .hud-action-btn {
+  width: 65px;
+  height: 65px;
+}
+
+/* 3. GOLPE SÍSMICO (Arc 2 - Posición media: right: 224px, bottom: 104px) */
+.hud-btn-seismic {
+  right: 224px;
+  bottom: 104px;
+  width: 65px;
+  height: 65px;
+}
+.hud-btn-seismic .hud-action-btn {
+  width: 65px;
+  height: 65px;
+}
+
+/* 4. PODER DEL ESCUDO (Arc 3 - Mid-high of Radial Arc) */
+.hud-btn-shield {
+  right: 180px;
+  bottom: 162px;
+  width: 65px;
+  height: 65px;
+}
+.hud-btn-shield .hud-action-btn {
+  width: 65px;
+  height: 65px;
+}
+
+/* 5. SUPER SKILL (SS) / DEFINITIVA CELESTIAL (Arc 4 - Top Apex of Radial Arc) */
+.hud-btn-ss {
+  right: 110px;
+  bottom: 196px;
+  width: 65px;
+  height: 65px;
+}
+.hud-btn-ss .hud-action-btn {
+  width: 65px;
+  height: 65px;
+  border-color: #f59e0b;
+  background: radial-gradient(circle at 40% 35%, #2e1065 0%, #1e1b4b 60%, #0f172a 100%);
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 14px rgba(0, 0, 0, 0.85),
+    inset 0 1.5px 3px rgba(255, 230, 180, 0.6),
+    0 0 16px rgba(250, 204, 21, 0.55);
+  opacity: 1 !important;
+}
+.hud-btn-ss .hud-action-btn:hover {
+  border-color: #fef08a;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 6px 18px rgba(0, 0, 0, 0.95),
+    0 0 24px rgba(250, 204, 21, 0.85);
+}
+.hud-btn-ss .hud-action-btn-label {
+  color: #fef08a;
+  font-weight: 800;
+  text-shadow: 0 0 6px rgba(234, 179, 8, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* 6. DASH FLANK 1 (Lower Flank: Always Dashes Left ⬅) */
+.hud-btn-dash-lower,
+.hud-btn-dash-back {
+  right: 185px;
+  bottom: 10px;
+  width: 48px;
+  height: 48px;
+}
+.hud-btn-dash-lower .hud-action-btn,
+.hud-btn-dash-back .hud-action-btn {
+  width: 48px;
+  height: 48px;
+}
+
+/* 7. DASH FLANK 2 (Lateral Flank: Always Dashes Right ➔) */
+.hud-btn-dash-lateral,
+.hud-btn-dash-front {
+  right: 82px;
+  bottom: 146px;
+  width: 47px;
+  height: 47px;
+}
+.hud-btn-dash-lateral .hud-action-btn,
+.hud-btn-dash-front .hud-action-btn {
+  width: 47px;
+  height: 47px;
+}
+
+/* Dynamic Dash Theme Accents when facing Right vs Left */
+.hud-action-btn-wrap.dash-is-front .hud-action-btn {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px #0f172a, 0 4px 12px rgba(0, 0, 0, 0.75), 0 0 10px rgba(245, 158, 11, 0.45);
+}
+.hud-action-btn-wrap.dash-is-front .hud-action-btn-label {
+  color: #fde047;
+  text-shadow: 0 0 6px rgba(245, 158, 11, 0.8), 0 1px 2px #000;
+}
+.hud-action-btn-wrap.dash-is-front .hud-action-btn:hover {
+  border-color: rgba(245, 158, 11, 0.9);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+}
+
+.hud-action-btn-wrap.dash-is-back .hud-action-btn {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px #0f172a, 0 4px 12px rgba(0, 0, 0, 0.75), 0 0 10px rgba(56, 189, 248, 0.45);
+}
+.hud-action-btn-wrap.dash-is-back .hud-action-btn-label {
+  color: #7dd3fc;
+  text-shadow: 0 0 6px rgba(56, 189, 248, 0.8), 0 1px 2px #000;
+}
+.hud-action-btn-wrap.dash-is-back .hud-action-btn:hover {
+  border-color: rgba(56, 189, 248, 0.9);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+}
+
+/* ==========================================================================
+   5. QUICK POTIONS (HP Red & MP Blue - Bottom Left of Action Cluster)
+   ========================================================================== */
+
+.hud-potions-group {
+  position: absolute;
+  right: 338px;
+  bottom: 33px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  opacity: 1 !important; /* 100% visible, fully opaque */
+}
+
+.hud-potions-group:hover,
+.hud-potions-group:active {
+  opacity: 1 !important;
+}
+
+.hud-potion-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.1s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hud-potion-item:hover {
+  transform: translateY(-2px);
+}
+
+.hud-potion-item:active {
+  transform: scale(0.92);
+}
+
+.hud-potion-disc {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2.5px solid #d4a059;
+  background: radial-gradient(circle at 40% 35%, #1e293b 0%, #0f172a 100%);
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 12px rgba(0, 0, 0, 0.75),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Distinct ruby glow for HP flask */
+.hud-potion-item:nth-child(1) .hud-potion-disc {
+  border-color: #ef4444;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 12px rgba(0, 0, 0, 0.75),
+    0 0 14px rgba(239, 68, 68, 0.55),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.4);
+}
+
+/* Distinct sapphire glow for MP flask */
+.hud-potion-item:nth-child(2) .hud-potion-disc {
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 12px rgba(0, 0, 0, 0.75),
+    0 0 14px rgba(59, 130, 246, 0.55),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.4);
+}
+
+.hud-potion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), filter 0.18s ease;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hud-potion-item:hover .hud-potion-img.hp {
+  transform: scale(1.14);
+}
+
+.hud-potion-item:hover .hud-potion-img.mp {
+  transform: scale(1.14);
+}
+
+.hud-potion-item:active .hud-potion-img {
+  transform: scale(0.92);
+}
+
+.hud-potion-label {
+  position: absolute;
+  bottom: -15px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 4px #000000;
+}
+
+.hud-potion-label.hp {
+  color: #f87171;
+  text-shadow: 0 0 6px rgba(239, 68, 68, 0.8), 0 1px 2px #000;
+}
+
+.hud-potion-label.mp {
+  color: #60a5fa;
+  text-shadow: 0 0 6px rgba(59, 130, 246, 0.8), 0 1px 2px #000;
+}
+
+.hud-potion-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #0f172a;
+  border: 1.5px solid #fbbf24;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8), 0 0 6px rgba(245, 158, 11, 0.5);
+}
+
+/* ==========================================================================
+   6. HAMBURGER GAME MENU MODAL
+   ========================================================================== */
+
+.hud-menu-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 11, 18, 0.88);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  animation: fadeIn 0.2s ease;
+}
+
+.hud-menu-modal-card {
+  width: 90%;
+  max-width: 460px;
+  background: linear-gradient(180deg, #1b2234 0%, #101524 100%);
+  border: 2px solid #b89360;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px) scale(0.97); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.hud-menu-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+}
+
+.hud-menu-modal-title {
+  color: #f7d36a;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.hud-menu-modal-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.hud-menu-modal-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.hud-menu-maps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.hud-menu-map-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.hud-menu-map-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(247, 211, 106, 0.4);
+}
+
+.hud-menu-map-btn.selected {
+  background: rgba(247, 211, 106, 0.15);
+  border-color: #f7d36a;
+  box-shadow: 0 0 12px rgba(247, 211, 106, 0.3);
+}
+
+.hud-menu-map-icon {
+  font-size: 20px;
+}
+
+.hud-menu-map-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.hud-menu-map-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.hud-menu-map-hall {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.hud-menu-actions-row {
+  display: flex;
+  gap: 10px;
+}
+
+.hud-menu-btn-action {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.15s;
+}
+
+.hud-menu-btn-action:hover {
+  filter: brightness(1.15);
+  -webkit-filter: brightness(1.15);
+}
+
+.hud-menu-btn-action:active {
+  transform: scale(0.97);
+}
+
+.hud-menu-btn-action.war-mode {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+  border: 1px solid #f87171;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.hud-menu-btn-action.audio-toggle {
+  background: #334155;
+  border: 1px solid #475569;
+  color: #ffffff;
+}
+
+.hud-menu-btn-action.fullscreen {
+  background: #334155;
+  border: 1px solid #475569;
+  color: #ffffff;
+}
+
+.hud-menu-btn-action.exit {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+  border: 1px solid #ef4444;
+  color: #ffffff;
+}
+
+.hud-menu-modal-card.hud-menu-exit-card {
+  max-width: 330px;
+  padding: 18px 20px;
+  gap: 16px;
+}
+
+.hud-menu-lang-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hud-menu-lang-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-menu-lang-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.hud-menu-lang-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 4px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.hud-menu-lang-pill:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-1px);
+}
+
+.hud-menu-lang-pill.is-active {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(2, 132, 199, 0.38));
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35), inset 0 0 6px rgba(56, 189, 248, 0.2);
+}
+
+.hud-menu-lang-flag {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.hud-menu-lang-code {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #cbd5e1;
+}
+
+.hud-menu-lang-pill.is-active .hud-menu-lang-code {
+  color: #38bdf8;
+  font-weight: 900;
+}
+
+.hud-menu-exit-actions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hud-menu-exit-actions .hud-menu-btn-action.exit {
+  width: 100%;
+  padding: 13px 20px;
+  font-size: 15px;
+  font-weight: 800;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.45);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE MOBILE LANDSCAPE SCALING
+   Adapts perfectly to all smartphones in landscape gaming orientation (iPhone, Android)
+   ========================================================================== */
+
+@media (max-height: 540px) {
+  .hud-left-column {
+    top: 104px;
+    left: 12px;
+    gap: 7px;
+    transform: scale(0.72);
+    transform-origin: top left;
+  }
+
+  .hud-top-right {
+    top: 8px;
+    right: 12px;
+    gap: 5px;
+    transform: scale(0.72);
+  }
+
+  .hud-joystick-container,
+  .hud-dpad-container {
+    bottom: 20px;
+    left: 60px;
+    transform: scale(0.90); /* Generous, comfortable thumb size (~138px) */
+  }
+
+  .hud-actions-cluster {
+    transform: scale(0.92);
+  }
+
+  .hud-backpack-center-slot {
+    left: 186px;
+    right: 416px;
+    bottom: 22px;
+    transform: scale(0.90);
+  }
+}
+
+@media (max-height: 410px) {
+  .hud-left-column {
+    top: 88px;
+    left: 8px;
+    gap: 5px;
+    transform: scale(0.64);
+    transform-origin: top left;
+  }
+
+  .hud-top-right {
+    top: 6px;
+    right: 8px;
+    transform: scale(0.64);
+  }
+
+  .hud-joystick-container,
+  .hud-dpad-container {
+    bottom: 12px;
+    left: 50px;
+    transform: scale(0.82); /* Stays comfortable (~126px) */
+  }
+
+  .hud-actions-cluster {
+    transform: scale(0.82);
+  }
+
+  .hud-backpack-center-slot {
+    left: 165px;
+    right: 371px;
+    bottom: 14px;
+    transform: scale(0.82);
+  }
+}
+
+/* ==========================================================================
+   Hamburger Menu: Touch Controls Toggle Switch
+   ========================================================================== */
+
+.hud-menu-toggle-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hud-menu-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 9px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+.hud-menu-toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hud-menu-toggle-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: 0.3px;
+}
+
+.hud-menu-toggle-sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.hud-menu-toggle-switch {
+  width: 44px;
+  height: 24px;
+  background: rgba(51, 65, 85, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+}
+
+.hud-menu-toggle-switch.is-active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #34d399;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.hud-menu-toggle-knob {
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+.hud-menu-toggle-switch.is-active .hud-menu-toggle-knob {
+  transform: translateX(20px);
+}
+
+/* ==========================================================================
+   DESKTOP HUD MODE: Hide Mobile Virtual Touch Controls
+   ========================================================================== */
+.mmorpg-hud-container.is-desktop .hud-joystick-container,
+.mmorpg-hud-container.is-desktop .hud-dpad-container,
+.mmorpg-hud-container.is-desktop .hud-backpack-center-slot,
+.mmorpg-hud-container.is-desktop .hud-actions-cluster {
+  display: none !important;
+}
+
+/* Fallback pure CSS media query for desktop with fine pointer / hover */
+@media (min-width: 961px) and (hover: hover) and (pointer: fine) {
+  .mmorpg-hud-container:not(.is-mobile) .hud-joystick-container,
+  .mmorpg-hud-container:not(.is-mobile) .hud-dpad-container,
+  .mmorpg-hud-container:not(.is-mobile) .hud-backpack-center-slot,
+  .mmorpg-hud-container:not(.is-mobile) .hud-actions-cluster {
+    display: none !important;
+  }
+}
+
+/* On small mobile screens, hide top nav bag button since center thumb slot is used */
+@media (max-width: 768px) {
+  .mmorpg-hud-container.is-mobile .hud-nav-btn-bag {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   DESKTOP MMORPG COMBAT HOTBAR (PC Only - Matching User Reference Screenshot)
+   ========================================================================== */
+
+.hud-desktop-hotbar {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none; /* Oculto en móviles */
+  align-items: flex-end;
+  gap: 7px;
+  z-index: 60;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Visibilidad Desktop en pantalla completa y ventana */
+.mmorpg-hud-container.is-desktop .hud-desktop-hotbar {
+  display: flex !important;
+}
+
+@media (min-width: 961px) {
+  .mmorpg-hud-container:not(.is-mobile) .hud-desktop-hotbar {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .hud-desktop-hotbar {
+    display: none !important;
+  }
+}
+
+/* Bandejas de alas metálicas doradas */
+.hud-desktop-wing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hud-desktop-tray {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #181410 0%, #0a0807 100%);
+  border: 2px solid #ca8a04;
+  outline: 1.5px solid #78350f;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.75), inset 0 1px 3px rgba(253, 224, 71, 0.4);
+  border-radius: 6px;
+  padding: 3px;
+  gap: 2px;
+}
+
+/* Contenedor del slot con la tecla debajo */
+.hud-desktop-slot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Botón cuadrado de habilidad/consumible */
+.hud-desktop-slot {
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle at 50% 30%, #1e1b18 0%, #080706 100%);
+  border: 1px solid rgba(202, 138, 4, 0.45);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: transform 0.08s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hud-desktop-slot:hover {
+  border-color: #fde047;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.7), inset 0 0 6px rgba(250, 204, 21, 0.4);
+  transform: translateY(-2px);
+}
+
+.hud-desktop-slot:active,
+.hud-desktop-slot.is-active-hotkey {
+  transform: translateY(1px) scale(0.95);
+  border-color: #ffffff !important;
+  box-shadow: 0 0 14px rgba(253, 224, 71, 0.95), inset 0 0 8px rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Envoltura del icono del slot */
+.hud-desktop-slot-icon-wrap {
+  width: 100%;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.hud-desktop-icon-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.hud-desktop-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  border-radius: 3px;
+}
+
+.hud-desktop-icon-img.is-flipped {
+  transform: scaleX(-1);
+}
+
+/* Cooldown countdown overlay */
+.hud-slot-cooldown-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: 3px;
+}
+
+.hud-slot-cooldown-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 900;
+  color: #fef08a;
+  text-shadow: 0 0 6px #000, 0 1px 3px #000;
+  letter-spacing: -0.5px;
+}
+
+.hud-desktop-slot.is-on-cooldown {
+  opacity: 0.65;
+  filter: grayscale(0.5);
+  -webkit-filter: grayscale(0.5);
+  cursor: not-allowed;
+}
+
+.hud-desktop-slot.is-on-cooldown:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(202, 138, 4, 0.45);
+}
+
+/* Mobile Action Cluster Webp icons & Cooldowns */
+.hud-action-btn-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.hud-btn-main-attack .hud-action-btn-img {
+  width: 100%;
+  height: 100%;
+}
+
+.hud-action-cooldown-badge {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 900;
+  color: #fef08a;
+  text-shadow: 0 1px 3px #000;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.hud-action-btn.is-on-cooldown {
+  opacity: 0.65;
+  filter: grayscale(0.5);
+  -webkit-filter: grayscale(0.5);
+  cursor: not-allowed;
+}
+
+/* Insignia de conteo (Combo "60", Poción "3", "2") */
+.hud-desktop-badge {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 1px 2px #000, 0 0 4px #000;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.hud-desktop-badge.potion-badge-mp,
+.hud-desktop-badge.potion-badge-hp {
+  right: auto;
+  left: 3px;
+  color: #fef08a;
+  font-size: 12px;
+}
+
+/* Barras segmentadas LED en la base de cada slot */
+.hud-desktop-pips {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 4px;
+  margin-top: 1px;
+  box-sizing: border-box;
+  padding: 0 2px;
+}
+
+.hud-pip {
+  flex: 1;
+  max-width: 9px;
+  height: 3px;
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 1px;
+}
+
+.hud-pip.active {
+  background: #38bdf8;
+  box-shadow: 0 0 4px #38bdf8;
+}
+
+.hud-pip.active.cyan {
+  background: #22d3ee;
+  box-shadow: 0 0 4px #22d3ee;
+}
+
+.hud-pip.active.blue {
+  background: #818cf8;
+  box-shadow: 0 0 4px #818cf8;
+}
+
+.hud-pip.active.green {
+  background: #34d399;
+  box-shadow: 0 0 4px #34d399;
+}
+
+/* Tecla asignada debajo del slot */
+.hud-desktop-key {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  color: #f1f5f9;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 3px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   UNIDAD CENTRAL: Retrato del Héroe y Nivel MMORPG
+   ========================================================================== */
+
+.hud-desktop-avatar-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0 2px;
+  top: -4px;
+}
+
+/* Banner de Runas Superior: \ 0 0 0 0 \ */
+.hud-desktop-rune-banner {
+  background: linear-gradient(180deg, #1c1917 0%, #0a0807 100%);
+  border: 1.5px solid #ca8a04;
+  outline: 1px solid #78350f;
+  border-radius: 4px 4px 0 0;
+  padding: 1px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+}
+
+.rune-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #e2e8f0;
+  text-shadow: 0 1px 2px #000;
+}
+
+.rune-icon {
+  font-style: normal;
+  font-size: 9px;
+  color: #f59e0b;
+}
+
+/* Marco del retrato del Héroe */
+.hud-desktop-avatar-frame {
+  width: 66px;
+  height: 66px;
+  background: #09090b;
+  border: 2px solid #ca8a04;
+  outline: 1.5px solid #78350f;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(250, 204, 21, 0.35);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hud-desktop-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: contrast(1.08) brightness(1.05);
+  -webkit-filter: contrast(1.08) brightness(1.05);
+}
+
+.hud-desktop-avatar-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%, rgba(202, 138, 4, 0.12) 100%);
+  pointer-events: none;
+}
+
+/* Rombo de Nivel inferior y tira de progreso EXP */
+.hud-desktop-level-strip {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: -9px;
+  z-index: 3;
+}
+
+.hud-desktop-level-diamond {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #1c1917 0%, #0a0807 100%);
+  border: 2px solid #ca8a04;
+  outline: 1px solid #78350f;
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.85), inset 0 0 4px rgba(253, 224, 71, 0.6);
+  margin-right: -4px;
+}
+
+.hud-desktop-level-num {
+  transform: rotate(-45deg);
+  font-size: 11px;
+  font-weight: 900;
+  color: #fde047;
+  text-shadow: 0 1px 2px #000;
+}
+
+.hud-desktop-exp-tray {
+  width: 46px;
+  height: 10px;
+  background: #09090b;
+  border: 1.5px solid #ca8a04;
+  outline: 1px solid #78350f;
+  border-radius: 0 3px 3px 0;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+}
+
+.hud-desktop-exp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #38bdf8 60%, #67e8f9 100%);
+  box-shadow: 0 0 6px #38bdf8;
+  transition: width 0.3s ease;
+}
+
+
+
+
+/* --- Mobile Rune Banner Styles --- */
+.hud-mobile-rune-banner {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  align-items: center;
+}
+
+@media (min-width: 961px) {
+  .hud-mobile-rune-banner {
+    display: none !important;
+  }
+}
+
+.rune-icon-img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  margin-right: 4px;
+  vertical-align: middle;
+}

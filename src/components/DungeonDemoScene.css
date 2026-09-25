@@ -1,0 +1,2571 @@
+/* DungeonDemoScene.css - Interactive Dungeon Demo Scene (Kina Male vs Slimes) */
+
+.dungeon-demo-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999;
+  overflow: hidden;
+  background-color: #04070c;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-drag: none !important;
+  touch-action: none;
+  font-family: 'Outfit', 'Nunito', system-ui, -apple-system, sans-serif;
+  animation: dungeonDemoFadeIn 0.4s ease-out;
+
+  /* Universal Master Canvas Tokens (100% Identical Parity across all screens) */
+  --dungeon-ground-offset: 31.48%;
+  --dungeon-world-height: 100dvh;
+  --dungeon-sprite-height: calc(var(--dungeon-world-height) * 0.21);
+  --dungeon-sprite-width: calc(var(--dungeon-sprite-height) * (16 / 9));
+}
+
+.dungeon-demo-root *,
+.dungeon-demo-root *::before,
+.dungeon-demo-root *::after {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-drag: none !important;
+}
+
+@keyframes dungeonDemoFadeIn {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================
+   0. AMBIENT BACKDROP GLOW (For Ultra-Wide Mobile Wings)
+   Fills the side margins behind controls with rich atmospheric glow
+   ============================================================ */
+.dungeon-ambient-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.dungeon-ambient-backdrop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* ============================================================
+   1. MASTER COVER VIEWPORT & WORLD (Edge-to-Edge Fullscreen Cover)
+   Synchronized 1:1 with map pixels across any screen ratio!
+   ============================================================ */
+.dungeon-camera-viewport {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  pointer-events: auto;
+  z-index: 5;
+}
+
+.dungeon-camera-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.dungeon-camera-world {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  container-type: inline-size;
+}
+
+/* Background Animated WebP Sprite Layer - Zero Video Lag, 100% Hardware Accelerated */
+.dungeon-demo-bg-sprite {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: center bottom;
+  pointer-events: none;
+  z-index: 1;
+  image-rendering: auto;
+}
+
+/* Atmospheric Vignette & Depth Lighting (Soft edge tint, zero muddiness) */
+.dungeon-demo-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 80%, rgba(4, 7, 12, 0.15) 100%);
+  transition: opacity 0.3s ease;
+}
+
+/* Subtle Floor Depth Mist (Light ambient glow, zero dark murkiness) */
+.dungeon-demo-ground-mist {
+  display: none;
+}
+
+/* ============================================================
+   TOP BAR & NAVIGATION CONTROLS
+   ============================================================ */
+.dungeon-demo-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  pointer-events: auto;
+  background: linear-gradient(180deg, rgba(6, 10, 18, 0.92) 0%, rgba(6, 10, 18, 0.6) 75%, rgba(6, 10, 18, 0) 100%);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.dungeon-demo-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1.5px solid rgba(245, 158, 11, 0.4);
+  color: #fef3c7;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.dungeon-demo-back-btn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.4) 100%);
+  border-color: rgba(245, 158, 11, 0.8);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.35);
+  color: #ffffff;
+}
+
+.dungeon-demo-back-esc-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+/* Center Map Switcher Tabs */
+.dungeon-demo-center-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.75);
+  padding: 4px 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.dungeon-demo-map-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.dungeon-demo-map-tab:hover {
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dungeon-demo-map-tab.is-active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.5) 100%);
+  border-color: rgba(52, 211, 153, 0.6);
+  color: #ecfdf5;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+}
+
+.dungeon-demo-map-tab-icon {
+  font-size: 1rem;
+}
+
+/* Top Right Actions (Sound, Fullscreen, Help) */
+.dungeon-demo-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dungeon-demo-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(30, 41, 59, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dungeon-demo-action-btn:hover {
+  background: rgba(51, 65, 85, 0.95);
+  border-color: rgba(245, 158, 11, 0.6);
+  color: #fbbf24;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   BOTTOM CONTROLS HELP BAR & FLOATING BANNER
+   ============================================================ */
+.dungeon-demo-bottom-banner {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(10, 15, 24, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  pointer-events: auto;
+}
+
+.dungeon-demo-hint-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.dungeon-demo-key-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f8fafc;
+  font-size: 0.72rem;
+  font-weight: 900;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   ENEMY ACTOR PRESENTATION & UNIFIED BASELINE ALIGNMENT
+   ============================================================ */
+.enemy-actor-root {
+  position: absolute;
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: auto;
+  cursor: default;
+  z-index: 12;
+}
+
+/* Enemy Ground Contact Shadow - Locked to floor baseline */
+.enemy-actor-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.48);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.085);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.85) 0%, rgba(14, 10, 18, 0.55) 45%, rgba(0, 0, 0, 0) 75%);
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+/* Enemy Sprite Wrap - Unified 16:9 canvas matching Kina exactly */
+.enemy-actor-sprite-wrap {
+  position: relative;
+  height: var(--dungeon-sprite-height, 21dvh);
+  aspect-ratio: 16 / 9;
+  width: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2;
+  transform-origin: center 97.22%; /* Ground contact baseline y=280/288 */
+  overflow: visible;
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.enemy-actor-sprite {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-origin: center 97.22%;
+  overflow: visible;
+}
+
+.enemy-actor-sprite img,
+.enemy-actor-sprite-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: center bottom;
+  pointer-events: auto;
+  image-rendering: auto;
+}
+
+/* Enemy Specific Precision Ground Baseline Alignments */
+/* 1. SLIME: Native base at y=255. Shift +8.33% (+24px / 288px) to land exactly on Kina ground line (y=280) */
+.enemy-actor-root.enemy-slime .enemy-actor-sprite {
+  transform: translateY(8.33%);
+}
+.enemy-actor-root.enemy-slime.is-attacking .enemy-actor-sprite {
+  transform: translateY(18.5%) !important;
+}
+.enemy-actor-root.enemy-slime.is-hit .enemy-actor-sprite {
+  transform: translateY(14.5%) !important;
+}
+.enemy-actor-root.enemy-slime .enemy-actor-shadow {
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.48);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.09);
+}
+
+/* 2. BAT: Native aerial combat hover (drawn at y=140-170 torso). Floats smoothly with ground shadow beneath */
+.enemy-actor-root.enemy-bat .enemy-actor-sprite {
+  animation: batHoverFloat 0.68s ease-in-out infinite alternate;
+}
+.enemy-actor-root.enemy-bat.is-walking .enemy-actor-sprite {
+  animation: batFlightFloat 0.44s ease-in-out infinite alternate;
+}
+.enemy-actor-root.enemy-bat.is-attacking .enemy-actor-sprite {
+  animation: none !important;
+  transform: translateY(4%) !important;
+}
+
+.enemy-actor-root.enemy-bat .enemy-actor-shadow {
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.36);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.06);
+  opacity: 0.55;
+  animation: batShadowPulse 0.68s ease-in-out infinite alternate;
+}
+
+@keyframes batHoverFloat {
+  0% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-4px) rotate(0deg); }
+  100% { transform: translateY(-9px) rotate(1deg); }
+}
+
+@keyframes batFlightFloat {
+  0% { transform: translateY(0) rotate(-2.5deg); }
+  50% { transform: translateY(-5px) rotate(0deg); }
+  100% { transform: translateY(-10px) rotate(2.5deg); }
+}
+
+@keyframes batShadowPulse {
+  0% { transform: translateX(-50%) scale(1); opacity: 0.55; }
+  100% { transform: translateX(-50%) scale(0.82); opacity: 0.38; }
+}
+
+/* 3. SKELETON: Native feet at y=274. Shift +2.08% (+6px / 288px) to land perfectly on Kina ground line (y=280) */
+.enemy-actor-root.enemy-skeleton .enemy-actor-sprite {
+  transform: translateY(2.08%);
+}
+.enemy-actor-root.enemy-skeleton.is-attacking .enemy-actor-sprite {
+  transform: translateY(2.08%) !important;
+}
+.enemy-actor-root.enemy-skeleton .enemy-actor-shadow {
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.46);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.09);
+}
+
+/* Slime Overhead Health Bar & Nameplate (Name and HP only - 100% Proportional) */
+.enemy-actor-overhead {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 25;
+  pointer-events: none;
+  user-select: none;
+  gap: calc(var(--dungeon-sprite-height, 21dvh) * 0.015);
+  white-space: nowrap;
+}
+
+.enemy-overhead-name {
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', system-ui, -apple-system, sans-serif;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.072);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  -webkit-text-stroke: clamp(0.8px, calc(var(--dungeon-sprite-height, 21dvh) * 0.007), 1.5px) #000000;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95);
+}
+
+.enemy-overhead-hp-frame {
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.032);
+  border-radius: calc(var(--dungeon-sprite-height, 21dvh) * 0.014);
+  background: #231610;
+  border: clamp(1px, calc(var(--dungeon-sprite-height, 21dvh) * 0.008), 1.8px) solid #000000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  position: relative;
+}
+
+.enemy-overhead-hp-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important;
+  border-radius: 2px;
+  transition: width 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 0 6px rgba(239, 68, 68, 0.6);
+}
+
+/* Screen Shake is handled directly on cameraWorldRef via requestAnimationFrame for zero-stutter WebKit performance */
+
+/* Player Red Hit Flash Vignette */
+.dungeon-hit-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 80;
+  opacity: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(239, 68, 68, 0) 45%, rgba(220, 38, 38, 0.45) 100%);
+  transition: opacity 0.08s ease;
+}
+
+.dungeon-hit-vignette.active {
+  opacity: 1;
+  animation: hitVignettePulse 0.32s ease-out forwards;
+}
+
+@keyframes hitVignettePulse {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Enemy Hit Flash Feedback - High-performance GPU opacity pulse (Zero WebKit CPU rasterization) */
+.enemy-actor-root.is-hit .enemy-actor-sprite-wrap {
+  opacity: 0.82;
+  transform: scale(0.97);
+  transition: opacity 0.08s ease, transform 0.08s ease;
+}
+
+/* Enemy Dead Dissolve & Spirit Fade */
+.enemy-actor-root.is-dead {
+  pointer-events: none;
+}
+.enemy-actor-root.is-dead .enemy-actor-sprite-wrap {
+  animation: enemyDeathFade 1.1s ease-out forwards;
+}
+
+/* Enemy Split Child Spawn Pop Animation */
+.enemy-actor-root.is-split-child .enemy-actor-sprite-wrap {
+  animation: slimeSplitSpawn 0.45s cubic-bezier(0.17, 0.89, 0.32, 1.25) forwards;
+}
+
+@keyframes slimeSplitSpawn {
+  0% {
+    opacity: 0;
+    transform: scale(0.35) translateY(-20px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.12) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes enemyDeathFade {
+  0% { opacity: 1; transform: scale(1); }
+  60% { opacity: 0.65; transform: scale(0.96); }
+  100% { opacity: 0; transform: scale(0.9); }
+}
+
+/* Enemy Attack Telegraph Danger Aura */
+.enemy-attack-telegraph {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.55);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.12);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(239, 68, 68, 0.85) 0%, rgba(220, 38, 38, 0.45) 55%, transparent 75%);
+  animation: attackTelegraphPulse 0.35s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes attackTelegraphPulse {
+  0% { transform: translateX(-50%) scale(0.85); opacity: 0.55; }
+  100% { transform: translateX(-50%) scale(1.15); opacity: 0.95; }
+}
+
+/* Spectacular MMORPG Floating Damage Numbers */
+.floating-damage-number {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Outfit', 'Nunito', system-ui, -apple-system, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 120;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.floating-damage-number.damage {
+  color: #fbbf24;
+  font-size: 1.55rem;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;
+  animation: floatingDmgAnim 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.floating-damage-number.crit {
+  font-size: 2.25rem;
+  color: #ffea00;
+  font-weight: 900;
+  text-shadow: 2px 2px 0 #b71c1c, -2px -2px 0 #b71c1c, 2px -2px 0 #b71c1c, -2px 2px 0 #b71c1c, 0 3px 0 #000;
+  animation: floatingCritBounce 0.95s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.floating-damage-number.player-damage-float {
+  top: auto;
+  z-index: 130;
+}
+
+.floating-damage-number.player-damage-float.damage {
+  color: #ef4444;
+  font-size: 1.75rem;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;
+  animation: floatingPlayerDmg 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.floating-damage-number.player-damage-float.block {
+  color: #67e8f9;
+  font-size: 1.85rem;
+  text-shadow: 1.5px 1.5px 0 #0891b2, -1.5px -1.5px 0 #0891b2, 1.5px -1.5px 0 #0891b2, -1.5px 1.5px 0 #0891b2, 0 2px 0 #000;
+  animation: floatingBlockAnim 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.floating-damage-number.exp {
+  color: #38bdf8;
+  font-size: 1.4rem;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;
+  animation: floatingRewardExp 1.1s ease-out forwards;
+}
+
+.floating-damage-number.gold {
+  color: #facc15;
+  font-size: 1.4rem;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;
+  animation: floatingRewardGold 1.1s ease-out forwards;
+}
+
+.floating-damage-number.levelup {
+  color: #fef08a;
+  font-size: 1.95rem;
+  font-weight: 900;
+  text-shadow: 2px 2px 0 #78350f, -2px -2px 0 #78350f, 2px -2px 0 #78350f, -2px 2px 0 #78350f, 0 3px 0 #000;
+  letter-spacing: 0.05em;
+  animation: floatingLevelUpBadge 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 150;
+}
+
+.floating-damage-number.heal {
+  color: #4ade80;
+  font-size: 1.45rem;
+  font-weight: 800;
+  text-shadow: 1.5px 1.5px 0 #064e3b, -1.5px -1.5px 0 #064e3b, 1.5px -1.5px 0 #064e3b, -1.5px 1.5px 0 #064e3b;
+  animation: floatingRewardExp 1.2s ease-out forwards;
+}
+
+@keyframes floatingLevelUpBadge {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 18px) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -15px) scale(1.25);
+  }
+  40% {
+    transform: translate(-50%, -24px) scale(1.05);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -55px) scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -85px) scale(0.9);
+  }
+}
+
+.floating-damage-number.respawn {
+  color: #a7f3d0;
+  font-size: 1.45rem;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;
+  animation: floatingDmgAnim 0.95s ease-out forwards;
+}
+
+.floating-damage-number.division {
+  color: #6ee7b7;
+  font-size: 1.50rem;
+  font-weight: 900;
+  text-shadow: 1.5px 1.5px 0 #064e3b, -1.5px -1.5px 0 #064e3b, 1.5px -1.5px 0 #064e3b, -1.5px 1.5px 0 #064e3b, 0 2px 4px rgba(0, 0, 0, 0.8);
+  animation: floatingDmgAnim 1.05s ease-out forwards;
+}
+
+@keyframes floatingDmgAnim {
+  0% { opacity: 0; transform: translate(-50%, 15px) scale(0.6); }
+  20% { opacity: 1; transform: translate(-50%, -15px) scale(1.15); }
+  60% { opacity: 1; transform: translate(-50%, -40px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -65px) scale(0.85); }
+}
+
+@keyframes floatingCritBounce {
+  0% { opacity: 0; transform: translate(-50%, 15px) scale(0.4) rotate(-6deg); }
+  25% { opacity: 1; transform: translate(-50%, -25px) scale(1.4) rotate(3deg); }
+  50% { opacity: 1; transform: translate(-50%, -45px) scale(1.15) rotate(-2deg); }
+  75% { opacity: 1; transform: translate(-50%, -65px) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, -88px) scale(0.85); }
+}
+
+@keyframes floatingPlayerDmg {
+  0% { opacity: 0; transform: translate(-50%, 10px) scale(0.7); }
+  25% { opacity: 1; transform: translate(-50%, -20px) scale(1.25); }
+  65% { opacity: 1; transform: translate(-50%, -45px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -70px) scale(0.8); }
+}
+
+@keyframes floatingBlockAnim {
+  0% { opacity: 0; transform: translate(-50%, 5px) scale(0.6); }
+  30% { opacity: 1; transform: translate(-50%, -25px) scale(1.3); }
+  70% { opacity: 1; transform: translate(-50%, -45px) scale(1.05); }
+  100% { opacity: 0; transform: translate(-50%, -65px) scale(0.9); }
+}
+
+@keyframes floatingRewardExp {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.7); }
+  25% { opacity: 1; transform: translate(-35%, -30px) scale(1.15); }
+  70% { opacity: 1; transform: translate(-25%, -60px) scale(1); }
+  100% { opacity: 0; transform: translate(-15%, -85px) scale(0.85); }
+}
+
+@keyframes floatingRewardGold {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.7); }
+  25% { opacity: 1; transform: translate(-65%, -30px) scale(1.15); }
+  70% { opacity: 1; transform: translate(-75%, -60px) scale(1); }
+  100% { opacity: 0; transform: translate(-85%, -85px) scale(0.85); }
+}
+
+.floating-damage-number.loot-gold {
+  color: #fde047;
+  font-size: 1.55rem;
+  -webkit-text-stroke: 1.2px #78350f;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.85);
+  animation: floatingLootGain 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.floating-damage-number.loot-potion {
+  color: #f87171;
+  font-size: 1.55rem;
+  -webkit-text-stroke: 1.2px #7f1d1d;
+  text-shadow: 0 0 14px rgba(239, 68, 68, 0.9);
+  animation: floatingLootGain 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.floating-damage-number.loot-mana {
+  color: #60a5fa;
+  font-size: 1.55rem;
+  -webkit-text-stroke: 1.2px #1e3a8a;
+  text-shadow: 0 0 14px rgba(59, 130, 246, 0.9);
+  animation: floatingLootGain 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes floatingLootGain {
+  0% { opacity: 0; transform: translate(-50%, 10px) scale(0.6); }
+  25% { opacity: 1; transform: translate(-50%, -20px) scale(1.2); }
+  75% { opacity: 1; transform: translate(-50%, -45px) scale(1.0); }
+  100% { opacity: 0; transform: translate(-50%, -70px) scale(0.85); }
+}
+
+/* ============================================================
+   GROUND LOOT DROPS (Monedas de Oro & Pociones de Vida)
+   ============================================================ */
+.dungeon-ground-loot-item {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  z-index: 14;
+  user-select: none;
+  pointer-events: auto;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+.dungeon-ground-loot-item:hover {
+  transform: translateX(-50%) translateY(-4px) scale(1.12);
+}
+
+.dungeon-ground-loot-item.is-collected {
+  animation: lootCollectFly 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes lootCollectFly {
+  0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateX(-50%) translateY(-35px) scale(1.25); opacity: 0.9; }
+  100% { transform: translateX(-50%) translateY(-75px) scale(0.3); opacity: 0; }
+}
+
+/* Floor contact shadow for dropped items */
+.loot-item-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.18);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.035);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 75%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Radiant aura glow around dropped loot */
+.loot-item-glow-aura {
+  position: absolute;
+  bottom: calc(var(--dungeon-sprite-height, 21dvh) * 0.05);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.32);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.32);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  animation: lootHaloPulse 1.6s ease-in-out infinite alternate;
+}
+
+.loot-gold .loot-item-glow-aura {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.5) 0%, rgba(217, 119, 6, 0.22) 50%, rgba(0, 0, 0, 0) 75%);
+}
+
+.loot-potion_health .loot-item-glow-aura {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.55) 0%, rgba(220, 38, 38, 0.28) 50%, rgba(0, 0, 0, 0) 75%);
+}
+
+.loot-potion_mana .loot-item-glow-aura {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.55) 0%, rgba(37, 99, 235, 0.28) 50%, rgba(0, 0, 0, 0) 75%);
+}
+
+@keyframes lootHaloPulse {
+  0% { transform: translateX(-50%) scale(0.85); opacity: 0.6; }
+  100% { transform: translateX(-50%) scale(1.15); opacity: 1.0; }
+}
+
+/* Sprite Container with entrance bounce and idle bobbing */
+.loot-item-sprite-wrap {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lootDropBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both, lootGlowBob 2s ease-in-out 0.5s infinite alternate;
+}
+
+@keyframes lootDropBounce {
+  0% { transform: translateY(-70px) scale(0.4); opacity: 0; }
+  60% { transform: translateY(0) scale(1.18); opacity: 1; }
+  80% { transform: translateY(-12px) scale(0.95); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes lootGlowBob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+.loot-item-icon {
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.24);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.24);
+  object-fit: contain;
+  transition: transform 0.15s ease;
+}
+
+/* Small amount badge on coins */
+.loot-item-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -8px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(180, 83, 9, 0.95) 100%);
+  border: 1px solid rgba(254, 240, 138, 0.8);
+  color: #ffffff;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.05);
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+/* Floating Item Name Tag */
+.loot-item-tag {
+  margin-top: 4px;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.052);
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  white-space: nowrap;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  opacity: 0.88;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dungeon-ground-loot-item:hover .loot-item-tag {
+  opacity: 1;
+  transform: translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.6);
+}
+
+.loot-gold .loot-item-tag {
+  color: #fde047;
+}
+
+.loot-potion_health .loot-item-tag {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.loot-potion_mana .loot-item-tag {
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN (MOBILE / TABLETS)
+   ============================================================ */
+@media (max-width: 768px) {
+  .dungeon-demo-topbar {
+    height: 60px;
+    padding: 0 12px;
+  }
+  .dungeon-demo-center-switcher {
+    gap: 4px;
+    padding: 2px 4px;
+  }
+  .dungeon-demo-map-tab {
+    padding: 4px 8px;
+    font-size: 0.76rem;
+  }
+  .dungeon-demo-bottom-banner {
+    display: none;
+  }
+}
+
+/* Mobile Landscape (e.g. iPhone, Android in horizontal gaming mode) */
+@media (max-height: 540px) {
+  .dungeon-demo-vignette {
+    display: none !important;
+  }
+  .dungeon-demo-ground-mist {
+    display: none !important;
+  }
+}
+
+@media (max-height: 410px) {
+  .dungeon-demo-vignette {
+    display: none !important;
+  }
+  .dungeon-demo-ground-mist {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   50-PLAYER MMORPG CORRIDOR WAR BATTLEFIELD STYLING
+   ============================================================ */
+
+.war-combatant-root {
+  position: absolute;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  cursor: crosshair;
+  transition: transform 0.1s ease;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.war-combatant-root.is-hit {
+  animation: warCombatantHitShake 0.25s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes warCombatantHitShake {
+  0%, 100% { transform: translateX(-50%); opacity: 1; }
+  10%, 90% { transform: translateX(calc(-50% - 4px)); opacity: 0.82; }
+  20%, 80% { transform: translateX(calc(-50% + 5px)); }
+  30%, 50%, 70% { transform: translateX(calc(-50% - 5px)); opacity: 0.9; }
+  40%, 60% { transform: translateX(calc(-50% + 3px)); }
+}
+
+/* Ground Contact Shadow - Exact 1:1 Match to Player Character */
+.war-combatant-shadow {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 154px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.82) 0%, rgba(14, 10, 18, 0.55) 45%, rgba(0, 0, 0, 0) 75%);
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+/* 16:9 Sprite Canvas Match - Exact 380x214 Match to Player Character */
+.war-combatant-sprite-wrap {
+  position: relative;
+  width: 380px;
+  height: 214px;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2;
+  transform-origin: center bottom;
+  overflow: hidden;
+  clip-path: inset(0% 1% 0% 1%);
+  pointer-events: auto;
+}
+
+.war-combatant-sprite-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center bottom;
+  pointer-events: auto;
+  image-rendering: -webkit-optimize-contrast;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Overhead Nameplate & Bars - Exact Position and Styling Matching Player */
+.war-combatant-overhead {
+  position: absolute;
+  bottom: calc(100% - 46px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.85);
+  transform-origin: center bottom;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 25;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.war-overhead-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.war-overhead-guild-badge {
+  font-size: 0.74rem;
+  font-weight: 900;
+  padding: 1.5px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+.war-overhead-guild-badge.faction-alliance {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.6);
+  color: #93c5fd;
+  text-shadow: 0 0 6px rgba(59, 130, 246, 0.8);
+}
+
+.war-overhead-guild-badge.faction-crimson {
+  background: linear-gradient(135deg, rgba(136, 19, 55, 0.85) 0%, rgba(76, 5, 25, 0.95) 100%);
+  border: 1px solid rgba(244, 63, 94, 0.6);
+  color: #fca5a5;
+  text-shadow: 0 0 6px rgba(244, 63, 94, 0.8);
+}
+
+.war-overhead-name {
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.4px;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-text-stroke: 1.2px #000000;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+}
+
+.war-overhead-bars-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.war-overhead-level-badge {
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 1.5px 5.5px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.war-overhead-level-badge.faction-alliance {
+  background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+  border: 1px solid #93c5fd;
+  color: #ffffff;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.6);
+}
+
+.war-overhead-level-badge.faction-crimson {
+  background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
+  border: 1px solid #fca5a5;
+  color: #ffffff;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+}
+
+.war-overhead-bars-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+}
+
+.war-overhead-hp-frame {
+  width: 120px;
+  height: 9px;
+  border-radius: 4px;
+  background: rgba(11, 15, 25, 0.95);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  position: relative;
+}
+
+.war-overhead-hp-frame.faction-alliance {
+  border: 1px solid rgba(16, 185, 129, 0.8);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+.war-overhead-hp-frame.faction-crimson {
+  border: 1px solid rgba(244, 63, 94, 0.8);
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.4);
+}
+
+.war-overhead-hp-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.war-overhead-hp-fill.faction-alliance {
+  background: linear-gradient(180deg, #6ee7b7 0%, #10b981 50%, #059669 100%) !important;
+  box-shadow: 0 0 10px #10b981, inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+.war-overhead-hp-fill.faction-crimson {
+  background: linear-gradient(180deg, #ff8585 0%, #ff1744 48%, #e11d48 100%) !important;
+  box-shadow: 0 0 10px #ff1744, inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+.war-overhead-mp-frame {
+  width: 120px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(11, 15, 25, 0.95);
+  border: 0.8px solid rgba(56, 189, 248, 0.5);
+  overflow: hidden;
+}
+
+.war-overhead-mp-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #7dd3fc 0%, #0284c7 100%) !important;
+  box-shadow: 0 0 6px #0284c7;
+}
+
+/* Frontline Clash Header Indicator */
+.war-frontline-clash-indicator {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(10, 15, 28, 0.88);
+  border: 1.5px solid rgba(245, 158, 11, 0.6);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.25);
+  z-index: 45;
+  pointer-events: none;
+  animation: warClashPulse 2s infinite ease-in-out;
+}
+
+@keyframes warClashPulse {
+  0%, 100% { border-color: rgba(245, 158, 11, 0.6); box-shadow: 0 0 16px rgba(245, 158, 11, 0.2); }
+  50% { border-color: rgba(239, 68, 68, 0.9); box-shadow: 0 0 24px rgba(239, 68, 68, 0.45); }
+}
+
+.war-clash-faction-badge {
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+}
+
+.war-clash-faction-badge.alliance {
+  color: #60a5fa;
+  text-shadow: 0 0 8px rgba(96, 165, 250, 0.8);
+}
+
+.war-clash-faction-badge.crimson {
+  color: #f87171;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.8);
+}
+
+.war-clash-vs-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+}
+
+/* Mobile adjustments (Exact parity with ChampionActor.css) */
+@media (max-width: 768px) {
+  .war-frontline-clash-indicator {
+    top: 52px;
+    padding: 4px 12px;
+    gap: 8px;
+  }
+  .war-clash-faction-badge {
+    font-size: 0.70rem;
+  }
+}
+
+@media (max-height: 540px) {
+  .war-combatant-sprite-wrap {
+    width: 350px !important;
+    height: 197px !important;
+  }
+  .war-combatant-shadow {
+    width: 140px !important;
+    height: 22px !important;
+    bottom: 6px !important;
+  }
+  .war-combatant-overhead {
+    transform: translateX(-50%) scale(0.82) !important;
+    bottom: calc(100% - 44px) !important;
+  }
+  .war-frontline-clash-indicator {
+    top: 10px;
+    padding: 3px 12px;
+  }
+}
+
+@media (max-height: 410px) {
+  .war-combatant-sprite-wrap {
+    width: 330px !important;
+    height: 186px !important;
+  }
+  .war-combatant-shadow {
+    width: 125px !important;
+    height: 20px !important;
+    bottom: 5px !important;
+  }
+  .war-combatant-overhead {
+    transform: translateX(-50%) scale(0.78) !important;
+    bottom: calc(100% - 40px) !important;
+  }
+}
+
+/* ============================================================
+   CORRIDOR & MAP WALKING TRANSITION BANNER
+   ============================================================ */
+.dungeon-corridor-toast {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 28px;
+  background: rgba(10, 16, 28, 0.90);
+  border: 1.5px solid rgba(110, 200, 255, 0.55);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.75), 0 0 24px rgba(60, 160, 255, 0.35);
+  border-radius: 999px;
+  pointer-events: none;
+  animation: corridorToastFade 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dungeon-corridor-toast.new-map {
+  background: rgba(28, 14, 42, 0.94);
+  border-color: rgba(255, 210, 80, 0.75);
+  box-shadow: 0 10px 42px rgba(0, 0, 0, 0.85), 0 0 32px rgba(255, 180, 50, 0.5);
+}
+
+.dungeon-corridor-toast-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.dungeon-corridor-toast.new-map .dungeon-corridor-toast-title {
+  color: #ffd866;
+}
+
+.dungeon-corridor-toast-sub {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(200, 230, 255, 0.9);
+  margin-top: 2px;
+}
+
+@keyframes corridorToastFade {
+  0% { opacity: 0; transform: translate(-50%, -18px) scale(0.92); }
+  12% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  80% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -10px) scale(0.96); }
+}
+
+/* ============================================================
+   LA FUNDADORA CELESTIAL - NPC ENTITY & SACRED STAGE STYLING
+   ============================================================ */
+.npc-fundadora-root {
+  position: absolute;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 13;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.npc-fundadora-root:hover {
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/* Celestial Ground Shadow */
+.npc-fundadora-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.52);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.09);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(20, 10, 30, 0.85) 0%, rgba(245, 158, 11, 0.3) 45%, rgba(0, 0, 0, 0) 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ethereal Divine Aura Pulsing Glow */
+.npc-fundadora-aura {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.92);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 1.02);
+  border-radius: 50% 50% 35% 35%;
+  background: radial-gradient(ellipse at 50% 55%, rgba(251, 191, 36, 0.28) 0%, rgba(168, 85, 247, 0.18) 45%, rgba(59, 130, 246, 0.09) 70%, rgba(0, 0, 0, 0) 100%);
+  pointer-events: none;
+  z-index: 1;
+  animation: fundadoraAuraPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes fundadoraAuraPulse {
+  0% {
+    opacity: 0.70;
+    transform: translateX(-50%) scale(0.95);
+    filter: brightness(1.0);
+  }
+  100% {
+    opacity: 1.0;
+    transform: translateX(-50%) scale(1.06);
+    filter: brightness(1.35);
+  }
+}
+
+/* Fundadora Sprite Wrap (Exact Matching Size and Baseline with Player Idle) */
+.npc-fundadora-sprite-wrap {
+  position: relative;
+  height: var(--dungeon-sprite-height, 21dvh);
+  aspect-ratio: 16 / 9;
+  width: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2;
+  transform-origin: center 97.22%;
+  overflow: visible;
+  pointer-events: auto;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.npc-fundadora-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center bottom;
+  pointer-events: auto;
+  image-rendering: auto;
+}
+
+/* Overhead Nameplate & Badge */
+.npc-fundadora-overhead {
+  position: absolute;
+  bottom: calc(100% + calc(var(--dungeon-sprite-height, 21dvh) * 0.035));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  pointer-events: none;
+  z-index: 15;
+  white-space: nowrap;
+}
+
+.npc-fundadora-title {
+  font-family: inherit;
+  font-weight: 900;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.082);
+  color: #fef08a;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.85), 0 2px 4px rgba(0, 0, 0, 0.95);
+  -webkit-text-stroke: clamp(0.8px, calc(var(--dungeon-sprite-height, 21dvh) * 0.007), 1.5px) #000000;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.npc-fundadora-crown {
+  font-size: 1.1em;
+
+
+}
+
+.npc-fundadora-sub {
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.055);
+  font-weight: 700;
+  color: #a7f3d0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 0.5px #000000;
+  letter-spacing: 0.02em;
+}
+
+/* Interactive Action Bubble (E / Clic) */
+.npc-fundadora-action-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 3px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(251, 191, 36, 0.6);
+  color: #fef3c7;
+  font-size: calc(var(--dungeon-sprite-height, 21dvh) * 0.052);
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7), 0 0 10px rgba(245, 158, 11, 0.3);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.npc-fundadora-action-bubble.is-near {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.45) 0%, rgba(180, 83, 9, 0.75) 100%);
+  border-color: #fde047;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.75), 0 4px 14px rgba(0, 0, 0, 0.8);
+  animation: fundadoraBubblePulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes fundadoraBubblePulse {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-3px) scale(1.06); }
+}
+
+/* Radiant Celestial Blessing Aura over Champion */
+.champion-blessing-aura {
+  position: absolute;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 14;
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.85);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 1.55);
+  animation: blessingAuraFade 3.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.blessing-aura-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(253, 224, 71, 0.75) 0%, rgba(245, 158, 11, 0.35) 60%, rgba(0, 0, 0, 0) 100%);
+  animation: blessingBeamPulse 0.8s ease-in-out infinite alternate;
+}
+
+.blessing-aura-flare {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 40%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(251, 191, 36, 0.7) 40%, rgba(0, 0, 0, 0) 80%);
+}
+
+@keyframes blessingAuraFade {
+  0% { opacity: 0; transform: translateX(-50%) scaleY(0.4); }
+  15% { opacity: 1; transform: translateX(-50%) scaleY(1); }
+  80% { opacity: 0.9; transform: translateX(-50%) scaleY(1); }
+  100% { opacity: 0; transform: translateX(-50%) scaleY(1.1); }
+}
+
+@keyframes blessingBeamPulse {
+  0% { opacity: 0.75; transform: scaleX(0.9); }
+  100% { opacity: 1; transform: scaleX(1.1); }
+}
+
+/* ============================================================
+   LA FUNDADORA - MMORPG DIALOGUE MODAL
+   ============================================================ */
+.fundadora-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(5, 8, 16, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fundadoraOverlayFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fundadoraOverlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fundadora-dialog-card {
+  position: relative;
+  width: min(620px, 94vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  background: linear-gradient(165deg, rgba(22, 27, 44, 0.96) 0%, rgba(12, 16, 28, 0.98) 100%);
+  border: 1.5px solid rgba(245, 158, 11, 0.65);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.90), 0 0 40px rgba(245, 158, 11, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fundadoraCardSlide 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fundadoraCardSlide {
+  from { transform: translateY(20px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Dialog Header */
+.fundadora-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+  position: relative;
+}
+
+.fundadora-dialog-avatar-wrap {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  border: 2px solid rgba(251, 191, 36, 0.75);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.35), 0 4px 12px rgba(0, 0, 0, 0.6);
+  background: radial-gradient(circle at 50% 40%, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 1) 100%);
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.fundadora-dialog-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+}
+
+.fundadora-dialog-avatar-crown {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  font-size: 1.15rem;
+
+
+}
+
+.fundadora-dialog-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.fundadora-dialog-name {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #fef08a;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.fundadora-dialog-role {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #93c5fd;
+  margin-top: 2px;
+  letter-spacing: 0.01em;
+}
+
+.fundadora-dialog-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: #cbd5e1;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.fundadora-dialog-close-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #ffffff;
+}
+
+/* Dialog Narrative Body */
+.fundadora-dialog-body {
+  padding: 6px 0;
+}
+
+.fundadora-dialog-text {
+  font-size: 0.98rem;
+  line-height: 1.68;
+  color: #f1f5f9;
+  letter-spacing: 0.015em;
+  margin: 0;
+  font-style: italic;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.fundadora-dialog-blessed-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(147, 51, 234, 0.12) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+
+.fundadora-blessed-icon {
+  font-size: 2.2rem;
+
+
+  animation: blessingAuraFade 2s infinite alternate;
+}
+
+.fundadora-dialog-text.highlight {
+  color: #fef08a;
+  font-weight: 600;
+}
+
+/* Action Buttons Grid */
+.fundadora-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.fundadora-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.fundadora-btn:active {
+  transform: scale(0.98);
+}
+
+.fundadora-btn-blessing {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #78350f 100%);
+  border: 1.5px solid #fde047;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.fundadora-btn-blessing:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #92400e 100%);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.65), 0 6px 20px rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+}
+
+.fundadora-btn-lore {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1.5px solid rgba(147, 51, 234, 0.55);
+  color: #e9d5ff;
+}
+
+.fundadora-btn-lore:hover {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.25) 0%, rgba(107, 33, 168, 0.45) 100%);
+  border-color: rgba(192, 132, 252, 0.85);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+  transform: translateY(-1px);
+}
+
+.fundadora-btn-restart {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1.5px solid rgba(59, 130, 246, 0.5);
+  color: #bae6fd;
+}
+
+.fundadora-btn-restart:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(29, 78, 216, 0.4) 100%);
+  border-color: rgba(96, 165, 250, 0.8);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+.fundadora-btn-back {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+}
+
+.fundadora-btn-back:hover {
+  background: rgba(51, 65, 85, 0.95);
+  color: #ffffff;
+}
+
+.fundadora-btn-close {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 0.88rem;
+  padding: 9px 16px;
+}
+
+.fundadora-btn-close:hover {
+  background: rgba(30, 41, 59, 0.8);
+  color: #ffffff;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px), (max-height: 520px) {
+  .fundadora-dialog-card {
+    padding: 16px 18px;
+    gap: 12px;
+  }
+  .fundadora-dialog-avatar-wrap {
+    width: 52px;
+    height: 52px;
+  }
+  .fundadora-dialog-name {
+    font-size: 1.05rem;
+  }
+  .fundadora-dialog-role {
+    font-size: 0.75rem;
+  }
+  .fundadora-dialog-text {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .fundadora-btn {
+    padding: 9px 14px;
+    font-size: 0.86rem;
+  }
+}
+
+/* ==========================================================================
+   SPECTACULAR LEVEL UP VISUAL SYSTEM
+   - Fullscreen celestial flash and golden bloom
+   - Ascending beam of divine light over player with rotating energy rings
+   - Runic ground magic circle and celestial sparkles
+   - High-end cinematic glassmorphism announcement banner
+   ========================================================================== */
+
+/* 1. Fast Radiant Flash Overlay (Crisp & Snappy 0.55s, Zero Lag) */
+.levelup-screen-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(254, 240, 138, 0.28) 0%,
+    rgba(250, 204, 21, 0.12) 40%,
+    transparent 70%
+  );
+  animation: levelUpScreenFlashAnim 0.55s ease-out forwards;
+  will-change: opacity;
+}
+
+@keyframes levelUpScreenFlashAnim {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 2. Celestial Light Pillar over the Player (GPU Layer Isolated) */
+.levelup-celestial-pillar {
+  position: absolute;
+  width: 160px;
+  height: 100%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 125;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+  contain: layout paint;
+  will-change: transform;
+}
+
+/* Towering Pillar Beam (Pure scaleX GPU Animation) */
+.levelup-light-beam {
+  position: absolute;
+  bottom: 0;
+  width: 110px;
+  height: 100vh;
+  background: linear-gradient(
+    to top,
+    rgba(254, 240, 138, 0.90) 0%,
+    rgba(250, 204, 21, 0.70) 25%,
+    rgba(245, 158, 11, 0.35) 55%,
+    transparent 100%
+  );
+  transform-origin: center bottom;
+  animation: levelUpBeamPulse 1.8s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes levelUpBeamPulse {
+  0% { opacity: 0; transform: scaleX(0.2); }
+  18% { opacity: 1; transform: scaleX(1.2); }
+  70% { opacity: 0.85; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(0.1); }
+}
+
+/* White-hot energy core (Pure scaleY GPU Animation - ZERO height reflow) */
+.levelup-light-core {
+  position: absolute;
+  bottom: 0;
+  width: 32px;
+  height: 100vh;
+  background: linear-gradient(
+    to top,
+    #ffffff 0%,
+    rgba(254, 240, 138, 0.95) 30%,
+    rgba(250, 204, 21, 0.50) 70%,
+    transparent 100%
+  );
+  filter: drop-shadow(0 0 6px rgba(254, 240, 138, 0.8));
+  transform-origin: center bottom;
+  animation: levelUpCoreRise 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes levelUpCoreRise {
+  0% { opacity: 0; transform: scaleY(0); }
+  20% { opacity: 1; transform: scaleY(1); }
+  75% { opacity: 0.9; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(0.9); }
+}
+
+/* Runic Magic Circle on Floor (GPU scale & rotate) */
+.levelup-magic-circle {
+  position: absolute;
+  bottom: -8px;
+  width: 140px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(254, 240, 138, 0.9);
+  background: radial-gradient(ellipse at center, rgba(254, 240, 138, 0.35) 0%, transparent 75%);
+  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.7));
+  animation: levelUpCircleSpin 1.8s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes levelUpCircleSpin {
+  0% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  18% { opacity: 1; transform: scale(1.1) rotate(70deg); }
+  75% { opacity: 0.85; transform: scale(1) rotate(220deg); }
+  100% { opacity: 0; transform: scale(1.2) rotate(320deg); }
+}
+
+/* Ascending Energy Rings (translate3d GPU Ascent - ZERO bottom reflow) */
+.levelup-energy-ring {
+  position: absolute;
+  bottom: 0;
+  width: 110px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(254, 240, 138, 0.85);
+  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.6));
+  animation: levelUpRingAscend 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.levelup-energy-ring.ring-1 {
+  animation-delay: 0s;
+}
+
+.levelup-energy-ring.ring-2 {
+  animation-delay: 0.25s;
+  width: 90px;
+  height: 32px;
+}
+
+.levelup-energy-ring.ring-3 {
+  animation-delay: 0.5s;
+  width: 70px;
+  height: 26px;
+}
+
+@keyframes levelUpRingAscend {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.65); }
+  25% { opacity: 0.95; transform: translate3d(0, -35px, 0) scale(1.05); }
+  75% { opacity: 0.75; transform: translate3d(0, -120px, 0) scale(1.3); }
+  100% { opacity: 0; transform: translate3d(0, -180px, 0) scale(1.5); }
+}
+
+/* Celestial Sparkles Rising (translate3d GPU Ascent) */
+.levelup-particles {
+  position: absolute;
+  bottom: 0;
+  width: 100px;
+  height: 180px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.levelup-particles span {
+  position: absolute;
+  bottom: 0;
+  font-size: 1.1rem;
+  color: #fef08a;
+  animation: particleAscend 1.4s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.levelup-particles .p1 { left: 15%; animation-delay: 0.05s; }
+.levelup-particles .p2 { left: 75%; animation-delay: 0.18s; font-size: 1.3rem; }
+.levelup-particles .p3 { left: 40%; animation-delay: 0.32s; font-size: 1.0rem; }
+.levelup-particles .p4 { left: 85%; animation-delay: 0.45s; }
+.levelup-particles .p5 { left: 25%; animation-delay: 0.58s; font-size: 1.2rem; }
+.levelup-particles .p6 { left: 55%; animation-delay: 0.72s; }
+
+@keyframes particleAscend {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.5); }
+  25% { opacity: 1; transform: translate3d(0, -30px, 0) scale(1.15); }
+  75% { opacity: 0.85; transform: translate3d(0, -100px, 0) scale(1); }
+  100% { opacity: 0; transform: translate3d(0, -150px, 0) scale(0.6); }
+}
+
+/* 3. Spectacular Level Up Cinematic Screen Banner (Snappy 2.2s, GPU Accelerated) */
+.levelup-cinematic-banner {
+  position: fixed;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+  animation: levelUpBannerIntro 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.levelup-banner-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at center, rgba(250, 204, 21, 0.28) 0%, rgba(245, 158, 11, 0.08) 55%, transparent 75%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.levelup-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, rgba(10, 15, 30, 0.98) 0%, rgba(24, 18, 44, 0.98) 50%, rgba(10, 15, 30, 0.98) 100%);
+  border: 2px solid #facc15;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.85),
+    0 0 12px rgba(250, 204, 21, 0.35);
+  border-radius: 18px;
+}
+
+.levelup-banner-icon-badge {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #facc15 0%, #b45309 100%);
+  border: 2px solid #fef08a;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+  flex-shrink: 0;
+}
+
+.levelup-banner-icon-badge .star-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  animation: starPulse 1.1s ease-in-out infinite alternate;
+}
+
+.levelup-badge-lvl-pill {
+  position: absolute;
+  bottom: -6px;
+  padding: 1px 6px;
+  background: #78350f;
+  border: 1px solid #fef08a;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #fef08a;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes starPulse {
+  0% { transform: scale(0.92) rotate(-6deg); }
+  100% { transform: scale(1.12) rotate(6deg); }
+}
+
+.levelup-banner-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.levelup-banner-title {
+  font-family: 'Cinzel', 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #fffbeb;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.95),
+    0 0 10px rgba(250, 204, 21, 0.80);
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1.15;
+}
+
+.levelup-banner-sub {
+  font-size: 1.0rem;
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+}
+
+.levelup-banner-rewards {
+  display: flex;
+  gap: 10px;
+  margin-left: 12px;
+}
+
+.levelup-pill-reward {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: rgba(16, 185, 129, 0.25);
+  border: 1.5px solid rgba(52, 211, 153, 0.85);
+  color: #a7f3d0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+.levelup-pill-reward .pill-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.levelup-pill-reward.hp-mp-full {
+  background: rgba(14, 165, 233, 0.25);
+  border: 1.5px solid rgba(56, 189, 248, 0.85);
+  color: #bae6fd;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes levelUpBannerIntro {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, -20px, 0) scale(0.92);
+  }
+  14% {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1.02);
+  }
+  22% {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-50%, -14px, 0) scale(0.96);
+  }
+}
+
+/* Mobile Adjustments for Level Up Banner — Compact Horizontal Strip */
+@media (max-width: 640px), (max-height: 520px) {
+  .levelup-cinematic-banner {
+    top: 4%;
+    width: auto;
+    max-width: 94vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .levelup-banner-glow {
+    inset: -3px;
+    border-radius: 16px;
+  }
+  .levelup-banner-inner {
+    padding: 8px 14px;
+    gap: 10px;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+  }
+  .levelup-banner-icon-badge {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+  .levelup-banner-icon-badge .star-icon {
+    font-size: 1rem;
+  }
+  .levelup-badge-lvl-pill {
+    bottom: -5px;
+    padding: 0px 4px;
+    font-size: 0.55rem;
+  }
+  .levelup-banner-text-group {
+    gap: 1px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .levelup-banner-title {
+    font-size: 0.95rem;
+    text-align: left;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+  .levelup-banner-sub {
+    font-size: 0.72rem;
+    text-align: left;
+    white-space: nowrap;
+    opacity: 0.9;
+  }
+  .levelup-banner-rewards {
+    margin-left: 4px;
+    width: auto;
+    justify-content: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .levelup-pill-reward {
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    border-radius: 8px;
+    gap: 3px;
+    white-space: nowrap;
+  }
+  .levelup-pill-reward .pill-icon {
+    font-size: 0.75rem;
+  }
+  /* Scale down the light pillar and effects for mobile */
+  .levelup-celestial-pillar {
+    width: 120px;
+  }
+  .levelup-light-beam {
+    width: 80px;
+  }
+  .levelup-light-core {
+    width: 24px;
+  }
+  .levelup-magic-circle {
+    width: 100px;
+    height: 40px;
+  }
+  .levelup-energy-ring {
+    width: 80px;
+    height: 30px;
+  }
+  .levelup-energy-ring.ring-2 {
+    width: 65px;
+  }
+  .levelup-energy-ring.ring-3 {
+    width: 50px;
+  }
+  .levelup-particles {
+    width: 70px;
+    height: 130px;
+  }
+  .levelup-particles span {
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================================================
+   WAVE CLEARED EXIT GUIDANCE ARROW & GATEWAY BEACON
+   ========================================================================== */
+
+/* 1. In-World Exit Gateway at Corridor Right Edge */
+.dungeon-exit-gateway-marker {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 18;
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  animation: exitGatewayFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes exitGatewayFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.65);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Ground Portal Ring on Floor */
+.dungeon-exit-portal-ring {
+  position: absolute;
+  bottom: -4px;
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.95);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.28);
+  border-radius: 50%;
+  border: 2px solid rgba(251, 191, 36, 0.85);
+  box-shadow: 
+    0 0 20px rgba(251, 191, 36, 0.65),
+    inset 0 0 16px rgba(56, 189, 248, 0.55);
+  background: radial-gradient(ellipse at 50% 50%, rgba(251, 191, 36, 0.25) 0%, rgba(56, 189, 248, 0.12) 60%, transparent 100%);
+  transform-origin: center center;
+  animation: portalRingPulse 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.dungeon-exit-portal-glow {
+  position: absolute;
+  bottom: -10px;
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 1.35);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 0.38);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(251, 191, 36, 0.35) 0%, rgba(56, 189, 248, 0) 70%);
+  pointer-events: none;
+}
+
+@keyframes portalRingPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 1;
+    box-shadow: 
+      0 0 32px rgba(251, 191, 36, 0.95),
+      inset 0 0 24px rgba(56, 189, 248, 0.75);
+  }
+}
+
+/* Vertical Beacon Light Beam */
+.dungeon-exit-beacon-beam {
+  position: absolute;
+  bottom: 0;
+  width: calc(var(--dungeon-sprite-height, 21dvh) * 0.42);
+  height: calc(var(--dungeon-sprite-height, 21dvh) * 1.4);
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0) 0%, rgba(251, 191, 36, 0.22) 50%, rgba(56, 189, 248, 0.45) 100%);
+  pointer-events: none;
+  animation: beaconBeamPulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes beaconBeamPulse {
+  0% { opacity: 0.55; transform: scaleX(0.85); }
+  100% { opacity: 0.95; transform: scaleX(1.15); }
+}
+
+/* Floating Directional Arrow Anchor */
+.dungeon-exit-arrow-anchor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  bottom: calc(var(--dungeon-sprite-height, 21dvh) * 0.55);
+  animation: exitArrowBob 1.1s ease-in-out infinite alternate;
+
+
+}
+
+@keyframes exitArrowBob {
+  0% {
+    transform: translateX(-4px) scale(0.98);
+  }
+  100% {
+    transform: translateX(12px) scale(1.04);
+  }
+}
+
+/* Golden Pill Label */
+.dungeon-exit-arrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(20, 16, 28, 0.94) 0%, rgba(38, 28, 52, 0.94) 100%);
+  border: 1.5px solid rgba(251, 191, 36, 0.85);
+  border-radius: 999px;
+  box-shadow: 
+    0 4px 18px rgba(0, 0, 0, 0.6),
+    0 0 14px rgba(251, 191, 36, 0.45);
+  white-space: nowrap;
+}
+
+.dungeon-exit-arrow-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+
+
+}
+
+.dungeon-exit-arrow-text {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #FFFFFF 15%, #FDE047 65%, #F59E0B 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+}
+
+.dungeon-exit-arrow-chevrons {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.dungeon-exit-arrow-chevrons .chv {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #38BDF8;
+  animation: chevronGlow 1.2s infinite ease-in-out;
+}
+
+.dungeon-exit-arrow-chevrons .chv-1 { animation-delay: 0s; }
+.dungeon-exit-arrow-chevrons .chv-2 { animation-delay: 0.2s; }
+.dungeon-exit-arrow-chevrons .chv-3 { animation-delay: 0.4s; }
+
+@keyframes chevronGlow {
+  0%, 100% { opacity: 0.35; transform: translateX(0); }
+  50% { opacity: 1; color: #FDE047; transform: translateX(3px); }
+}
+
+/* Main Arrow SVG Graphic */
+.dungeon-exit-arrow-main {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, rgba(14, 10, 20, 0.75) 75%);
+  border-radius: 50%;
+  border: 2px solid rgba(251, 191, 36, 0.9);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.7), inset 0 0 10px rgba(56, 189, 248, 0.5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dungeon-exit-gateway-marker:hover .dungeon-exit-arrow-main {
+  transform: scale(1.12);
+  box-shadow: 0 0 30px rgba(251, 191, 36, 1), inset 0 0 14px rgba(56, 189, 248, 0.8);
+}
+
+.dungeon-exit-arrow-svg {
+  width: 32px;
+  height: 32px;
+
+
+}
+
+/* 2. Screen-Fixed Directional Waypoint Pill (Right margin of screen) */
+.dungeon-screen-guide-pill {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, rgba(18, 14, 28, 0.92) 0%, rgba(32, 22, 46, 0.95) 100%);
+  border: 1.5px solid rgba(251, 191, 36, 0.85);
+  border-radius: 999px;
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.75),
+    0 0 22px rgba(251, 191, 36, 0.55);
+  z-index: 95;
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  animation: screenGuidePillPulse 1.2s ease-in-out infinite alternate;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease;
+}
+
+.dungeon-screen-guide-pill:hover {
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 
+    0 12px 36px rgba(0, 0, 0, 0.85),
+    0 0 32px rgba(251, 191, 36, 0.85);
+}
+
+.dungeon-screen-guide-pill:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+@keyframes screenGuidePillPulse {
+  0% {
+    transform: translateY(-50%) translateX(0);
+    box-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.7),
+      0 0 16px rgba(251, 191, 36, 0.45);
+  }
+  100% {
+    transform: translateY(-50%) translateX(6px);
+    box-shadow: 
+      0 10px 32px rgba(0, 0, 0, 0.85),
+      0 0 26px rgba(251, 191, 36, 0.75),
+      0 0 40px rgba(56, 189, 248, 0.4);
+  }
+}
+
+.dungeon-guide-pill-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 75% 50%, rgba(251, 191, 36, 0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.dungeon-guide-pill-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1;
+}
+
+.dungeon-guide-pill-icon {
+  font-size: 1.15rem;
+
+
+}
+
+.dungeon-guide-pill-label {
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #FFFFFF 10%, #FDE047 65%, #F59E0B 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+.dungeon-guide-pill-chevrons {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #38BDF8;
+
+
+  animation: chevronRightMove 0.85s ease-in-out infinite alternate;
+}
+
+@keyframes chevronRightMove {
+  0% { transform: translateX(0); color: #38BDF8; }
+  100% { transform: translateX(4px); color: #FDE047; }
+}
+
+@media (max-width: 640px) {
+  .dungeon-screen-guide-pill {
+    right: 10px;
+    padding: 8px 14px;
+    top: 45%;
+  }
+  .dungeon-guide-pill-label {
+    font-size: 0.74rem;
+  }
+  .dungeon-exit-arrow-badge {
+    padding: 4px 10px;
+  }
+  .dungeon-exit-arrow-text {
+    font-size: 0.72rem;
+  }
+}
+
+
+/* RESPONSIVE TOAST (Level Map Transition Modal) */
+@media (max-width: 768px) {
+  .dungeon-corridor-toast {
+    padding: 6px 14px;
+    width: 90%;
+    text-align: center;
+    top: 25%;
+  }
+  .dungeon-corridor-toast-title {
+    font-size: 0.95rem;
+  }
+  .dungeon-corridor-toast-sub {
+    font-size: 0.75rem;
+  }
+}

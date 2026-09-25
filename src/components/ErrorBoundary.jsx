@@ -11,12 +11,14 @@ export class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('ErrorBoundary caught an error:', error?.message || String(error))
-    console.error('ErrorBoundary details:', {
+    console.error('[ErrorBoundary] Caught an error:', error?.message || String(error))
+    if (errorInfo?.componentStack) {
+      console.error('[ErrorBoundary] Component Stack:\n' + errorInfo.componentStack)
+    }
+    console.error('[ErrorBoundary] Details:', {
       name: error?.name,
       message: error?.message,
       stack: error?.stack,
-      componentStack: errorInfo?.componentStack
     })
   }
 

@@ -1,0 +1,1150 @@
+{
+  "frames": {
+    "molino_idle_00.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_01.png": {
+      "frame": {
+        "x": 240,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_02.png": {
+      "frame": {
+        "x": 480,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_03.png": {
+      "frame": {
+        "x": 720,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_04.png": {
+      "frame": {
+        "x": 960,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_05.png": {
+      "frame": {
+        "x": 1200,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_06.png": {
+      "frame": {
+        "x": 1440,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_07.png": {
+      "frame": {
+        "x": 1680,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_08.png": {
+      "frame": {
+        "x": 0,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_09.png": {
+      "frame": {
+        "x": 240,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_10.png": {
+      "frame": {
+        "x": 480,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_11.png": {
+      "frame": {
+        "x": 720,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_12.png": {
+      "frame": {
+        "x": 960,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_13.png": {
+      "frame": {
+        "x": 1200,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_14.png": {
+      "frame": {
+        "x": 1440,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_15.png": {
+      "frame": {
+        "x": 1680,
+        "y": 252,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_16.png": {
+      "frame": {
+        "x": 0,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_17.png": {
+      "frame": {
+        "x": 240,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_18.png": {
+      "frame": {
+        "x": 480,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_19.png": {
+      "frame": {
+        "x": 720,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_20.png": {
+      "frame": {
+        "x": 960,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_21.png": {
+      "frame": {
+        "x": 1200,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_22.png": {
+      "frame": {
+        "x": 1440,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_23.png": {
+      "frame": {
+        "x": 1680,
+        "y": 504,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_24.png": {
+      "frame": {
+        "x": 0,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_25.png": {
+      "frame": {
+        "x": 240,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_26.png": {
+      "frame": {
+        "x": 480,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_27.png": {
+      "frame": {
+        "x": 720,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_28.png": {
+      "frame": {
+        "x": 960,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_29.png": {
+      "frame": {
+        "x": 1200,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_30.png": {
+      "frame": {
+        "x": 1440,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_31.png": {
+      "frame": {
+        "x": 1680,
+        "y": 756,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_32.png": {
+      "frame": {
+        "x": 0,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_33.png": {
+      "frame": {
+        "x": 240,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_34.png": {
+      "frame": {
+        "x": 480,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_35.png": {
+      "frame": {
+        "x": 720,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_36.png": {
+      "frame": {
+        "x": 960,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_37.png": {
+      "frame": {
+        "x": 1200,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_38.png": {
+      "frame": {
+        "x": 1440,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_39.png": {
+      "frame": {
+        "x": 1680,
+        "y": 1008,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_40.png": {
+      "frame": {
+        "x": 0,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_41.png": {
+      "frame": {
+        "x": 240,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_42.png": {
+      "frame": {
+        "x": 480,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_43.png": {
+      "frame": {
+        "x": 720,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_44.png": {
+      "frame": {
+        "x": 960,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_45.png": {
+      "frame": {
+        "x": 1200,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_46.png": {
+      "frame": {
+        "x": 1440,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_47.png": {
+      "frame": {
+        "x": 1680,
+        "y": 1260,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_48.png": {
+      "frame": {
+        "x": 0,
+        "y": 1512,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_49.png": {
+      "frame": {
+        "x": 240,
+        "y": 1512,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_50.png": {
+      "frame": {
+        "x": 480,
+        "y": 1512,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_51.png": {
+      "frame": {
+        "x": 720,
+        "y": 1512,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_52.png": {
+      "frame": {
+        "x": 960,
+        "y": 1512,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    },
+    "molino_idle_53.png": {
+      "frame": {
+        "x": 1200,
+        "y": 1512,
+        "w": 240,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 240,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 240,
+        "h": 252
+      }
+    }
+  },
+  "animations": {
+    "play": [
+      "molino_idle_00.png",
+      "molino_idle_01.png",
+      "molino_idle_02.png",
+      "molino_idle_03.png",
+      "molino_idle_04.png",
+      "molino_idle_05.png",
+      "molino_idle_06.png",
+      "molino_idle_07.png",
+      "molino_idle_08.png",
+      "molino_idle_09.png",
+      "molino_idle_10.png",
+      "molino_idle_11.png",
+      "molino_idle_12.png",
+      "molino_idle_13.png",
+      "molino_idle_14.png",
+      "molino_idle_15.png",
+      "molino_idle_16.png",
+      "molino_idle_17.png",
+      "molino_idle_18.png",
+      "molino_idle_19.png",
+      "molino_idle_20.png",
+      "molino_idle_21.png",
+      "molino_idle_22.png",
+      "molino_idle_23.png",
+      "molino_idle_24.png",
+      "molino_idle_25.png",
+      "molino_idle_26.png",
+      "molino_idle_27.png",
+      "molino_idle_28.png",
+      "molino_idle_29.png",
+      "molino_idle_30.png",
+      "molino_idle_31.png",
+      "molino_idle_32.png",
+      "molino_idle_33.png",
+      "molino_idle_34.png",
+      "molino_idle_35.png",
+      "molino_idle_36.png",
+      "molino_idle_37.png",
+      "molino_idle_38.png",
+      "molino_idle_39.png",
+      "molino_idle_40.png",
+      "molino_idle_41.png",
+      "molino_idle_42.png",
+      "molino_idle_43.png",
+      "molino_idle_44.png",
+      "molino_idle_45.png",
+      "molino_idle_46.png",
+      "molino_idle_47.png",
+      "molino_idle_48.png",
+      "molino_idle_49.png",
+      "molino_idle_50.png",
+      "molino_idle_51.png",
+      "molino_idle_52.png",
+      "molino_idle_53.png"
+    ]
+  },
+  "meta": {
+    "image": "molino_idle_atlas.webp",
+    "size": {
+      "w": 1920,
+      "h": 1764
+    },
+    "scale": "1"
+  }
+}

@@ -18,7 +18,11 @@ import { StarterPackBanner } from './components/StarterPackBanner'
 import { FlyToHudLayer } from './components/FlyToHudLayer'
 import { GuidedTutorial } from './components/GuidedTutorial'
 import { StartScreen } from './components/StartScreen'
+import { StudioIntroSplash } from './components/StudioIntroSplash'
 import { PvpScene } from './components/PvpScene'
+import { DirigibleModal } from './components/DirigibleModal'
+import { DungeonScene } from './components/DungeonScene'
+import { CAVES_DATA } from './data/cavesData'
 import { SmartLoader } from './components/SmartLoader'
 import { preloadImages, getCityCriticalAssets } from './utils/smartAssetLoader'
 import OrientationNotice from './components/OrientationNotice'
@@ -216,15 +220,18 @@ export default function App() {
     try {
       const params = new URLSearchParams(window.location.search)
       if (params.get('scene') === 'pvp') return 'pvp'
+      if (params.get('scene') === 'dungeon') return 'dungeon'
     } catch {}
     return 'kingdom'
-  }) // 'kingdom' | 'pvp'
+  }) // 'kingdom' | 'pvp' | 'dungeon'
+  const [dirigibleMenuOpen, setDirigibleMenuOpen] = useState(false)
+  const [selectedCave, setSelectedCave] = useState(() => CAVES_DATA[0])
   const [isCityLoading, setIsCityLoading] = useState(false)
   const [cityLoadProgress, setCityLoadProgress] = useState(0)
   const [playerName, setPlayerName] = useState(() => {
     const stored = localStorage.getItem('toc_player_name')
     if (!stored || stored === 'Lord King' || stored === 'Lord Soberano' || stored === 'LORD SOBERANO' || stored === 'Sovereign Lord' || stored === 'Lorde Soberano') {
-      const generated = generateRandomNobleName(localStorage.getItem('toc_language') || 'es')
+      const generated = generateRandomNobleName(localStorage.getItem('toc_game_lang') || localStorage.getItem('toc_language') || 'us')
       try { localStorage.setItem('toc_player_name', generated) } catch {}
       return generated
     }
@@ -236,14 +243,14 @@ export default function App() {
   const [playerEmail, setPlayerEmail] = useState(() => {
     return gameStorage.getEmail() || ''
   })
+  const [showStudioSplash, setShowStudioSplash] = useState(true)
 
   // Modal states
   const [usernameModalOpen, setUsernameModalOpen] = useState(false)
-  const [buildModalOpen, setBuildModalOpen] = useState(false)
   const [tutorialKey, setTutorialKey] = useState(0)
 
   // Guided interactive tutorial active running condition (only on kingdom island)
-  const isTutorialRunning = isTutorialActive && !welcomeModalOpen && !usernameModalOpen && hasStartedGame && !isCityLoading && currentScene !== 'pvp'
+  const isTutorialRunning = isTutorialActive && !welcomeModalOpen && !usernameModalOpen && hasStartedGame && !isCityLoading && currentScene !== 'pvp' && currentScene !== 'dungeon'
   const [detailsModalOpen, setDetailsModalOpen] = useState(false)
   const [questsModalOpen, setQuestsModalOpen] = useState(false)
   const [armyModalOpen, setArmyModalOpen] = useState(false)
@@ -257,7 +264,6 @@ export default function App() {
   const [offlineEarnings, setOfflineEarnings] = useState(null)
   const [offlineModalOpen, setOfflineModalOpen] = useState(false)
   const [selectedSlot, setSelectedSlot] = useState(null)
-  const [recommendedBuildId, setRecommendedBuildId] = useState(null)
   const [activeEvent, setActiveEvent] = useState(null)
   const [eventModalOpen, setEventModalOpen] = useState(false)
 
@@ -267,6 +273,7 @@ export default function App() {
   const [combatModeModalOpen, setCombatModeModalOpen] = useState(false)
   const [kingdomHubModalOpen, setKingdomHubModalOpen] = useState(false)
   const [chatModalOpen, setChatModalOpen] = useState(false)
+  const [marketInteriorOpen, setMarketInteriorOpen] = useState(false)
   const [flyingParticles, setFlyingParticles] = useState([])
   const [poppingResource, setPoppingResource] = useState(null)
   const [isCinematicMode, setIsCinematicMode] = useState(false)
@@ -510,7 +517,6 @@ export default function App() {
 
   // Universal condition tracking if ANY modal or sub-window is currently active
   const isAnyModalOpen = useMemo(() => Boolean(
-    buildModalOpen ||
     detailsModalOpen ||
     questsModalOpen ||
     armyModalOpen ||
@@ -535,31 +541,36 @@ export default function App() {
     (notificationsModalOpen && isMobileScreen) ||
     arenaBattleOpen ||
     usernameModalOpen ||
-    welcomeModalOpen
+    welcomeModalOpen ||
+    dirigibleMenuOpen ||
+    marketInteriorOpen
   ), [
-    buildModalOpen, detailsModalOpen, questsModalOpen, armyModalOpen,
+    detailsModalOpen, questsModalOpen, armyModalOpen,
     expeditionModalOpen, dungeonCombatOpen, campaignWindowOpen, menuModalOpen,
     profileModalOpen, levelUpModalOpen, offlineModalOpen, eventModalOpen,
     techTreeModalOpen, inventoryModalOpen, combatModeModalOpen, kingdomHubModalOpen,
     chatModalOpen, shopModalOpen, arenaModalOpen, seasonEndModalOpen,
     rankingModalOpen, harvestModalOpen, notificationsModalOpen, isMobileScreen,
-    arenaBattleOpen, usernameModalOpen, welcomeModalOpen
+    arenaBattleOpen, usernameModalOpen, welcomeModalOpen, dirigibleMenuOpen, marketInteriorOpen
   ])
 
   const isWorldSuspended = useMemo(() => Boolean(
+    !hasStartedGame ||
     isAnyModalOpen || 
     campaignWindowOpen || 
     dungeonCombatOpen || 
     arenaBattleOpen || 
-    currentScene === 'pvp'
-  ), [isAnyModalOpen, campaignWindowOpen, dungeonCombatOpen, arenaBattleOpen, currentScene])
+    currentScene === 'pvp' ||
+    currentScene === 'dungeon'
+  ), [hasStartedGame, isAnyModalOpen, campaignWindowOpen, dungeonCombatOpen, arenaBattleOpen, currentScene])
 
   // Keyboard shortcut: Press 'H' to toggle Cinematic View, 'Escape' to exit
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target?.tagName)) return
+      if (e.defaultPrevented) return
 
-      if (e.key === 'h' || e.key === 'H') {
+      if ((e.key === 'h' || e.key === 'H') && currentScene === 'kingdom') {
         e.preventDefault()
         soundManager.playClick()
         setIsCinematicMode((prev) => !prev)
@@ -567,7 +578,7 @@ export default function App() {
         e.preventDefault()
         soundManager.playClick()
         setIsCinematicMode(false)
-      } else if (e.key === 'Escape' && currentScene === 'pvp') {
+      } else if (e.key === 'Escape' && (currentScene === 'pvp' || currentScene === 'dungeon')) {
         e.preventDefault()
         soundManager.playClick()
         setCurrentScene('kingdom')
@@ -577,9 +588,19 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isCinematicMode, currentScene])
 
-  // Strict audio & scene isolation: turn off Kingdom audio/ambient when in PvP and resume when returning
+  // Open Caves Selector modal when clicking on the Celestial Dirigible
   useEffect(() => {
-    if (currentScene === 'pvp') {
+    const handleOpenExpeditions = () => {
+      soundManager.playClick?.()
+      setDirigibleMenuOpen(true)
+    }
+    window.addEventListener('toc-open-expeditions', handleOpenExpeditions)
+    return () => window.removeEventListener('toc-open-expeditions', handleOpenExpeditions)
+  }, [])
+
+  // Strict audio & scene isolation: turn off Kingdom audio/ambient when in PvP or Dungeon and resume when returning
+  useEffect(() => {
+    if (currentScene === 'pvp' || currentScene === 'dungeon') {
       soundManager.stopKingdomMusic()
     } else if (currentScene === 'kingdom' && hasStartedGame && !arenaBattleOpen && !dungeonCombatOpen) {
       soundManager.resumeKingdomAudio()
@@ -1341,65 +1362,15 @@ export default function App() {
   useEffect(() => {
     if (!hasStartedGame) return
 
-    const hasActiveConstruction = slotsRef.current.some((s) => s.isConstructing)
     const hasActiveTraining = Boolean(trainingQueueRef.current && trainingQueueRef.current.length > 0)
 
-    // Idle Optimization: If nothing is constructing and no troops are training, DO NOT spin a 1s interval.
-    // This completely eliminates background CPU wakeups and state checks during normal idle gameplay.
-    if (!hasActiveConstruction && !hasActiveTraining) return
+    // Idle Optimization: If no troops are training, DO NOT spin a 1s interval.
+    if (!hasActiveTraining) return
 
     const interval = setInterval(() => {
       const now = Date.now()
-
-      // Read current values from refs (not stale closure captures)
-      const currentSlots = slotsRef.current
       const currentQueue = trainingQueueRef.current
-      const hasConstruction = currentSlots.some((s) => s.isConstructing)
       const hasTraining = Boolean(currentQueue && currentQueue.length > 0)
-
-      if (hasConstruction) {
-        setSlots((prevSlots) => {
-          let hasChanges = false
-          const updated = prevSlots.map((slot) => {
-            if (slot.isConstructing) {
-              const durationSec = slot.constructionDurationSec || 60
-              const startedAt = slot.constructionStartedAt || (now - ((slot.progress || 0) / 100) * durationSec * 1000)
-              const elapsedSec = (now - startedAt) / 1000
-
-              if (elapsedSec >= durationSec) {
-                hasChanges = true
-                soundManager.stopConstructionAudio(slot.id)
-                soundManager.playBuildComplete()
-                if (typeof navigator !== 'undefined' && navigator.vibrate) {
-                  navigator.vibrate([40, 30, 40])
-                }
-                const bDef = BUILDING_TYPES[slot.buildingId?.toUpperCase()]
-                const finalLevel = slot.targetLevel || slot.level || 1
-                showNotification(
-                  t('notifications.constructionFinished', { name: t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || 'Building', level: finalLevel }),
-                  'success'
-                )
-                addKingdomXp(85 * finalLevel, t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || t('common.construction'))
-                return {
-                  ...slot,
-                  isConstructing: false,
-                  progress: 100,
-                  level: finalLevel,
-                  targetLevel: undefined,
-                  constructionStartedAt: undefined,
-                  constructionDurationSec: undefined,
-                  lastHarvestAt: now,
-                }
-              }
-
-              // In-flight progress is smoothly rendered by GameWorld & Modals locally without waking up App.jsx
-              return slot
-            }
-            return slot
-          })
-          return hasChanges ? updated : prevSlots
-        })
-      }
 
       // Real-time military training queue progression
       if (hasTraining) {
@@ -1609,112 +1580,6 @@ export default function App() {
     setEventTimeLeft(0)
   }
 
-  // Open build menu
-  const handleOpenBuildMenu = (target = null) => {
-    if (isTutorialRunning) return
-    if (typeof target === 'string') {
-      // If target is a buildingId string, find first empty slot and set recommended
-      const freeSlot = slots.find((s) => !s.buildingId)
-      setSelectedSlot(freeSlot || null)
-      setRecommendedBuildId(target)
-    } else {
-      setSelectedSlot(target)
-      setRecommendedBuildId(null)
-    }
-    setBuildModalOpen(true)
-  }
-
-  // Execute building construction
-  const handleSelectBuilding = (buildingId, targetSlot) => {
-    const bDef = getBuildingDef(buildingId) || BUILDING_TYPES[buildingId.toUpperCase()]
-    if (!bDef) return
-
-    // Check maximum building limits
-    const currentBuilt = getBuildingCurrentCount(bDef.id, slots)
-    const maxAllowed = getBuildingMaxAllowed(bDef.id)
-    if (currentBuilt >= maxAllowed) {
-      showNotification(
-        maxAllowed === 1
-          ? t('notifications.buildingUnique', { name: t(`buildings.slots.${bDef.id}.name`) || bDef.name })
-          : t('notifications.buildingLimitReached', { max: maxAllowed, name: t(`buildings.slots.${bDef.id}.name`) || bDef.name }),
-        'warning'
-      )
-      soundManager.playButtonClick()
-      return
-    }
-
-    // Check active builder capacity
-    const activeBuilders = slots.filter((s) => s.isConstructing).length
-    const maxBuilders = vipStatus.hasSecondBuilder ? 2 : 1
-    if (activeBuilders >= maxBuilders) {
-      showNotification(
-        vipStatus.hasSecondBuilder
-          ? t('notifications.buildersBusyDual')
-          : t('notifications.buildersBusy'),
-        'warning'
-      )
-      soundManager.playButtonClick()
-      return
-    }
-
-    // Deduct resources
-    setResources((prev) => ({
-      ...prev,
-      gold: prev.gold - (bDef.cost.gold || 0),
-      wood: prev.wood - (bDef.cost.wood || 0),
-      stone: prev.stone - (bDef.cost.stone || 0),
-      gems: prev.gems - (bDef.cost.gems || 0),
-      populationUsed: prev.populationUsed + (bDef.populationUsed || 0),
-      populationMax: prev.populationMax + (bDef.populationProvided || 0),
-    }))
-
-    // Find destination slot
-    const slotToUse = targetSlot || slots.find((s) => !s.buildingId)
-    if (!slotToUse) {
-      showNotification(t('notifications.noFreePlots'), 'warning')
-      return
-    }
-
-    soundManager.startConstructionAudio(buildingId, slotToUse.id)
-    const duration = getBuildingConstructionTime(buildingId, vipStatus.hasEngineering)
-
-    const updatedResources = {
-      ...resources,
-      gold: resources.gold - (bDef.cost.gold || 0),
-      wood: resources.wood - (bDef.cost.wood || 0),
-      stone: resources.stone - (bDef.cost.stone || 0),
-      gems: resources.gems - (bDef.cost.gems || 0),
-      populationUsed: resources.populationUsed + (bDef.populationUsed || 0),
-      populationMax: resources.populationMax + (bDef.populationProvided || 0),
-    }
-
-    const updatedSlots = slots.map((s) =>
-      s.id === slotToUse.id
-        ? {
-            ...s,
-            buildingId,
-            isConstructing: true,
-            progress: 0,
-            level: 1,
-            targetLevel: 1,
-            constructionStartedAt: Date.now(),
-            constructionDurationSec: duration,
-            lastHarvestAt: Date.now(),
-          }
-        : s
-    )
-
-    setSlots(updatedSlots)
-
-    // Instant synchronous save to eliminate any possibility of loss on tab close
-    gameStorage.save(buildSaveState({
-      resources: updatedResources,
-      slots: updatedSlots,
-    }), true)
-
-    showNotification(t('notifications.startingConstruction', { name: t(`buildings.slots.${buildingId}.name`) || bDef.name, duration: Math.round(duration) }), 'info')
-  }
-
   // Open details for a clicked building
   const handleSelectSlot = (slot) => {
     if (isTutorialRunning) return
@@ -1722,85 +1587,46 @@ export default function App() {
     setDetailsModalOpen(true)
   }
 
-  // Upgrade building
+  // Direct progressive upgrade for existing buildings
   const handleUpgradeBuilding = (slot, cost) => {
-    // Check active builder capacity
-    const activeBuilders = slots.filter((s) => s.isConstructing).length
-    const maxBuilders = vipStatus.hasSecondBuilder ? 2 : 1
-    if (activeBuilders >= maxBuilders) {
-      showNotification(
-        vipStatus.hasSecondBuilder
-          ? t('notifications.buildersBusyDual')
-          : t('notifications.buildersBusy'),
-        'warning'
-      )
-      soundManager.playButtonClick()
-      return
-    }
-
     const updatedResources = {
       ...resources,
-      gold: resources.gold - cost.gold,
-      wood: resources.wood - cost.wood,
-      stone: resources.stone - cost.stone,
+      gold: Math.max(0, resources.gold - (cost.gold || 0)),
+      wood: Math.max(0, resources.wood - (cost.wood || 0)),
+      stone: Math.max(0, resources.stone - (cost.stone || 0)),
     }
     setResources(updatedResources)
 
-    soundManager.startConstructionAudio(slot.buildingId, slot.id)
-    const duration = getBuildingUpgradeTime(slot.buildingId, slot.level, vipStatus.hasEngineering)
-
+    const nextLevel = (slot.level || 1) + 1
     const updatedSlots = slots.map((s) =>
       s.id === slot.id
         ? {
             ...s,
-            isConstructing: true,
-            progress: 0,
-            targetLevel: s.level + 1,
-            constructionStartedAt: Date.now(),
-            constructionDurationSec: duration,
+            level: nextLevel,
+            isConstructing: false,
+            progress: 100,
           }
         : s
     )
 
     setSlots(updatedSlots)
 
-    // Instant synchronous save on upgrade start
+    soundManager.playBuildComplete?.()
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate([40, 30, 40])
+    }
+
+    const bDef = getBuildingDef(slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]
+    const bldName = t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || 'Edificio'
+    addKingdomXp(95 * nextLevel, bldName)
+
+    showNotification(t('notifications.constructionFinished', { name: bldName, level: nextLevel }), 'success')
+
+    // Instant synchronous save
     gameStorage.save(buildSaveState({
       resources: updatedResources,
       slots: updatedSlots,
     }), true)
-
-    const bDef = BUILDING_TYPES[slot.buildingId.toUpperCase()]
-    showNotification(t('notifications.upgradingBuilding', { name: t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name, level: slot.level + 1, duration: Math.round(duration) }), 'info')
-    setDetailsModalOpen(false)
-  }
-
-  // Demolish building
-  const handleDemolishBuilding = (slot) => {
-    if (!slot || slot.buildingId === 'ayuntamiento' || slot.buildingId === 'castillo') {
-      showNotification(t('notifications.castleCannotDemolish'), 'warning')
-      soundManager.playButtonClick()
-      return
-    }
-    soundManager.stopConstructionAudio(slot.id)
-    const bDef = getBuildingDef(slot.buildingId) || BUILDING_TYPES[slot.buildingId.toUpperCase()]
-    setResources((prev) => ({
-      ...prev,
-      gold: prev.gold + Math.round((bDef?.cost.gold || 0) * 0.4),
-      wood: prev.wood + Math.round((bDef?.cost.wood || 0) * 0.4),
-      populationUsed: Math.max(0, prev.populationUsed - (bDef?.populationUsed || 0)),
-      populationMax: Math.max(30, prev.populationMax - (bDef?.populationProvided || 0)),
-    }))
-
-    setSlots((prev) =>
-      prev.map((s) =>
-        s.id === slot.id
-          ? { ...s, buildingId: null, level: 0, isConstructing: false, progress: 0 }
-          : s
-      )
-    )
-
-    showNotification(t('notifications.buildingDemolished'), 'info')
   }
 
   // Particle & visual juice triggers
@@ -2439,124 +2265,6 @@ export default function App() {
     showNotification(t('notifications.wheelPrizeReceived', { label: resolvedLabel }), 'success')
   }
 
-  const handleSpeedupBuilding = (slot) => {
-    const now = Date.now()
-    const startedAt = slot.constructionStartedAt || now
-    const durationSec = slot.constructionDurationSec || 60
-    const elapsedSec = (now - startedAt) / 1000
-    const remainingSec = Math.max(0, durationSec - elapsedSec)
-
-    const freeThresholdSec = vipStatus.hasEngineering ? 300 : 180 // 5m VIP, 3m Free
-    const isFree = remainingSec <= freeThresholdSec
-
-    const costGems = isFree ? 0 : Math.max(2, Math.ceil(remainingSec / 50))
-
-    if (!isFree && resources.gems < costGems) {
-      showNotification(t('notifications.insufficientGemsForSpeedup', { cost: costGems }), 'warning')
-      handleOpenShop('vault')
-      return
-    }
-
-    if (!isFree) {
-      setResources((prev) => ({
-        ...prev,
-        gems: prev.gems - costGems,
-      }))
-    }
-
-    soundManager.stopConstructionAudio(slot.id)
-    soundManager.playSpeedup()
-
-    const newLevel = slot.targetLevel || slot.level || 1
-    const bDef = BUILDING_TYPES[slot.buildingId?.toUpperCase()]
-
-    const updatedSlots = slots.map((s) =>
-      s.id === slot.id
-        ? {
-            ...s,
-            isConstructing: false,
-            progress: 100,
-            level: newLevel,
-            targetLevel: undefined,
-            constructionStartedAt: undefined,
-            constructionDurationSec: undefined,
-            lastHarvestAt: Date.now(),
-          }
-        : s
-    )
-
-    setSlots(updatedSlots)
-
-    // Synchronous immediate save
-    gameStorage.save(buildSaveState({
-      resources: isFree ? resources : { ...resources, gems: resources.gems - costGems },
-      slots: updatedSlots,
-    }), false)
-
-    showNotification(
-      isFree
-        ? t('notifications.speedupFreeComplete', { name: t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || 'Building', level: newLevel })
-        : t('notifications.speedupGemComplete', { name: t(`buildings.slots.${slot.buildingId}.name`) || bDef?.name || 'Building', cost: costGems }),
-      'success'
-    )
-    addKingdomXp(75 * newLevel, t('notifications.xpSpeedup'))
-    setDetailsModalOpen(false)
-  }
-
-  const handleUseSpeedup = (slotId, speedupId) => {
-    const speedup = SPEEDUP_TYPES[speedupId]
-    if (!speedup) return
-    if ((speedups[speedupId] || 0) <= 0) {
-      showNotification(t('notifications.noSpeedups'), 'warning')
-      return
-    }
-
-    setSpeedups((prev) => ({
-      ...prev,
-      [speedupId]: Math.max(0, (prev[speedupId] || 0) - 1),
-    }))
-
-    soundManager.playSpeedup()
-
-    setSlots((prev) =>
-      prev.map((s) => {
-        if (s.id !== slotId || !s.isConstructing) return s
-        const now = Date.now()
-        const newStartedAt = (s.constructionStartedAt || now) - (speedup.seconds * 1000)
-        const durationSec = s.constructionDurationSec || 60
-        const elapsedSec = (now - newStartedAt) / 1000
-
-        if (elapsedSec >= durationSec) {
-          soundManager.stopConstructionAudio(s.id)
-          soundManager.playBuildComplete()
-          const newLevel = s.targetLevel || s.level || 1
-          const bDef = BUILDING_TYPES[s.buildingId?.toUpperCase()]
-          showNotification(t('notifications.buildingCompletedWithSpeedup', { name: t(`buildings.slots.${s.buildingId}.name`) || bDef?.name || 'Building' }), 'success')
-          addKingdomXp(75 * newLevel, t('notifications.xpSpeedupWork'))
-          return {
-            ...s,
-            isConstructing: false,
-            progress: 100,
-            level: newLevel,
-            targetLevel: undefined,
-            constructionStartedAt: undefined,
-            constructionDurationSec: undefined,
-            lastHarvestAt: Date.now(),
-          }
-        }
-
-        const nextProgress = Math.min(99, Math.floor((elapsedSec / durationSec) * 100))
-        return {
-          ...s,
-          constructionStartedAt: newStartedAt,
-          progress: nextProgress,
-        }
-      })
-    )
-
-    showNotification(t('notifications.speedupUsed', { label: speedup.label }), 'info')
-  }
-
   const handleDungeonRevive = (costGems = 20) => {
     if (resources.gems < costGems) {
       showNotification(t('notifications.insufficientGemsForRevive'), 'warning')
@@ -2583,7 +2291,7 @@ export default function App() {
       isHarvestingAllRef.current = false
     }, 1000)
 
-    const readySlots = slots.filter((s) => s.buildingId && !s.isConstructing)
+    const readySlots = slots.filter((s) => s.buildingId)
     if (readySlots.length === 0) {
       showNotification(t('notifications.noBuildingsProducing'), 'info')
       return
@@ -2693,8 +2401,18 @@ export default function App() {
   // ============================================================
   // COMPETITIVE ARENA & PVP HANDLERS
   // ============================================================
+  const [pvpInitialMode, setPvpInitialMode] = useState('pvp')
+
   const handleOpenArena = (tab = 'pvp') => {
     setArenaInitialTab(tab)
+    setPvpInitialMode('pvp')
+    setCombatModeModalOpen(false)
+    setArenaModalOpen(false)
+    setCurrentScene('pvp')
+  }
+
+  const handleOpenTraining = () => {
+    setPvpInitialMode('training')
     setCombatModeModalOpen(false)
     setArenaModalOpen(false)
     setCurrentScene('pvp')
@@ -3431,8 +3149,8 @@ export default function App() {
     // 2. Stop music
     soundManager.stopBGM?.()
 
-    // 3. Purge session context
-    gameStorage.purgeSession()
+    // 3. Purge session context and disconnect account
+    await gameStorage.disconnectAccount?.()
 
     // 4. Clean React memory state so no data leaks into the next account
     setResources(INITIAL_RESOURCES)
@@ -3534,7 +3252,7 @@ export default function App() {
       <FpsOverlay fpsMode={fpsMode} />
 
       {/* Top HUD */}
-      {hasStartedGame && currentScene === 'kingdom' && (
+      {hasStartedGame && currentScene === 'kingdom' && !marketInteriorOpen && (
         <TopBar 
           resources={resources} 
           soundEnabled={soundEnabled} 
@@ -3569,7 +3287,6 @@ export default function App() {
                 chapterData={activeChapterData}
                 questProgress={activeQuestProgress}
                 onClaimQuest={handleClaimQuest}
-                onOpenBuild={handleOpenBuildMenu}
                 onOpenArmy={() => setArmyModalOpen(true)}
                 onOpenCampaign={() => setCampaignWindowOpen(true)}
                 onOpenQuestsModal={() => setQuestsModalOpen(true)}
@@ -3603,15 +3320,15 @@ export default function App() {
         />
       )}
 
-      {/* Main Interactive Game World Canvas - completely hidden when in PvP/battle */}
+      {/* Main Interactive Game World Canvas - completely hidden when in StartScreen/Dungeon demo, PvP/battle or Market interior */}
       <main 
         className="game-main-viewport"
         style={{
-          display: currentScene === 'kingdom' ? 'block' : 'none',
-          visibility: currentScene === 'kingdom' ? 'visible' : 'hidden',
-          pointerEvents: currentScene === 'kingdom' ? 'auto' : 'none'
+          display: (hasStartedGame && currentScene === 'kingdom' && !marketInteriorOpen) ? 'block' : 'none',
+          visibility: (hasStartedGame && currentScene === 'kingdom' && !marketInteriorOpen) ? 'visible' : 'hidden',
+          pointerEvents: (hasStartedGame && currentScene === 'kingdom' && !marketInteriorOpen) ? 'auto' : 'none'
         }}
-        aria-hidden={currentScene !== 'kingdom'}
+        aria-hidden={!hasStartedGame || currentScene !== 'kingdom' || marketInteriorOpen}
       >
         <GameWorld 
           engine="pixi"
@@ -3619,10 +3336,9 @@ export default function App() {
           vipStatus={vipStatus}
           activeStoryQuest={activeStoryQuest}
           onSelectSlot={handleSelectSlot}
-          onOpenBuildMenu={handleOpenBuildMenu}
           onCollectFromSlot={handleCollectFromSlot}
           onCitizenGift={handleCitizenGift}
-          onSpeedupBuilding={handleSpeedupBuilding}
+          onOpenBattle={() => setCombatModeModalOpen(true)}
           onToggleCinematic={() => setIsCinematicMode((prev) => !prev)}
           isCinematicMode={isCinematicMode}
           soundEnabled={soundEnabled}
@@ -3636,7 +3352,7 @@ export default function App() {
       </main>
 
       {/* Lateral Events & Deals Dock (Royal Messenger, Daily Roulette, Starter Pack) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !marketInteriorOpen && (
         <aside className="hud-lateral-events-dock" aria-label="Avisos y Ofertas">
           <EventBadge 
             activeEvent={activeEvent}
@@ -3659,7 +3375,7 @@ export default function App() {
       )}
 
       {/* Bottom-Left Kingdom Button & Chat Button */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !marketInteriorOpen && (
         <LeftActionControls 
           onOpenKingdom={() => setKingdomHubModalOpen(true)}
           onOpenChat={() => setChatModalOpen(true)}
@@ -3670,7 +3386,7 @@ export default function App() {
       )}
 
       {/* Bottom-Right Battle & Settings Action Controls (Swapped with Kingdom) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !marketInteriorOpen && (
         <RightActionControls 
           onOpenBattle={() => setCombatModeModalOpen(true)}
           onOpenSettings={() => setMenuModalOpen(true)}
@@ -3680,7 +3396,7 @@ export default function App() {
       )}
 
       {/* Lateral Ranking Button (Kept in Place) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !marketInteriorOpen && (
         <RankingLateralButton 
           onOpenRanking={handleOpenRanking}
           trophies={arenaData.trophies}
@@ -3690,7 +3406,7 @@ export default function App() {
       )}
 
       {/* Lateral Store Button (Placed Next to Ranking) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !marketInteriorOpen && (
         <StoreLateralButton 
           onOpenShop={() => handleOpenShop('offers')}
           wheelFreeSpinReady={isWheelFreeSpinReady}
@@ -3699,7 +3415,7 @@ export default function App() {
       )}
 
       {/* Lateral Inventory Button (Placed Next to Store) */}
-      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && (
+      {hasStartedGame && currentScene === 'kingdom' && !isCinematicMode && !marketInteriorOpen && (
         <InventoryLateralButton 
           onOpenInventory={() => setInventoryModalOpen(true)}
           itemCount={(ownedRelicIds?.length || 0) + Object.values(consumables || {}).reduce((acc, v) => acc + (typeof v === 'number' ? v : 0), 0)}
@@ -3710,7 +3426,11 @@ export default function App() {
       {/* Dedicated Fullscreen PvP Scene */}
       {currentScene === 'pvp' && (
         <PvpScene 
-          onBack={() => setCurrentScene('kingdom')}
+          onBack={() => {
+            setPvpInitialMode('pvp')
+            setCurrentScene('kingdom')
+          }}
+          initialMode={pvpInitialMode}
           resources={resources}
           arenaData={arenaData}
           playerName={playerName}
@@ -3720,6 +3440,18 @@ export default function App() {
           onStartBattle={handleStartArenaBattle}
           onRefreshRivals={handleRefreshRivals}
           showNotification={showNotification}
+        />
+      )}
+
+      {/* Dedicated Fullscreen Dungeon / Cave Scene */}
+      {currentScene === 'dungeon' && selectedCave && (
+        <DungeonScene 
+          cave={selectedCave}
+          onBack={() => {
+            setCurrentScene('kingdom')
+            soundManager.resumeKingdomAudio()
+          }}
+          onSelectCave={(cave) => setSelectedCave(cave)}
         />
       )}
 
@@ -3746,8 +3478,6 @@ export default function App() {
         setChatModalOpen={setChatModalOpen}
         campaignWindowOpen={campaignWindowOpen}
         setCampaignWindowOpen={setCampaignWindowOpen}
-        buildModalOpen={buildModalOpen}
-        setBuildModalOpen={setBuildModalOpen}
         detailsModalOpen={detailsModalOpen}
         setDetailsModalOpen={setDetailsModalOpen}
         questsModalOpen={questsModalOpen}
@@ -3786,8 +3516,10 @@ export default function App() {
         setRankingModalOpen={setRankingModalOpen}
         harvestModalOpen={harvestModalOpen}
         setHarvestModalOpen={setHarvestModalOpen}
-        usernameModalOpen={usernameModalOpen}
+         usernameModalOpen={usernameModalOpen}
         setUsernameModalOpen={setUsernameModalOpen}
+        marketInteriorOpen={marketInteriorOpen}
+        setMarketInteriorOpen={setMarketInteriorOpen}
         resources={resources}
         slots={slots}
         troops={troops}
@@ -3820,8 +3552,6 @@ export default function App() {
         characterShadows={characterShadows}
         hudEffects={hudEffects}
         selectedSlot={selectedSlot}
-        recommendedBuildId={recommendedBuildId}
-        setRecommendedBuildId={setRecommendedBuildId}
         evaluatedStoryQuests={evaluatedStoryQuests}
         evaluatedDailyQuests={evaluatedDailyQuests}
         evaluatedEpicFeats={evaluatedEpicFeats}
@@ -3845,7 +3575,7 @@ export default function App() {
         setIsTutorialActive={setIsTutorialActive}
         getTutorialAccountKey={getTutorialAccountKey}
         handleOpenArena={handleOpenArena}
-        handleOpenBuildMenu={handleOpenBuildMenu}
+        handleOpenTraining={handleOpenTraining}
         handleOpenShop={handleOpenShop}
         handleOpenRanking={handleOpenRanking}
         handleCampaignClaimLoot={handleCampaignClaimLoot}
@@ -3854,12 +3584,8 @@ export default function App() {
         handleUseConsumable={handleUseConsumable}
         handleObtainRelic={handleObtainRelic}
         handleDungeonRevive={handleDungeonRevive}
-        handleSelectBuilding={handleSelectBuilding}
         handleUpgradeBuilding={handleUpgradeBuilding}
-        handleDemolishBuilding={handleDemolishBuilding}
         handleCollectFromSlot={handleCollectFromSlot}
-        handleSpeedupBuilding={handleSpeedupBuilding}
-        handleUseSpeedup={handleUseSpeedup}
         handleClaimQuest={handleClaimQuest}
         handleQueueTroops={handleQueueTroops}
         handleCancelTrainingJob={handleCancelTrainingJob}
@@ -3902,6 +3628,18 @@ export default function App() {
         handleOneClickHarvestAll={handleOneClickHarvestAll}
       />
 
+      {/* Celestial Dirigible Cave Selector Modal (10 Cuadritos) */}
+      <DirigibleModal 
+        isOpen={dirigibleMenuOpen}
+        onClose={() => setDirigibleMenuOpen(false)}
+        onSelectCave={(cave) => {
+          setSelectedCave(cave)
+          setDirigibleMenuOpen(false)
+          soundManager.stopKingdomMusic()
+          setCurrentScene('dungeon')
+        }}
+      />
+
       {/* Fly-to-HUD Flying Particles Layer */}
       <FlyToHudLayer 
         particles={flyingParticles} 
@@ -3927,15 +3665,20 @@ export default function App() {
       )}
 
       {/* Startup Screen Scene with Email Quest / Guest Persistence */}
-      {!hasStartedGame && currentScene !== 'pvp' && (
+      {!hasStartedGame && currentScene !== 'pvp' && currentScene !== 'dungeon' && (
         <StartScreen onEnterGame={handleEnterGame} />
       )}
 
       {/* Mobile & Vertical Portrait Orientation Warning Overlay (only during active city gameplay) */}
-      {hasStartedGame && currentScene !== 'pvp' && <OrientationNotice />}
+      {hasStartedGame && currentScene !== 'pvp' && currentScene !== 'dungeon' && <OrientationNotice />}
 
       {/* Global Custom Context Menu for WizzarDev Studios on Right-Click */}
       <CustomContextMenu />
+
+      {/* Cinematic WizzarDev Studios Intro Branding Splash (Always top-level on startup) */}
+      {showStudioSplash && (
+        <StudioIntroSplash onComplete={() => setShowStudioSplash(false)} />
+      )}
     </div>
   )
 }

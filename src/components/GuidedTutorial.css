@@ -392,6 +392,7 @@
 
 .guided-nav-btn.primary:hover {
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
   transform: translateY(-1px);
 }
 
@@ -554,6 +555,7 @@
 .graduation-claim-btn:hover {
   transform: translateY(-2px);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
   box-shadow: 0 8px 24px rgba(2, 132, 199, 0.6);
 }
 
@@ -1202,6 +1204,7 @@
   object-fit: contain;
   flex-shrink: 0;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+  -webkit-filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
 }
 
 .welcome-hero-text {
@@ -1357,6 +1360,7 @@
   object-fit: contain;
   flex-shrink: 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
 }
 
 .roadmap-card-body {

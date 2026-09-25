@@ -152,6 +152,7 @@
 .btn-dispatch-candy.primary:hover {
   transform: translateY(-2px);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }
 
 .btn-dispatch-candy.disabled {
@@ -245,4 +246,5 @@
 .btn-claim-spoils-candy:hover {
   transform: scale(1.05);
   filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
 }

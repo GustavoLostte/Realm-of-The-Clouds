@@ -1,5 +1,5 @@
 {
-  "name": "realm-of-kingdoms",
+  "name": "realm-of-kingdom",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,21 +7,33 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build",
+    "android:dev": "tauri android dev",
+    "android:build": "tauri android build --apk -t aarch64",
+    "android:build:aab": "tauri android build --aab -t aarch64",
+    "android:build:teaser": "VITE_APP_MODE=teaser tauri android build --apk -t aarch64"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",
+    "@tauri-apps/plugin-opener": "^2.5.5",
     "lucide-react": "^1.45.0",
     "pixi.js": "^8.20.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@tauri-apps/api": "^2.11.1",
+    "@tauri-apps/cli": "^2.11.5",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.6.1",
     "free-tex-packer-core": "^0.3.9",
     "oxlint": "^1.81.0",
+    "postcss": "^8.5.28",
     "sharp": "^0.35.4",
     "vite": "^8.3.0"
   }

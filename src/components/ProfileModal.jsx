@@ -143,7 +143,7 @@ export function ProfileModal({
   }
 
   // Calculate realm statistics
-  const builtBuildingsCount = slots.filter((s) => s.buildingId && !s.isConstructing).length
+  const builtBuildingsCount = slots.filter((s) => s.buildingId).length
   const totalTroopsCount = (troops.infantry || 0) + (troops.archers || 0) + (troops.mages || 0) + (troops.commander || 0)
   const militaryPower = (troops.infantry || 0) * 34 + (troops.archers || 0) * 62 + (troops.mages || 0) * 96 + (troops.commander || 0) * 145 + builtBuildingsCount * 50
 
@@ -151,7 +151,7 @@ export function ProfileModal({
     {
       id: 'ach-1',
       title: 'Primer Asentamiento',
-      desc: 'Construye al menos 3 estructuras en la meseta flotante',
+      desc: 'Consolida y gestiona las estructuras sagradas de la meseta celestial',
       progress: Math.min(builtBuildingsCount, 3),
       max: 3,
       completed: builtBuildingsCount >= 3,

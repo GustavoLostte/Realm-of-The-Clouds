@@ -123,6 +123,7 @@
   max-width: 170px;
   height: auto;
   filter: drop-shadow(0 4px 16px rgba(14, 165, 233, 0.45));
+  -webkit-filter: drop-shadow(0 4px 16px rgba(14, 165, 233, 0.45));
   animation: gentleFloat 3s ease-in-out infinite;
 }
 
@@ -157,6 +158,7 @@
   margin: 0 0 6px 0;
   background: linear-gradient(180deg, #ffffff 0%, #e0f2fe 45%, #0ea5e9 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 2px 14px rgba(14, 165, 233, 0.35);
 }

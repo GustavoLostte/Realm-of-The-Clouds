@@ -231,7 +231,7 @@ export function DungeonCombatModal({ isOpen, onClose, onVictory, troops }) {
         }
 
         setFloatingDamage({
-          text: strikeType === 'critical' ? `¡¡CRÍTICO!! -${damageToEnemy}` : `-${damageToEnemy}`,
+          text: strikeType === 'critical' ? `${t('dungeonCombat.timingCritical') || 'CRITICAL!'} -${damageToEnemy}` : `-${damageToEnemy}`,
           type: strikeType,
           target: 'enemy'
         })

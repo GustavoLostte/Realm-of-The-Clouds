@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inspector y Recortador de Animaciones • Kina & Campeones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --card-bg: #101625;
+      --card-border: #1e293b;
+      --gold-primary: #f59e0b;
+      --gold-light: #fef08a;
+      --gold-border: rgba(245, 158, 11, 0.45);
+      --red-discard: #ef4444;
+      --green-keep: #22c55e;
+      --blue-accent: #38bdf8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-dark);
+      color: #f1f5f9;
+      font-family: 'Outfit', system-ui, sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .header h1 {
+      font-size: 1.85rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef08a 35%, #f59e0b 70%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .header p {
+      color: #94a3b8;
+      font-size: 0.92rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    /* Tabs for Champion */
+    .champ-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .champ-btn {
+      background: #1e293b;
+      border: 1.5px solid #334155;
+      color: #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .champ-btn:hover { border-color: #64748b; color: #ffffff; }
+    .champ-btn.active {
+      background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
+      border-color: #fef08a;
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Animation Selector Pills */
+    .anim-selector-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      background: rgba(16, 22, 37, 0.9);
+      padding: 8px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      max-width: 1240px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .anim-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .anim-pill:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #f0f9ff;
+    }
+    .anim-pill.active {
+      background: #0284c7;
+      border-color: #7dd3fc;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.5);
+    }
+
+    /* Dual Stage Comparison Grid */
+    .dual-stage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1240px;
+      margin: 0 auto 18px;
+    }
+    @media (max-width: 860px) {
+      .dual-stage-grid { grid-template-columns: 1fr; }
+    }
+
+    .stage-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .stage-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stage-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .tag-original {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fde68a;
+    }
+    .tag-trimmed {
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      color: #86efac;
+    }
+
+    .canvas-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: radial-gradient(circle at 50% 60%, #172033 0%, #090e1c 100%);
+      border: 1.5px solid #2d3748;
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: inset 0 0 45px rgba(0,0,0,0.85);
+    }
+
+    .ground-laser {
+      position: absolute;
+      bottom: 18px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #f59e0b 20%, #fef08a 50%, #f59e0b 80%, transparent 100%);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .ground-laser-label {
+      position: absolute;
+      right: 10px;
+      bottom: 22px;
+      font-size: 0.62rem;
+      font-weight: 900;
+      color: #fde68a;
+      letter-spacing: 0.8px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .stage-media {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 2;
+    }
+
+    .frame-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(10, 15, 26, 0.92);
+      border: 1.5px solid #f59e0b;
+      color: #fef08a;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 0.95rem;
+      z-index: 10;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .frame-status-tag {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .tag-keep { background: rgba(34, 197, 94, 0.25); color: #86efac; border: 1px solid #22c55e; }
+    .tag-discard { background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid #ef4444; }
+
+    /* Controls Panel */
+    .controls-card {
+      max-width: 1240px;
+      margin: 0 auto 20px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .ctrl-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ctrl-btn:hover { background: #334155; border-color: #64748b; }
+    .ctrl-btn.btn-play {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #fff;
+      min-width: 95px;
+      justify-content: center;
+    }
+    .ctrl-btn.btn-play:hover { background: #0369a1; }
+    .ctrl-btn.btn-play.is-playing {
+      background: #e11d48;
+      border-color: #fb7185;
+    }
+
+    .slider {
+      flex: 1;
+      min-width: 180px;
+      accent-color: #f59e0b;
+      cursor: pointer;
+      height: 8px;
+    }
+
+    .speed-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(0,0,0,0.4);
+      padding: 3px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .speed-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .speed-btn:hover { color: #fff; }
+    .speed-btn.active {
+      background: #f59e0b;
+      color: #000;
+    }
+
+    /* Trimming Tools Row */
+    .trim-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .trim-inputs-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .trim-input {
+      width: 65px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 0.92rem;
+      text-align: center;
+    }
+    .trim-btn {
+      background: #059669;
+      border: 1px solid #10b981;
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .trim-btn:hover { background: #047857; }
+    .trim-btn-reset {
+      background: #334155;
+      border-color: #475569;
+    }
+    .trim-btn-reset:hover { background: #475569; }
+
+    .summary-text {
+      font-size: 0.84rem;
+      color: #cbd5e1;
+    }
+    .summary-text strong { color: #fde047; }
+
+    .copy-btn {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      border: 1px solid #fef08a;
+      color: #000;
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-weight: 900;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .copy-btn:hover {
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.5);
+      transform: translateY(-1px);
+    }
+    .copy-btn:active { transform: translateY(0); }
+
+    /* Filmstrip Section */
+    .filmstrip-card {
+      max-width: 1240px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .filmstrip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .filmstrip-header h2 {
+      font-size: 1.15rem;
+      color: #fde047;
+      font-weight: 800;
+    }
+    .filmstrip-legend {
+      display: flex;
+      gap: 12px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+    .legend-item { display: inline-flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .filmstrip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+      gap: 8px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .film-frame {
+      background: #0a0f1d;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .film-frame:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+    .film-frame.selected {
+      border-color: #f59e0b !important;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+    }
+    .film-frame.is-discard {
+      border-color: rgba(239, 68, 68, 0.7);
+      opacity: 0.6;
+    }
+    .film-frame.is-discard:hover { opacity: 0.95; }
+
+    .film-frame img {
+      width: 100%;
+      height: 68px;
+      object-fit: contain;
+      display: block;
+      background: radial-gradient(circle at 50% 50%, #151d2f 0%, #080c16 100%);
+    }
+
+    .film-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      padding: 3px 6px;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      color: #f1f5f9;
+    }
+    .film-frame.is-discard .film-bar {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
+    .film-action-toggle {
+      font-size: 0.68rem;
+      padding: 1px 4px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>⚔️ Inspector y Recortador de Animaciones</h1>
+    <p>Mira la <strong>animación original completa</strong> al lado de tu <strong>previsualización recortada</strong> en tiempo real. Usa los controles para avanzar cuadro por cuadro y elegir qué fotogramas quitar.</p>
+  </div>
+
+  <!-- Champion Tabs -->
+  <div class="champ-tabs">
+    <button class="champ-btn active" onclick="setChampion('KNIGHT_MALE')">🛡️ Kina Hombre</button>
+    <button class="champ-btn" onclick="setChampion('KNIGHT_FEMALE')">🛡️ Kina Mujer</button>
+    <button class="champ-btn" onclick="setChampion('MAGE_MALE')">🧙‍♂️ Mago Hombre</button>
+    <button class="champ-btn" onclick="setChampion('MAGE_FEMALE')">🧙‍♀️ Mago Mujer</button>
+    <button class="champ-btn" onclick="setChampion('HEALER_MALE')">✨ Healer Hombre</button>
+    <button class="champ-btn" onclick="setChampion('HEALER_FEMALE')">✨ Healer Mujer</button>
+  </div>
+
+  <!-- Animation Selector Pills -->
+  <div class="anim-selector-bar" id="animSelectorBar">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Dual Stage Comparison (Side-by-Side) -->
+  <div class="dual-stage-grid">
+    <!-- Screen 1: Original Full Animated WebP -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <div class="stage-title">
+          <span>🎬 Animación Original (Completa)</span>
+        </div>
+        <span class="stage-tag tag-original">Bucle Original</span>
+      </div>
+
+      <div class="canvas-wrap">
+        <div class="frame-badge">
+          <span id="originalBadgeFrameNum" style="color: #fef08a;">#00 / 42</span>
+          <span class="frame-status-tag tag-keep">Original</span>
+        </div>
+        <canvas id="originalCanvas" width="512" height="288" class="stage-media"></canvas>
+        <div class="ground-laser"></div>
+        <div class="ground-laser-label">SUELO</div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Real-time Trimmed Preview & Scrubber Canvas -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <div class="stage-title">
+          <span>✂️ Tu Previsualización Recortada</span>
+        </div>
+        <span class="stage-tag tag-trimmed" id="trimmedTag">Reproduciendo Recorte</span>
+      </div>
+
+      <div class="canvas-wrap">
+        <div class="frame-badge">
+          <span id="badgeFrameNum">#00</span>
+          <span id="badgeStatus" class="frame-status-tag tag-keep">Conservar</span>
+        </div>
+        <canvas id="stageCanvas" width="512" height="288" class="stage-media"></canvas>
+        <div class="ground-laser"></div>
+        <div class="ground-laser-label">SUELO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Playback & Scrubber Controls Card -->
+  <div class="controls-card">
+    <div class="controls-row">
+      <button class="ctrl-btn" onclick="seekFrame(0)" title="Ir al primer fotograma">⏮ #00</button>
+      <button class="ctrl-btn" onclick="step(-1)">◀ Anterior</button>
+      <button class="ctrl-btn btn-play is-playing" id="playBtn" onclick="togglePlay()">⏸ Pausa</button>
+      <button class="ctrl-btn" onclick="step(1)">Siguiente ▶</button>
+      <button class="ctrl-btn" onclick="seekLast()" title="Ir al último fotograma">⏭ Fin</button>
+
+      <input 
+        type="range" 
+        class="slider" 
+        id="frameSlider" 
+        min="0" 
+        max="42" 
+        value="0" 
+        oninput="handleSliderScrub(Number(this.value))" 
+      />
+
+      <span id="sliderNumTag" style="font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; font-weight: 800; color: #fde047; min-width: 58px;">
+        #00 / 42
+      </span>
+
+      <div class="speed-group">
+        <span style="font-size: 0.72rem; color: #94a3b8; font-weight: 800; padding-left: 4px;">Vel:</span>
+        <button class="speed-btn" onclick="setSpeed(160, this)">0.25x</button>
+        <button class="speed-btn" onclick="setSpeed(80, this)">0.5x</button>
+        <button class="speed-btn active" onclick="setSpeed(44, this)">1x</button>
+      </div>
+    </div>
+
+    <!-- Trimming Range & Copy Instruction -->
+    <div class="trim-action-row">
+      <div class="trim-inputs-wrap">
+        <span style="font-size: 0.82rem; font-weight: 800;">Conservar desde:</span>
+        <input type="number" id="rangeStart" class="trim-input" value="0" min="0" />
+        <span style="font-size: 0.82rem; font-weight: 800;">hasta:</span>
+        <input type="number" id="rangeEnd" class="trim-input" value="23" min="0" />
+        <button class="trim-btn" onclick="applyKeepRange()">✅ Aplicar Recorte</button>
+        <button class="trim-btn trim-btn-reset" onclick="resetKeepAll()">Restablecer Todo</button>
+      </div>
+
+      <div class="summary-text" id="summaryText">
+        Conservando: <strong id="sumKeep" style="color: #4ade80;">43</strong> • 
+        Eliminando: <strong id="sumDiscard" style="color: #f87171;">0</strong>
+      </div>
+
+      <button class="copy-btn" onclick="copyInstruction()">
+        📋 Copiar Instrucción para Chat
+      </button>
+    </div>
+    
+    <div id="copyNotice" style="display: none; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; color: #86efac; padding: 6px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 800; text-align: center;">
+      ¡Instrucción copiada al portapapeles! Pégala aquí en el chat para que aplique el recorte.
+    </div>
+  </div>
+
+  <!-- Filmstrip Section -->
+  <div class="filmstrip-card">
+    <div class="filmstrip-header">
+      <h2>🎞️ Tira Completa de Fotogramas (Haz clic para ver o recortar)</h2>
+      <div class="filmstrip-legend">
+        <div class="legend-item"><div class="legend-dot" style="background: #22c55e;"></div><span>Verde: Conservar</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #ef4444;"></div><span>Rojo: Descartar</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #f59e0b;"></div><span>Borde Dorado: Activo</span></div>
+      </div>
+    </div>
+
+    <div class="filmstrip-grid" id="filmstripGrid"></div>
+  </div>
+
+  <script>
+    const CHAMPION_CONFIGS = {
+      KNIGHT_MALE: {
+        name: 'Kina Hombre',
+        rawPath: 'knight_male',
+        anims: {
+          jump: { name: '🦘 Salto', count: 28, folder: 'KNIGHT_MALE_jump', webp: 'jump.webp' },
+          dash_front: { name: '⚡ Dash Frontal', count: 38, folder: 'KNIGHT_MALE_dash_front', webp: 'dash_front.webp' },
+          dash_back: { name: '💨 Dash Trasero', count: 20, folder: 'KNIGHT_MALE_dash_back', webp: 'dash_back.webp' },
+          walk: { name: '🚶 Caminar', count: 28, folder: 'KNIGHT_MALE_walk', webp: 'walk.webp' },
+          run: { name: '🏃 Correr', count: 19, folder: 'KNIGHT_MALE_run', webp: 'run.webp' },
+          attack1: { name: '⚔️ Ataque 1', count: 82, folder: 'KNIGHT_MALE_attack1', webp: 'attack1.webp' },
+          attack2: { name: '🗡️ Ataque 2', count: 53, folder: 'KNIGHT_MALE_attack2', webp: 'attack2.webp' },
+          special: { name: '🌟 Especial', count: 44, folder: 'KNIGHT_MALE_special', webp: 'special.webp' },
+          special2: { name: '💥 Especial Sísmico', count: 101, folder: 'KNIGHT_MALE_special2', webp: 'special2.webp' },
+          defend: { name: '🛡️ Guardia', count: 101, folder: 'KNIGHT_MALE_defend', webp: 'defend.webp' }
+        }
+      },
+      KNIGHT_FEMALE: {
+        name: 'Kina Mujer',
+        rawPath: 'knight_female',
+        anims: {
+          jump: { name: '🦘 Salto', count: 28, folder: 'KNIGHT_FEMALE_jump', webp: 'jump.webp' },
+          dash_front: { name: '⚡ Dash Frontal', count: 38, folder: 'KNIGHT_FEMALE_dash_front', webp: 'dash_front.webp' },
+          dash_back: { name: '💨 Dash Trasero', count: 20, folder: 'KNIGHT_FEMALE_dash_back', webp: 'dash_back.webp' },
+          walk: { name: '🚶 Caminar', count: 28, folder: 'KNIGHT_FEMALE_walk', webp: 'walk.webp' },
+          run: { name: '🏃 Correr', count: 19, folder: 'KNIGHT_FEMALE_run', webp: 'run.webp' },
+          attack1: { name: '⚔️ Ataque 1', count: 82, folder: 'KNIGHT_FEMALE_attack1', webp: 'attack1.webp' },
+          attack2: { name: '🗡️ Ataque 2', count: 53, folder: 'KNIGHT_FEMALE_attack2', webp: 'attack2.webp' },
+          special: { name: '🌟 Especial', count: 44, folder: 'KNIGHT_FEMALE_special', webp: 'special.webp' },
+          special2: { name: '💥 Especial Sísmico', count: 101, folder: 'KNIGHT_FEMALE_special2', webp: 'special2.webp' },
+          defend: { name: '🛡️ Guardia', count: 101, folder: 'KNIGHT_FEMALE_defend', webp: 'defend.webp' }
+        }
+      },
+      MAGE_MALE: {
+        name: 'Mago Hombre',
+        rawPath: 'mage_male',
+        anims: {
+          dash_front: { name: '⚡ Dash Frontal', count: 29, folder: 'MAGE_MALE', webp: 'dash_front.webp' }
+        }
+      },
+      MAGE_FEMALE: {
+        name: 'Mago Mujer',
+        rawPath: 'mage_female',
+        anims: {
+          dash_front: { name: '⚡ Dash Frontal', count: 29, folder: 'MAGE_FEMALE', webp: 'dash_front.webp' }
+        }
+      },
+      HEALER_MALE: {
+        name: 'Healer Hombre',
+        rawPath: 'healer_male',
+        anims: {
+          dash_front: { name: '⚡ Dash Frontal', count: 28, folder: 'HEALER_MALE', webp: 'dash_front.webp' }
+        }
+      },
+      HEALER_FEMALE: {
+        name: 'Healer Mujer',
+        rawPath: 'healer_female',
+        anims: {
+          dash_front: { name: '⚡ Dash Frontal', count: 29, folder: 'HEALER_FEMALE', webp: 'dash_front.webp' }
+        }
+      }
+    };
+
+    const CACHE_VERSION = Date.now();
+    let currentChamp = 'KNIGHT_MALE';
+    let currentAnimKey = 'jump';
+    let currentFrame = 0;
+    let originalPlayFrame = 0;
+    let isPlaying = true; // Autoplay by default!
+    let playTimer = null;
+    let playSpeed = 44; // ms per frame (approx 23 fps)
+
+    // In-memory preloaded frame images for zero-lag canvas rendering
+    let preloadedImages = [];
+    let frameMask = []; // true = keep, false = discard
+
+    const canvas = document.getElementById('stageCanvas');
+    const ctx = canvas.getContext('2d');
+    const origCanvas = document.getElementById('originalCanvas');
+    const origCtx = origCanvas.getContext('2d');
+
+    function setChampion(champKey) {
+      currentChamp = champKey;
+      document.querySelectorAll('.champ-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${champKey}'`));
+      });
+
+      const anims = CHAMPION_CONFIGS[champKey].anims;
+      const bar = document.getElementById('animSelectorBar');
+      bar.innerHTML = '';
+      
+      const animKeys = Object.keys(anims);
+      if (!anims[currentAnimKey]) {
+        currentAnimKey = animKeys[0];
+      }
+
+      animKeys.forEach(k => {
+        const btn = document.createElement('button');
+        btn.className = 'anim-pill' + (k === currentAnimKey ? ' active' : '');
+        btn.innerHTML = `${anims[k].name} <span style="opacity: 0.6; font-size: 0.72rem;">(${anims[k].count}f)</span>`;
+        btn.onclick = () => setAnimation(k);
+        bar.appendChild(btn);
+      });
+
+      setAnimation(currentAnimKey);
+    }
+
+    function setAnimation(animKey) {
+      currentAnimKey = animKey;
+      document.querySelectorAll('.anim-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(CHAMPION_CONFIGS[currentChamp].anims[animKey].name));
+      });
+
+      const champData = CHAMPION_CONFIGS[currentChamp];
+      const animData = champData.anims[animKey];
+      const count = animData.count;
+
+      // 1. Setup frame mask (default all keep)
+      frameMask = new Array(count).fill(true);
+      currentFrame = 0;
+      originalPlayFrame = 0;
+
+      // 2. Preload all unique frame images into RAM with cache buster
+      preloadedImages = [];
+      let loaded = 0;
+      for (let i = 0; i < count; i++) {
+        const img = new Image();
+        img.src = `/dash_inspector/${animData.folder}/${i}.png?v=${CACHE_VERSION}`;
+        img.onload = () => {
+          loaded++;
+          if (i === currentFrame) {
+            drawCanvases(false);
+          }
+        };
+        preloadedImages.push(img);
+      }
+
+      // 3. Update Sliders & Inputs
+      const slider = document.getElementById('frameSlider');
+      slider.max = count - 1;
+      slider.value = 0;
+
+      document.getElementById('rangeStart').value = 0;
+      document.getElementById('rangeEnd').value = count - 1;
+      document.getElementById('rangeEnd').max = count - 1;
+
+      renderFilmstrip();
+      drawCanvases(false);
+      updateSummary();
+
+      // 4. Start continuous loop playback
+      startPlayback();
+    }
+
+    function drawCanvases(isScrubbing = false) {
+      const animData = CHAMPION_CONFIGS[currentChamp].anims[currentAnimKey];
+      const count = animData.count;
+
+      // --- SCREEN 1: ORIGINAL (Continuous loop when playing, or exact scrubbed frame when paused) ---
+      const origFrame = isScrubbing ? currentFrame : originalPlayFrame;
+      origCtx.clearRect(0, 0, origCanvas.width, origCanvas.height);
+      const origImg = preloadedImages[origFrame];
+      if (origImg && origImg.complete) {
+        origCtx.drawImage(origImg, 0, 0, origCanvas.width, origCanvas.height);
+      }
+      const origNumStr = origFrame < 10 ? '0' + origFrame : origFrame;
+      document.getElementById('originalBadgeFrameNum').textContent = `#${origNumStr} / ${count - 1}`;
+
+      // --- SCREEN 2: TRIMMED PREVIEW (Plays only kept frames, or exact scrubbed frame) ---
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const trimImg = preloadedImages[currentFrame];
+      if (trimImg && trimImg.complete) {
+        ctx.drawImage(trimImg, 0, 0, canvas.width, canvas.height);
+      }
+
+      // Update badge & scrubber
+      const numStr = currentFrame < 10 ? '0' + currentFrame : currentFrame;
+      document.getElementById('badgeFrameNum').textContent = `#${numStr}`;
+      document.getElementById('sliderNumTag').textContent = `#${numStr} / ${count - 1}`;
+      document.getElementById('frameSlider').value = currentFrame;
+
+      const isKept = frameMask[currentFrame];
+      const statusBadge = document.getElementById('badgeStatus');
+      if (isKept) {
+        statusBadge.className = 'frame-status-tag tag-keep';
+        statusBadge.textContent = 'Conservar';
+      } else {
+        statusBadge.className = 'frame-status-tag tag-discard';
+        statusBadge.textContent = 'Eliminar';
+      }
+
+      // Highlight in filmstrip
+      document.querySelectorAll('.film-frame').forEach((el, idx) => {
+        el.classList.toggle('selected', idx === currentFrame);
+      });
+    }
+
+    function renderFilmstrip() {
+      const animData = CHAMPION_CONFIGS[currentChamp].anims[currentAnimKey];
+      const count = animData.count;
+      const folder = animData.folder;
+      const grid = document.getElementById('filmstripGrid');
+      grid.innerHTML = '';
+
+      for (let i = 0; i < count; i++) {
+        const item = document.createElement('div');
+        const isKept = frameMask[i];
+        item.className = 'film-frame' + (!isKept ? ' is-discard' : '');
+        if (i === currentFrame) item.classList.add('selected');
+        item.id = `film_${i}`;
+
+        item.innerHTML = `
+          <img src="/dash_inspector/${folder}/${i}.png?v=${CACHE_VERSION}" alt="F ${i}" loading="lazy" />
+          <div class="film-bar">
+            <span>#${i < 10 ? '0' + i : i}</span>
+            <span class="film-action-toggle" title="Alternar Conservar / Eliminar">${isKept ? '✅' : '❌'}</span>
+          </div>
+        `;
+
+        item.onclick = (e) => {
+          if (e.target.classList.contains('film-action-toggle')) {
+            toggleFrame(i);
+          } else {
+            pausePlayback();
+            seekFrame(i);
+          }
+        };
+
+        grid.appendChild(item);
+      }
+    }
+
+    function toggleFrame(idx) {
+      frameMask[idx] = !frameMask[idx];
+      const item = document.getElementById(`film_${idx}`);
+      if (item) {
+        item.classList.toggle('is-discard', !frameMask[idx]);
+        item.querySelector('.film-action-toggle').textContent = frameMask[idx] ? '✅' : '❌';
+      }
+      drawCanvases(true);
+      updateSummary();
+    }
+
+    function applyKeepRange() {
+      const start = Math.max(0, parseInt(document.getElementById('rangeStart').value, 10) || 0);
+      const end = Math.min(frameMask.length - 1, parseInt(document.getElementById('rangeEnd').value, 10) || 0);
+
+      for (let i = 0; i < frameMask.length; i++) {
+        frameMask[i] = (i >= start && i <= end);
+      }
+
+      renderFilmstrip();
+      drawCanvases(true);
+      updateSummary();
+    }
+
+    function resetKeepAll() {
+      frameMask.fill(true);
+      document.getElementById('rangeStart').value = 0;
+      document.getElementById('rangeEnd').value = frameMask.length - 1;
+      renderFilmstrip();
+      drawCanvases(true);
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const champName = CHAMPION_CONFIGS[currentChamp].name;
+      const animName = CHAMPION_CONFIGS[currentChamp].anims[currentAnimKey].name;
+      
+      const kept = [];
+      const discarded = [];
+      frameMask.forEach((isKeep, idx) => {
+        if (isKeep) kept.push(idx);
+        else discarded.push(idx);
+      });
+
+      document.getElementById('sumKeep').textContent = `${kept.length} fotogramas (${kept.length > 0 ? '#' + kept[0] + ' a #' + kept[kept.length - 1] : '0'})`;
+      document.getElementById('sumDiscard').textContent = `${discarded.length} fotogramas (${discarded.length > 0 ? '#' + discarded[0] + ' a #' + discarded[discarded.length - 1] : '0'})`;
+    }
+
+    function copyInstruction() {
+      const champName = CHAMPION_CONFIGS[currentChamp].name;
+      const animName = CHAMPION_CONFIGS[currentChamp].anims[currentAnimKey].name;
+      const kept = [];
+      const discarded = [];
+      frameMask.forEach((isKeep, idx) => {
+        if (isKeep) kept.push(idx);
+        else discarded.push(idx);
+      });
+
+      let text = '';
+      if (discarded.length === 0) {
+        text = `Para la animación de ${animName} de ${champName}: conservar todos los ${kept.length} fotogramas intactos.`;
+      } else {
+        text = `Por favor recorta la animación de ${animName} de ${champName}: conservar los fotogramas del #${kept[0]} al #${kept[kept.length - 1]} (${kept.length} fotogramas) y descartar del #${discarded[0]} al #${discarded[discarded.length - 1]} (${discarded.length} fotogramas).`;
+      }
+
+      navigator.clipboard.writeText(text).then(() => {
+        const notice = document.getElementById('copyNotice');
+        notice.style.display = 'block';
+        setTimeout(() => { notice.style.display = 'none'; }, 4000);
+      });
+    }
+
+    // Playback loop (Original plays 0..N-1, Trimmed plays only kept frames)
+    function startPlayback() {
+      isPlaying = true;
+      const btn = document.getElementById('playBtn');
+      btn.textContent = '⏸ Pausa';
+      btn.classList.add('is-playing');
+
+      if (playTimer) clearInterval(playTimer);
+      playTimer = setInterval(() => {
+        const total = frameMask.length;
+
+        // Advance original full animation
+        originalPlayFrame = (originalPlayFrame + 1) % total;
+
+        // Advance trimmed animation (only kept frames)
+        let next = (currentFrame + 1) % total;
+        let count = 0;
+        while (!frameMask[next] && count < total) {
+          next = (next + 1) % total;
+          count++;
+        }
+
+        currentFrame = next;
+        drawCanvases(false);
+      }, playSpeed);
+    }
+
+    function pausePlayback() {
+      isPlaying = false;
+      const btn = document.getElementById('playBtn');
+      btn.textContent = '▶ Play';
+      btn.classList.remove('is-playing');
+      if (playTimer) {
+        clearInterval(playTimer);
+        playTimer = null;
+      }
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        pausePlayback();
+      } else {
+        startPlayback();
+      }
+    }
+
+    function handleSliderScrub(val) {
+      pausePlayback();
+      seekFrame(val);
+    }
+
+    function seekFrame(idx) {
+      const animData = CHAMPION_CONFIGS[currentChamp].anims[currentAnimKey];
+      currentFrame = Math.max(0, Math.min(animData.count - 1, idx));
+      originalPlayFrame = currentFrame;
+      drawCanvases(true);
+    }
+
+    function seekLast() {
+      pausePlayback();
+      const animData = CHAMPION_CONFIGS[currentChamp].anims[currentAnimKey];
+      seekFrame(animData.count - 1);
+    }
+
+    function step(delta) {
+      pausePlayback();
+      const animData = CHAMPION_CONFIGS[currentChamp].anims[currentAnimKey];
+      currentFrame = (currentFrame + delta + animData.count) % animData.count;
+      originalPlayFrame = currentFrame;
+      drawCanvases(true);
+    }
+
+    function setSpeed(ms, btn) {
+      playSpeed = ms;
+      document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (isPlaying) {
+        startPlayback();
+      }
+    }
+
+    // Auto-initialize with Kina Male Jump
+    setChampion('KNIGHT_MALE');
+  </script>
+</body>
+</html>

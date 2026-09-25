@@ -59,6 +59,7 @@
   height: 28px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -170,6 +171,7 @@
   height: 42px;
   object-fit: contain;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
   pointer-events: none;
 }
 

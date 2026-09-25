@@ -48,16 +48,6 @@ export function GuidedTutorial({
       preferredPosition: 'bottom'
     },
     {
-      id: 'build',
-      targetId: 'dock-btn-build',
-      title: t('tutorial.step3Title'),
-      subtitle: t('tutorial.step3Subtitle'),
-      icon: '/assets/hud_icons/btn_build.webp',
-      description: t('tutorial.step3Desc'),
-      tip: t('tutorial.step3Tip'),
-      preferredPosition: 'top'
-    },
-    {
       id: 'harvest',
       targetId: 'hud-btn-harvest',
       title: t('tutorial.step4Title'),

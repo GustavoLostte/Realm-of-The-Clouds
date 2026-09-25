@@ -148,9 +148,12 @@ export class PixiMapLayer {
 
   setSuspended(isSuspended) {
     this.isSuspended = isSuspended
-    // CRITICAL: Map motion (textures and sprite frames) MUST NEVER STOP on any mode or suspension!
-    if (this.animSprite && !this.animSprite.playing) {
-      this.animSprite.play()
+    if (this.animSprite) {
+      if (isSuspended) {
+        this.animSprite.stop()
+      } else if (!this.animSprite.playing) {
+        this.animSprite.play()
+      }
     }
     if (this.audioElement) {
       if (isSuspended) {

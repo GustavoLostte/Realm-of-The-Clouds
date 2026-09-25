@@ -192,7 +192,7 @@ export function ArenaBattleView({
     setRivalShield(0) // Rival shield consumed by hit
 
     setRivalAnim('hit')
-    addFloatingText('rival', isCrit ? `¡CRÍTICO! -${finalDamage}` : `-${finalDamage}`, isCrit ? 'crit' : 'damage')
+    addFloatingText('rival', isCrit ? `${t('dungeonCombat.timingCritical') || 'CRITICAL!'} -${finalDamage}` : `-${finalDamage}`, isCrit ? 'crit' : 'damage')
 
     setCombatLog((prev) => [
       { id: Date.now(), text: `⚔️ Kael usó [${actionName}] e infligió ${finalDamage} de daño a ${rival?.name || 'Rival'}.`, type: isCrit ? 'crit' : 'attack' },
@@ -470,7 +470,7 @@ export function ArenaBattleView({
             {/* Fighter Info Card */}
             <div className="fighter-status-card rival-card">
               <div className="fighter-identity">
-                <span className="fighter-name">{rival?.name || 'Lord Malakor'}</span>
+                <span className="fighter-name">{rival?.name || 'Sombra Rival'}</span>
                 <span className="fighter-title">[{rival?.kingdom || 'Caudillo Celestial'}]</span>
                 {rivalShield > 0 && <span className="shield-active-badge dark">🛡️ -60%</span>}
               </div>
@@ -500,13 +500,13 @@ export function ArenaBattleView({
             <div className="fighter-visual-wrap">
               <div className="fighter-shadow" />
               <img 
-                src={rival?.avatar || '/assets/champions/malakor_idle.webp'} 
+                src={rival?.avatar || '/assets/champions/valiria_idle.webp'} 
                 alt="Comandante Rival" 
                 className="fighter-sprite rival-sprite" 
                 draggable="false"
                 onError={(e) => {
                   e.target.onerror = null
-                  e.target.src = '/assets/champions/malakor_poster.webp'
+                  e.target.src = '/assets/champions/valiria_poster.webp'
                 }}
               />
               {rivalShield > 0 && <div className="dark-shield-aura" />}

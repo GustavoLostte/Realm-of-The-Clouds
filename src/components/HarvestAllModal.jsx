@@ -30,7 +30,7 @@ export function HarvestAllModal({
 
   // Calculate real-time estimated harvestable resources
   const { harvestableCount, readyResources, totalXp, totalProductionSlots } = useMemo(() => {
-    const readySlots = (slots || []).filter((s) => s.buildingId && !s.isConstructing)
+    const readySlots = (slots || []).filter((s) => s.buildingId)
     const now = Date.now()
     const vipHarvestBonus = hasOneClickHarvest ? 0.25 : 0
     const totals = { gold: 0, wood: 0, stone: 0, food: 0, gems: 0 }

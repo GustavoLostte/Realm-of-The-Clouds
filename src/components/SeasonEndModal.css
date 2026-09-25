@@ -60,6 +60,7 @@
   height: 72px;
   object-fit: contain;
   filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.6));
+  -webkit-filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.6));
   animation: bounceCrest 2s ease-in-out infinite;
 }
 
@@ -74,6 +75,7 @@
   margin: 0;
   background: linear-gradient(135deg, #bae6fd 0%, #38bdf8 50%, #ca8a04 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -166,6 +168,7 @@
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+  -webkit-filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
 }
 
 .chest-name-heading {
