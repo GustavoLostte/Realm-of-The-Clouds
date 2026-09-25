@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Shield, Loader2, AlertCircle, CheckCircle2, Trash2, X, Dices, Check, Sparkles, ArrowLeft, ArrowRight, Edit3, Crown, Mail, Globe, ChevronDown, Lock, Eye, EyeOff, ShieldCheck, LogIn, UserPlus, LogOut, Swords } from 'lucide-react'
 import { gameStorage, hasMeaningfulProgress } from '../utils/gameStorage'
 import { soundManager } from '../utils/audio'
