@@ -83,7 +83,7 @@ export const MmorpgHudOverlay = React.memo(function MmorpgHudOverlay({
   const [isJoystickActive, setIsJoystickActive] = useState(false)
   const [showMobileHud, setShowMobileHud] = useState(() => checkIsMobileDevice())
   const userOverrodeRef = useRef(false)
-  const setActiveHotkey = useState(null)[1]
+  const [activeHotkey, setActiveHotkey] = useState(null)
 
   // Real skill & potion cooldown system
   const [cooldownRemaining, setCooldownRemaining] = useState({
