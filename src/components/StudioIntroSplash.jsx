@@ -14,7 +14,7 @@ export function StudioIntroSplash({ onComplete }) {
     setPhase('exiting')
     setTimeout(() => {
       onComplete?.()
-    }, 550) // wait for exit fade-out transition
+    }, 250) // fast fade-out transition
   }
 
   const tryPlayAudio = () => {
@@ -59,15 +59,13 @@ export function StudioIntroSplash({ onComplete }) {
       setPhase('holding')
     }, 600)
 
-    // Allow skip only after 800ms to prevent accidental immediate clicks on window focus
-    const skipTimer = setTimeout(() => {
-      canSkipRef.current = true
-    }, 800)
+    // Allow immediate skip on user gesture
+    canSkipRef.current = true
 
-    // Auto-finish after 2.8s
+    // Auto-finish after 1.8s
     const exitTimer = setTimeout(() => {
       finishSplash()
-    }, 2800)
+    }, 1800)
 
     // Keyboard listener to skip after grace period
     const handleKeyDown = (e) => {
@@ -100,6 +98,7 @@ export function StudioIntroSplash({ onComplete }) {
   return (
     <div 
       className={`studio-splash-overlay phase-${phase}`}
+      onPointerDown={handleOverlayClick}
       onClick={handleOverlayClick}
       role="banner"
       aria-label="WizzarDev Studios Intro"

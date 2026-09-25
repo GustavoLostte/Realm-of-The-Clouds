@@ -575,12 +575,30 @@ export function StartScreen({ onEnterGame }) {
     }
   }
 
-  // Handle tap anywhere on screen to unlock audio and immediately enter the game
-  const handleScreenClick = () => {
+  // Handle tap anywhere on screen to unlock audio and immediately enter the game (Instant 0ms response)
+  const hasTriggeredEntryRef = useRef(false)
+  const handleScreenClick = (e) => {
+    // If clicking language menu or interactive buttons like website/discord, don't trigger game start
+    if (e && e.target && e.target.closest && (
+      e.target.closest('.start-top-left-actions') ||
+      e.target.closest('.start-lang-dropdown-wrap') ||
+      e.target.closest('.remembered-account-card') ||
+      e.target.closest('.guest-modal-card') ||
+      e.target.closest('.server-connecting-card') ||
+      e.target.closest('button') ||
+      e.target.closest('a')
+    )) {
+      return
+    }
+
     if (isLangMenuOpen) {
       setIsLangMenuOpen(false)
       return
     }
+
+    if (hasTriggeredEntryRef.current) return
+    hasTriggeredEntryRef.current = true
+
     soundManager.initCtx?.()
     soundManager.playClick?.()
     requestGameFullscreen()
@@ -1052,6 +1070,7 @@ export function StartScreen({ onEnterGame }) {
   return (
     <div 
       className="start-screen-overlay"
+      onPointerDown={handleScreenClick}
       onClick={handleScreenClick}
     >
       {/* Connecting to Server Loading Overlay */}
@@ -1222,12 +1241,10 @@ export function StartScreen({ onEnterGame }) {
       <div className="start-screen-vignette" />
 
       {/* Center Cinematic Title & Branding */}
-      <div className="start-screen-hero">
+      <div className="start-screen-hero" style={{ pointerEvents: 'none' }}>
         <div 
           className="start-screen-logo-container"
-          onClick={handleLogoTap}
-          style={{ cursor: 'pointer', userSelect: 'none' }}
-          title={isDevBypassActive ? "Modo Desarrollador Activo (Acceso Habilitado)" : "Realm of Kingdom"}
+          style={{ pointerEvents: 'none', userSelect: 'none' }}
         >
           <img 
             src="/assets/logo/logo.webp" 
