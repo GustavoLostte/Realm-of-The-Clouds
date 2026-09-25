@@ -78,7 +78,6 @@ export function StudioIntroSplash({ onComplete }) {
 
     return () => {
       clearTimeout(enterTimer)
-      clearTimeout(skipTimer)
       clearTimeout(exitTimer)
       window.removeEventListener('pointerdown', handleFirstGesture)
       window.removeEventListener('keydown', handleFirstGesture)
