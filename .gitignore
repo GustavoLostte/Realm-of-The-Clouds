@@ -44,4 +44,8 @@ public_demo/
 public_teaser/
 src-tauri/gen/android/app/build/
 src-tauri/gen/android/.gradle/
+keystore/
+*.jks
+*.keystore
+google-play-assets/*.aab
 

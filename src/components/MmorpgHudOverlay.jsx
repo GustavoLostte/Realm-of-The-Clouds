@@ -758,7 +758,7 @@ export const MmorpgHudOverlay = React.memo(function MmorpgHudOverlay({
           </div>
         </div>
 
-        {/* Toggle Pills Row: War Mode & Virtual Camera Zoom */}
+        {/* Toggle Pills Row: War Mode */}
         <div className="hud-pill-row">
           {onToggleWarMode && (
             <button
@@ -774,7 +774,6 @@ export const MmorpgHudOverlay = React.memo(function MmorpgHudOverlay({
               <span className="hud-war-mode-text">{isWarMode ? 'Champions (4)' : 'Slimes'}</span>
             </button>
           )}
-
         </div>
       </div>
 

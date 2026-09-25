@@ -75,7 +75,7 @@ export const DEMO_MAPS = [
     hall: 'Pasillo 1/3',
     icon: '🍄',
     basePoster: '/DEMO/MAPS/MAP2/1/map_base.webp',
-    audioOgg: '/DEMO/MAPS/MAP2/2/sound_effect.ogg',
+    audioOgg: '/DEMO/MAPS/MAP2/1/sound_effect.ogg',
     groundOffset: '31.48%',
     description: 'Sendero de hongos bioluminiscentes flotantes.',
   },
@@ -463,9 +463,9 @@ export function DungeonDemoScene({ onBack }) {
   const [questProgress, setQuestProgress] = useState(0)
   const [levelUpEffect, setLevelUpEffect] = useState(null)
 
-  // Dynamic Virtual Camera Zoom & Player-Tracking System (Default 1.0x across all devices for exact parity)
-  const [cameraZoom, setCameraZoom] = useState(1.0)
-  const cameraZoomRef = useRef(1.0)
+  // Dynamic Virtual Camera Zoom & Player-Tracking System (Permanent 1.35x close-up immersive view)
+  const [cameraZoom, setCameraZoom] = useState(1.35)
+  const cameraZoomRef = useRef(1.35)
   const cameraWorldRef = useRef(null)
   const cameraCenterRef = useRef(50)
 
