@@ -21,6 +21,8 @@ import { DungeonEnemiesLayer } from './DungeonEnemiesLayer'
 import { MmorpgHudOverlay } from './MmorpgHudOverlay'
 import { DungeonBackpackModal } from './DungeonBackpackModal'
 import { generateUniqueId } from '../utils/uniqueId'
+import { authoritativeEngine } from '../services/authoritativeEngine'
+import { gameTelemetry } from '../services/gameTelemetryService'
 import './DungeonDemoScene.css'
 
 export const DEMO_MAPS = [
@@ -460,6 +462,10 @@ export function DungeonDemoScene({ onBack }) {
     exp: 0,
     expNeeded: 140,
   })
+  const progressionRef = useRef(progression)
+  useEffect(() => {
+    progressionRef.current = progression
+  }, [progression])
   const [currentQuestIndex, setCurrentQuestIndex] = useState(0)
   const [questProgress, setQuestProgress] = useState(0)
   const [levelUpEffect, setLevelUpEffect] = useState(null)
@@ -852,10 +858,20 @@ export function DungeonDemoScene({ onBack }) {
     setQuestProgress(0)
   }, [awardPlayerExp, logRecentLoot])
 
-  // High-performance callback when an enemy is defeated
+  // High-performance callback when an enemy is defeated (Authoritative verification)
   const handleEnemyKilled = useCallback(({ enemy, exp, gold, lootDrops }) => {
-    awardPlayerExp(exp, true)
-    const goldText = getDungeonText(langRef.current, 'combat', 'lootGold', { amount: gold })
+    const authResult = authoritativeEngine.resolveEnemyKill({
+      enemy,
+      currentProgression: progressionRef.current || progression,
+      mapIndex: selectedMapIndexRef.current || 0,
+    })
+
+    const finalExp = authResult?.expGained ?? exp
+    const finalGold = authResult?.goldGained ?? gold
+    const finalDrops = (authResult?.lootDrops && authResult.lootDrops.length > 0) ? authResult.lootDrops : lootDrops
+
+    awardPlayerExp(finalExp, true)
+    const goldText = getDungeonText(langRef.current, 'combat', 'lootGold', { amount: finalGold })
     const fId2 = generateUniqueId('pgold')
     const playerX = champActorRef.current?.posX ?? champPosRef.current ?? champStateRef.current?.posX ?? 18
     setPlayerFloatingTexts((prev) => [
@@ -886,7 +902,7 @@ export function DungeonDemoScene({ onBack }) {
     })
 
     // Spawn physical ground loot
-    if (lootDrops && lootDrops.length > 0) {
+    if (finalDrops && finalDrops.length > 0) {
       const formattedDrops = lootDrops.map((drop, i) => {
         let name = getDungeonText(langRef.current, 'items', 'goldCoins')
         let icon = '/assets/items/gold_coin_v4.webp'
