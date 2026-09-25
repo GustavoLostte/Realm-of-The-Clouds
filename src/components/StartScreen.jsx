@@ -577,6 +577,32 @@ export function StartScreen({ onEnterGame }) {
 
   // Handle tap anywhere on screen to unlock audio and immediately enter the game (Instant 0ms response)
   const hasTriggeredEntryRef = useRef(false)
+  const lastScreenTapTimeRef = useRef(0)
+
+  // Reset entry lock whenever returning to start screen view
+  useEffect(() => {
+    if (!isDungeonDemoOpen) {
+      hasTriggeredEntryRef.current = false
+    }
+  }, [isDungeonDemoOpen])
+
+  const handleBackFromDungeon = useCallback(() => {
+    setIsDungeonDemoOpen(false)
+    hasTriggeredEntryRef.current = false
+    lastScreenTapTimeRef.current = 0
+    try {
+      if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+        if (
+          window.location.search.includes('dungeon-demo') ||
+          window.location.search.includes('slime-demo') ||
+          window.location.search.includes('map-demo')
+        ) {
+          window.history.replaceState({}, document.title, window.location.pathname)
+        }
+      }
+    } catch {}
+  }, [])
+
   const handleScreenClick = (e) => {
     // If clicking language menu or interactive buttons like website/discord, don't trigger game start
     if (e && e.target && e.target.closest && (
@@ -596,6 +622,11 @@ export function StartScreen({ onEnterGame }) {
       return
     }
 
+    // Debounce rapid double events (e.g. pointerdown followed immediately by click)
+    const now = Date.now()
+    if (now - lastScreenTapTimeRef.current < 400) return
+    lastScreenTapTimeRef.current = now
+
     if (hasTriggeredEntryRef.current) return
     hasTriggeredEntryRef.current = true
 
@@ -605,6 +636,12 @@ export function StartScreen({ onEnterGame }) {
 
     try {
       if (typeof window !== 'undefined') {
+        if (window.__dungeonBgm) {
+          try {
+            window.__dungeonBgm.pause()
+            window.__dungeonBgm.currentTime = 0
+          } catch {}
+        }
         // Pre-warm audio element on active user gesture to guarantee 100% autoplay clearance
         const bgm = new Audio('/DEMO/MUSIC/The_Mushroom_Waltz.ogg')
         bgm.loop = true
@@ -1062,7 +1099,7 @@ export function StartScreen({ onEnterGame }) {
   if (isDungeonDemoOpen) {
     return (
       <DungeonDemoScene
-        onBack={() => setIsDungeonDemoOpen(false)}
+        onBack={handleBackFromDungeon}
       />
     )
   }
