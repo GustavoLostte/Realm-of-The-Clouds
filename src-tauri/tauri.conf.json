@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "identifier": "com.realmoftheclouds.game",
   "build": {
-    "frontendDist": "https://realm-of-kingdom.vercel.app",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
