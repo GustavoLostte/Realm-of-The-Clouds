@@ -199,7 +199,7 @@ export const DUNGEON_QUESTS = [
 
 
 
-export function DungeonDemoScene({ onBack }) {
+export function DungeonDemoScene({ onBack, initialPlayer = null }) {
   const { currentLang, t } = useTranslation()
   const lang = currentLang || 'us'
   const langRef = useRef(lang)
@@ -397,17 +397,54 @@ export function DungeonDemoScene({ onBack }) {
     groundLootRef.current = groundLoot
   }, [groundLoot])
 
-  // Champion current live state from ChampionActor (Initialized with Level 10 stats for Demo Mode)
-  const [champState, setChampState] = useState(() => ({
-    name: 'Player',
-    level: 10,
-    badge: '👑',
-    avatar: '/CHAMPIONS/KINA_MALE/avatar.webp',
-    hp: 850,
-    maxHp: 850,
-    hpPercent: 100,
-    fury: 100,
-  }))
+  // Champion current live state from ChampionActor (Initialized from Character Creation or saved player)
+  const [champState, setChampState] = useState(() => {
+    const rawPlayer = initialPlayer || (() => {
+      try {
+        const saved = localStorage.getItem('rok_active_player')
+        return saved ? JSON.parse(saved) : null
+      } catch {
+        return null
+      }
+    })()
+
+    if (rawPlayer) {
+      const folderMap = {
+        knight: 'KINA',
+        paladin: 'PALADIN',
+        mage: 'MAGE',
+        healer: 'HEALER',
+      }
+      const folder = folderMap[rawPlayer.classId] || 'KINA'
+      const gender = (rawPlayer.gender || 'male').toUpperCase()
+      const baseHp = rawPlayer.stats?.hp || 620
+      return {
+        name: rawPlayer.player_name || 'Player',
+        level: rawPlayer.level || 1,
+        badge: '👑',
+        classId: rawPlayer.classId || 'knight',
+        gender: (rawPlayer.gender || 'male').toLowerCase(),
+        avatar: `/CHAMPIONS/${folder}_${gender}/avatar.webp`,
+        hp: baseHp,
+        maxHp: baseHp,
+        hpPercent: 100,
+        fury: 100,
+      }
+    }
+
+    return {
+      name: 'Player',
+      level: 10,
+      badge: '👑',
+      classId: 'knight',
+      gender: 'male',
+      avatar: '/CHAMPIONS/KINA_MALE/avatar.webp',
+      hp: 850,
+      maxHp: 850,
+      hpPercent: 100,
+      fury: 100,
+    }
+  })
   const champActorRef = useRef(null)
   const champPosRef = useRef(18)
   const champFacingRef = useRef(1)
@@ -1629,7 +1666,8 @@ export function DungeonDemoScene({ onBack }) {
               (Top-Left status HUD is rendered outside on the screen-fixed layer!)
             */}
             <ChampionActor 
-              champion="knight_male"
+              champion={`${champState.classId || 'knight'}_${champState.gender || 'male'}`}
+              name={champState.name}
               actorRef={champActorRef}
               level={progression.level}
               badge="👑"

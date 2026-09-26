@@ -4,32 +4,7 @@
    ============================================================================== */
 
 .orientation-notice-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999999;
-  display: none; /* By default hidden on landscape / wide screens */
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
-  background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.98) 0%, rgba(2, 6, 23, 0.99) 100%);
-  color: #f8fafc;
-  font-family: 'Outfit', sans-serif;
-  overflow: hidden;
-  user-select: none;
-  -webkit-user-select: none;
-  animation: orientationNoticeFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Activate on mobile/tablet portrait orientation OR narrow vertical windows */
-@media (orientation: portrait) and (max-width: 1024px), (max-aspect-ratio: 1/1) and (max-width: 920px) {
-  .orientation-notice-overlay {
-    display: flex;
-  }
-}
-
-/* Also support programmatic activation via React is-active class */
-.orientation-notice-overlay.is-active {
-  display: flex;
+  display: none !important;
 }
 
 /* Ambient Floating Magic Orbs / Embers */

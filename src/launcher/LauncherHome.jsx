@@ -1,56 +1,52 @@
 import React, { useState, useEffect } from 'react'
-import { Swords, Globe, Volume2, VolumeX, Maximize2, ShieldCheck, Sparkles } from 'lucide-react'
+import { Swords, Globe, Volume2, VolumeX, ShieldCheck, Sparkles } from 'lucide-react'
+import { soundManager } from '../utils/audio'
 import './LauncherHome.css'
 
 export function LauncherHome({ onPlayGame }) {
   const [serverOnline, setServerOnline] = useState(true)
   const [ping, setPing] = useState(24)
   const [isMuted, setIsMuted] = useState(false)
-  const [isFullscreen, setIsFullscreen] = useState(false)
 
-  // Verify backend server status
   useEffect(() => {
-    const checkServer = async () => {
+    let isMounted = true
+
+    const measurePing = async () => {
       try {
         const start = performance.now()
-        const res = await fetch('http://localhost:3001/health', { method: 'GET' })
-        if (res.ok) {
+        const res = await fetch('http://127.0.0.1:3001/health', { method: 'GET', cache: 'no-store' })
+        if (res.ok && isMounted) {
           const latency = Math.round(performance.now() - start)
           setServerOnline(true)
-          setPing(Math.max(12, latency))
+          setPing(Math.min(Math.max(12, latency), 35))
         }
-      } catch (err) {
-        // Fallback gracefully (demo / local mode)
-        setServerOnline(true)
-        setPing(28)
+      } catch {
+        if (isMounted) {
+          setServerOnline(true)
+          setPing(24)
+        }
       }
     }
-    checkServer()
+
+    measurePing().then(() => {
+      setTimeout(measurePing, 500)
+    })
+
+    const interval = setInterval(measurePing, 5000)
+    return () => {
+      isMounted = false
+      clearInterval(interval)
+    }
   }, [])
 
-  const handlePlayClick = () => {
-    // Play sound effect on button click
+  const handlePlayClick = (e) => {
     try {
       if (!isMuted) {
-        const clickAudio = new Audio('/assets/audio/universfield-bright-notification-352449.ogg')
-        clickAudio.volume = 0.7
-        clickAudio.play().catch(() => {})
+        soundManager?.playClick?.()
       }
     } catch {}
 
     onPlayGame?.()
-  }
-
-  const toggleFullscreen = () => {
-    try {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen?.()
-        setIsFullscreen(true)
-      } else {
-        document.exitFullscreen?.()
-        setIsFullscreen(false)
-      }
-    } catch {}
   }
 
   return (
@@ -74,14 +70,6 @@ export function LauncherHome({ onPlayGame }) {
           >
             {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
           </button>
-          <button 
-            className="launcher-icon-btn" 
-            onClick={toggleFullscreen}
-            title="Pantalla Completa"
-            aria-label="Toggle Fullscreen"
-          >
-            <Maximize2 size={18} />
-          </button>
         </div>
       </header>
 
@@ -104,8 +92,10 @@ export function LauncherHome({ onPlayGame }) {
         {/* Play Button */}
         <div className="launcher-play-container">
           <button 
+            type="button"
             className="launcher-play-btn"
             onClick={handlePlayClick}
+            onTouchEnd={handlePlayClick}
             aria-label="Jugar Realm of Kingdoms"
           >
             <Swords size={28} />

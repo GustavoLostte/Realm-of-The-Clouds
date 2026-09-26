@@ -164,6 +164,7 @@
 
 .launcher-play-btn {
   position: relative;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,6 +183,8 @@
   text-shadow: 0 1px 1px rgba(253, 230, 138, 0.8);
   box-shadow: 0 0 30px rgba(245, 158, 11, 0.5), 0 12px 35px rgba(0, 0, 0, 0.7);
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }

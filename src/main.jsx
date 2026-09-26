@@ -43,13 +43,33 @@ registerServiceWorker()
 analytics.init()
 
 import React, { lazy, Suspense } from 'react'
-import App from './App.jsx'
+
+const isTeaser = import.meta.env.VITE_APP_MODE === 'teaser'
+const isWorkbenchMode = typeof window !== 'undefined' && (
+  window.location.search.includes('workbench=true') ||
+  window.location.search.includes('scale-lab') ||
+  window.location.search.includes('scale=true') ||
+  window.location.pathname.endsWith('/workbench') ||
+  window.location.hash.includes('workbench')
+)
+
+const StandaloneWorkbench = isWorkbenchMode
+  ? lazy(() => 
+      import('./components/ChampionsScaleWorkbenchModal.jsx').then(m => ({ 
+        default: (props) => <m.ChampionsScaleWorkbenchModal standalone={true} isOpen={true} {...props} /> 
+      }))
+    )
+  : null
+
+const ActiveApp = isTeaser
+  ? lazy(() => import('./AppTeaser.jsx'))
+  : lazy(() => import('./App.jsx'))
 
 createRoot(document.getElementById('root')).render(
   <ErrorBoundary>
     <LanguageProvider>
       <Suspense fallback={<div style={{ background: '#090c10', width: '100vw', height: '100vh' }} />}>
-        <App />
+        {isWorkbenchMode && StandaloneWorkbench ? <StandaloneWorkbench /> : <ActiveApp />}
       </Suspense>
     </LanguageProvider>
   </ErrorBoundary>,

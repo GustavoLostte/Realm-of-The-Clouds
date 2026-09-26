@@ -235,7 +235,18 @@ export function getChampionByClassAndGender(classId, gender = 'male') {
 // ============================================================
 // CHAMPION SCALING SYSTEM (Per-Animation & Per-Gender Support)
 // ============================================================
-export const ANIM_SCALE_KEYS = ['idle', 'walk', 'run', 'jump', 'dash_front', 'dash_back']
+export const ANIM_SCALE_KEYS = [
+  'idle', 
+  'walk', 
+  'run', 
+  'jump', 
+  'dash_front', 
+  'dash_back', 
+  'attack1', 
+  'attack2', 
+  'special', 
+  'special2'
+]
 
 export const CHAMPION_SCALE_KEYS = [
   'knight_male',
@@ -261,15 +272,104 @@ export const DEFAULT_ANIM_SCALES = {
   special2: 1.0,
 }
 
+// Morphologically normalized animation scales: matches body stature of idle without shrinking/morphing
 export const DEFAULT_CHAMPION_SCALES = {
-  knight_male: { idle: 1.15, walk: 1.15, run: 1.15, jump: 1.15, dash_front: 1.15, dash_back: 1.15, attack1: 1.15, attack2: 1.15, special: 1.15, special2: 1.15 },
-  knight_female: { idle: 1.19, walk: 1.19, run: 1.19, jump: 1.19, dash_front: 1.19, dash_back: 1.19, attack1: 1.19, attack2: 1.19, special: 1.19, special2: 1.19 },
-  paladin_male: { idle: 0.88, walk: 0.88, run: 0.88, jump: 0.88, dash_front: 0.88, dash_back: 0.88, attack1: 0.88, attack2: 0.88, special: 0.88, special2: 0.88 },
-  paladin_female: { ...DEFAULT_ANIM_SCALES },
-  mage_male: { ...DEFAULT_ANIM_SCALES },
-  mage_female: { ...DEFAULT_ANIM_SCALES },
-  healer_male: { ...DEFAULT_ANIM_SCALES },
-  healer_female: { ...DEFAULT_ANIM_SCALES },
+  knight_male: {
+    idle: 0.80,       // Sacred baseline (UNTOUCHED)
+    walk: 1.14,       // Uniform action scale: aligns 288 canvas body stature with idle 576 canvas
+    run: 1.14,        // Uniform action scale
+    jump: 1.46,       // Jump compensation scale: perfectly aligns 145px tuck frame to 212px idle stature
+    dash_front: 1.14, // Uniform action scale
+    dash_back: 1.14,  // Uniform action scale
+    attack1: 1.14,    // Uniform action scale: identical across all attack combos
+    attack2: 1.14,    // Uniform action scale: identical across all attack combos
+    special: 1.14,    // Uniform action scale: exact match to walk/idle (no morphing/shrinking)
+    special2: 1.14,   // Uniform action scale: exact match to walk/idle (no morphing/shrinking)
+  },
+  knight_female: {
+    idle: 0.80,       // Sacred baseline (UNTOUCHED)
+    walk: 1.16,       // Uniform action scale
+    run: 1.16,        // Uniform action scale
+    jump: 1.50,       // Jump compensation scale: aligns 140px tuck frame to 212px idle stature
+    dash_front: 1.16, // Uniform action scale
+    dash_back: 1.16,  // Uniform action scale
+    attack1: 1.16,    // Uniform action scale
+    attack2: 1.16,    // Uniform action scale
+    special: 1.16,    // Uniform action scale
+    special2: 1.16,   // Uniform action scale
+  },
+  paladin_male: {
+    idle: 0.80,       // Sacred baseline (UNTOUCHED)
+    walk: 0.89,       // Aligns 239px walk frame to idle stature (214px)
+    run: 1.04,        // +20% boost (from 0.87) for commanding sprint presence
+    jump: 1.18,       // Jump compensation: aligns 181px jump frame to 214px idle stature
+    dash_front: 0.98, // Proportional dash scale matching idle stature (212px)
+    dash_back: 0.98,  // Proportional dash scale matching idle stature (212px)
+    attack1: 0.86,    // Aligns 247px attack frame to idle stature (212.4px)
+    attack2: 0.86,    // Aligns attack2 to idle stature (212.4px)
+    special: 0.91,    // Aligns special sweep to idle stature (212.9px)
+    special2: 0.91,   // Aligns special2 to idle stature (212.9px)
+  },
+  paladin_female: {
+    idle: 0.80,       // Sacred baseline (UNTOUCHED)
+    walk: 0.89,       // Aligns 240px walk frame to idle stature (214px)
+    run: 1.02,        // +20% boost (from 0.85) for commanding sprint presence
+    jump: 1.19,       // Jump compensation: aligns 179px jump frame to 213px idle stature
+    dash_front: 1.08, // Full proportional stature (213px) matching idle, feet fully intact
+    dash_back: 1.05,  // Full proportional stature (216px) matching idle, feet fully intact
+    attack1: 0.85,    // Aligns 249px attack frame to idle stature (211.6px)
+    attack2: 0.85,    // Aligns attack2 to idle stature (211.6px)
+    special: 0.91,    // Aligns special sweep to idle stature (212.9px)
+    special2: 0.91,   // Aligns special2 to idle stature (212.9px)
+  },
+  mage_male: {
+    idle: 1.00,       // Sacred baseline (UNTOUCHED)
+    walk: 1.01,       // Exact 1:1 match to idle stature (270px)
+    run: 1.01,        // Exact 1:1 match to idle stature (270px)
+    jump: 1.00,       // Exact 1:1 match to idle stature (270px)
+    dash_front: 1.01, // Exact 1:1 match to idle stature (270px)
+    dash_back: 1.01,  // Exact 1:1 match to idle stature (270px)
+    attack1: 1.01,    // Exact 1:1 match to idle stature (270px)
+    attack2: 1.00,    // Exact 1:1 match to idle stature (270px)
+    special: 1.01,    // Exact 1:1 match to idle stature (270px)
+    special2: 1.01,   // Exact 1:1 match to idle stature (270px)
+  },
+  mage_female: {
+    idle: 1.00,       // Sacred baseline (UNTOUCHED)
+    walk: 1.01,       // Exact 1:1 match to idle stature (278px)
+    run: 1.01,        // Exact 1:1 match to idle stature (278px)
+    jump: 1.00,       // Exact 1:1 match to idle stature (278px)
+    dash_front: 1.01, // Exact 1:1 match to idle stature (278px)
+    dash_back: 1.01,  // Exact 1:1 match to idle stature (278px)
+    attack1: 1.01,    // Exact 1:1 match to idle stature (278px)
+    attack2: 1.00,    // Exact 1:1 match to idle stature (278px)
+    special: 1.01,    // Exact 1:1 match to idle stature (278px)
+    special2: 1.01,   // Exact 1:1 match to idle stature (278px)
+  },
+  healer_male: {
+    idle: 1.00,       // Sacred baseline (UNTOUCHED)
+    walk: 1.01,       // Exact 1:1 match to idle stature (265px)
+    run: 1.01,        // Exact 1:1 match to idle stature (265px)
+    jump: 1.00,       // Exact 1:1 match to idle stature (265px)
+    dash_front: 1.01, // Exact 1:1 match to idle stature (265px)
+    dash_back: 1.01,  // Exact 1:1 match to idle stature (265px)
+    attack1: 1.01,    // Exact 1:1 match to idle stature (265px)
+    attack2: 1.00,    // Exact 1:1 match to idle stature (265px)
+    special: 1.01,    // Exact 1:1 match to idle stature (265px)
+    special2: 1.01,   // Exact 1:1 match to idle stature (265px)
+  },
+  healer_female: {
+    idle: 1.00,       // Sacred baseline (UNTOUCHED)
+    walk: 1.01,       // Exact 1:1 match to idle stature (278px)
+    run: 1.01,        // Exact 1:1 match to idle stature (278px)
+    jump: 1.00,       // Exact 1:1 match to idle stature (278px)
+    dash_front: 1.01, // Exact 1:1 match to idle stature (278px)
+    dash_back: 1.01,  // Exact 1:1 match to idle stature (278px)
+    attack1: 1.01,    // Exact 1:1 match to idle stature (278px)
+    attack2: 1.00,    // Exact 1:1 match to idle stature (278px)
+    special: 1.01,    // Exact 1:1 match to idle stature (278px)
+    special2: 1.01,   // Exact 1:1 match to idle stature (278px)
+  },
 }
 
 export const DEFAULT_CLASS_SCALES = {
@@ -277,12 +377,12 @@ export const DEFAULT_CLASS_SCALES = {
   // Class-level fallbacks
   knight: { ...DEFAULT_CHAMPION_SCALES.knight_male },
   paladin: { ...DEFAULT_CHAMPION_SCALES.paladin_male },
-  mage: { ...DEFAULT_ANIM_SCALES },
-  healer: { ...DEFAULT_ANIM_SCALES },
+  mage: { ...DEFAULT_CHAMPION_SCALES.mage_male },
+  healer: { ...DEFAULT_CHAMPION_SCALES.healer_male },
 }
 
-export const STORAGE_KEY_CLASS_SCALES = 'toc_champion_class_scales_v2'
-export const STORAGE_KEY_LEGACY_SCALES = 'toc_champion_class_scales_v1'
+export const STORAGE_KEY_CLASS_SCALES = 'toc_champion_class_scales_v25'
+export const STORAGE_KEY_LEGACY_SCALES = 'toc_champion_class_scales_v10'
 
 export const DEFAULT_ANIM_OFFSETS = {
   idle: 0,
@@ -297,28 +397,117 @@ export const DEFAULT_ANIM_OFFSETS = {
   special2: 0,
 }
 
+// Ground-contact alignment offsets (in pixels): grounds floating animations cleanly to floor
 export const DEFAULT_CHAMPION_OFFSETS = {
-  knight_male: { ...DEFAULT_ANIM_OFFSETS },
-  knight_female: { ...DEFAULT_ANIM_OFFSETS },
-  paladin_male: { ...DEFAULT_ANIM_OFFSETS },
-  paladin_female: { ...DEFAULT_ANIM_OFFSETS },
-  mage_male: { ...DEFAULT_ANIM_OFFSETS },
-  mage_female: { ...DEFAULT_ANIM_OFFSETS },
-  healer_male: { ...DEFAULT_ANIM_OFFSETS },
-  healer_female: { ...DEFAULT_ANIM_OFFSETS },
+  knight_male: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: -6,         // Grounds walk firmly onto floor line
+    run: -6,          // Grounds run
+    jump: 0,          // Jump elevation handled by physics
+    dash_front: -6,   // Grounds forward dash
+    dash_back: -6,    // Grounds backdash
+    attack1: -6,      // Grounds attack
+    attack2: -6,      // Grounds shield bash
+    special: -6,      // Grounds leap slam
+    special2: -6,     // Grounds shield wall
+  },
+  knight_female: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: -6,         // Grounds walk firmly onto floor line
+    run: -6,          // Grounds run
+    jump: 0,          // Jump elevation handled by physics
+    dash_front: -6,   // Grounds forward dash
+    dash_back: -6,    // Grounds backdash
+    attack1: -6,      // Grounds attack
+    attack2: -6,      // Grounds shield bash
+    special: -6,      // Grounds leap slam
+    special2: -6,     // Grounds shield wall
+  },
+  paladin_male: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: -8,         // Grounds walk firmly onto floor line
+    run: -8,          // Grounds sprint stride so feet plant cleanly on floor
+    jump: -6,         // Grounds jump start/land firmly onto floor line
+    dash_front: -4,   // Clean floor contact, zero cutting
+    dash_back: -4,    // Clean floor contact, zero cutting
+    attack1: -4,      // Grounds attack
+    attack2: -4,      // Grounds attack
+    special: -4,      // Grounds special
+    special2: -4,     // Grounds special
+  },
+  paladin_female: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: -8,         // Grounds walk firmly onto floor line
+    run: -8,          // Grounds sprint stride so feet plant cleanly on floor
+    jump: -6,         // Grounds jump start/land firmly onto floor line
+    dash_front: -4,   // Clean floor contact, zero feet cutting
+    dash_back: -4,    // Clean floor contact, zero feet cutting
+    attack1: -4,      // Grounds attack
+    attack2: -4,      // Grounds attack
+    special: -4,      // Grounds special
+    special2: -4,     // Grounds special
+  },
+  mage_male: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: 0,          // Natural floor alignment (feet at 287px)
+    run: 0,           // Natural floor alignment (feet at 287px)
+    jump: -3,         // Grounds takeoff/landing firmly onto floor line
+    dash_front: -4,   // Grounds lunge onto floor line
+    dash_back: 0,     // Natural floor alignment (feet at 287px)
+    attack1: -4,      // Grounds attack onto floor line
+    attack2: -3,      // Grounds leap onto floor line
+    special: -4,      // Grounds special onto floor line
+    special2: -4,     // Grounds special onto floor line
+  },
+  mage_female: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: 0,          // Natural floor alignment (feet at 287px)
+    run: 0,           // Natural floor alignment (feet at 287px)
+    jump: -3,         // Grounds takeoff/landing firmly onto floor line
+    dash_front: -4,   // Grounds lunge onto floor line
+    dash_back: 0,     // Natural floor alignment (feet at 287px)
+    attack1: -4,      // Grounds attack onto floor line
+    attack2: -3,      // Grounds leap onto floor line
+    special: -4,      // Grounds special onto floor line
+    special2: -4,     // Grounds special onto floor line
+  },
+  healer_male: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: 0,          // Natural floor alignment (feet at 286px)
+    run: 0,           // Natural floor alignment (feet at 286px)
+    jump: -3,         // Grounds takeoff/landing firmly onto floor line
+    dash_front: -4,   // Grounds lunge onto floor line
+    dash_back: 0,     // Natural floor alignment (feet at 287px)
+    attack1: -4,      // Grounds attack onto floor line
+    attack2: -3,      // Grounds leap onto floor line
+    special: -4,      // Grounds special onto floor line
+    special2: -4,     // Grounds special onto floor line
+  },
+  healer_female: {
+    idle: 0,          // Sacred baseline (UNTOUCHED)
+    walk: 0,          // Natural floor alignment (feet at 287px)
+    run: 0,           // Natural floor alignment (feet at 287px)
+    jump: -3,         // Grounds takeoff/landing firmly onto floor line
+    dash_front: -4,   // Grounds lunge onto floor line
+    dash_back: 0,     // Natural floor alignment (feet at 287px)
+    attack1: -4,      // Grounds attack onto floor line
+    attack2: -3,      // Grounds leap onto floor line
+    special: -4,      // Grounds special onto floor line
+    special2: -4,     // Grounds special onto floor line
+  },
 }
 
 export const DEFAULT_CLASS_OFFSETS = {
   ...DEFAULT_CHAMPION_OFFSETS,
-  knight: { ...DEFAULT_ANIM_OFFSETS },
-  paladin: { ...DEFAULT_ANIM_OFFSETS },
-  mage: { ...DEFAULT_ANIM_OFFSETS },
-  healer: { ...DEFAULT_ANIM_OFFSETS },
+  knight: { ...DEFAULT_CHAMPION_OFFSETS.knight_male },
+  paladin: { ...DEFAULT_CHAMPION_OFFSETS.paladin_male },
+  mage: { ...DEFAULT_CHAMPION_OFFSETS.mage_male },
+  healer: { ...DEFAULT_CHAMPION_OFFSETS.healer_male },
 }
 
-export const STORAGE_KEY_CLASS_OFFSETS = 'toc_champion_class_offsets_v1'
+export const STORAGE_KEY_CLASS_OFFSETS = 'toc_champion_class_offsets_v14'
 
-function normalizeAnimOffsetObject(val) {
+function normalizeAnimOffsetObject(val, defaultObj = null) {
   if (typeof val === 'number') {
     const clamped = Math.max(-100, Math.min(100, Math.round(val)))
     const res = {}
@@ -327,9 +516,10 @@ function normalizeAnimOffsetObject(val) {
   }
   const res = {}
   for (const k of ANIM_SCALE_KEYS) {
-    const raw = val?.[k] ?? val?.idle ?? 0
+    const fallback = defaultObj?.[k] ?? defaultObj?.idle ?? 0
+    const raw = val?.[k] ?? fallback
     const n = typeof raw === 'number' ? raw : parseFloat(raw)
-    res[k] = (!isNaN(n) && n >= -100 && n <= 100) ? Math.round(n) : 0
+    res[k] = (!isNaN(n) && n >= -100 && n <= 100) ? Math.round(n) : fallback
   }
   return res
 }
@@ -346,10 +536,10 @@ export function getSavedClassOffsets() {
       for (const k of CHAMPION_SCALE_KEYS) {
         const classPrefix = k.split('_')[0]
         const val = parsed?.[k] ?? parsed?.[classPrefix]
-        res[k] = normalizeAnimOffsetObject(val)
+        res[k] = normalizeAnimOffsetObject(val, DEFAULT_CHAMPION_OFFSETS[k])
       }
       for (const c of ['knight', 'paladin', 'mage', 'healer']) {
-        res[c] = res[`${c}_male`] || normalizeAnimOffsetObject(parsed?.[c])
+        res[c] = res[`${c}_male`] || normalizeAnimOffsetObject(parsed?.[c], DEFAULT_CHAMPION_OFFSETS[`${c}_male`])
       }
       return res
     }
@@ -405,7 +595,7 @@ export function saveClassOffsets(offsets) {
   }
 }
 
-function normalizeAnimScaleObject(val) {
+function normalizeAnimScaleObject(val, defaultObj = null) {
   if (typeof val === 'number') {
     const clamped = Math.max(0.2, Math.min(3.0, Math.round(val * 100) / 100))
     const res = {}
@@ -414,9 +604,10 @@ function normalizeAnimScaleObject(val) {
   }
   const res = {}
   for (const k of ANIM_SCALE_KEYS) {
-    const raw = val?.[k] ?? val?.idle ?? 1.0
+    const fallback = defaultObj?.[k] ?? defaultObj?.idle ?? 1.0
+    const raw = val?.[k] ?? fallback
     const n = typeof raw === 'number' ? raw : parseFloat(raw)
-    res[k] = (!isNaN(n) && n >= 0.2 && n <= 3.0) ? Math.round(n * 100) / 100 : 1.0
+    res[k] = (!isNaN(n) && n >= 0.2 && n <= 3.0) ? Math.round(n * 100) / 100 : fallback
   }
   return res
 }
@@ -472,26 +663,10 @@ export function getSavedClassScales() {
       for (const k of CHAMPION_SCALE_KEYS) {
         const classPrefix = k.split('_')[0]
         const val = parsed?.[k] ?? parsed?.[classPrefix]
-        res[k] = normalizeAnimScaleObject(val)
+        res[k] = normalizeAnimScaleObject(val, DEFAULT_CHAMPION_SCALES[k])
       }
       for (const c of ['knight', 'paladin', 'mage', 'healer']) {
-        res[c] = res[`${c}_male`] || normalizeAnimScaleObject(parsed?.[c])
-      }
-      return res
-    }
-
-    // Fallback to legacy v1 format
-    const rawV1 = localStorage.getItem(STORAGE_KEY_LEGACY_SCALES)
-    if (rawV1) {
-      const parsed = JSON.parse(rawV1)
-      const res = {}
-      for (const k of CHAMPION_SCALE_KEYS) {
-        const classPrefix = k.split('_')[0]
-        const val = parsed?.[k] ?? parsed?.[classPrefix]
-        res[k] = normalizeAnimScaleObject(val)
-      }
-      for (const c of ['knight', 'paladin', 'mage', 'healer']) {
-        res[c] = res[`${c}_male`]
+        res[c] = res[`${c}_male`] || normalizeAnimScaleObject(parsed?.[c], DEFAULT_CHAMPION_SCALES[`${c}_male`])
       }
       return res
     }
@@ -517,17 +692,6 @@ export function saveClassScales(scales) {
 
     // Save v2
     localStorage.setItem(STORAGE_KEY_CLASS_SCALES, JSON.stringify(sanitized))
-
-    // Save legacy v1 flat numbers for backwards-compat
-    try {
-      const flatV1 = {
-        knight: sanitized.knight_male.idle,
-        paladin: sanitized.paladin_male.idle,
-        mage: sanitized.mage_male.idle,
-        healer: sanitized.healer_male.idle,
-      }
-      localStorage.setItem(STORAGE_KEY_LEGACY_SCALES, JSON.stringify(flatV1))
-    } catch {}
 
     // Dispatch async event in the current window
     if (typeof window !== 'undefined') {
@@ -565,9 +729,37 @@ export function saveClassScales(scales) {
 
 // Global cross-window and cross-process listener (activates in Tauri Launcher, Chrome, Safari, etc.)
 if (typeof window !== 'undefined') {
+  // Purge any stale or corrupted scale/offset keys from older sessions
+  try {
+    const staleKeys = [
+      'toc_champion_class_scales_v1',
+      'toc_champion_class_scales_v2',
+      'toc_champion_class_scales_v10',
+      'toc_champion_class_scales_v11',
+      'toc_champion_class_scales_v12',
+      'toc_champion_class_scales_v13',
+      'toc_champion_class_scales_v14',
+      'toc_champion_class_scales_v15',
+      'toc_champion_class_scales_v16',
+      'toc_champion_class_scales_v17',
+      'toc_champion_class_scales_v18',
+      'toc_champion_class_scales_v24',
+      'toc_champion_class_offsets_v1',
+      'toc_champion_class_offsets_v2',
+      'toc_champion_class_offsets_v3',
+      'toc_champion_class_offsets_v4',
+      'toc_champion_class_offsets_v5',
+      'toc_champion_class_offsets_v6',
+      'toc_champion_class_offsets_v7',
+      'toc_champion_class_offsets_v8',
+      'toc_champion_class_offsets_v13',
+    ]
+    staleKeys.forEach((k) => localStorage.removeItem(k))
+  } catch {}
+
   // 1. Storage event listener (fires in all other tabs within the same browser engine)
   window.addEventListener('storage', (e) => {
-    if (e.key === STORAGE_KEY_CLASS_SCALES || e.key === STORAGE_KEY_LEGACY_SCALES || e.key === STORAGE_KEY_CLASS_OFFSETS) {
+    if (e.key === STORAGE_KEY_CLASS_SCALES || e.key === STORAGE_KEY_CLASS_OFFSETS) {
       window.dispatchEvent(new CustomEvent('toc_champion_scales_updated', { 
         detail: { scales: getSavedClassScales(), offsets: getSavedClassOffsets() } 
       }))
