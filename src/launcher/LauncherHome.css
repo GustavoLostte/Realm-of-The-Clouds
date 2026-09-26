@@ -1,0 +1,265 @@
+/* ============================================================
+   REALM OF KINGDOMS — OFFICIAL LAUNCHER HOME CSS
+   Dark Fantasy MMORPG Aesthetic
+   ============================================================ */
+
+.launcher-home-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: #090c10 url('/assets/cloud_realm_background.webp') no-repeat center center / cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(24px, env(safe-area-inset-top, 24px)) max(28px, env(safe-area-inset-right, 28px)) max(28px, env(safe-area-inset-bottom, 28px)) max(28px, env(safe-area-inset-left, 28px));
+  overflow: hidden;
+  user-select: none;
+  font-family: 'Cinzel', 'Trajan Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #f8fafc;
+}
+
+/* Atmospheric Vignette */
+.launcher-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(14, 165, 233, 0.05) 0%, rgba(5, 8, 16, 0.4) 65%, rgba(2, 4, 8, 0.85) 100%),
+              linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, transparent 25%, transparent 65%, rgba(0, 0, 0, 0.85) 100%);
+  z-index: 1;
+}
+
+/* Top Header Bar */
+.launcher-header-bar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.launcher-server-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(11, 15, 25, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.launcher-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.launcher-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.launcher-icon-btn {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: #94a3b8;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.launcher-icon-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+/* Center Hero Section */
+.launcher-hero-center {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 850px;
+  margin-top: -20px;
+}
+
+.launcher-logo-wrap {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.launcher-logo-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.25) 0%, rgba(56, 189, 248, 0.15) 40%, transparent 70%);
+  filter: blur(25px);
+  pointer-events: none;
+  animation: logoGlowBreath 4s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlowBreath {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+.launcher-game-logo {
+  width: min(440px, 85vw);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 35px rgba(245, 158, 11, 0.4)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.8));
+  user-select: none;
+  pointer-events: none;
+}
+
+.launcher-game-tagline {
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #e2e8f0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.launcher-game-tagline span {
+  color: #f59e0b;
+  text-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+}
+
+/* Giant Play Button */
+.launcher-play-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.launcher-play-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: min(380px, 90vw);
+  height: 68px;
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+  border: 2px solid #fde68a;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1e1102;
+  text-shadow: 0 1px 1px rgba(253, 230, 138, 0.8);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.5), 0 12px 35px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.launcher-play-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-25deg);
+  animation: shineSweep 3.5s infinite;
+}
+
+@keyframes shineSweep {
+  0% { left: -100%; }
+  25%, 100% { left: 200%; }
+}
+
+.launcher-play-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 45px rgba(245, 158, 11, 0.75), 0 18px 40px rgba(0, 0, 0, 0.85);
+  border-color: #ffffff;
+  color: #000000;
+}
+
+.launcher-play-btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.launcher-play-subtitle {
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Bottom Footer Bar */
+.launcher-footer-bar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: #64748b;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+}
+
+.launcher-studio-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.launcher-version-badge {
+  background: rgba(15, 23, 42, 0.6);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .launcher-header-bar,
+  .launcher-footer-bar {
+    font-size: 0.75rem;
+  }
+  .launcher-play-btn {
+    height: 60px;
+    font-size: 1.15rem;
+  }
+}
