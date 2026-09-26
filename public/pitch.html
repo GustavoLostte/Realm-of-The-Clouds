@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realm of Kingdoms — Documento Ejecutivo de Inversión</title>
+  
+  <!-- SEO & Social OpenGraph Card (Previews for WhatsApp, Telegram, LinkedIn, Twitter) -->
+  <meta name="description" content="Propuesta Ejecutiva de Inversión — Realm of Kingdoms (2.5D Action MMORPG • Reinos en Guerra). WizzarDev Studios.">
+  <meta property="og:title" content="Realm of Kingdoms — Documento Ejecutivo de Inversión">
+  <meta property="og:description" content="Propuesta de Inversión Semilla / Apoyo. Demo jugable en vivo a 60 FPS y cliente APK nativo. WizzarDev Studios.">
+  <meta property="og:image" content="https://realm-of-kingdom.vercel.app/assets/logo/logo.webp">
+  <meta property="og:url" content="https://realm-of-kingdom.vercel.app/pitch">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#090d16">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="/assets/logo/logo.webp">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --gold-primary: #f59e0b;
+      --gold-light: #fef3c7;
+      --cyan-accent: #38bdf8;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      line-height: 1.65;
+      padding: 30px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Top Quick Navigation Bar */
+    .top-nav {
+      max-width: 840px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--card-border);
+      color: #cbd5e1;
+      padding: 9px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--cyan-accent);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.primary {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-color: #fde68a;
+      color: #000000;
+      font-weight: 800;
+    }
+
+    .nav-btn.primary:hover {
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.55);
+      color: #000000;
+    }
+
+    .lang-toggle-btn {
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid #475569;
+      color: #f8fafc;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .document-container {
+      max-width: 840px;
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 44px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 36px;
+    }
+
+    .header-logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.45));
+    }
+
+    .badge-tag {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 40%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.12rem;
+      color: var(--cyan-accent);
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .quote-box {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 4px solid var(--gold-primary);
+      padding: 16px 22px;
+      border-radius: 8px;
+      font-style: italic;
+      color: #e2e8f0;
+      font-size: 0.96rem;
+      margin-top: 14px;
+      text-align: left;
+    }
+
+    /* Meta Card */
+    .meta-card {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      align-items: center;
+    }
+
+    .meta-item {
+      font-size: 0.9rem;
+    }
+
+    .meta-label {
+      color: var(--text-muted);
+      font-weight: 500;
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .demo-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-weight: 800;
+      padding: 11px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .demo-link-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 18px rgba(245, 158, 11, 0.45);
+    }
+
+    /* Section Styling */
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: #f8fafc;
+      margin: 34px 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    p {
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      margin-bottom: 14px;
+    }
+
+    strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    ul {
+      margin-left: 22px;
+      margin-bottom: 18px;
+      color: #cbd5e1;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* Interactive Demo Banner inside document */
+    .demo-banner {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(245, 158, 11, 0.08));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 14px;
+      padding: 24px;
+      margin: 22px 0 28px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .demo-banner-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .demo-url-box {
+      font-family: monospace;
+      font-size: 0.88rem;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--cyan-accent);
+      word-break: break-all;
+    }
+
+    /* Funding Box */
+    .funding-highlight {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.09), rgba(56, 189, 248, 0.04));
+      border: 1px solid rgba(245, 158, 11, 0.32);
+      border-radius: 14px;
+      padding: 26px;
+      margin: 24px 0;
+    }
+
+    .funding-amount {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #fbbf24;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 6px;
+    }
+
+    /* Milestones Grid */
+    .milestone-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .milestone-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 16px;
+      border-radius: 10px;
+    }
+
+    .milestone-month {
+      color: var(--cyan-accent);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .milestone-desc {
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      line-height: 1.45;
+    }
+
+    /* Footer Contact */
+    .contact-footer {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 28px;
+      margin-top: 38px;
+      text-align: center;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .contact-item {
+      font-size: 0.92rem;
+      color: var(--cyan-accent);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .contact-item:hover {
+      background: rgba(56, 189, 248, 0.25);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 1000;
+    }
+
+    .print-tip {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-top: 24px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 640px) {
+      .document-container {
+        padding: 24px 18px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .funding-amount {
+        font-size: 1.45rem;
+      }
+      .top-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .top-nav > div {
+        justify-content: center;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        padding: 0;
+      }
+      .top-nav, .toast-msg, .print-tip {
+        display: none !important;
+      }
+      .document-container {
+        box-shadow: none !important;
+        border: none !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        padding: 0;
+        max-width: 100% !important;
+      }
+      h1, h2, strong, .meta-value, .demo-banner-title {
+        color: #0f172a !important;
+        -webkit-text-fill-color: initial !important;
+      }
+      p, li, .milestone-desc {
+        color: #334155 !important;
+      }
+      .quote-box, .meta-card, .milestone-card, .funding-highlight, .contact-footer, .demo-banner {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+      .funding-amount {
+        color: #b45309 !important;
+      }
+      .demo-url-box {
+        color: #0284c7 !important;
+        background: #e0f2fe !important;
+        border: 1px solid #bae6fd !important;
+      }
+    }
+  </style>
+</head>
+<body data-lang="es">
+
+  <!-- Top Navigation Controls -->
+  <div class="top-nav">
+    <a href="https://realm-of-kingdom.vercel.app/" target="_blank" rel="noopener noreferrer" class="nav-btn primary">
+      🎮 <span data-es="Probar Demo Jugable en Vivo (Web)" data-en="Launch Live Playable Web Demo">Probar Demo Jugable en Vivo (Web)</span>
+    </a>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button onclick="copyPitchLink()" class="nav-btn" title="Copiar enlace para enviar por WhatsApp o correo">
+        📋 <span data-es="Copiar Link" data-en="Copy Link">Copiar Link</span>
+      </button>
+      <a href="/deck" target="_blank" rel="noopener noreferrer" class="nav-btn">
+        📊 <span data-es="Ver Deck de Slides" data-en="View Slide Deck">Ver Deck de Slides</span>
+      </a>
+      <button onclick="toggleLang()" class="nav-btn lang-toggle-btn" id="lang-btn">
+        🇺🇸 English
+      </button>
+      <button onclick="window.print()" class="nav-btn" style="cursor: pointer;">
+        🖨️ PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="document-container">
+    
+    <!-- Header -->
+    <header class="header">
+      <img src="/assets/logo/logo.webp" alt="Realm of Kingdoms Logo" class="header-logo">
+      <br>
+      <span class="badge-tag" data-es="Ronda Semilla / Apoyo Inicial" data-en="Seed Round / Angel Support">Ronda Semilla / Apoyo Inicial</span>
+      <h1>Realm of Kingdoms</h1>
+      <div class="subtitle" data-es="2.5D Action MMORPG • Reinos en Guerra • Propuesta Ejecutiva de Inversión" data-en="2.5D Action MMORPG • Kingdoms at War • Executive Investment Proposal">
+        2.5D Action MMORPG • Reinos en Guerra • Propuesta Ejecutiva de Inversión
+      </div>
+      <div class="quote-box" data-es='"Los mundos virtuales más memorables no nacen del presupuesto desmedido, sino del alma, la resiliencia y el deseo genuino de conectar a las personas."' data-en='"The most memorable virtual worlds are not born from excessive budgets, but from heart, resilience, and a genuine desire to connect people."'>
+        "Los mundos virtuales más memorables no nacen del presupuesto desmedido, sino del alma, la resiliencia y el deseo genuino de conectar a las personas."
+      </div>
+    </header>
+
+    <!-- Meta Information -->
+    <div class="meta-card">
+      <div class="meta-item">
+        <span class="meta-label" data-es="Género" data-en="Genre">Género</span>
+        <span class="meta-value">2.5D Action MMORPG</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-es="Estudio Fundador" data-en="Founding Studio">Estudio Fundador</span>
+        <span class="meta-value">WizzarDev Studios</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-es="Liderazgo & Desarrollo" data-en="Founder & Lead Dev">Liderazgo & Desarrollo</span>
+        <span class="meta-value">Gustavo (WizzarDev)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-es="Demo Web Oficial" data-en="Official Web Demo">Demo Web Oficial</span>
+        <a href="https://realm-of-kingdom.vercel.app/" target="_blank" rel="noopener noreferrer" class="demo-link-btn">
+          ⚔️ <span data-es="Probar Demo (60 FPS)" data-en="Play Live Demo (60 FPS)">Probar Demo (60 FPS)</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 1. Historia y Resiliencia -->
+    <h2>1. <span data-es="La Historia Detrás del Proyecto: Superación y Resiliencia" data-en="The Story Behind the Project: Overcoming Adversity & Resilience">La Historia Detrás del Proyecto: Superación y Resiliencia</span></h2>
+    <div data-lang-block="es">
+      <p>
+        <strong>Realm of Kingdoms</strong> no nació en una oficina corporativa con millones de dólares de presupuesto. Nació en una habitación modesta, impulsado por una profunda vocación de superación frente a la adversidad.
+      </p>
+      <p>
+        Durante incontables noches de trabajo solitario, cada línea de código, cada animación de combate, cada nota musical y cada mapa fueron construidos con una sola convicción: <strong>demostrar que el talento, la perseverancia y el amor por los videojuegos pueden crear una experiencia viva capaz de competir de tú a tú con producciones de grandes estudios.</strong>
+      </p>
+      <p>
+        Muchos proyectos en esta industria piden inversión antes de haber escrito una sola línea de código. <strong>Nosotros hicimos exactamente lo contrario:</strong> trabajamos en silencio hasta tener una <strong>demo real, funcional, jugable y fluida hoy mismo</strong>, lista en tus manos antes de pedir un solo centavo.
+      </p>
+    </div>
+    <div data-lang-block="en" style="display: none;">
+      <p>
+        <strong>Realm of Kingdoms</strong> was not conceived in a corporate high-rise with millions in venture backing. It was born in a modest room, driven by resilience, determination, and an unwavering passion to overcome obstacles through craftsmanship.
+      </p>
+      <p>
+        Over countless late nights of dedicated development, every single line of code, combat animation, audio track, and map asset was built with one core conviction: <strong>to prove that authentic talent, perseverance, and genuine love for gaming can create an experience that stands toe-to-toe with established studios.</strong>
+      </p>
+      <p>
+        Most gaming pitches ask for funding before writing a single line of code. <strong>We did the exact opposite:</strong> we built in silence until we had a <strong>real, high-performance, playable demo running at locked 60 FPS today</strong>, ready in your hands before asking for a single dollar.
+      </p>
+    </div>
+
+    <!-- 2. La Visión -->
+    <h2>2. <span data-es="La Visión: La Magia de los MMORPG Clásicos, Sin Barreras" data-en="The Vision: Classic MMORPG Magic, Zero Friction">La Visión: La Magia de los MMORPG Clásicos, Sin Barreras</span></h2>
+    <div data-lang-block="es">
+      <p>
+        Los que crecimos en los años dorados de los juegos de rol recordamos la emoción de entrar a un mundo donde cada combate importaba, donde conseguir un nivel era un logro heroico y donde forjabas amistades para toda la vida.
+      </p>
+      <p>Hoy, la industria ha saturado los juegos con barreras innecesarias:</p>
+      <ul>
+        <li><strong>Descargas gigantescas:</strong> Instaladores de 40 a 80 GB que alejan a los jugadores casuales y móviles.</li>
+        <li><strong>Requisitos de hardware inaccesibles:</strong> Exigencias gráficas que excluyen a millones de usuarios en Latinoamérica y mercados emergentes.</li>
+        <li><strong>Mecánicas abusivas:</strong> Economías depredadoras que priorizan el dinero sobre la diversión real.</li>
+      </ul>
+      <p>
+        <strong>Nuestra propuesta es accesible, cálida y directa:</strong> juegas al instante en cualquier navegador a 60 FPS con un solo clic, o en un cliente nativo optimizado (APK Android de 12 MB y Launcher para PC de 13 MB), sin fricciones ni descargas masivas.
+      </p>
+    </div>
+    <div data-lang-block="en" style="display: none;">
+      <p>
+        Those of us who grew up during the golden age of RPGs remember the thrill of entering a world where every battle mattered, leveling up was a true achievement, and lifelong friendships were forged in battle.
+      </p>
+      <p>Today, the industry has weighed players down with needless friction:</p>
+      <ul>
+        <li><strong>Bloated downloads:</strong> 40 to 80 GB installers that alienate casual and mobile gamers.</li>
+        <li><strong>Unaffordable hardware requirements:</strong> Spec creep that locks out hundreds of millions in emerging markets.</li>
+        <li><strong>Predatory monetization:</strong> Gacha and pay-to-win schemes that destroy player trust.</li>
+      </ul>
+      <p>
+        <strong>Our approach is fast, universal, and accessible:</strong> instant 60 FPS play directly in any web browser with one click, alongside ultra-light native clients (a 12 MB Android APK and a 13 MB PC launcher), zero barriers, zero friction.
+      </p>
+    </div>
+
+    <!-- 3. Qué está construido hoy -->
+    <h2>3. <span data-es="Estado Actual: Tracción y Producto Real" data-en="Current Traction: A Playable Reality Today">Estado Actual: Tracción y Producto Real</span></h2>
+    
+    <!-- Direct Web Demo Banner -->
+    <div class="demo-banner">
+      <div class="demo-banner-title">
+        <span>🎮</span> 
+        <span data-es="Prueba la Demo Web Jugable en Vivo Ahora Mismo" data-en="Test the Live Web Demo Right Now">Prueba la Demo Web Jugable en Vivo Ahora Mismo</span>
+      </div>
+      <p style="margin-bottom: 4px;" data-es="Comprueba directamente el rendimiento a 60 FPS, combate en tiempo real, HUD de héroe y animaciones fluidas sin instalar nada:" data-en="Experience locked 60 FPS combat, real-time hero mechanics, and MMORPG interface directly in your browser:">
+        Comprueba directamente el rendimiento a 60 FPS, combate en tiempo real, HUD de héroe y animaciones fluidas sin instalar nada:
+      </p>
+      <div class="demo-url-box">
+        https://realm-of-kingdom.vercel.app/
+      </div>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="https://realm-of-kingdom.vercel.app/" target="_blank" rel="noopener noreferrer" class="demo-link-btn">
+          ⚔️ <span data-es="Abrir Demo en Vivo (Nueva Pestaña)" data-en="Open Live Demo (New Tab)">Abrir Demo en Vivo (Nueva Pestaña)</span>
+        </a>
+        <a href="/deck" target="_blank" rel="noopener noreferrer" class="nav-btn">
+          📊 <span data-es="Ver Diapositivas de Pitch" data-en="View Pitch Deck Slides">Ver Diapositivas de Pitch</span>
+        </a>
+      </div>
+    </div>
+
+    <div data-lang-block="es">
+      <p>A diferencia de conceptos en papel, la base técnica y jugable está completamente construida y operativa hoy:</p>
+      <ul>
+        <li><strong>Combate en Tiempo Real:</strong> Sistema reactivo de golpes con espada, habilidades con enfriamiento dinámico, esquivas y retrocesos fluidos.</li>
+        <li><strong>Sistema de Progresión:</strong> Monitoreo de misiones en tiempo real, acumulación de EXP y fanfarria audiovisual de subida de nivel con efectos de pantalla.</li>
+        <li><strong>Multiplataforma Nativo:</strong> Controles híbridos adaptados para PC (teclado MMORPG con hotkeys numéricas) y dispositivos móviles (D-pad virtual y botones de acción táctiles).</li>
+        <li><strong>Actualizaciones Instantáneas en la Nube (OTA):</strong> Capacidad de aplicar mejoras y parches al juego en 30 segundos sin obligar al usuario a reinstalar la app.</li>
+        <li><strong>Launcher Oficial para PC:</strong> Cliente de escritorio ultraligero de solo 13 MB con verificación de ping en tiempo real.</li>
+      </ul>
+    </div>
+    <div data-lang-block="en" style="display: none;">
+      <p>Unlike abstract whitepapers, the technical and gameplay foundation is fully working and deployed today:</p>
+      <ul>
+        <li><strong>Real-Time Action Combat:</strong> Hit validation, cooldown skill loops, fluid dodges, and enemy knockback response.</li>
+        <li><strong>Progression Engine:</strong> Live quest tracking, real-time EXP acquisition, and celebratory level-up audiovisual effects.</li>
+        <li><strong>Universal Cross-Platform:</strong> Seamless support for PC keyboard hotkeys and mobile touch virtual controls.</li>
+        <li><strong>Over-The-Air (OTA) Cloud Updates:</strong> Push balance updates and bug fixes in 30 seconds without forcing app re-downloads.</li>
+        <li><strong>Official Desktop Launcher:</strong> Ultra-lightweight 13 MB PC launcher with real-time server latency ping.</li>
+      </ul>
+    </div>
+
+    <!-- 4. La Inversión -->
+    <h2>4. <span data-es="La Oportunidad: Micro-Ronda de Apoyo" data-en="The Opportunity: Early-Stage Micro-Round">La Oportunidad: Micro-Ronda de Apoyo</span></h2>
+    <div class="funding-highlight">
+      <div class="funding-amount">$10,000 – $25,000 USD</div>
+      <p style="margin-bottom: 0; color: #f1f5f9;" data-es="Buscamos un <strong>socio con visión humana</strong>: un inversionista ángel, editor o patrocinador que crea en el potencial de los fundadores resilientes y quiera ser parte del crecimiento temprano de esta franquicia." data-en="We are looking for a <strong>partner with a human perspective</strong>: an angel investor, publisher, or sponsor who believes in determined founders and wants to join the ground-floor growth of this IP.">
+        Buscamos un <strong>socio con visión humana</strong>: un inversionista ángel, editor o patrocinador que crea en el potencial de los fundadores resilientes y quiera ser parte del crecimiento temprano de esta franquicia.
+      </p>
+    </div>
+
+    <div data-lang-block="es">
+      <p><strong>Distribución Estratégica del Capital:</strong></p>
+      <ul>
+        <li><strong>65% — Dedicación Exclusiva y Desarrollo (6 a 9 meses de runway):</strong> Permitirá al fundador dedicarse a tiempo completo a la finalización de la primera gran versión, acelerando los tiempos de lanzamiento.</li>
+        <li><strong>20% — Infraestructura Multijugador:</strong> Despliegue de servidores dedicados de baja latencia para albergar las primeras salas de mazmorras cooperativas en vivo.</li>
+        <li><strong>15% — Arte Original y Música Exclusiva:</strong> Colaboración con artistas independientes para diseñar nuevos héroes, jefes de mazmorra y temas orquestales propios.</li>
+      </ul>
+    </div>
+    <div data-lang-block="en" style="display: none;">
+      <p><strong>Strategic Allocation of Capital:</strong></p>
+      <ul>
+        <li><strong>65% — Dedicated Full-Time Runway (6 to 9 months):</strong> Enables the founder to build full-time, dramatically compressing delivery timelines for the public release.</li>
+        <li><strong>20% — Dedicated Multiplayer Infrastructure:</strong> Scalable, low-latency authoritative servers for co-op dungeon instances.</li>
+        <li><strong>15% — Original Art & Original Audio:</strong> Collaborating with independent artists for unique hero sprites, raid bosses, and an orchestral soundtrack.</li>
+      </ul>
+    </div>
+
+    <!-- 5. Hitos -->
+    <h2>5. <span data-es="Hitos de Entrega" data-en="Roadmap & Delivery Milestones">Hitos de Entrega</span></h2>
+    <div class="milestone-grid">
+      <div class="milestone-card">
+        <div class="milestone-month" data-es="Mes 1 - 2" data-en="Month 1 - 2">Mes 1 - 2</div>
+        <div class="milestone-desc" data-es="Sincronización multijugador en tiempo real (mazmorras cooperativas de 4 jugadores)." data-en="Real-time co-op dungeon instances (4-player synchronized parties).">Sincronización multijugador en tiempo real (mazmorras cooperativas de 4 jugadores).</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-month" data-es="Mes 3 - 4" data-en="Month 3 - 4">Mes 3 - 4</div>
+        <div class="milestone-desc" data-es="Expansión de mundo: 3 biomas nuevos, 5 tipos de monstruos y primer Jefe de Incursión (*Raid Boss*)." data-en="World expansion: 3 new biomes, 5 monster archetypes, and first Raid Boss encounter.">Expansión de mundo: 3 biomas nuevos, 5 tipos de monstruos y primer Jefe de Incursión (*Raid Boss*).</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-month" data-es="Mes 5 - 6" data-en="Month 5 - 6">Mes 5 - 6</div>
+        <div class="milestone-desc" data-es="Beta Cerrada Global en Google Play y Web escalada a 5,000 jugadores simultáneos." data-en="Global Closed Beta on Google Play & Web scaled to 5,000 concurrent players.">Beta Cerrada Global en Google Play y Web escalada a 5,000 jugadores simultáneos.</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-month" data-es="Mes 7+" data-en="Month 7+">Mes 7+</div>
+        <div class="milestone-desc" data-es="Lanzamiento oficial e inicio de monetización ética mediante pases cosméticos y skins exclusivas." data-en="Official launch with ethical monetization: cosmetic seasonal battle passes & skins.">Lanzamiento oficial e inicio de monetización ética mediante pases cosméticos y skins exclusivas.</div>
+      </div>
+    </div>
+
+    <!-- 6. Conclusión -->
+    <h2>6. <span data-es="Una Invitación Personal" data-en="A Personal Invitation">Una Invitación Personal</span></h2>
+    <div data-lang-block="es">
+      <p>
+        <em>"No te pedimos que inviertas en una promesa abstracta. Te invitamos a probar nuestra demo, sentir el combate en tus manos y conocer a alguien que no se rinde ante los obstáculos y que va a llevar este juego a la meta con o sin viento a favor."</em>
+      </p>
+    </div>
+    <div data-lang-block="en" style="display: none;">
+      <p>
+        <em>"We do not ask you to invest in an abstract promise. We invite you to play our demo, feel the combat in your own hands, and back a builder who does not quit in the face of adversity and who will deliver this game to the finish line no matter the odds."</em>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="contact-footer">
+      <div style="font-weight: 700; font-size: 1.2rem; color: #ffffff;">WizzarDev Studios — Gustavo</div>
+      <p style="font-size: 0.88rem; color: #94a3b8; margin-top: 4px;" data-es="Fundador & Desarrollador Principal" data-en="Founder & Lead Game Developer">Fundador & Desarrollador Principal</p>
+      <div class="contact-links">
+        <a href="mailto:kalellostte@gmail.com" class="contact-item">✉️ kalellostte@gmail.com</a>
+        <a href="https://t.me/WizzarDev_1" target="_blank" rel="noopener noreferrer" class="contact-item">💬 Telegram: @WizzarDev_1</a>
+        <a href="https://realm-of-kingdom.vercel.app/" target="_blank" rel="noopener noreferrer" class="contact-item">🎮 Demo Web: realm-of-kingdom.vercel.app</a>
+      </div>
+    </div>
+
+    <div class="print-tip" onclick="window.print()">
+      💡 <span data-es="Tip: Puedes presionar <strong>Ctrl + P</strong> (o <strong>Cmd + P</strong>) en tu navegador para guardarlo como un PDF elegante y listo para enviar a empresas e inversores." data-en="Tip: Press <strong>Ctrl + P</strong> (or <strong>Cmd + P</strong>) to save as an executive PDF ready to email to partners and angels.">Tip: Puedes presionar <strong>Ctrl + P</strong> (o <strong>Cmd + P</strong>) en tu navegador para guardarlo como un PDF elegante y listo para enviar a empresas e inversores.</span>
+    </div>
+
+  </div>
+
+  <div id="toast" class="toast-msg">
+    ✅ ¡Enlace copiado al portapapeles!
+  </div>
+
+  <script>
+    let currentLang = 'es';
+
+    function toggleLang() {
+      currentLang = currentLang === 'es' ? 'en' : 'es';
+      document.body.dataset.lang = currentLang;
+      document.documentElement.lang = currentLang;
+
+      // Update button text
+      const btn = document.getElementById('lang-btn');
+      if (btn) {
+        btn.textContent = currentLang === 'es' ? '🇺🇸 English' : '🇪🇸 Español';
+      }
+
+      // Update inline spans
+      document.querySelectorAll('[data-es][data-en]').forEach(el => {
+        const text = el.getAttribute(`data-${currentLang}`);
+        if (text) {
+          el.innerHTML = text;
+        }
+      });
+
+      // Update block sections
+      document.querySelectorAll('[data-lang-block]').forEach(block => {
+        if (block.getAttribute('data-lang-block') === currentLang) {
+          block.style.display = 'block';
+        } else {
+          block.style.display = 'none';
+        }
+      });
+    }
+
+    function copyPitchLink() {
+      const url = 'https://realm-of-kingdom.vercel.app/pitch';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(showToast);
+      } else {
+        const input = document.createElement('input');
+        input.value = url;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        showToast();
+      }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2500);
+    }
+  </script>
+
+</body>
+</html>
