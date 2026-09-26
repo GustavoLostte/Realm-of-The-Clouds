@@ -1,0 +1,337 @@
+/* ============================================================
+   STARTER WELCOME MODAL - MOBILE RESPONSIVENESS OVERRIDES
+   ============================================================ */
+
+/* 1. Mobile Portrait (Screens <= 580px) */
+@media (max-width: 580px) {
+  .starter-welcome-modal {
+    width: calc(100vw - 12px) !important;
+    max-width: 460px !important;
+    max-height: 94dvh !important;
+    border-radius: 16px !important;
+  }
+
+  .welcome-hero-banner {
+    padding: 12px 14px !important;
+    gap: 12px !important;
+  }
+
+  .welcome-avatar-wrap {
+    width: 54px !important;
+    height: 54px !important;
+    border-width: 2.5px !important;
+  }
+
+  .welcome-crown-beacon-wrap {
+    width: 24px !important;
+    height: 24px !important;
+    bottom: -5px !important;
+    right: -4px !important;
+    border-width: 1px !important;
+  }
+
+  .welcome-crown-beacon-img {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .welcome-subtitle-tag {
+    font-size: 0.6rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  .welcome-hero-text h2 {
+    font-size: 1.15rem !important;
+    margin: 2px 0 1px !important;
+  }
+
+  .welcome-hero-text p {
+    font-size: 0.75rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .welcome-body-content {
+    padding: 12px 14px !important;
+  }
+
+  .welcome-prose {
+    padding: 10px 12px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+    margin-bottom: 12px !important;
+    border-left-width: 3px !important;
+    border-radius: 10px !important;
+  }
+
+  .roadmap-title {
+    font-size: 0.84rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  .roadmap-grid {
+    grid-template-columns: 1fr !important;
+    gap: 7px !important;
+  }
+
+  .roadmap-card {
+    padding: 8px 10px !important;
+    gap: 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .roadmap-hud-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .roadmap-card-body h5 {
+    font-size: 0.8rem !important;
+    margin-bottom: 1px !important;
+    padding-right: 48px !important;
+  }
+
+  .roadmap-card-body p {
+    font-size: 0.71rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .roadmap-badge {
+    font-size: 0.6rem !important;
+    top: 6px !important;
+    right: 8px !important;
+    padding: 1px 5px !important;
+  }
+
+  .welcome-footer-cta {
+    padding: 10px 14px max(10px, env(safe-area-inset-bottom, 10px)) !important;
+  }
+
+  .welcome-begin-btn {
+    padding: 10px 14px !important;
+    font-size: 0.86rem !important;
+    border-radius: 12px !important;
+    gap: 8px !important;
+  }
+
+  .welcome-btn-icon {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .welcome-btn-arrow {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* 2. Extra Narrow Phones (<= 375px e.g. iPhone SE) */
+@media (max-width: 375px) {
+  .starter-welcome-modal {
+    width: calc(100vw - 8px) !important;
+    border-radius: 14px !important;
+  }
+
+  .welcome-hero-banner {
+    padding: 10px !important;
+    gap: 10px !important;
+  }
+
+  .welcome-avatar-wrap {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .welcome-crown-beacon-wrap {
+    width: 20px !important;
+    height: 20px !important;
+    bottom: -4px !important;
+    right: -3px !important;
+  }
+
+  .welcome-crown-beacon-img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .welcome-subtitle-tag {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.8px !important;
+  }
+
+  .welcome-hero-text h2 {
+    font-size: 1.02rem !important;
+  }
+
+  .welcome-hero-text p {
+    font-size: 0.7rem !important;
+  }
+
+  .welcome-body-content {
+    padding: 10px !important;
+  }
+
+  .welcome-prose {
+    padding: 8px 10px !important;
+    font-size: 0.74rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .roadmap-card {
+    padding: 7px 9px !important;
+    gap: 8px !important;
+  }
+
+  .roadmap-card-body h5 {
+    font-size: 0.77rem !important;
+    padding-right: 44px !important;
+  }
+
+  .roadmap-card-body p {
+    font-size: 0.68rem !important;
+  }
+
+  .welcome-footer-cta {
+    padding: 8px 10px max(8px, env(safe-area-inset-bottom, 8px)) !important;
+  }
+
+  .welcome-begin-btn {
+    padding: 9px 10px !important;
+    font-size: 0.79rem !important;
+    gap: 6px !important;
+  }
+
+  .welcome-btn-icon {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .welcome-btn-arrow {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+/* 3. Mobile Landscape (Max Height <= 540px, or Landscape with Height <= 580px) */
+/* THIS IS THE NATIVE PLAYING ORIENTATION ON MOBILE */
+@media (max-height: 540px), ((orientation: landscape) and (max-height: 580px)) {
+  .starter-welcome-modal {
+    max-width: min(720px, calc(100vw - 16px)) !important;
+    width: min(720px, calc(100vw - 16px)) !important;
+    max-height: 96dvh !important;
+    border-radius: 14px !important;
+  }
+
+  .welcome-hero-banner {
+    padding: 8px 14px !important;
+    gap: 12px !important;
+  }
+
+  .welcome-avatar-wrap {
+    width: 44px !important;
+    height: 44px !important;
+    border-width: 2px !important;
+  }
+
+  .welcome-crown-beacon-wrap {
+    width: 20px !important;
+    height: 20px !important;
+    bottom: -3px !important;
+    right: -3px !important;
+  }
+
+  .welcome-crown-beacon-img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .welcome-subtitle-tag {
+    font-size: 0.58rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  .welcome-hero-text h2 {
+    font-size: 1.05rem !important;
+    margin: 1px 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  .welcome-hero-text p {
+    font-size: 0.71rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .welcome-body-content {
+    padding: 8px 14px !important;
+  }
+
+  .welcome-prose {
+    padding: 6px 10px !important;
+    font-size: 0.74rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 8px !important;
+    border-left-width: 3px !important;
+    border-radius: 8px !important;
+  }
+
+  .roadmap-title {
+    font-size: 0.79rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .roadmap-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .roadmap-card {
+    padding: 6px 9px !important;
+    gap: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .roadmap-hud-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .roadmap-card-body h5 {
+    font-size: 0.76rem !important;
+    margin-bottom: 1px !important;
+    padding-right: 42px !important;
+  }
+
+  .roadmap-card-body p {
+    font-size: 0.67rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .roadmap-badge {
+    font-size: 0.56rem !important;
+    top: 4px !important;
+    right: 6px !important;
+    padding: 1px 4px !important;
+  }
+
+  .welcome-footer-cta {
+    padding: 6px 14px max(6px, env(safe-area-inset-bottom, 6px)) !important;
+  }
+
+  .welcome-begin-btn {
+    padding: 7px 16px !important;
+    font-size: 0.82rem !important;
+    border-radius: 10px !important;
+    min-height: 36px !important;
+    gap: 8px !important;
+  }
+
+  .welcome-btn-icon {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .welcome-btn-arrow {
+    width: 15px !important;
+    height: 15px !important;
+  }
+}

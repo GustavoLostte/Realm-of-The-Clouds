@@ -21,8 +21,6 @@ import { DungeonEnemiesLayer } from './DungeonEnemiesLayer'
 import { MmorpgHudOverlay } from './MmorpgHudOverlay'
 import { DungeonBackpackModal } from './DungeonBackpackModal'
 import { generateUniqueId } from '../utils/uniqueId'
-import { authoritativeEngine } from '../services/authoritativeEngine'
-import { gameTelemetry } from '../services/gameTelemetryService'
 import './DungeonDemoScene.css'
 
 export const DEMO_MAPS = [
@@ -199,7 +197,7 @@ export const DUNGEON_QUESTS = [
 
 
 
-export function DungeonDemoScene({ onBack, initialPlayer = null }) {
+export function DungeonDemoScene({ onBack }) {
   const { currentLang, t } = useTranslation()
   const lang = currentLang || 'us'
   const langRef = useRef(lang)
@@ -397,54 +395,17 @@ export function DungeonDemoScene({ onBack, initialPlayer = null }) {
     groundLootRef.current = groundLoot
   }, [groundLoot])
 
-  // Champion current live state from ChampionActor (Initialized from Character Creation or saved player)
-  const [champState, setChampState] = useState(() => {
-    const rawPlayer = initialPlayer || (() => {
-      try {
-        const saved = localStorage.getItem('rok_active_player')
-        return saved ? JSON.parse(saved) : null
-      } catch {
-        return null
-      }
-    })()
-
-    if (rawPlayer) {
-      const folderMap = {
-        knight: 'KINA',
-        paladin: 'PALADIN',
-        mage: 'MAGE',
-        healer: 'HEALER',
-      }
-      const folder = folderMap[rawPlayer.classId] || 'KINA'
-      const gender = (rawPlayer.gender || 'male').toUpperCase()
-      const baseHp = rawPlayer.stats?.hp || 620
-      return {
-        name: rawPlayer.player_name || 'Player',
-        level: rawPlayer.level || 1,
-        badge: '👑',
-        classId: rawPlayer.classId || 'knight',
-        gender: (rawPlayer.gender || 'male').toLowerCase(),
-        avatar: `/CHAMPIONS/${folder}_${gender}/avatar.webp`,
-        hp: baseHp,
-        maxHp: baseHp,
-        hpPercent: 100,
-        fury: 100,
-      }
-    }
-
-    return {
-      name: 'Player',
-      level: 10,
-      badge: '👑',
-      classId: 'knight',
-      gender: 'male',
-      avatar: '/CHAMPIONS/KINA_MALE/avatar.webp',
-      hp: 850,
-      maxHp: 850,
-      hpPercent: 100,
-      fury: 100,
-    }
-  })
+  // Champion current live state from ChampionActor (Initialized with Level 10 stats for Demo Mode)
+  const [champState, setChampState] = useState(() => ({
+    name: 'Player',
+    level: 10,
+    badge: '👑',
+    avatar: '/CHAMPIONS/KINA_MALE/avatar.webp',
+    hp: 850,
+    maxHp: 850,
+    hpPercent: 100,
+    fury: 100,
+  }))
   const champActorRef = useRef(null)
   const champPosRef = useRef(18)
   const champFacingRef = useRef(1)
@@ -499,10 +460,6 @@ export function DungeonDemoScene({ onBack, initialPlayer = null }) {
     exp: 0,
     expNeeded: 140,
   })
-  const progressionRef = useRef(progression)
-  useEffect(() => {
-    progressionRef.current = progression
-  }, [progression])
   const [currentQuestIndex, setCurrentQuestIndex] = useState(0)
   const [questProgress, setQuestProgress] = useState(0)
   const [levelUpEffect, setLevelUpEffect] = useState(null)
@@ -895,20 +852,10 @@ export function DungeonDemoScene({ onBack, initialPlayer = null }) {
     setQuestProgress(0)
   }, [awardPlayerExp, logRecentLoot])
 
-  // High-performance callback when an enemy is defeated (Authoritative verification)
+  // High-performance callback when an enemy is defeated
   const handleEnemyKilled = useCallback(({ enemy, exp, gold, lootDrops }) => {
-    const authResult = authoritativeEngine.resolveEnemyKill({
-      enemy,
-      currentProgression: progressionRef.current || progression,
-      mapIndex: selectedMapIndexRef.current || 0,
-    })
-
-    const finalExp = authResult?.expGained ?? exp
-    const finalGold = authResult?.goldGained ?? gold
-    const finalDrops = (authResult?.lootDrops && authResult.lootDrops.length > 0) ? authResult.lootDrops : lootDrops
-
-    awardPlayerExp(finalExp, true)
-    const goldText = getDungeonText(langRef.current, 'combat', 'lootGold', { amount: finalGold })
+    awardPlayerExp(exp, true)
+    const goldText = getDungeonText(langRef.current, 'combat', 'lootGold', { amount: gold })
     const fId2 = generateUniqueId('pgold')
     const playerX = champActorRef.current?.posX ?? champPosRef.current ?? champStateRef.current?.posX ?? 18
     setPlayerFloatingTexts((prev) => [
@@ -939,7 +886,7 @@ export function DungeonDemoScene({ onBack, initialPlayer = null }) {
     })
 
     // Spawn physical ground loot
-    if (finalDrops && finalDrops.length > 0) {
+    if (lootDrops && lootDrops.length > 0) {
       const formattedDrops = lootDrops.map((drop, i) => {
         let name = getDungeonText(langRef.current, 'items', 'goldCoins')
         let icon = '/assets/items/gold_coin_v4.webp'
@@ -1666,8 +1613,7 @@ export function DungeonDemoScene({ onBack, initialPlayer = null }) {
               (Top-Left status HUD is rendered outside on the screen-fixed layer!)
             */}
             <ChampionActor 
-              champion={`${champState.classId || 'knight'}_${champState.gender || 'male'}`}
-              name={champState.name}
+              champion="knight_male"
               actorRef={champActorRef}
               level={progression.level}
               badge="👑"

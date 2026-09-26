@@ -118,7 +118,6 @@ export const SeamlessSprite = React.memo(function SeamlessSprite({
     width: '100%',
     height: '100%',
     transformOrigin: 'center bottom',
-    overflow: 'visible',
     ...(facing !== null ? { transform: `scaleX(${facing})` } : {}),
     ...style,
   }
