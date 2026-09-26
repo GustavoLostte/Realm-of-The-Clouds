@@ -14,7 +14,9 @@
     "android:dev": "tauri android dev",
     "android:build": "tauri android build --apk -t aarch64",
     "android:build:aab": "tauri android build --aab -t aarch64",
-    "android:build:teaser": "VITE_APP_MODE=teaser tauri android build --apk -t aarch64"
+    "android:build:teaser": "VITE_APP_MODE=teaser tauri android build --apk -t aarch64",
+    "server": "node server/src/index.js",
+    "server:dev": "node --watch server/src/index.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",
