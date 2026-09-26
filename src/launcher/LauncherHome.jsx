@@ -98,7 +98,7 @@ export function LauncherHome({ onPlayGame }) {
         </div>
 
         <div className="launcher-game-tagline">
-          2.5D Action MMORPG • <span>Reino de las Nubes</span>
+          2.5D Action MMORPG • <span>Reinos en Guerra</span>
         </div>
 
         {/* Play Button */}

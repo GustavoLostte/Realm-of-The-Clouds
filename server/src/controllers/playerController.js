@@ -52,7 +52,7 @@ export const syncPlayerProgression = async (req, res) => {
       id,
       player_email: player_email || null,
       player_name: player_name || 'Lord King',
-      kingdom_name: kingdom_name || 'Reino de las Nubes',
+      kingdom_name: kingdom_name || 'Reinos en Guerra',
       kingdom_level: Number(kingdom_level) || 1,
       trophies: Number(trophies) || 400,
       military_power: Number(military_power) || 1200,
