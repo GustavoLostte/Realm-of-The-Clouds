@@ -5,7 +5,7 @@ import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
 import { requestGameFullscreen } from '../utils/fullscreen'
 import { RoyalConfirmModal } from './RoyalConfirmModal'
-import { supabase, checkUsernameAvailable } from '../utils/supabaseClient'
+import { supabase, checkUsernameAvailable, recordPlayerSession } from '../utils/supabaseClient'
 import { generateRandomNobleName } from '../utils/nobleNameGenerator'
 import { ChampionSelectScreen } from './ChampionSelectScreen'
 import { openExternalUrl } from '../utils/openExternalUrl'
@@ -205,7 +205,7 @@ export function StartScreen({ onEnterGame }) {
   const [isGuestSession, setIsGuestSession] = useState(false)
   const [totalPlayersCount, setTotalPlayersCount] = useState(51)
 
-  // Fetch live registered player count from Supabase (100% real data)
+  // Fetch live registered player count from Supabase (100% real data with live auto-refresh)
   useEffect(() => {
     let isMounted = true
     const fetchCount = async () => {
@@ -218,8 +218,18 @@ export function StartScreen({ onEnterGame }) {
         }
       } catch {}
     }
+
     fetchCount()
-    return () => { isMounted = false }
+
+    // Refresh every 15 seconds and on tab focus
+    const interval = setInterval(fetchCount, 15000)
+    window.addEventListener('focus', fetchCount)
+
+    return () => {
+      isMounted = false
+      clearInterval(interval)
+      window.removeEventListener('focus', fetchCount)
+    }
   }, [])
   const [isDevBypassActive, setIsDevBypassActive] = useState(() => {
     try {
@@ -685,6 +695,10 @@ export function StartScreen({ onEnterGame }) {
     soundManager.initCtx?.()
     soundManager.playClick?.()
     requestGameFullscreen()
+
+    try {
+      recordPlayerSession()
+    } catch {}
 
     try {
       analytics?.gameStart?.(currentLang)

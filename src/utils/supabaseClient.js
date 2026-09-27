@@ -231,6 +231,48 @@ export async function checkSupabaseConnection() {
 }
 
 /**
+ * Register a new player or visitor session into Supabase Cloud
+ * Guaranteed to increment live player count for every unique device/guest.
+ */
+export async function recordPlayerSession() {
+  try {
+    const id = getPlayerId()
+    const email = getPlayerEmail() || null
+    const name = (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_name')) ||
+      generateRandomNobleName(typeof localStorage !== 'undefined' ? localStorage.getItem('toc_language') : 'es')
+    const avatar = (typeof localStorage !== 'undefined' && localStorage.getItem('toc_player_avatar')) || '/assets/avatars/avatar_king.webp'
+
+    // Check if this player already exists in kingdom_saves to avoid duplicate increments
+    const { data: existing } = await supabase
+      .from('kingdom_saves')
+      .select('id')
+      .eq('id', id)
+      .maybeSingle()
+
+    if (!existing) {
+      await supabase.from('kingdom_saves').insert({
+        id,
+        player_email: email,
+        player_name: name,
+        avatar,
+        kingdom_level: 1,
+        trophies: 250,
+        military_power: 1200,
+        game_state: {
+          profile: { name, avatar },
+          kingdomLevel: 1,
+          resources: { food: 500, wood: 500, gold: 1000, stone: 400 },
+          lastSavedTime: Date.now()
+        },
+        updated_at: new Date().toISOString()
+      })
+    }
+  } catch (err) {
+    console.warn('[Session] Could not record player session:', err)
+  }
+}
+
+/**
  * Save kingdom game state to Supabase Cloud immediately
  */
 export async function saveKingdomToCloud(state) {
