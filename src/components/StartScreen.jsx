@@ -203,9 +203,9 @@ export function StartScreen({ onEnterGame }) {
   const [logoClickCount, setLogoClickCount] = useState(0)
   const [lastLogoClickTime, setLastLogoClickTime] = useState(0)
   const [isGuestSession, setIsGuestSession] = useState(false)
-  const [totalPlayersCount, setTotalPlayersCount] = useState(1480)
+  const [totalPlayersCount, setTotalPlayersCount] = useState(51)
 
-  // Fetch live registered player count from Supabase
+  // Fetch live registered player count from Supabase (100% real data)
   useEffect(() => {
     let isMounted = true
     const fetchCount = async () => {
@@ -214,7 +214,7 @@ export function StartScreen({ onEnterGame }) {
           .from('kingdom_saves')
           .select('id', { count: 'exact', head: true })
         if (!error && typeof count === 'number' && count > 0 && isMounted) {
-          setTotalPlayersCount(1420 + count)
+          setTotalPlayersCount(count)
         }
       } catch {}
     }
@@ -1379,7 +1379,7 @@ export function StartScreen({ onEnterGame }) {
           <div className="start-player-count-badge">
             <span className="start-player-pulse-dot" />
             <span className="start-player-count-text">
-              {(t('start.playedByCount') || 'Jugado por +{count} personas').replace('{count}', totalPlayersCount.toLocaleString())}
+              {(t('start.playedByCount') || 'Jugado por {count} personas').replace('{count}', totalPlayersCount.toLocaleString())}
             </span>
           </div>
         </div>
@@ -1482,7 +1482,7 @@ export function StartScreen({ onEnterGame }) {
           <div className="start-player-count-badge" style={{ marginTop: '14px' }}>
             <span className="start-player-pulse-dot" />
             <span className="start-player-count-text">
-              {(t('start.playedByCount') || 'Jugado por +{count} personas').replace('{count}', totalPlayersCount.toLocaleString())}
+              {(t('start.playedByCount') || 'Jugado por {count} personas').replace('{count}', totalPlayersCount.toLocaleString())}
             </span>
           </div>
         </div>

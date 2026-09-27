@@ -121,7 +121,7 @@ export const es = {
     "guestBadge": "Reino Invitado",
     "lastPlayed": "Última actividad: {time}",
     "discordCommunity": "Comunidad Oficial de Discord",
-    "playedByCount": "Jugado por +{count} personas",
+    "playedByCount": "Jugado por {count} personas",
     "rememberedSession": "SESIÓN GUARDADA • LIVE",
     "continueAdventure": "CONTINUAR AVENTURA",
     "disconnectAccount": "Desconectar Cuenta / Cambiar",

@@ -120,7 +120,7 @@ export const kr = {
     "guestBadge": "게스트 왕국",
     "lastPlayed": "최근 활동: {time}",
     "discordCommunity": "공식 Discord 커뮤니티",
-    "playedByCount": "{count}+명 이상의 플레이어 플레이 중",
+    "playedByCount": "{count}명의 플레이어 플레이 중",
     "rememberedSession": "저장된 세션 • LIVE",
     "continueAdventure": "모험 계속하기",
     "disconnectAccount": "계정 연결 해제 / 전환",

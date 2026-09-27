@@ -121,7 +121,7 @@ export const us = {
     "guestBadge": "Guest Realm",
     "lastPlayed": "Last active: {time}",
     "discordCommunity": "Official Discord Community",
-    "playedByCount": "Played by {count}+ players",
+    "playedByCount": "Played by {count} players",
     "rememberedSession": "REMEMBERED SESSION • LIVE",
     "continueAdventure": "CONTINUE ADVENTURE",
     "disconnectAccount": "Disconnect Account / Switch",

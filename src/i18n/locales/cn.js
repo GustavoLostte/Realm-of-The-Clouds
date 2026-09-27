@@ -120,7 +120,7 @@ export const cn = {
     "guestBadge": "访客领地",
     "lastPlayed": "最近活跃：{time}",
     "discordCommunity": "官方 Discord 社区",
-    "playedByCount": "已有超过 {count}+ 位玩家加入",
+    "playedByCount": "已有 {count} 位玩家加入",
     "rememberedSession": "已保存会话 • LIVE",
     "continueAdventure": "继续冒险",
     "disconnectAccount": "断开账号 / 切换",
