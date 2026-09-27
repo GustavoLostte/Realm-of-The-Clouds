@@ -3947,6 +3947,21 @@ img, picture, svg, canvas, [draggable] {
     white-space: nowrap !important;
   }
 
+  .start-player-count-badge {
+    margin-top: 4px !important;
+    padding: 3px 10px 3px 8px !important;
+    gap: 6px !important;
+  }
+
+  .start-player-count-text {
+    font-size: 0.68rem !important;
+  }
+
+  .start-player-pulse-dot {
+    width: 7px !important;
+    height: 7px !important;
+  }
+
   /* Guest / Login modal card on short landscape viewports */
   .guest-modal-backdrop {
     padding: max(6px, env(safe-area-inset-top, 6px)) max(12px, env(safe-area-inset-right, 12px)) max(6px, env(safe-area-inset-bottom, 6px)) max(12px, env(safe-area-inset-left, 12px)) !important;
@@ -6981,6 +6996,61 @@ img, picture, svg, canvas, [draggable] {
       0 0 64px rgba(14, 165, 233, 0.65),
       0 2px 12px rgba(0, 0, 0, 1);
   }
+}
+
+/* Live Player Count Badge with Pulsing Green Dot */
+.start-player-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(6, 14, 26, 0.76);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 
+    0 4px 18px rgba(0, 0, 0, 0.65),
+    0 0 14px rgba(16, 185, 129, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 5px 14px 5px 10px;
+  border-radius: 9999px;
+  margin-top: 12px;
+  pointer-events: none;
+  user-select: none;
+  animation: fadeIn 1.2s ease-out both;
+  transition: all 0.3s ease;
+}
+
+.start-player-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981, 0 0 18px rgba(16, 185, 129, 0.85);
+  flex-shrink: 0;
+  animation: greenDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes greenDotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px #10b981, 0 0 18px rgba(16, 185, 129, 0.85);
+  }
+  50% {
+    transform: scale(0.82);
+    opacity: 0.65;
+    box-shadow: 0 0 5px #10b981, 0 0 10px rgba(16, 185, 129, 0.45);
+  }
+}
+
+.start-player-count-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Cinzel', sans-serif;
+  font-size: clamp(0.74rem, 1.4vw, 0.84rem);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #a7f3d0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
 }
 
 /* GUEST EMAIL PERSISTENCE MODAL */

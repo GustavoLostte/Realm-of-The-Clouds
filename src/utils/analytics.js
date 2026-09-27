@@ -9,7 +9,7 @@
  *   analytics.trackEvent('building_built', { building: 'castle', level: 2 })
  */
 
-const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX' // ← Replace with your real GA4 Measurement ID
+const GA_MEASUREMENT_ID = 'G-H0ZD5NFG59'
 
 let isInitialized = false
 const eventQueue = []
@@ -22,30 +22,29 @@ export function initAnalytics() {
   if (typeof window === 'undefined') return
   if (isInitialized) return
 
-  // Don't load in development
-  if (GA_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
-    console.log('[Analytics] Skipped: Replace GA_MEASUREMENT_ID with your real ID')
-    isInitialized = true // Mark as init so events just log to console
-    return
-  }
-
   try {
-    // Load gtag.js script
-    const script = document.createElement('script')
-    script.async = true
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
-    document.head.appendChild(script)
+    // If gtag.js was already injected by index.html, reuse it
+    if (!window.gtag) {
+      const script = document.createElement('script')
+      script.async = true
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
+      document.head.appendChild(script)
 
-    // Initialize dataLayer and gtag function
-    window.dataLayer = window.dataLayer || []
-    window.gtag = function () {
-      window.dataLayer.push(arguments)
+      window.dataLayer = window.dataLayer || []
+      window.gtag = function () {
+        window.dataLayer.push(arguments)
+      }
+      window.gtag('js', new Date())
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        send_page_view: true,
+        cookie_flags: 'SameSite=None;Secure',
+      })
+    } else {
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        send_page_view: true,
+        cookie_flags: 'SameSite=None;Secure',
+      })
     }
-    window.gtag('js', new Date())
-    window.gtag('config', GA_MEASUREMENT_ID, {
-      send_page_view: false, // We'll track game screens manually
-      cookie_flags: 'SameSite=None;Secure',
-    })
 
     isInitialized = true
 

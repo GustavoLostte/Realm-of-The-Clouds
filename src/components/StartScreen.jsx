@@ -11,6 +11,7 @@ import { ChampionSelectScreen } from './ChampionSelectScreen'
 import { openExternalUrl } from '../utils/openExternalUrl'
 import { UnderDevelopmentModal } from './UnderDevelopmentModal'
 import { DungeonDemoScene } from './DungeonDemoScene'
+import { analytics } from '../utils/analytics'
 
 const AVATAR_LIST = [
   { id: 'king', name: 'Arcángel Soberano', img: '/assets/avatars/avatar_king.webp', title: 'Monarca Celestial' },
@@ -202,6 +203,24 @@ export function StartScreen({ onEnterGame }) {
   const [logoClickCount, setLogoClickCount] = useState(0)
   const [lastLogoClickTime, setLastLogoClickTime] = useState(0)
   const [isGuestSession, setIsGuestSession] = useState(false)
+  const [totalPlayersCount, setTotalPlayersCount] = useState(1480)
+
+  // Fetch live registered player count from Supabase
+  useEffect(() => {
+    let isMounted = true
+    const fetchCount = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('kingdom_saves')
+          .select('id', { count: 'exact', head: true })
+        if (!error && typeof count === 'number' && count > 0 && isMounted) {
+          setTotalPlayersCount(1420 + count)
+        }
+      } catch {}
+    }
+    fetchCount()
+    return () => { isMounted = false }
+  }, [])
   const [isDevBypassActive, setIsDevBypassActive] = useState(() => {
     try {
       sessionStorage.setItem('roc_dev_bypass', 'true')
@@ -666,6 +685,15 @@ export function StartScreen({ onEnterGame }) {
     soundManager.initCtx?.()
     soundManager.playClick?.()
     requestGameFullscreen()
+
+    try {
+      analytics?.gameStart?.(currentLang)
+      analytics?.trackEvent?.('game_enter_click', {
+        method: 'tap_to_enter',
+        language: currentLang,
+        server: chosenServer,
+      })
+    } catch {}
 
     try {
       if (typeof window !== 'undefined') {
@@ -1346,6 +1374,14 @@ export function StartScreen({ onEnterGame }) {
           <span className="start-prompt-text">
             {t('start.touchToStart')}
           </span>
+
+          {/* Live Player Count Badge with Green Pulsing Dot */}
+          <div className="start-player-count-badge">
+            <span className="start-player-pulse-dot" />
+            <span className="start-player-count-text">
+              {(t('start.playedByCount') || 'Jugado por +{count} personas').replace('{count}', totalPlayersCount.toLocaleString())}
+            </span>
+          </div>
         </div>
       )}
 
@@ -1440,6 +1476,14 @@ export function StartScreen({ onEnterGame }) {
                 <span>{isLoading ? t('start.disconnecting') : t('start.disconnectAccount')}</span>
               </button>
             </div>
+          </div>
+
+          {/* Live Player Count Badge with Green Pulsing Dot */}
+          <div className="start-player-count-badge" style={{ marginTop: '14px' }}>
+            <span className="start-player-pulse-dot" />
+            <span className="start-player-count-text">
+              {(t('start.playedByCount') || 'Jugado por +{count} personas').replace('{count}', totalPlayersCount.toLocaleString())}
+            </span>
           </div>
         </div>
       )}

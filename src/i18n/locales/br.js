@@ -120,6 +120,7 @@ export const br = {
     "guestBadge": "Reino de Convidado",
     "lastPlayed": "Última atividade: {time}",
     "discordCommunity": "Comunidade Oficial do Discord",
+    "playedByCount": "Jogado por mais de {count} pessoas",
     "rememberedSession": "SESSÃO SALVA • LIVE",
     "continueAdventure": "CONTINUAR AVENTURA",
     "disconnectAccount": "Desconectar Conta / Trocar",
