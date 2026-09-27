@@ -219,6 +219,11 @@ export function StartScreen({ onEnterGame }) {
       } catch {}
     }
 
+    // Record session immediately upon arrival so new visitors increment counter right away
+    recordPlayerSession().then(() => {
+      if (isMounted) fetchCount()
+    }).catch(() => {})
+
     fetchCount()
 
     // Refresh every 15 seconds and on tab focus
