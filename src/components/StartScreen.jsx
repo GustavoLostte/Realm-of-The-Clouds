@@ -578,11 +578,13 @@ export function StartScreen({ onEnterGame }) {
   // Handle tap anywhere on screen to unlock audio and immediately enter the game (Instant 0ms response)
   const hasTriggeredEntryRef = useRef(false)
   const lastScreenTapTimeRef = useRef(0)
+  const mountTimeRef = useRef(Date.now())
 
   // Reset entry lock whenever returning to start screen view
   useEffect(() => {
     if (!isDungeonDemoOpen) {
       hasTriggeredEntryRef.current = false
+      mountTimeRef.current = Date.now()
     }
   }, [isDungeonDemoOpen])
 
@@ -590,6 +592,7 @@ export function StartScreen({ onEnterGame }) {
     setIsDungeonDemoOpen(false)
     hasTriggeredEntryRef.current = false
     lastScreenTapTimeRef.current = 0
+    mountTimeRef.current = Date.now()
     try {
       if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
         if (
@@ -605,20 +608,50 @@ export function StartScreen({ onEnterGame }) {
 
   const handleScreenClick = (e) => {
     // If clicking language menu or interactive buttons like website/discord, don't trigger game start
-    if (e && e.target && e.target.closest && (
-      e.target.closest('.start-top-left-actions') ||
-      e.target.closest('.start-lang-dropdown-wrap') ||
-      e.target.closest('.remembered-account-card') ||
-      e.target.closest('.guest-modal-card') ||
-      e.target.closest('.server-connecting-card') ||
-      e.target.closest('button') ||
-      e.target.closest('a')
-    )) {
-      return
+    if (e) {
+      const target = e.target
+      if (target) {
+        if (target.closest && (
+          target.closest('.start-top-left-actions') ||
+          target.closest('.start-top-discord-btn') ||
+          target.closest('.start-top-website-btn') ||
+          target.closest('.start-lang-dropdown-wrap') ||
+          target.closest('.remembered-account-card') ||
+          target.closest('.guest-modal-card') ||
+          target.closest('.server-connecting-card') ||
+          target.closest('button') ||
+          target.closest('a')
+        )) {
+          return
+        }
+
+        // Parent traversal fallback for SVG / touch targets
+        let curr = target
+        while (curr && curr !== e.currentTarget) {
+          const cls = String(curr.className || '')
+          const tag = (curr.tagName || '').toLowerCase()
+          if (
+            cls.includes('start-top-left-actions') ||
+            cls.includes('start-top-discord-btn') ||
+            cls.includes('start-top-website-btn') ||
+            cls.includes('start-lang') ||
+            tag === 'a' ||
+            tag === 'button'
+          ) {
+            return
+          }
+          curr = curr.parentNode
+        }
+      }
     }
 
     if (isLangMenuOpen) {
       setIsLangMenuOpen(false)
+      return
+    }
+
+    // Startup grace period (600ms) to prevent stray taps/skips from intro splash from launching game
+    if (Date.now() - mountTimeRef.current < 600) {
       return
     }
 
@@ -1147,14 +1180,26 @@ export function StartScreen({ onEnterGame }) {
         </div>
       )}
       {/* Top Floating Left Actions: Web Site & Discord Community */}
-      <div className="start-top-left-actions">
+      <div 
+        className="start-top-left-actions"
+        onPointerDown={(e) => e.stopPropagation()}
+        onPointerUp={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Official Web Site Button */}
         <a
           href="https://rok-web-site.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
           className="start-top-website-btn"
+          onPointerDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
           onClick={(e) => {
+            e.stopPropagation()
             soundManager.playClick?.()
             openExternalUrl('https://rok-web-site.vercel.app/', e)
           }}
@@ -1168,13 +1213,16 @@ export function StartScreen({ onEnterGame }) {
 
         {/* Discord Community Button */}
         <a
-          href="https://discord.gg/ThNaG4pzy"
+          href="https://discord.gg/z8VU8ZQmUQ"
           target="_blank"
           rel="noopener noreferrer"
           className="start-top-discord-btn"
+          onPointerDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
           onClick={(e) => {
+            e.stopPropagation()
             soundManager.playClick?.()
-            openExternalUrl('https://discord.gg/ThNaG4pzy', e)
+            openExternalUrl('https://discord.gg/z8VU8ZQmUQ', e)
           }}
           title={t('start.discordCommunity') || 'Official Discord Community'}
         >

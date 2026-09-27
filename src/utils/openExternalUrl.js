@@ -13,7 +13,6 @@ export const isTauriEnvironment = () => {
 
 export const openExternalUrl = async (url, event) => {
   if (event) {
-    if (typeof event.preventDefault === 'function') event.preventDefault()
     if (typeof event.stopPropagation === 'function') event.stopPropagation()
   }
 
@@ -21,6 +20,7 @@ export const openExternalUrl = async (url, event) => {
 
   // 1. If running inside Tauri desktop app, use official Tauri Opener plugin
   if (isTauriEnvironment()) {
+    if (event && typeof event.preventDefault === 'function') event.preventDefault()
     try {
       const { openUrl } = await import('@tauri-apps/plugin-opener')
       await openUrl(url)
@@ -31,31 +31,45 @@ export const openExternalUrl = async (url, event) => {
   }
 
   // 2. Standard Web / PWA environment
-  try {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      // Pop-up blocker might have blocked it, try direct navigation
-      window.location.assign(url)
-    }
-  } catch (err) {
-    console.error('[openExternalUrl] Failed to open external URL:', err)
+  // If this was an event triggered on a native <a> link with target="_blank",
+  // allow the browser to open it natively without preventDefault (immune to popup blockers).
+  const isAnchorTag = Boolean(
+    event && (
+      (event.currentTarget && event.currentTarget.tagName?.toLowerCase() === 'a') ||
+      (event.target && event.target.closest && event.target.closest('a'))
+    )
+  )
+
+  if (!isAnchorTag) {
     try {
-      window.location.href = url
-    } catch (e) {
-      // ignore
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        // Pop-up blocker might have blocked it, try direct navigation
+        window.location.assign(url)
+      }
+    } catch (err) {
+      console.error('[openExternalUrl] Failed to open external URL:', err)
+      try {
+        window.location.href = url
+      } catch (e) {
+        // ignore
+      }
     }
   }
 }
 
 /**
  * Initializes a global listener to intercept <a target="_blank"> clicks
- * in Tauri desktop environments, ensuring all external links open in the
- * system's default browser (Safari, Chrome, etc.).
+ * in Tauri desktop environments ONLY, ensuring all external links open in the
+ * system's default browser (Safari, Chrome, etc.) rather than being blocked inside Tauri.
  */
 export const initGlobalLinkInterceptor = () => {
   if (typeof window === 'undefined') return
 
   document.addEventListener('click', (e) => {
+    // Only intercept in Tauri desktop environment; let web browsers use native behavior
+    if (!isTauriEnvironment()) return
+
     // Find closest anchor tag
     const anchor = e.target.closest ? e.target.closest('a') : null
     if (!anchor) return
@@ -65,7 +79,7 @@ export const initGlobalLinkInterceptor = () => {
 
     // If it's an external link or target="_blank"
     if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-      if (isTauriEnvironment() || target === '_blank') {
+      if (target === '_blank') {
         e.preventDefault()
         e.stopPropagation()
         openExternalUrl(href)

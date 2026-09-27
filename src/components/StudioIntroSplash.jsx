@@ -89,7 +89,10 @@ export function StudioIntroSplash({ onComplete }) {
     }
   }, [])
 
-  const handleOverlayClick = () => {
+  const handleOverlayClick = (e) => {
+    if (e) {
+      if (typeof e.stopPropagation === 'function') e.stopPropagation()
+    }
     if (!canSkipRef.current) return
     finishSplash()
   }
@@ -98,6 +101,7 @@ export function StudioIntroSplash({ onComplete }) {
     <div 
       className={`studio-splash-overlay phase-${phase}`}
       onPointerDown={handleOverlayClick}
+      onTouchStart={handleOverlayClick}
       onClick={handleOverlayClick}
       role="banner"
       aria-label="WizzarDev Studios Intro"

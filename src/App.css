@@ -8164,6 +8164,8 @@ img, picture, svg, canvas, [draggable] {
   pointer-events: auto;
   text-decoration: none;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   color: #f1f5f9;
   height: 42px;

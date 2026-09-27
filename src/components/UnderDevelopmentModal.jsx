@@ -24,7 +24,7 @@ export function UnderDevelopmentModal({ isOpen, onClose, onEnterGuest }) {
 
   const handleDiscordClick = (e) => {
     soundManager.playClick?.()
-    openExternalUrl('https://discord.gg/ThNaG4pzy', e)
+    openExternalUrl('https://discord.gg/z8VU8ZQmUQ', e)
   }
 
   const handleWebsiteClick = (e) => {
