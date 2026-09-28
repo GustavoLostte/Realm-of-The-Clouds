@@ -76,20 +76,11 @@ export default defineConfig(({ mode }) => {
         }
       },
       {
-        name: 'html-routes-fallback',
+        name: 'deck-fallback',
         configureServer(server) {
           server.middlewares.use((req, res, next) => {
-            const urlPath = req.url ? req.url.split('?')[0] : ''
-            if (urlPath === '/deck' || urlPath === '/deck/') {
+            if (req.url === '/deck' || req.url === '/deck/') {
               req.url = '/deck/index.html'
-            } else if (urlPath === '/pitch' || urlPath === '/pitch/') {
-              req.url = '/pitch.html'
-            } else if (urlPath === '/inversion' || urlPath === '/inversion/') {
-              req.url = '/pitch.html'
-            } else if (urlPath === '/privacy' || urlPath === '/privacy/') {
-              req.url = '/privacy.html'
-            } else if (urlPath === '/terms' || urlPath === '/terms/') {
-              req.url = '/terms.html'
             }
             next()
           })
