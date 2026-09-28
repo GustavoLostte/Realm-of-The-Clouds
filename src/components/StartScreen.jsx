@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { Shield, Loader2, AlertCircle, CheckCircle2, Trash2, X, Dices, Check, Sparkles, ArrowLeft, ArrowRight, Edit3, Crown, Mail, Globe, ChevronDown, Lock, Eye, EyeOff, ShieldCheck, LogIn, UserPlus, LogOut, Swords } from 'lucide-react'
+import { Shield, Loader2, AlertCircle, CheckCircle2, Trash2, X, Dices, Check, Sparkles, ArrowLeft, ArrowRight, Edit3, Crown, Mail, Globe, ChevronDown, Lock, Eye, EyeOff, ShieldCheck, LogIn, UserPlus, LogOut, Swords, Heart } from 'lucide-react'
 import { gameStorage, hasMeaningfulProgress } from '../utils/gameStorage'
 import { soundManager } from '../utils/audio'
 import { useTranslation } from '../i18n/index.jsx'
@@ -135,9 +135,38 @@ function CloudRealmCrown({ className = "w-11 h-11" }) {
   )
 }
 
+const KOFI_URL = 'https://ko-fi.com/wizzardev'
+const DONATE_I18N = {
+  es: {
+    title: '☕ Apoya a Realm of Kingdoms',
+    p1: 'Primero que todo, gracias por estar aquí. El simple hecho de que estés jugando ya significa mucho para nosotros.',
+    p2: 'Este juego nace del sueño de un desarrollador indie independiente — sin estudio, sin inversores — solo pasión, noches largas y mucho café.',
+    p3: 'Si el juego te gusta y quieres ayudarnos a seguir adelante, tu donativo nos permite:',
+    b1: '🖥️ Mantener los servidores activos para todos',
+    b2: '⚔️ Crear nuevas clases, dungeons y contenido',
+    b3: '🌍 Hacer crecer este mundo que estamos construyendo juntos',
+    p4: 'No estás obligado a nada. Tu tiempo jugando ya es un regalo. Pero si puedes, cada café nos acerca un paso más a hacer este sueño realidad.',
+    thanks: 'Gracias de corazón por creer en nosotros. 🙏❤️',
+    btn: '☕ Invítanos un café',
+  },
+  en: {
+    title: '☕ Support Realm of Kingdoms',
+    p1: 'First of all, thank you for being here. Just the fact that you\'re playing already means the world to us.',
+    p2: 'This game is born from the dream of a solo indie developer — no studio, no investors — just passion, long nights, and a lot of coffee.',
+    p3: 'If you enjoy the game and want to help us keep going, your donation helps us:',
+    b1: '🖥️ Keep the servers running for everyone',
+    b2: '⚔️ Create new classes, dungeons & content',
+    b3: '🌍 Grow this world we\'re building together',
+    p4: 'You\'re not obligated to anything. Your time playing is already a gift. But if you can, every coffee brings us one step closer to making this dream a reality.',
+    thanks: 'Thank you from the bottom of our hearts. 🙏❤️',
+    btn: '☕ Buy us a coffee',
+  }
+}
+
 export function StartScreen({ onEnterGame }) {
   const { t, currentLang, changeLanguage, languages } = useTranslation()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showDonateModal, setShowDonateModal] = useState(false)
   const [isGuestNameModalOpen, setIsGuestNameModalOpen] = useState(false)
   const [guestStep, setGuestStep] = useState(1) // 1: Commander Name, 2: Avatar Selection
   const [guestName, setGuestName] = useState('')
@@ -2592,6 +2621,42 @@ export function StartScreen({ onEnterGame }) {
           handleConfirmServerSelection(chosenServer)
         }}
       />
+
+      {/* Donate Button — bottom left */}
+      <button
+        type="button"
+        className="donate-fab-btn"
+        onClick={() => setShowDonateModal(true)}
+        aria-label="Support the developer"
+      >
+        <Heart size={16} fill="#ef4444" color="#ef4444" />
+        <span>Support</span>
+      </button>
+
+      {/* Donate Modal */}
+      {showDonateModal && (() => {
+        const dt = DONATE_I18N[currentLang?.startsWith?.('es') ? 'es' : (currentLang || 'en').startsWith('es') ? 'es' : 'en'] || DONATE_I18N.en
+        return (
+          <div className="donate-overlay" onClick={e => { if (e.target === e.currentTarget) setShowDonateModal(false) }}>
+            <div className="donate-card">
+              <button className="donate-close" onClick={() => setShowDonateModal(false)}><X size={20} /></button>
+              <div style={{fontSize:'3rem',textAlign:'center',marginBottom:8}}>☕</div>
+              <h2 className="donate-title">{dt.title}</h2>
+              <p className="donate-text donate-hl">{dt.p1}</p>
+              <p className="donate-text">{dt.p2}</p>
+              <p className="donate-text">{dt.p3}</p>
+              <ul className="donate-list">
+                <li>{dt.b1}</li>
+                <li>{dt.b2}</li>
+                <li>{dt.b3}</li>
+              </ul>
+              <p className="donate-text" style={{fontStyle:'italic',color:'#94a3b8'}}>{dt.p4}</p>
+              <p className="donate-thanks">{dt.thanks}</p>
+              <a href={KOFI_URL} target="_blank" rel="noopener noreferrer" className="donate-cta">{dt.btn}</a>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }
