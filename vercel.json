@@ -2,6 +2,22 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/pitch",
+      "destination": "/pitch.html"
+    },
+    {
+      "source": "/inversion",
+      "destination": "/pitch.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
       "source": "/deck",
       "destination": "/deck/index.html"
     },

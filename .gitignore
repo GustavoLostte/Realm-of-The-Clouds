@@ -39,6 +39,7 @@ public/assets/characters/ANIMADOS/
 *.mp4
 *.mov
 build-android/
+build-pc/
 archive_raw_frames/
 public_demo/
 public_teaser/

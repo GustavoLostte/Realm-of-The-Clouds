@@ -1,0 +1,818 @@
+/* Cloud City Scene — Aesthetic Styles for Realm of the Clouds Hub */
+
+.cloud-city-scene-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  background-color: #0b1329;
+  font-family: 'Cinzel', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #fff;
+  container-type: inline-size;
+  --dungeon-sprite-height: 21vh;
+}
+
+/* 1. Background Layer & Animated Transitions */
+.cloud-city-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, filter;
+  z-index: 1;
+}
+
+.cloud-city-bg-layer.transitioning {
+  filter: brightness(1.25) saturate(1.15) blur(2px);
+}
+
+.cloud-city-bg-layer.transitioning.transition-right {
+  transform: translateX(-20px) scale(1.02);
+}
+
+.cloud-city-bg-layer.transitioning.transition-left {
+  transform: translateX(20px) scale(1.02);
+}
+
+.cloud-city-sky-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.05) 0%, rgba(11, 19, 41, 0.45) 85%);
+  pointer-events: none;
+}
+
+/* 2. Top Header Navigation */
+.cloud-city-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: linear-gradient(180deg, rgba(8, 14, 30, 0.88) 0%, rgba(8, 14, 30, 0.4) 75%, transparent 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 50;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.city-header-left,
+.city-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.city-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.city-nav-btn:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: #f59e0b;
+  color: #fbbf24;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);
+}
+
+.city-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.city-icon-btn:hover,
+.city-icon-btn.active {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: scale(1.05);
+}
+
+/* Center Title Chip */
+.city-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.city-title-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+}
+
+.city-realm-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.city-divider {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.city-hall-name {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: 0.5px;
+}
+
+.city-hall-name.is-center-hall {
+  color: #fde047;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+}
+
+.city-zone-subtitle {
+  font-size: 0.72rem;
+  color: #38bdf8;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+/* Minimap Strip */
+.city-halls-nav-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 4px 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.city-hall-pill {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.city-hall-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.city-hall-pill.active {
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+  color: #0b1329;
+  border-color: #7dd3fc;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.city-hall-pill.is-center-pill {
+  color: #fcd34d;
+  font-weight: 800;
+}
+
+.city-hall-pill.is-center-pill.active {
+  background: linear-gradient(135deg, #b45309 0%, #f59e0b 50%, #fbbf24 100%);
+  color: #0b1329;
+  border-color: #fef08a;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+}
+
+/* Quick Champion Switcher */
+.city-champion-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 4px 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.city-champ-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.city-champ-switch-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+}
+
+.city-champ-switch-btn.active {
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+  color: #0b1329;
+  border-color: #7dd3fc;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.city-gender-switch-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fbbf24;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 2px;
+}
+
+.city-gender-switch-btn:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #fbbf24;
+  transform: scale(1.08);
+}
+
+/* 3. Navigation Side Arrows */
+.city-side-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 18px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 12px;
+  color: #f1f5f9;
+  cursor: pointer;
+  z-index: 40;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.city-arrow-left {
+  left: 20px;
+}
+
+.city-arrow-right {
+  right: 20px;
+}
+
+.city-side-arrow:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: #fbbf24;
+  color: #fbbf24;
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.35);
+}
+
+.city-arrow-left:hover {
+  transform: translateY(-50%) translateX(-4px);
+}
+
+.city-arrow-right:hover {
+  transform: translateY(-50%) translateX(4px);
+}
+
+.arrow-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* 4. NPCs Layer */
+.city-npcs-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.city-npc-actor {
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s ease;
+}
+
+.city-npc-actor:hover {
+  transform: translateX(-50%) scale(1.04);
+}
+
+.city-npc-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid #38bdf8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #f8fafc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+.city-npc-sprite-wrap {
+  position: relative;
+  width: 140px;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.city-npc-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
+  animation: npcIdleBreath 3.5s ease-in-out infinite;
+}
+
+@keyframes npcIdleBreath {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.city-npc-shadow {
+  position: absolute;
+  bottom: -4px;
+  width: 80px;
+  height: 14px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.city-npc-name-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 0, 0, 0.8);
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+.city-npc-interact-prompt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: 1px solid #fef08a;
+  border-radius: 14px;
+  color: #0b1329;
+  font-size: 0.74rem;
+  font-weight: 800;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
+}
+
+.prompt-key {
+  display: inline-block;
+  padding: 1px 5px;
+  background: #0b1329;
+  color: #fef08a;
+  border-radius: 4px;
+  font-size: 0.68rem;
+}
+
+/* 6. Corridor Transition Banner / Toast */
+.city-transition-toast {
+  position: absolute;
+  top: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 36px;
+  background: rgba(11, 19, 41, 0.92);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(245, 158, 11, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100;
+  animation: toastPopDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  text-align: center;
+  pointer-events: none;
+}
+
+.city-transition-toast.center-gate {
+  border-color: #fde047;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.8), 0 0 45px rgba(250, 204, 21, 0.6);
+}
+
+@keyframes toastPopDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -24px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.city-toast-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.city-toast-hall {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #94a3b8;
+}
+
+.city-toast-center-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.25);
+  border: 1px solid #fbbf24;
+  color: #fef08a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.city-toast-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.city-transition-toast.center-gate .city-toast-title {
+  color: #fef08a;
+  text-shadow: 0 0 16px rgba(250, 204, 21, 0.6);
+}
+
+.city-toast-desc {
+  margin: 6px 0 0 0;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  max-width: 480px;
+}
+
+.city-toast-zone {
+  margin-top: 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+}
+
+/* 7. Bottom Walking Instruction Card */
+.city-controls-hint-bar {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  background: rgba(8, 14, 30, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 45;
+  pointer-events: none;
+}
+
+.hint-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: #cbd5e1;
+}
+
+.hint-kbd {
+  padding: 2px 6px;
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-weight: 700;
+  color: #f8fafc;
+  font-size: 0.7rem;
+}
+
+.hint-pill-highlight {
+  color: #fde047;
+  font-weight: 600;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 12px;
+}
+
+/* 8. On-screen Touch Controls */
+.city-touch-controls {
+  position: absolute;
+  bottom: 74px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.touch-group-dpad,
+.touch-group-actions {
+  display: flex;
+  gap: 14px;
+  pointer-events: auto;
+}
+
+.touch-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.85);
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  color: #f8fafc;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.touch-btn:active {
+  transform: scale(0.92);
+  background: #f59e0b;
+  color: #0b1329;
+}
+
+/* 9. NPC Dialogue Modal */
+.city-npc-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.city-npc-dialog-card {
+  position: relative;
+  width: 90%;
+  max-width: 620px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(11, 19, 41, 0.98) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.45);
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  gap: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.25);
+  animation: dialogCardPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dialogCardPop {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dialog-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.dialog-close-btn:hover {
+  background: rgba(239, 68, 68, 0.8);
+  color: #fff;
+}
+
+.dialog-npc-portrait-col {
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.dialog-npc-avatar {
+  width: 130px;
+  height: 165px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.dialog-npc-role-tag {
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #0b1329;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dialog-npc-content-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dialog-npc-title-row {
+  margin-bottom: 12px;
+}
+
+.dialog-npc-name {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.dialog-npc-subtitle {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.dialog-npc-speech-bubble {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.dialog-npc-speech-bubble p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+}
+
+.dialog-actions-row {
+  display: flex;
+  gap: 12px;
+}
+
+.dialog-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dialog-action-btn.primary {
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+  border: 1px solid #7dd3fc;
+  color: #0b1329;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+}
+
+.dialog-action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+}
+
+.dialog-action-btn.secondary {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+}
+
+.dialog-action-btn.secondary:hover {
+  background: rgba(51, 65, 85, 0.9);
+  color: #fff;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .cloud-city-header {
+    height: 60px;
+    padding: 0 12px;
+  }
+  .city-halls-nav-strip {
+    display: none;
+  }
+  .city-side-arrow {
+    padding: 8px 10px;
+  }
+  .arrow-label {
+    display: none;
+  }
+  .city-controls-hint-bar {
+    display: none;
+  }
+  .city-npc-dialog-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+}
