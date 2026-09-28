@@ -99,6 +99,57 @@
   transform: translateY(-2px);
 }
 
+.launcher-discord-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(30, 27, 75, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1.5px solid rgba(88, 101, 242, 0.45);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 12px rgba(88, 101, 242, 0.2);
+  color: #f8fafc;
+  padding: 6px 14px 6px 8px;
+  height: 40px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.launcher-discord-link:hover {
+  background: linear-gradient(135deg, rgba(49, 46, 129, 0.95) 0%, rgba(30, 27, 75, 0.98) 100%);
+  border-color: #818cf8;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 18px rgba(99, 102, 241, 0.45);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.launcher-discord-icon-wrap {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #5865F2 0%, #4752c4 100%);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(88, 101, 242, 0.5);
+}
+
+.launcher-discord-svg {
+  width: 15px;
+  height: 15px;
+  color: #ffffff;
+}
+
+.launcher-discord-text {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #f8fafc;
+}
+
 /* Center Hero Section */
 .launcher-hero-center {
   position: relative;
@@ -266,3 +317,241 @@
     font-size: 1.15rem;
   }
 }
+
+/* ============================================================
+   DONATE FAB BUTTON — bottom left, non-intrusive
+   ============================================================ */
+.launcher-donate-fab {
+  position: fixed;
+  bottom: max(20px, env(safe-area-inset-bottom, 20px));
+  left: max(20px, env(safe-area-inset-left, 20px));
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(20, 20, 35, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 9999px;
+  color: #fca5a5;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: donate-pulse 3s ease-in-out infinite;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+}
+
+.launcher-donate-fab:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25);
+}
+
+.launcher-donate-fab:active {
+  transform: translateY(0);
+}
+
+@keyframes donate-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15); }
+  50% { box-shadow: 0 4px 25px rgba(239, 68, 68, 0.35); }
+}
+
+.launcher-donate-fab-label {
+  pointer-events: none;
+}
+
+/* ============================================================
+   DONATE MODAL — glassmorphism, beautiful, mobile-ready
+   ============================================================ */
+.donate-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: donate-fade-in 0.3s ease;
+}
+
+@keyframes donate-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.donate-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85dvh;
+  overflow-y: auto;
+  background: linear-gradient(145deg, rgba(15, 20, 40, 0.95), rgba(10, 12, 25, 0.98));
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6),
+              0 0 60px rgba(56, 189, 248, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: donate-card-in 0.4s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@keyframes donate-card-in {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.donate-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.donate-modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.donate-modal-icon {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 4px 12px rgba(139, 92, 42, 0.4));
+}
+
+.donate-modal-title {
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 20px;
+  letter-spacing: 0.02em;
+}
+
+.donate-modal-text {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #cbd5e1;
+  margin: 0 0 14px;
+}
+
+.donate-modal-highlight {
+  color: #e2e8f0;
+  font-weight: 500;
+  background: rgba(56, 189, 248, 0.06);
+  border-left: 3px solid rgba(56, 189, 248, 0.5);
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+}
+
+.donate-modal-italic {
+  font-style: italic;
+  color: #94a3b8;
+}
+
+.donate-modal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.donate-modal-list li {
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.donate-modal-list li:last-child {
+  border-bottom: none;
+}
+
+.donate-modal-thanks {
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fbbf24;
+  margin: 20px 0 24px;
+  text-shadow: 0 2px 8px rgba(251, 191, 36, 0.2);
+}
+
+.donate-modal-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.donate-modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 35px rgba(239, 68, 68, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  filter: brightness(1.1);
+}
+
+.donate-modal-btn:active {
+  transform: translateY(0);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .launcher-donate-fab {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+    bottom: max(12px, env(safe-area-inset-bottom, 12px));
+    left: max(12px, env(safe-area-inset-left, 12px));
+  }
+
+  .donate-modal-card {
+    padding: 24px 20px;
+    border-radius: 16px;
+    max-height: 90dvh;
+  }
+
+  .donate-modal-title {
+    font-size: 1.15rem;
+  }
+
+  .donate-modal-text {
+    font-size: 0.85rem;
+  }
+
+  .donate-modal-btn {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+}
+
