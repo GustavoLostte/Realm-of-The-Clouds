@@ -1,57 +1,53 @@
-# 👑 Realm of Kingdoms
+# 👑 Realm of Kingdoms • Official Demo
 
-Motor progresivo de aplicaciones web y juegos de estrategia descentralizados (PWA + Web3) construido con **React 19**, **Vite 8**, soporte PWA offline-first y persistencia híbrida.
+Presented by **[WizzarDev Studios](https://wizzardev.com/)**
 
-![Realm of the Clouds Logo](/public/assets/logo/logo.webp)
+High-performance 2D Action RPG Combat Demo built with Canvas 2D, custom 60 FPS fixed-timestep physics engine, dynamic particles, full mobile analog touch controls, and high-fidelity sound synthesis.
 
----
-
-## ⚔️ Características Principales
-
-- 🏰 **Gestión y Construcción del Feudo**: Construye y mejora castillos, cuarteles, minas de oro, canteras, almacenes y graneros con animaciones de construcción dinámicas.
-- 🌾 **Producción y Cosechas en Tiempo Real**: Recolecta oro, madera, piedra y trigo con visualización de rendimientos y multiplicadores VIP.
-- 🛡️ **Guarnición y Sistema Militar**: Recluta infantería, arqueros y comandantes imperiales para proteger tu soberanía.
-- 🏆 **El Coliseo de los Soberanos (PvP)**: Asalta ciudadelas rivales, compara tu poderío militar y saquea recursos y coronas para ascender en la liga imperial.
-- 📜 **Heraldo Real & Campaña**: Misiones de historia dinámicas y exploración territorial a través de biomas salvajes.
-- 🔮 **Gran Academia (Árbol Tecnológico)**: Desbloquea investigaciones en ramas económica, militar y arcana.
-- 🎲 **Bazar Imperial & Ruleta de la Fortuna**: Tiradas diarias y premios de recursos, gemas, pócimas y tropas.
-- ☁️ **Persistencia en la Nube con Supabase**: Sincronización automática de progreso, recursos y clasificaciones globales.
-- 📱 **Diseño Ergonómico Móvil & Desktop**: Soporte para pantallas táctiles, orientación horizontal bloqueada y adaptación responsiva de alta definición.
+![WizzarDev Studios](assets/branding/LogoWizzarDev.webp)
 
 ---
 
-## 🛠️ Tecnologías
+## 🎮 Features
 
-- **Frontend**: React 19, Vite 8, Vanilla CSS
-- **Iconografía**: Lucide React
-- **Base de Datos & Auth**: Supabase (`@supabase/supabase-js`)
-- **Audio Engine**: Web Audio API con síntesis polifónica y efectos de sonido
-
----
-
-## 🚀 Despliegue en Vercel
-
-Este proyecto está 100% preconfigurado para Vercel:
-
-1. Importa el repositorio en [Vercel](https://vercel.com).
-2. Framework Preset: **Vite**.
-3. Build Command: `npm run build`
-4. Output Directory: `dist`
-5. Variables de Entorno (Opcionales, cuentan con fallback automático):
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
+- 🏹 **Cinematic Combat Engine**: Fluid bow attacks, double jumping, high-speed dash dodging with afterimage ghosts, triple arrows, and explosive arcane arrows.
+- ⚙️ **Pause System with Seamless Background Music**: Press `Escape` or open Settings (`⚙️`) at any time to freeze gameplay, timers, and physics while the orchestral background soundtrack continues playing.
+- 📱 **Mobile & Desktop Optimization**:
+  - Virtual floating analog joystick and tactile action cluster for mobile touchscreens.
+  - Automatic landscape mode adaptation with high-DPI scaling.
+  - Fullscreen toggle available for Web/Desktop, automatically streamlined and hidden on Android native apps.
+  - Zero heavy shadowBlur/backdrop-filter bottlenecks: 60 FPS guaranteed even on budget devices.
+- 🌟 **Official Studio Branding**: Fully branded for **WizzarDev Studios** (`wizzardev.com`) with integrated community Discord links.
 
 ---
 
-## 💻 Desarrollo Local
+## 🕹️ Controls
+
+| Action | Desktop Keyboard | Mobile Touchscreen |
+| :--- | :--- | :--- |
+| **Move** | `A` / `D` or `←` / `→` | Virtual Analog Thumbstick |
+| **Jump** | `Space` / `W` / `↑` | Jump Button (`▲`) |
+| **Drop Platform** | `S + Space` or `↓ + Space` | Pull Thumbstick Down |
+| **Normal Attack** | `1` or Left Click | Attack Button (`🏹`) |
+| **Triple Shot** | `2` | Triple Button (`🏹x3`) |
+| **Arcane Arrow** | `3` | Magic Button (`✨`) |
+| **Dash / Dodge** | `Shift` or `C` | Dash Button (`⚡`) |
+| **Pause / Settings** | `Escape` | Settings Button (`⚙️`) |
+| **Toggle Music** | `M` | Settings Modal |
+
+---
+
+## 🛠️ Local Development & Build
 
 ```bash
-# Instalar dependencias
-npm install
-
-# Iniciar servidor de desarrollo
+# Start local dev server
 npm run dev
 
-# Compilar para producción
+# Build production bundle for Vercel & Tauri
 npm run build
 ```
+
+---
+
+© 2026 **WizzarDev Studios**. All rights reserved.
+Visit [wizzardev.com](https://wizzardev.com/) | [Join Discord Community](https://discord.gg/dwyHMb8df)
